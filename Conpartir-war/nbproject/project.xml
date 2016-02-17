@@ -4,6 +4,7 @@
     <configuration>
         <buildExtensions xmlns="http://www.netbeans.org/ns/ant-build-extender/1">
             <extension file="rest-build.xml" id="rest.5"/>
+            <extension file="jaxws-build.xml" id="jaxws"/>
         </buildExtensions>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>Conpartir-war</name>
@@ -13,8 +14,8 @@
                     <file>${reference.Conpartir-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

@@ -5,7 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>Conpartir-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip</included-library>
+            <included-library dirs="200">file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

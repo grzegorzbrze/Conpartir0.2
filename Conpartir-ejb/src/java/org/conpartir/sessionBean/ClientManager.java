@@ -25,4 +25,18 @@ public class ClientManager implements ClientManagerLocal {
        clientFacade.create(client);
     }
 
+    @Override
+    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto) {
+        Client nuovo  = new Client();
+        nuovo.setAge(age);
+        nuovo.setEmail(email);
+        nuovo.setGender(gender);
+        nuovo.setName(name);
+        nuovo.setSurname(surname);
+        nuovo.setPass(pass);
+        nuovo.setUrlPhoto(urlPhoto);
+        clientFacade.create(nuovo);
+                
+    }
+
 }

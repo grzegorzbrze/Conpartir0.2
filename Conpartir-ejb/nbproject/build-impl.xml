@@ -793,17 +793,17 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
-        <copyfiles files="${file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
-        <basename file="${file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip}" property="manifest.file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip"/>
+        <basename file="${file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}" property="manifest.file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip}"/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
-        <copyfiles files="${file.reference.eclipselink-src-2.6.2.v20151217-774c696.zip}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

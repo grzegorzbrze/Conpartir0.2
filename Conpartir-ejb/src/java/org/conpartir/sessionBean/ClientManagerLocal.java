@@ -18,5 +18,6 @@ public interface ClientManagerLocal {
     
     public void createClient(Client client);
 
+    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto);
     //public void addDriver(Driver driver_id);
 }
