@@ -1,16 +1,96 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Conpartir - Home</title>
+    
+    <!-- Google Maps
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="js/GoogleMap.js"></script>-->
+    
+    <!-- Bootstrap -->
+      
+    <link href="frameworks/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="frameworks/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/override.css" rel="stylesheet">
+
+  </head>
+  <body ng-app = "myApp" ng-controller = "MainController">
+
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+      	<div class="navbar-header">
+			<ul class="nav navbar-nav">
+                            <li class="active"><a href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
+                          <li><a href="#/cars">Cars</a></li>
+                          <li><a href="#/taxis">Taxis</a></li>
+                          <li><a href="#/createpost">Post your travel</a></li>                          
+			  <li><a href="#/about">About</a></li>
+			</ul>
+		</div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-form navbar-right">
+                <div class="form-group">
+                    <button class="btn btn-success" id="loginbutton">Log in</button>
+                </div>
+            </div>
+            <div class="navbar-form navbar-right">
+                <form method="POST" action="#">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Search"/>
+                    </div>
+                </form>
+            </div>
+        </div>       
+        </div>
+    </nav>
+      
+   <div class="main-container" >
+           <ng-view></ng-view> 
+    </div>       
+   
+      <footer class="footer"> 
+          <p>Prova di footer</p>
+      </footer>
+        
+     
+  
+    
+    <script src="js/ie10-viewport-bug-workaround.js"></script>    
+    <script src="js/ie-emulation-modes-warning.js"></script>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
+    <script src="frameworks/bootstrap/js/carousel.js"></script>
+    
+    <!-- Angular Js Main and Services -->
+    <script src="frameworks/angularJs/angular.min.js"></script>
+    <script src="frameworks/angularJs/angular-route.min.js"></script>    
+    <script src="frameworks/angularJs/angular-touch.min.js"></script>
+    <script src="frameworks/angularJs/angular-animate.min.js"></script>
+    
+    
+    <!-- Angular Bootstrap UI -->
+    <script src="frameworks/ui-bootstrap-tpls-0.14.3.js"></script>
+    
+    <!-- Angular Js Controllers -->
+    <script src="js/homeCtrl.js"></script>
+    <script src="js/postCtrl.js"></script>
+    <script src="js/carouselCtrl.js"></script>
+    
+   
+    
+    <!-- Button JS scripts 
+    <script type="text/javascript">
+        document.getElementById("loginbutton").onclick = function () {
+            location.href = "http://localhost:8080/Conpartir-war/#/login";
+        };
+    </script>-->
+  </body>
 </html>
