@@ -68,10 +68,6 @@ public class Driver implements Serializable {
         return driver_id;
     }
 
-    public void setDriver_id(Long driver_id) {
-        this.driver_id = driver_id;
-    }
-
     public String getCarModel() {
         return carModel;
     }
@@ -110,15 +106,9 @@ public class Driver implements Serializable {
         if (!Objects.equals(this.client, other.client)) {
             return false;
         }
-        if (!Objects.equals(this.carModel, other.carModel)) {
-            return false;
-        }
-        if (this.carYear != other.carYear) {
-            return false;
-        }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "Driver{" + "driver_id=" + driver_id + ", client=" + client + ", carModel=" + carModel + ", carYear=" + carYear + '}';

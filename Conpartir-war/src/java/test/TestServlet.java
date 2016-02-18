@@ -43,23 +43,10 @@ public class TestServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //clientManager.addClient("Mario", "Rossi", 'M', 27, "mario.rossi@gmail.com", "rossi", "root/rossi");
-        //clientManager.addClient("Lorenzo", "Verdi", 'M', 47, "lorenzo.verdi@gmail.com", "verdi", "root/verdi");
-        //long i = (long)1;
-        //driverManager.addDriver(i);
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TestServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-                        
-            Driver driver1 = new Driver();
+    
+    
+    private void test(){
+        Driver driver1 = new Driver();
             driver1.setCarModel("Audi A6");
             driver1.setCarYear(2014);
                         
@@ -83,14 +70,7 @@ public class TestServlet extends HttpServlet {
             driver2.setClient(client1);     
             
             clientManager.createClient(client1);
-            System.out.println("Esiste email di Mario: "+clientManager.isEmail("mario.rossi@gmail.com"));
-            System.out.println("Esiste email di Mario: "+clientManager.isEmail("lorenzo@gggg.it"));
-            System.out.println("Email di ID 1 : "+clientManager.getEmail((long)1));
-            System.out.println("Email di ID 5: "+clientManager.getEmail((long)5));
-            
-            System.out.println("Info sul client Mario: "+clientManager.getClient("mario.rossi@gmail.com").toString());
-            
-            
+  
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
             travel1.setData(new Date());
@@ -101,7 +81,7 @@ public class TestServlet extends HttpServlet {
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
             postManager.createPost(travel1);
-            
+                        
             Client client2 = new Client();
             client2.setName("Lorenzo");
             client2.setSurname("Verdi");
@@ -114,7 +94,45 @@ public class TestServlet extends HttpServlet {
             clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
             
             /*  clientManager.createClient(client2);*/
+            testClient();
+            testDriver();
+    }
+    
+    private void testClient(){
+        System.out.println("Test classe Client");
+        System.out.println("Esiste email mario.rossi@gmail.com: "+clientManager.isEmail("mario.rossi@gmail.com"));
+        System.out.println("Info sul client che ha email mario.rossi@gmail.com: "+clientManager.getClient("mario.rossi@gmail.com").toString());
+        System.out.println("Esiste lorenzo@gmail.com: "+clientManager.isEmail("lorenzo@gmail.com"));
+        System.out.println("Info sul client che ha email lorenzo@gmail.com: "+clientManager.getClient("lorenzo@gmail.com").toString());
+        System.out.println("Restituisci l'email del client con ID 1 : "+clientManager.getEmail((long)1));
+        System.out.println("Restituisci l'email del client con ID 5: "+clientManager.getEmail((long)5));
+    }
+    
+    private void testDriver(){
+        System.out.println("Test classe Driver");
+        System.out.println("Info sul driver con ID 1: "+driverManager.getDriver((long)1).toString());
+        System.out.println("Esiste il dirver con ID 5: "+driverManager.isDriver((long)5));
+        System.out.println("Esiste il dirver con ID 1: " +driverManager.isDriver((long)1));
+    }
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //clientManager.addClient("Mario", "Rossi", 'M', 27, "mario.rossi@gmail.com", "rossi", "root/rossi");
+        //clientManager.addClient("Lorenzo", "Verdi", 'M', 47, "lorenzo.verdi@gmail.com", "verdi", "root/verdi");
+        //long i = (long)1;
+        //driverManager.addDriver(i);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet TestServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
             
+            test();
+                        
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

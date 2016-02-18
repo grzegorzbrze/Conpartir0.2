@@ -125,10 +125,6 @@ public class Client implements Serializable {
         return clientID;
     }
 
-    public void setId(Long id) {
-        this.clientID = id;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;

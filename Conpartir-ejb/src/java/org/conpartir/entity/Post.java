@@ -54,13 +54,9 @@ public class Post implements Serializable {
     
     @Column (name = "DESTINATION")
     private String destination;
-    
+
     public Long getPost_id() {
         return post_id;
-    }
-
-    public void setPost_id(Long post_id) {
-        this.post_id = post_id;
     }
 
     public Driver getDriver() {
@@ -91,8 +87,8 @@ public class Post implements Serializable {
         return time;
     }
 
-    public void setTime(Date hour) {
-        this.time = hour;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public String getOrigin() {
@@ -130,10 +126,10 @@ public class Post implements Serializable {
         if (!Objects.equals(this.post_id, other.post_id)) {
             return false;
         }
-        if (!Objects.equals(this.driver, other.driver)) {
+        if (!Objects.equals(this.data, other.data)) {
             return false;
         }
-        if (!Objects.equals(this.client_id, other.client_id)) {
+        if (!Objects.equals(this.time, other.time)) {
             return false;
         }
         return true;
@@ -141,11 +137,7 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "Post{" + "post_id=" + post_id + ", driver=" + driver + ", client_id=" + client_id + '}';
+        return "Post{" + "post_id=" + post_id + ", driver=" + driver.toString() + ", client_id=" + client_id + ", data=" + data + ", time=" + time + ", origin=" + origin + ", destination=" + destination + '}';
     }
-    
-    
-    
-
-    
+        
 }

@@ -7,7 +7,9 @@ package org.conpartir.sessionBean;
 
 import java.util.List;
 import javax.ejb.Local;
+import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Post;
 
 /**
  *
@@ -16,7 +18,29 @@ import org.conpartir.entity.Driver;
 @Local
 public interface DriverManagerLocal {
     
+    /**
+     * Permette di creare una tupla nel database tramite un oggetto di tipo driver
+     * @param driver 
+     */
     public void createDriver(Driver driver);
-    public void createDriver(Long ID);
-    public String getDriver(Long ID);
+    
+    /**
+     * Permette di creare una tupla nel database tramite i valori esplici
+     */
+    public void createDriver(String carModel, int carYear, Client client, List<Post> posts);
+    
+    /**
+     * Restituisce l'oggetto di tipo driver, se esiste, ricercato per ID
+     * @param ID
+     * @return 
+     */
+    public Driver getDriver(Long ID);
+    
+    /**
+     * Restituisce il valore true o false se ID esiste nel DB
+     * @param ID
+     * @return 
+     */
+    public boolean isDriver(Long ID);
+    
 }

@@ -38,7 +38,7 @@ public interface ClientManagerLocal {
     
     
     /**
-     * Il metodo verifica se la stringa emial è presente nel database
+     * Il metodo verifica se la stringa email è presente nel database
      * @return  
      */
     public boolean isEmail(String email);

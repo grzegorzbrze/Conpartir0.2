@@ -40,6 +40,20 @@ public class ClientManager implements ClientManagerLocal {
     }
 
     @Override
+    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto, List<Driver> drivers) {
+       Client nuovo  = new Client();
+        nuovo.setAge(age);
+        nuovo.setEmail(email);
+        nuovo.setGender(gender);
+        nuovo.setName(name);
+        nuovo.setSurname(surname);
+        nuovo.setPass(pass);
+        nuovo.setUrlPhoto(urlPhoto);
+        nuovo.setDrivers(drivers);
+        clientFacade.create(nuovo);  
+    }
+    
+    @Override
     public boolean isEmail(String email) {
         boolean risultato = false;
         List<Client> list = clientFacade.findAll();
@@ -77,18 +91,5 @@ public class ClientManager implements ClientManagerLocal {
         }
         return client;
     }
-
-    @Override
-    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto, List<Driver> drivers) {
-       Client nuovo  = new Client();
-        nuovo.setAge(age);
-        nuovo.setEmail(email);
-        nuovo.setGender(gender);
-        nuovo.setName(name);
-        nuovo.setSurname(surname);
-        nuovo.setPass(pass);
-        nuovo.setUrlPhoto(urlPhoto);
-        nuovo.setDrivers(drivers);
-        clientFacade.create(nuovo);  }
 
 }
