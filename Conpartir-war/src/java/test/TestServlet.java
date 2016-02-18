@@ -7,6 +7,7 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -85,6 +86,7 @@ public class TestServlet extends HttpServlet {
             
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
+            travel1.setData(new Date());
             driver1.getPosts().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
