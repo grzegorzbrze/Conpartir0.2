@@ -7,6 +7,7 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -82,9 +83,20 @@ public class TestServlet extends HttpServlet {
             driver2.setClient(client1);     
             
             clientManager.createClient(client1);
+            System.out.println("Esiste email di Mario: "+clientManager.isEmail("mario.rossi@gmail.com"));
+            System.out.println("Esiste email di Mario: "+clientManager.isEmail("lorenzo@gggg.it"));
+            System.out.println("Email di ID 1 : "+clientManager.getEmail((long)1));
+            System.out.println("Email di ID 5: "+clientManager.getEmail((long)5));
+            
+            System.out.println("Info sul client Mario: "+clientManager.getClient("mario.rossi@gmail.com").toString());
+            
             
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
+            travel1.setData(new Date());
+            travel1.setDestination("Milano");
+            travel1.setOrigin("Torino");
+            travel1.setTime(new Date());
             driver1.getPosts().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
@@ -99,7 +111,7 @@ public class TestServlet extends HttpServlet {
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
             
-            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http");
+            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
             
             /*  clientManager.createClient(client2);*/
             

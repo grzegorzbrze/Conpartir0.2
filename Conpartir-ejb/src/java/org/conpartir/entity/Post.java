@@ -7,6 +7,7 @@ package org.conpartir.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -16,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,6 +41,20 @@ public class Post implements Serializable {
     @Column (name = "CLIENT_ID")
     private Long client_id;
 
+    @Column (name = "DATA")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date data;
+    
+    @Column(name = "TIME")
+    @Temporal(javax.persistence.TemporalType.TIME)
+    private Date time;
+    
+    @Column (name = "ORIGIN")
+    private String origin;
+    
+    @Column (name = "DESTINATION")
+    private String destination;
+    
     public Long getPost_id() {
         return post_id;
     }
@@ -62,6 +79,38 @@ public class Post implements Serializable {
         this.client_id = client_id;
     }
 
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date hour) {
+        this.time = hour;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
