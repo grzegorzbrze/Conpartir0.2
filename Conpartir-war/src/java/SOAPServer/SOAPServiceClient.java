@@ -45,34 +45,7 @@ public class SOAPServiceClient {
     @Oneway
     public void createClient(@WebParam(name = "name") String name, @WebParam(name = "surname") String surname, @WebParam(name = "gender") char gender, @WebParam(name = "age") int age, @WebParam(name = "email") String email, @WebParam(name = "pass") String pass, @WebParam(name = "urlPhoto") String urlPhoto) {
         clientRef.createClient(name, surname, gender, age, email, pass, urlPhoto);
-    }
+    } 
 
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "createDriver")
-    @Oneway
-    public void createDriver(@WebParam(name = "ID") Long ID) {
-        driverRef.createDriver(ID);
-    }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "getDriver")
-    public String getDriver(@WebParam(name = "ID") Long ID) {
-        String risposta;
-        risposta = driverRef.getDriver(ID);
-        return risposta;
-    }
-
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "createPost")
-    @Oneway
-    public void createPost(@WebParam(name = "Param") String Param) {
-    }
-    
     
 }

@@ -56,26 +56,42 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
-      $scope.cities = ["Bologna", "Firenze", "Genova", "Milano", "Napoli", 
-          "Padova", "Pisa", "Roma", "Siena", "Torino", "Venezia", "Verona"];
       
+      //Inizio carousel della home
      
        $scope.myInterval = 5000;
-  $scope.noWrapSlides = false;
-  var slides = $scope.slides = [];
-  var currIndex = 0;
+       $scope.noWrapSlides = false;
+       var slides = $scope.slides = [];
+       var currIndex = 0;
 
-  $scope.addSlide = function(i) {
-    slides.push({
-      image: 'prova' + i + ".png",
-      text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
-      id: currIndex++
-    });
-  }; 
+        $scope.addSlide = function(i) {
+         slides.push({
+             image: 'prova' + i + ".png",
+             text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
+             id: currIndex++
+           });
+        }; 
 
-  for (var i = 0; i < 4; i++) {
-    $scope.addSlide(i+1);
-  }
+        for (var i = 0; i < 4; i++) {
+            $scope.addSlide(i+1);
+        }
+        
+        // Fine Carousel
+        
+        $scope.pass;
+        $scope.email;
+        
+        $scope.prova = function () {
+            
+            alert($scope.pass);
+            $route.reload();
+        };
+        
+        $scope.servletCall = function (data) {    
+            $.get('Registration', function(data) {
+            alert(data);
+            });
+        };
   
 
   

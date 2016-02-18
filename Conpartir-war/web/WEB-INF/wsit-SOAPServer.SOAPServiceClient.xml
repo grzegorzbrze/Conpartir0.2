@@ -3,49 +3,19 @@
  xmlns="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
- xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="SOAPServiceClient" targetNamespace="http://SOAPServer/" xmlns:tns="http://SOAPServer/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="SOAPServiceClient" targetNamespace="http://SOAPServer/" xmlns:tns="http://SOAPServer/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" 
  >
     <message name="createClient_1"/>
     <message name="createClient_1Response"/>
-    <message name="createDriver"/>
-    <message name="createDriverResponse"/>
-    <message name="getDriver"/>
-    <message name="getDriverResponse"/>
-    <message name="createPost"/>
-    <message name="createPostResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
             <output message="tns:createClient_1Response"/>
         </operation>
-        <operation name="createDriver">
-            <input message="tns:createDriver"/>
-            <output message="tns:createDriverResponse"/>
-        </operation>
-        <operation name="getDriver">
-            <input message="tns:getDriver"/>
-            <output message="tns:getDriverResponse"/>
-        </operation>
-        <operation name="createPost">
-            <input message="tns:createPost"/>
-            <output message="tns:createPostResponse"/>
-        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
         <operation name="createClient_1">
-            <input/>
-            <output/>
-        </operation>
-        <operation name="createDriver">
-            <input/>
-            <output/>
-        </operation>
-        <operation name="getDriver">
-            <input/>
-            <output/>
-        </operation>
-        <operation name="createPost">
             <input/>
             <output/>
         </operation>
@@ -56,6 +26,78 @@
     <wsp:Policy wsu:Id="SOAPServiceClientPortBindingPolicy">
         <wsp:ExactlyOne>
             <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createDriver_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createDriver_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createPost_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createPost_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriver_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriver_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
         </wsp:ExactlyOne>
     </wsp:Policy>
 </definitions>
