@@ -96,6 +96,7 @@ public class TestServlet extends HttpServlet {
             /*  clientManager.createClient(client2);*/
             testClient();
             testDriver();
+            testPost();
     }
     
     private void testClient(){
@@ -113,6 +114,14 @@ public class TestServlet extends HttpServlet {
         System.out.println("Info sul driver con ID 1: "+driverManager.getDriver((long)1).toString());
         System.out.println("Esiste il dirver con ID 5: "+driverManager.isDriver((long)5));
         System.out.println("Esiste il dirver con ID 1: " +driverManager.isDriver((long)1));
+    }
+    
+    private void testPost(){
+        int numero1 = postManager.searchByOriginDestination("Milano", "Torino").size();
+        int numero2 = postManager.searchByOriginDestination("Torino", "Milano").size();
+        System.out.println("Test classe Post");
+        System.out.println("Il numero di viaggi da Milano a Torino: "+numero1);
+        System.out.println("Il numero di viaggi da Torino a Milano: "+numero2);
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

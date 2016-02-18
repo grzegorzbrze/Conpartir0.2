@@ -5,6 +5,7 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -52,6 +53,28 @@ public class PostManager implements PostManagerLocal {
             }
         }
         return post;
+    }
+
+    @Override
+    public List<Post> searchByOriginDestination(String origin, String destination) {
+        List <Post> lista = new ArrayList();
+        List <Post> viaggi = postFacade.findAll();
+        for (Post temp : viaggi){
+            if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin)){
+                lista.add(temp);
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Post> searchByDestinationOriginDate(Date data, String destination, String origin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Post> searchByDestinationOriginTime(Date time, String destination, String origin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
