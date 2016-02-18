@@ -5,6 +5,7 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Driver;
@@ -20,7 +21,26 @@ public class DriverManager implements DriverManagerLocal {
     private DriverFacadeLocal driverFacade;
 
     @Override
-    public void cerateDriver(Driver driver) {
+    public void createDriver(Driver driver) {
         driverFacade.create(driver);
+    }
+    
+    @Override
+    public void createDriver(Long ID) {
+        Driver nuovo = new Driver();
+        nuovo.setDriver_id(ID);
+        driverFacade.create(null);
+    }
+
+    @Override
+    public String getDriver(Long ID) {
+        String risposta = null;
+       
+        Driver risultato;
+        risultato = driverFacade.find(ID);
+        
+        risposta= risultato.getDriver_id().toString() + risultato.getCarModel();
+        
+    return risposta;
     }
 }

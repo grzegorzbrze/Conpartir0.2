@@ -5,6 +5,7 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.List;
 import javax.ejb.Local;
 import org.conpartir.entity.Driver;
 
@@ -15,5 +16,7 @@ import org.conpartir.entity.Driver;
 @Local
 public interface DriverManagerLocal {
     
-    public void cerateDriver(Driver driver);
+    public void createDriver(Driver driver);
+    public void createDriver(Long ID);
+    public String getDriver(Long ID);
 }

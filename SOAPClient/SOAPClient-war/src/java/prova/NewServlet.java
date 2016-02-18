@@ -46,9 +46,11 @@ public class NewServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h3>" + this.getDriver(1L) + "</h3>");
             out.println("</body>");
             out.println("</html>");
             this.createClient1("gianno", "canio", 'm', 65, "fff", "Denjer", "wdjsenf");
+            
             
             
             
@@ -98,7 +100,18 @@ public class NewServlet extends HttpServlet {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         prova.SOAPServiceClient port = service.getSOAPServiceClientPort();
+        
         port.createClient1(name, surname, gender, age, email, pass, urlPhoto);
     }
 
+    private String getDriver(java.lang.Long id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        prova.SOAPServiceClient port = service.getSOAPServiceClientPort();
+        return port.getDriver(id);
+    }
+
+ 
+    
+ 
 }
