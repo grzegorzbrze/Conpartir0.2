@@ -83,6 +83,13 @@ public class TestServlet extends HttpServlet {
             driver2.setClient(client1);     
             
             clientManager.createClient(client1);
+            System.out.println("Esiste email di Mario: "+clientManager.isEmail("mario.rossi@gmail.com"));
+            System.out.println("Esiste email di Mario: "+clientManager.isEmail("lorenzo@gggg.it"));
+            System.out.println("Email di ID 1 : "+clientManager.getEmail((long)1));
+            System.out.println("Email di ID 5: "+clientManager.getEmail((long)5));
+            
+            System.out.println("Info sul client Mario: "+clientManager.getClient("mario.rossi@gmail.com").toString());
+            
             
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
@@ -104,7 +111,7 @@ public class TestServlet extends HttpServlet {
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
             
-            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http");
+            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
             
             /*  clientManager.createClient(client2);*/
             

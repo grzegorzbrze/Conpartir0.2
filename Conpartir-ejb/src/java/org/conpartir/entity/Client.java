@@ -56,8 +56,6 @@ public class Client implements Serializable {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Driver> drivers = new ArrayList<>();
     
-    
-
     @XmlTransient
     public List<Driver> getDrivers() {
         return drivers;
@@ -146,6 +144,13 @@ public class Client implements Serializable {
         return hash;
     }
 
+    /**
+     * Due client sono uguali se hanno la stessa email. 
+     * obj deve essere di tipo Client.
+     * @param obj
+     * @return 
+     */
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -155,25 +160,7 @@ public class Client implements Serializable {
             return false;
         }
         final Client other = (Client) obj;
-        if (!Objects.equals(this.clientID, other.clientID)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.surname, other.surname)) {
-            return false;
-        }
-        if (this.gender != other.gender) {
-            return false;
-        }
-        if (this.age != other.age) {
-            return false;
-        }
         if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.pass, other.pass)) {
             return false;
         }
         return true;
@@ -181,9 +168,10 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" + "clientID=" + clientID + ", name=" + name + ", surname="
+        return "Client{ " + "clientID=" + clientID + ", name=" + name + ", surname=" 
                 + surname + ", gender=" + gender + ", age=" + age + ", email=" 
-                + email + ", pass=" + pass + ", urlPhoto=" + urlPhoto + '}';
+                + email + ", pass=" + pass + ", urlPhoto=" + urlPhoto + "}";
     }
+    
     
 }

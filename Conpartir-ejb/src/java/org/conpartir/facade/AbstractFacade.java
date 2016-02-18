@@ -33,6 +33,13 @@ public abstract class AbstractFacade<T> {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
+    /**
+     * Restituisce un oggetto T se esiste nella tabella ID ad esso associato
+     * ovviamente tutti ID sono di tipo Long quindi usare quelli.
+     * @param id
+     * @return 
+     */
+    
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }

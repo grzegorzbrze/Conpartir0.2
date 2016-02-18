@@ -5,6 +5,7 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Client;
@@ -35,8 +36,59 @@ public class ClientManager implements ClientManagerLocal {
         nuovo.setSurname(surname);
         nuovo.setPass(pass);
         nuovo.setUrlPhoto(urlPhoto);
-        clientFacade.create(nuovo);
-                
+        clientFacade.create(nuovo);  
     }
+
+    @Override
+    public boolean isEmail(String email) {
+        boolean risultato = false;
+        List<Client> list = clientFacade.findAll();
+        for (Client temp : list){
+            String tempEmail = temp.getEmail();
+            if (tempEmail.equals(email)){
+                risultato = true;
+            }
+        }
+        return risultato;
+    }
+
+    @Override
+    public String getEmail(long id) {
+        String risultato = "";
+        List<Client> list = clientFacade.findAll();
+        for (Client temp : list){
+            Long tempID = temp.getId();
+            if (tempID.equals(id)){
+                risultato = temp.getEmail();
+            }
+        }
+        return risultato;        
+    }
+    
+    @Override
+    public Client getClient(String email) {
+        Client client = new Client();
+        List<Client> list = clientFacade.findAll();
+        for (Client temp : list){
+            String tempEmail = temp.getEmail();
+            if (tempEmail.equals(email)){
+                client = temp;            
+            }
+        }
+        return client;
+    }
+
+    @Override
+    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto, List<Driver> drivers) {
+       Client nuovo  = new Client();
+        nuovo.setAge(age);
+        nuovo.setEmail(email);
+        nuovo.setGender(gender);
+        nuovo.setName(name);
+        nuovo.setSurname(surname);
+        nuovo.setPass(pass);
+        nuovo.setUrlPhoto(urlPhoto);
+        nuovo.setDrivers(drivers);
+        clientFacade.create(nuovo);  }
 
 }
