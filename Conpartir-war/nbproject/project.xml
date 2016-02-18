@@ -13,10 +13,6 @@
                 <library dirs="100">
                     <file>${reference.Conpartir-ejb.dist}</file>
                 </library>
-                <library dirs="200">
-                    <file>${file.reference.lib-eclipselink-src-2.6.2.v20151217-774c696}</file>
-                    <path-in-war>WEB-INF/classes</path-in-war>
-                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
