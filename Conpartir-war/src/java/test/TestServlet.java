@@ -87,6 +87,9 @@ public class TestServlet extends HttpServlet {
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
             travel1.setData(new Date());
+            travel1.setDestination("Milano");
+            travel1.setOrigin("Torino");
+            travel1.setTime(new Date());
             driver1.getPosts().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);

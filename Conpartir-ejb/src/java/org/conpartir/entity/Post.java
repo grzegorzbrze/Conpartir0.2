@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,9 +41,19 @@ public class Post implements Serializable {
     @Column (name = "CLIENT_ID")
     private Long client_id;
 
-     @Column (name = "DATA")
+    @Column (name = "DATA")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date data;
+    
+    @Column(name = "TIME")
+    @Temporal(javax.persistence.TemporalType.TIME)
+    private Date time;
+    
+    @Column (name = "ORIGIN")
+    private String origin;
+    
+    @Column (name = "DESTINATION")
+    private String destination;
     
     public Long getPost_id() {
         return post_id;
@@ -74,6 +85,30 @@ public class Post implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date hour) {
+        this.time = hour;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
     
     @Override
