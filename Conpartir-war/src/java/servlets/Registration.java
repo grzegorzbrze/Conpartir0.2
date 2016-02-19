@@ -5,14 +5,22 @@
  */
 package servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.conpartir.sessionBean.ClientManagerLocal;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -59,6 +67,8 @@ public class Registration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,11 +83,49 @@ public class Registration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+     @Override
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     {
+         String enteredValue;
+         // gets all the selected options from the client browser
+         String[] selectedOptions = request.getParameterValues("options");
+         // gets the enteredValue fields value
+         enteredValue = request.getParameter("enteredValue");
+         response.setContentType("text/html");
+         PrintWriter printWriter;  
+         StringBuffer sb = new StringBuffer();
+         
+         try 
+         {
+             BufferedReader reader = request.getReader(); 
+             String line = null;
+             while ((line = reader.readLine()) != null)
+             {
+                 sb.append(line);
+                         }
+         } catch (Exception e) { e.printStackTrace(); }
+         
+         JSONParser parser = new JSONParser();
+         JSONObject joUser = null;
+         
+         try
+         {
+             joUser = (JSONObject) parser.parse(sb.toString());
+         } catch (ParseException e) { e.printStackTrace(); }/**/
+    
+         String user = (String) joUser.get("name"); 
+    
+         PrintWriter out;
+        try {
+            out = response.getWriter();
+            out.write("A new user " + user + " has been created.");
+            out.flush();            
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+     }
+
 
     /**
      * Returns a short description of the servlet.
@@ -92,6 +140,5 @@ public class Registration extends HttpServlet {
     public void createClient(String name, String surname, char sex, int age, String email, String pass, String photo) {
         clientManager.createClient(name, surname, sex, age, email, pass, photo);    
     };
-    
     
 }

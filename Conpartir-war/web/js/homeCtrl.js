@@ -51,8 +51,8 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
         // controllerAs: "app"
     });    
 });
-  myapp.controller("MainController", ['$scope', 
-      function($scope) {
+  myapp.controller("MainController", ['$scope', '$http', 
+      function($scope, $http) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
@@ -81,16 +81,33 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
         $scope.pass;
         $scope.email;
         
-        $scope.prova = function () {
-            
-            alert($scope.pass);
-            $route.reload();
-        };
+        $scope.master = {};
+
+      $scope.login = function(user) {
+        $scope.master = angular.copy(user);
+        //$scope.servletCall(user);
+       };
+       
+       $scope.register = function (user) {
+           $scope.master = angular.copy(user);
+           //console.log(user);
+           $scope.servletCall(user.email);
+       };
+       
+       
         
-        $scope.servletCall = function (data) {    
-            $.get('Registration', function(data) {
-            alert(data);
+        $scope.servletCall = function (data){ 
+            $http({
+                method: 'POST',
+                url: 'Registration',
+                headers: {'Content-Type': 'application/json'},
+                data:  $scope.master
+            }).success(function (data)
+            {
+                $scope.status=data;
             });
+            
+        
         };
   
 
