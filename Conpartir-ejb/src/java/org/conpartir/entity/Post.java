@@ -7,6 +7,7 @@ package org.conpartir.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -107,6 +108,30 @@ public class Post implements Serializable {
         this.destination = destination;
     }
     
+    public Calendar getCalendarData(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(data);
+        return calendar;
+    }
+    
+    public Calendar getCalendarTime(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+        return calendar;
+    }
+    
+    public String getTimeString(){
+        Calendar cal = getCalendarTime();
+        String hour = cal.get(Calendar.HOUR) +":"+cal.get(Calendar.MINUTE)+":" + cal.get(Calendar.SECOND);
+        return hour;
+    }
+    
+    public String getDataString(){
+        Calendar cal = getCalendarData();
+        String laData = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.DAY_OF_MONTH);
+        return laData;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -137,7 +162,9 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "Post{" + "post_id=" + post_id + ", driver=" + driver.toString() + ", client_id=" + client_id + ", data=" + data + ", time=" + time + ", origin=" + origin + ", destination=" + destination + '}';
+        return "Post{" + "post_id=" + post_id + ", driver=" + driver.toString() + 
+                ", client_id=" + client_id + ", data=" + getDataString() + ", time=" + getTimeString()+
+                ", origin=" + origin + ", destination=" + destination + '}';
     }
         
 }

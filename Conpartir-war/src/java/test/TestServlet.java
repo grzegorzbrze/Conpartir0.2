@@ -7,6 +7,7 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -73,10 +74,14 @@ public class TestServlet extends HttpServlet {
   
             Post travel1 = new Post();
             travel1.setClient_id(client1.getId());
-            travel1.setData(new Date());
+            
             travel1.setDestination("Milano");
             travel1.setOrigin("Torino");
-            travel1.setTime(new Date());
+            Calendar cal = Calendar.getInstance();
+            cal.set(2016, 3, 12, 17, 15, 25);
+            Date d = cal.getTime();
+            travel1.setData(d);
+            travel1.setTime(d);
             driver1.getPosts().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
@@ -122,10 +127,17 @@ public class TestServlet extends HttpServlet {
         System.out.println("Test classe Post");
         System.out.println("Il numero di viaggi da Milano a Torino: "+numero1);
         System.out.println("Il numero di viaggi da Torino a Milano: "+numero2);
+        
         Date data = new Date();
-        /*for (Post temp : postManager.searchByOriginDestination("Torino", "Milano"))
-            System.out.println(temp.toString());*/
-        System.out.println("Esiste un viaggio oggi alle 20: "+postManager.searchByOriginDestinationDateTime(data, data, "Torino", "Milano"));
+        Date time = new Date();
+        System.out.println("Lista di viaggi da Torino per Milano a partire da oggi: ");
+        for (Post temp : postManager.searchByOriginDestinationDate(data, "Torino", "Milano")){
+            System.out.println(temp.toString());
+        }
+        System.out.println("Lista di viaggi da Torino per Milano a partire da oggi a quest'ora");
+        for (Post temp : postManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
+            System.out.println(temp.toString());
+        }
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
