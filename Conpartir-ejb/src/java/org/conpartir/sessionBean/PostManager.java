@@ -68,13 +68,39 @@ public class PostManager implements PostManagerLocal {
     }
 
     @Override
-    public List<Post> searchByDestinationOriginDate(Date data, String destination, String origin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Post> searchByOriginDestinationDate(Date data, String origin, String destination) {
+        List <Post> lista = new ArrayList();
+        List <Post> viaggi = postFacade.findAll();
+        for (Post temp : viaggi){
+            //in questo modo vengono controllate tutte le date successive a quelle dell'utente
+            if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
+                    viaggi.add(temp);
+            }
+        }
+        return lista;
     }
 
     @Override
-    public List<Post> searchByDestinationOriginTime(Date time, String destination, String origin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Post> searchByOriginDestinationDateTime(Date data, Date time, String destination, String origin) {
+        List <Post> lista = new ArrayList();
+        List <Post> viaggi = postFacade.findAll();
+        for (Post temp : viaggi){
+            //in questo modo vengono controllate tutte le date successive a quelle dell'utente
+            if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
+                    && afterTime(temp.getTime(), time)){      
+                    viaggi.add(temp);
+            }
+        }
+        return lista;
     }
-
+    
+    /**
+     * Restituisce true se l'ora temp2 è dopo l'ora temp1  
+     */
+    protected boolean afterTime(Date temp1, Date tempo2){
+        boolean risultato = false;
+        
+           
+        return risultato;
+    }
 }
