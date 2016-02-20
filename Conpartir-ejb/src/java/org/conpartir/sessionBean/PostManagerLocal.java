@@ -46,12 +46,12 @@ public interface PostManagerLocal {
      * Il metodo risponde alla ricerca per destinazione, data e punto di partenza
      * Restituisce una lista di viaggi possibili
      */
-    public List<Post> searchByDestinationOriginDate(Date data, String destination, String origin);
+    public List<Post> searchByOriginDestinationDate(Date data, String destination, String origin);
     
     /**
      * Il metodo risponde alla ricerca per destinazione, ora e punto di partenza
      * Restituisce una lista di viaggi possibili
      */
-    public List<Post> searchByDestinationOriginTime(Date time, String destination, String origin);
+    public List<Post> searchByOriginDestinationDateTime(Date data, Date time, String destination, String origin);
     
 }

@@ -122,6 +122,10 @@ public class TestServlet extends HttpServlet {
         System.out.println("Test classe Post");
         System.out.println("Il numero di viaggi da Milano a Torino: "+numero1);
         System.out.println("Il numero di viaggi da Torino a Milano: "+numero2);
+        Date data = new Date();
+        /*for (Post temp : postManager.searchByOriginDestination("Torino", "Milano"))
+            System.out.println(temp.toString());*/
+        System.out.println("Esiste un viaggio oggi alle 20: "+postManager.searchByOriginDestinationDateTime(data, data, "Torino", "Milano"));
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
