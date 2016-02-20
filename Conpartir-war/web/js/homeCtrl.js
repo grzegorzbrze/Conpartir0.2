@@ -51,8 +51,8 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
         // controllerAs: "app"
     });    
 });
-  myapp.controller("MainController", ['$scope', '$http', 
-      function($scope, $http) {
+  myapp.controller("MainController", ['$scope', '$http', '$uibModal',
+      function($scope, $http, $uibModal) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
@@ -78,30 +78,44 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
         
         // Fine Carousel
         
-        $scope.pass;
-        $scope.email;
         
         $scope.master = {};
+        $scope.status = {};
 
       $scope.login = function(user) {
-        $scope.master = angular.copy(user);
-        //$scope.servletCall(user);
+        $scope.master = user;
+        $scope.master.use = "login";
+        
+        if (user.email == "", user.email == undefined || user.pass == "", user.pass == undefined ) alert("Per favore, completa i campi per effettuare il login!");
+        else $scope.servletCall($scope.master);
        };
        
               
        $scope.register = function (user) {
-           $scope.master = angular.copy(user);
+           $scope.master = user;
+           $scope.master.use = "registration";
+           flag = false;
            
            if (user.pass !== user.passRe) { 
                alert("Le password inserite sono diverse");
-           } else {    
-               alert(user.gender);
-                //console.log(user);
-                $scope.servletCall(user);
-            }
-       };
-       
-       
+               flag = true; 
+           }           
+           if (user.email === null) { 
+               alert("Prego, inserisci un'email valida");
+               flag = true; 
+           }           
+           if (user.name === null || user.surname === null) { 
+               alert("Prego, inserisci il tuo nome!");
+               flag = true; 
+           }
+           if (user.age === null || user.gender === null) { 
+               alert("Per favore, completa tutti i campi.");
+               flag = true; 
+           }
+              
+            if (flag === false) $scope.servletCall($scope.master);
+            
+       };       
         
         $scope.servletCall = function (data){ 
             $http({
@@ -112,21 +126,16 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
             }).success(function (data)
             {
                 $scope.status=data;
-            });
-            
-        
+                alert($scope.status);
+                
+            });         
         };
+        
+        
   
-
-  
-
-  
-
-          
-      
       
    }]);
    
-   
+  
  
    
