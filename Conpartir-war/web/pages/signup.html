@@ -6,7 +6,7 @@
           <label class="sr-only">Password</label>
           <input name="password" class="form-control" type="password" placeholder="Password" ng-model="user.pass"/>          
           <label class="sr-only">RePassword</label>
-          <input name="password2" class="form-control" type="password" placeholder="Retype Password"/>
+          <input name="password2" class="form-control" type="password" placeholder="Retype Password" ng-model="user.passRe"/>
           <label class="sr-only">Name</label>
           <input name="name" class="form-control" type="text" placeholder="Name" ng-model="user.name"/>
           <label class="sr-only">Surname</label>
@@ -15,8 +15,8 @@
           <input name="birth" class="form-control" type="text" placeholder="Age" ng-model="user.age"/>
           <div class="radio-inline-panel">
               <label>Gender: </label>
-            <label class="radio-inline">M</label><input type="radio" name="optradio" id="carselected" ng-model="user.gender"/>
-            <label class="radio-inline">F</label><input type="radio" name="optradio" id="taxiselected" ng-model="user.gender"/>
+            <label class="radio-inline" ng-value="'M'"><input type="radio"  name="optradio" ng-model="user.gender" />M</label>
+            <label class="radio-inline" ng-value="'F'"><input type="radio" name="optradio" ng-model="user.gender"/>F</label>
           </div>
           <button class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Sign up</button>
       </form>

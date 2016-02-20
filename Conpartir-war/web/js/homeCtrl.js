@@ -88,10 +88,17 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
         //$scope.servletCall(user);
        };
        
+              
        $scope.register = function (user) {
            $scope.master = angular.copy(user);
-           //console.log(user);
-           $scope.servletCall(user.email);
+           
+           if (user.pass !== user.passRe) { 
+               alert("Le password inserite sono diverse");
+           } else {    
+               alert(user.gender);
+                //console.log(user);
+                $scope.servletCall(user);
+            }
        };
        
        

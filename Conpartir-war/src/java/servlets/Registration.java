@@ -84,7 +84,7 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
      @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
      {
          String enteredValue;
          // gets all the selected options from the client browser
@@ -113,17 +113,35 @@ public class Registration extends HttpServlet {
              joUser = (JSONObject) parser.parse(sb.toString());
          } catch (ParseException e) { e.printStackTrace(); }/**/
     
-         String user = (String) joUser.get("name"); 
-    
+         String name = (String) joUser.get("name");
+         String surname = (String) joUser.get("surname"); 
+         String email = (String) joUser.get("email");
+         int age = Integer.parseInt((String) joUser.get("age"));
+       //  char gender = (char) joUser.get("gender");
+         String password = (String) joUser.get("pass"); 
+         
+       
+         
+         Boolean emailCheck = clientManager.isEmail(email);
+         
+         if (emailCheck == true) {
+         
+         }
+         else { 
+             clientManager.createClient(name, surname, ' ', age, email, password, null); 
+         } 
+         
+                
          PrintWriter out;
         try {
             out = response.getWriter();
-            out.write("A new user " + user + " has been created.");
+            out.write("A new user " + name + " " + surname + " " + email + " has been created.");
             out.flush();            
             out.close();
         } catch (IOException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        }            
+        }
+       
      }
 
 
