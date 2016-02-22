@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
-import org.conpartir.entity.Post;
+import org.conpartir.entity.Travel;
 import org.conpartir.facade.DriverFacadeLocal;
 
 /**
@@ -28,12 +28,12 @@ public class DriverManager implements DriverManagerLocal {
     }
 
     @Override
-    public void createDriver(String carModel, int carYear, Client client, List<Post> posts) {
+    public void createDriver(String carModel, int carYear, Client client, List<Travel> travels) {
         Driver driver = new Driver();
         driver.setCarModel(carModel);
         driver.setCarYear(carYear);
         driver.setClient(client);
-        driver.setPosts(posts);
+        driver.setTravels(travels);
         driverFacade.create(driver);
     }
 

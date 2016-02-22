@@ -45,15 +45,15 @@ public class Driver implements Serializable {
     private int carYear;
     
     @OneToMany (mappedBy = "driver", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList();
+    private List<Travel> travels = new ArrayList();
 
     @XmlTransient
-    public List<Post> getPosts() {
-        return posts;
+    public List<Travel> getTravels() {
+        return travels;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
     }
         
     public Client getClient() {

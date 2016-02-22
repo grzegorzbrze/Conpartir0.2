@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
-import org.conpartir.entity.Post;
+import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.DriverManagerLocal;
-import org.conpartir.sessionBean.PostManagerLocal;
+import org.conpartir.sessionBean.TravelManagerLocal;
 
 /**
  *
@@ -27,7 +27,7 @@ import org.conpartir.sessionBean.PostManagerLocal;
  */
 public class TestServlet extends HttpServlet {
     @EJB
-    private PostManagerLocal postManager;
+    private TravelManagerLocal postManager;
     @EJB
     private DriverManagerLocal driverManager;
     @EJB
@@ -72,7 +72,7 @@ public class TestServlet extends HttpServlet {
             
             clientManager.createClient(client1);
   
-            Post travel1 = new Post();
+            Travel travel1 = new Travel();
             travel1.setClient_id(client1.getId());
             
             travel1.setDestination("Milano");
@@ -82,7 +82,7 @@ public class TestServlet extends HttpServlet {
             Date d = cal.getTime();
             travel1.setData(d);
             travel1.setTime(d);
-            driver1.getPosts().add(travel1);
+            driver1.getTravels().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
             postManager.createPost(travel1);
@@ -101,7 +101,7 @@ public class TestServlet extends HttpServlet {
             /*  clientManager.createClient(client2);*/
             testClient();
             testDriver();
-            testPost();
+            testTravel();
     }
     
     private void testClient(){
@@ -121,21 +121,21 @@ public class TestServlet extends HttpServlet {
         System.out.println("Esiste il dirver con ID 1: " +driverManager.isDriver((long)1));
     }
     
-    private void testPost(){
+    private void testTravel(){
         int numero1 = postManager.searchByOriginDestination("Milano", "Torino").size();
         int numero2 = postManager.searchByOriginDestination("Torino", "Milano").size();
-        System.out.println("Test classe Post");
+        System.out.println("Test classe Travel");
         System.out.println("Il numero di viaggi da Milano a Torino: "+numero1);
         System.out.println("Il numero di viaggi da Torino a Milano: "+numero2);
         
         Date data = new Date();
         Date time = new Date();
         System.out.println("Lista di viaggi da Torino per Milano a partire da oggi: ");
-        for (Post temp : postManager.searchByOriginDestinationDate(data, "Torino", "Milano")){
+        for (Travel temp : postManager.searchByOriginDestinationDate(data, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
         System.out.println("Lista di viaggi da Torino per Milano a partire da oggi a quest'ora");
-        for (Post temp : postManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
+        for (Travel temp : postManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
     }

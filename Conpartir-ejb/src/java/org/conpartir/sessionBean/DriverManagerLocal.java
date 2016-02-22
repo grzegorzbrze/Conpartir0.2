@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
-import org.conpartir.entity.Post;
+import org.conpartir.entity.Travel;
 
 /**
  *
@@ -27,7 +27,7 @@ public interface DriverManagerLocal {
     /**
      * Permette di creare una tupla nel database tramite i valori esplici
      */
-    public void createDriver(String carModel, int carYear, Client client, List<Post> posts);
+    public void createDriver(String carModel, int carYear, Client client, List<Travel> travels);
     
     /**
      * Restituisce l'oggetto di tipo driver, se esiste, ricercato per ID

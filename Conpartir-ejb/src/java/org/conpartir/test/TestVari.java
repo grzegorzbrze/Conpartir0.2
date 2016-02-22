@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import org.conpartir.entity.Post;
-import org.conpartir.facade.PostFacadeLocal;
+import org.conpartir.entity.Travel;
+import org.conpartir.facade.TravelFacadeLocal;
 
 /**
  *
@@ -24,10 +24,10 @@ import org.conpartir.facade.PostFacadeLocal;
 public class TestVari {
    
      //@Override
-    public List<Post> searchByOriginDestinationDate(Date data, String origin, String destination) {
-        List <Post> lista = new ArrayList();
-        List <Post> viaggi = new ArrayList();
-        Post travel1 = new Post();
+    public List<Travel> searchByOriginDestinationDate(Date data, String origin, String destination) {
+        List <Travel> lista = new ArrayList();
+        List <Travel> viaggi = new ArrayList();
+        Travel travel1 = new Travel();
             travel1.setClient_id((long)1);
             travel1.setData(new Date());
             travel1.setDestination("Milano");
@@ -38,7 +38,7 @@ public class TestVari {
             travel1.setTime(d);
             viaggi.add(travel1);
         System.out.println("Data da confrontare: "+data.toString());
-        for (Post temp : viaggi){
+        for (Travel temp : viaggi){
             System.out.println("Data nel DB: "+temp.getTime().toString());
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
             if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
