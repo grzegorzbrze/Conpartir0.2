@@ -4,52 +4,30 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule']);
+var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'postModule']);
   
   myapp.config(function($routeProvider){
-  $routeProvider.when("/",
-    {
-      templateUrl: "pages/home.html",
-      controller: "MainController"
-     // controllerAs: "app"
-    });
-    
-    $routeProvider.when("/about",
-    {
-      templateUrl: "pages/about.html",
-      controller: "MainController"
-     // controllerAs: "app"
-    });
-    $routeProvider.when("/taxis",{
-        templateUrl: "pages/taxis.html",
-        controller: "PostController"
-        // controllerAs: "app"
-    });
-    $routeProvider.when("/cars",{
-        templateUrl: "pages/cars.html",
-        controller: "PostController"
-        // controllerAs: "app"
-    });
-    $routeProvider.when("/signup",{
-        templateUrl: "pages/signup.html",
-        controller: "LoginController"
-        // controllerAs: "app"
-    });
-    $routeProvider.when("/login",{
-        templateUrl: "pages/login.html",
-        controller: "LoginController"
-        // controllerAs: "app"
-    });
-    $routeProvider.when("/createpost",{
-        templateUrl: "pages/createpost.html",
-        controller: "MainController"
-        // controllerAs: "app"
-    });
-    $routeProvider.when("/postview",{
-        templateUrl: "pages/postview.html",
-        controller: "MainController"
-        // controllerAs: "app"
-    });    
+  $routeProvider
+          .when("/", "/home",
+  {   templateUrl: "pages/home.html", controller: "MainController" })    
+          .when("/about",
+  {   templateUrl: "pages/about.html", controller: "MainController" })
+          .when("/account",
+  {   templateUrl: "pages/account.html", controller: "MainController" })
+          .when("/taxis", 
+  {   templateUrl: "pages/taxis.html", controller: "PostController" })
+          .when("/cars",
+  {   templateUrl: "pages/cars.html", controller: "PostController"   })
+          .when("/signup",
+  {   templateUrl: "pages/signup.html", controller: "LoginController" })
+          .when("/login",
+  {   templateUrl: "pages/login.html", controller: "LoginController" })
+          .when("/list",
+  {   templateUrl: "pages/list.html",  controller: "PostController"  })
+          .when("/post",
+  {   templateUrl: "pages/post.html",  controller: "MainController"  });  
+  
+  
 });
   myapp.controller("MainController", ['$scope', '$http', '$uibModal',
       function($scope, $http, $uibModal) {

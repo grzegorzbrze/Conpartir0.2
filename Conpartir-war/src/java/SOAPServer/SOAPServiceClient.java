@@ -15,7 +15,7 @@ import javax.xml.ws.RequestWrapper;
 import org.conpartir.entity.Client;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
-import org.conpartir.sessionBean.PostManagerLocal;
+
 
 /**
  *
@@ -26,8 +26,8 @@ public class SOAPServiceClient {
         
     @EJB
     private ClientManagerLocal clientRef;
-    @EJB
-    private PostManagerLocal postRef;
+    /* @EJB
+    private PostManagerLocal postRef;*/
     @EJB
     private DriverManagerLocal driverRef;
 

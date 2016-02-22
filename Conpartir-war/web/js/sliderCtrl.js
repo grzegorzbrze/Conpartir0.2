@@ -22,6 +22,10 @@
           return $routeParams.Id;
       };
       
+      //Per l'oggetto "pagination"
+            $scope.totalItems = 64;
+       $scope.currentPage = 4;
+      
       //Array of JSON objects to show "posts" on the page. TODO: import posts from DB       
       $scope.samplePosts =[ 
         { name: "Matteo Rossi",
