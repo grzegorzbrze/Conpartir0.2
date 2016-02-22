@@ -15,10 +15,11 @@
           <input name="birth" class="form-control" type="text" placeholder="Age" ng-model="user.age"/>
           <div class="radio-inline-panel">
               <label>Gender: </label>
-            <label class="radio-inline" ng-value="'M'"><input type="radio"  name="optradio" ng-model="user.gender" />M</label>
-            <label class="radio-inline" ng-value="'F'"><input type="radio" name="optradio" ng-model="user.gender"/>F</label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="user.gender" ng-value="'M'"/>M</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="user.gender" ng-value="'F'"/>F</label>
           </div>
           <button class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Sign up</button>
       </form>
 
 </div>
+

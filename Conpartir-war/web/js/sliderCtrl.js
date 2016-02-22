@@ -6,8 +6,8 @@
 (function () {
   'use strict';
 
-  var modPost = angular.module('postModule', ['ngRoute']);
-        modPost.controller('PostController', ['$scope', '$routeParams', '$location',
+  var modSlide = angular.module('sliderModule', ['ngRoute']);
+        modSlide.controller('SliderController', ['$scope', '$routeParams', '$location',
         function($scope,$routeParams,$location) {
       
       //Change page url, adding a given parameter. 
@@ -48,6 +48,7 @@
           from: "Torino" ,
           to: "Palermo"          
       }  ];
-}]);
+     
+        }]);
 
 })();
