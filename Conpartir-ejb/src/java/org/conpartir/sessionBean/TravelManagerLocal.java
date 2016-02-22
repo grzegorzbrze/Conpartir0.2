@@ -31,9 +31,10 @@ public interface TravelManagerLocal {
             String destination, Date data, Date time);
     
     /**
-     * Restituisce un oggetto di tipo Travel a partire dagli ID del driver e client 
+     * Restituisce un long che rappresenta il campo travel_id del oggetto Travel
      */
-    public Travel getTravel(Long driver_id, Long client_id);
+    public Long getTravel_ID(Long driver_id, Long client_id, Date data, 
+            Date time, String origine, String destination);
     
     
     /**
@@ -58,5 +59,9 @@ public interface TravelManagerLocal {
      * Il metodo decrementa di 1 il numero dei posti disponibili, se possibile, e restituisce true 
      * altrimenti restituisce false
      */
-    public boolean subFreeSeat (Long driver_id, Long client_id);
+    public boolean subFreeSeat (Long travel_id);
+    
+    public Travel getTravel(Long travelID);
+    
+    
 }

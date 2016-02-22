@@ -87,7 +87,7 @@ public class TestServlet extends HttpServlet {
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
             travelManager.createTravel(travel1);
-            travelManager.subFreeSeat(driver1.getDriver_id(), client1.getId());
+            travelManager.subFreeSeat(travel1.getTravel_id());
             Client client2 = new Client();
             client2.setName("Lorenzo");
             client2.setSurname("Verdi");

@@ -16,11 +16,11 @@ import org.conpartir.entity.Travel;
 @Local
 public interface TravelFacadeLocal {
 
-    void create(Travel post);
+    void create(Travel travel);
 
-    void edit(Travel post);
+    void edit(Travel travel);
 
-    void remove(Travel post);
+    void remove(Travel travel);
 
     Travel find(Object id);
 

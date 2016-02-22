@@ -43,17 +43,24 @@ public class TravelManager implements TravelManagerLocal {
     }
 
     @Override
-    public Travel getTravel(Long driver_id, Long client_id) {
-        Travel travel = new Travel();
+    public Long getTravel_ID(Long driver_id, Long client_id, Date data, 
+            Date time, String origine, String destination) {
+        Long id_travel = null;
         List<Travel> list = travelFacade.findAll();
         for (Travel temp : list){
             Long temp_driverID = temp.getDriver().getDriver_id();
             Long temp_clientID = temp.getClient_id();
-            if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id)){
-                travel = temp;
+            Date temp_data = temp.getData();
+            Date temp_time = temp.getTime();
+            String temp_origine = temp.getOrigin();
+            String temp_destination = temp.getDestination();
+            if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id) &&
+                    temp_data.equals(data) && temp_time.equals(time) && 
+                    temp_origine.equals(origine) && temp_destination.equals(destination)){
+                id_travel = temp.getTravel_id();
             }
         }
-        return travel;
+        return id_travel;
     }
 
     @Override
@@ -130,9 +137,9 @@ public class TravelManager implements TravelManagerLocal {
     }
     
      @Override
-    public boolean subFreeSeat(Long driver_id, Long client_id) {
+    public boolean subFreeSeat(Long travel_id) {
         boolean diminuito = false;
-        Travel viaggio = getTravel(driver_id, client_id);
+        Travel viaggio = getTravel(travel_id);
         int viaggiResidui = viaggio.getFreeSeats();
         if (viaggiResidui > 0){
             viaggiResidui = viaggiResidui - 1;
@@ -140,6 +147,16 @@ public class TravelManager implements TravelManagerLocal {
             diminuito = true;
         }
         return diminuito;
+    }
+
+    @Override
+    public Travel getTravel(Long travelID) {
+        Travel viaggio = new Travel();
+        for (Travel temp : travelFacade.findAll()){
+            if (temp.getTravel_id().equals(travelID))
+                viaggio = temp;
+        }
+        return viaggio;
     }
     
 }
