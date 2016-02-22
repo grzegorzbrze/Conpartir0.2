@@ -22,18 +22,18 @@ public interface TravelManagerLocal {
      * Permette di creare una tupla nel database tramite un oggetto di tipo post
      * @param post
      */
-    public void createPost(Travel post);
+    public void createTravel(Travel post);
     
     /**
      * Permette di creare una tupla nel database tramite i valori esplici
      */
-    public void createPost(Driver driver, Long client_id, String origin, 
+    public void createTravel(Driver driver, Long client_id, String origin, 
             String destination, Date data, Date time);
     
     /**
      * Restituisce un oggetto di tipo Travel a partire dagli ID del driver e client 
      */
-    public Travel getPost(Long driver_id, Long client_id);
+    public Travel getTravel(Long driver_id, Long client_id);
     
     
     /**
@@ -54,4 +54,9 @@ public interface TravelManagerLocal {
      */
     public List<Travel> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination);
     
+    /**
+     * Il metodo decrementa di 1 il numero dei posti disponibili, se possibile, e restituisce true 
+     * altrimenti restituisce false
+     */
+    public boolean subFreeSeat (Long driver_id, Long client_id);
 }

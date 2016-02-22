@@ -56,6 +56,9 @@ public class Travel implements Serializable {
     @Column (name = "DESTINATION")
     private String destination;
 
+    @Column (name = "FREE_SEATS")
+    private int freeSeats;
+    
     public Long getTravel_id() {
         return travel_id;
     }
@@ -106,6 +109,14 @@ public class Travel implements Serializable {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public int getFreeSeats() {
+        return freeSeats;
+    }
+
+    public void setFreeSeats(int freeSeats) {
+        this.freeSeats = freeSeats;
     }
     
     public Calendar getCalendarData(){
@@ -164,7 +175,7 @@ public class Travel implements Serializable {
     public String toString() {
         return "Travel{" + "travel_id=" + travel_id + ", driver=" + driver.toString() + 
                 ", client_id=" + client_id + ", data=" + getDataString() + ", time=" + getTimeString()+
-                ", origin=" + origin + ", destination=" + destination + '}';
+                ", origin=" + origin + ", destination=" + destination + ", freeSeats=" +freeSeats+'}';
     }
         
 }

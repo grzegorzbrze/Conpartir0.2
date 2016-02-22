@@ -23,15 +23,15 @@ import org.conpartir.facade.TravelFacadeLocal;
 @Stateless
 public class TravelManager implements TravelManagerLocal {
     @EJB
-    private TravelFacadeLocal postFacade;
+    private TravelFacadeLocal travelFacade;
 
     @Override
-    public void createPost(Travel travel) {
-        postFacade.create(travel);
+    public void createTravel(Travel travel) {
+        travelFacade.create(travel);
     }
 
     @Override
-    public void createPost(Driver driver, Long client_id, String origin, String destination, Date data, Date time) {
+    public void createTravel(Driver driver, Long client_id, String origin, String destination, Date data, Date time) {
         Travel travel = new Travel();
         travel.setClient_id(client_id);
         travel.setDriver(driver);
@@ -39,13 +39,13 @@ public class TravelManager implements TravelManagerLocal {
         travel.setDestination(destination);
         travel.setOrigin(origin);
         travel.setTime(time);
-        postFacade.create(travel);
+        travelFacade.create(travel);
     }
 
     @Override
-    public Travel getPost(Long driver_id, Long client_id) {
+    public Travel getTravel(Long driver_id, Long client_id) {
         Travel travel = new Travel();
-        List<Travel> list = postFacade.findAll();
+        List<Travel> list = travelFacade.findAll();
         for (Travel temp : list){
             Long temp_driverID = temp.getDriver().getDriver_id();
             Long temp_clientID = temp.getClient_id();
@@ -59,7 +59,7 @@ public class TravelManager implements TravelManagerLocal {
     @Override
     public List<Travel> searchByOriginDestination(String origin, String destination) {
         List <Travel> lista = new ArrayList();
-        List <Travel> viaggi = postFacade.findAll();
+        List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin)){
                 lista.add(temp);
@@ -71,7 +71,7 @@ public class TravelManager implements TravelManagerLocal {
     @Override
     public List<Travel> searchByOriginDestinationDate(Date data, String origin, String destination) {
         List <Travel> lista = new ArrayList();
-        List <Travel> viaggi = postFacade.findAll();
+        List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
             if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
@@ -85,7 +85,7 @@ public class TravelManager implements TravelManagerLocal {
     public List<Travel> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination) {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
         List <Travel> lista = searchByOriginDestinationDate(data, origin, destination);
-        List <Travel> viaggi = postFacade.findAll();
+        List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
             if (temp.getData().equals(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
@@ -128,4 +128,18 @@ public class TravelManager implements TravelManagerLocal {
         }   
         return risultato;
     }
+    
+     @Override
+    public boolean subFreeSeat(Long driver_id, Long client_id) {
+        boolean diminuito = false;
+        Travel viaggio = getTravel(driver_id, client_id);
+        int viaggiResidui = viaggio.getFreeSeats();
+        if (viaggiResidui > 0){
+            viaggiResidui = viaggiResidui - 1;
+            viaggio.setFreeSeats(viaggiResidui);
+            diminuito = true;
+        }
+        return diminuito;
+    }
+    
 }

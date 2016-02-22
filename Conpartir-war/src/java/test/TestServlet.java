@@ -27,7 +27,7 @@ import org.conpartir.sessionBean.TravelManagerLocal;
  */
 public class TestServlet extends HttpServlet {
     @EJB
-    private TravelManagerLocal postManager;
+    private TravelManagerLocal travelManager;
     @EJB
     private DriverManagerLocal driverManager;
     @EJB
@@ -81,12 +81,13 @@ public class TestServlet extends HttpServlet {
             cal.set(2016, 3, 12, 17, 15, 25);
             Date d = cal.getTime();
             travel1.setData(d);
+            travel1.setFreeSeats(4);
             travel1.setTime(d);
             driver1.getTravels().add(travel1);
             travel1.setDriver(driver1);
             //driverManager.cerateDriver(driver1);
-            postManager.createPost(travel1);
-                        
+            travelManager.createTravel(travel1);
+            travelManager.subFreeSeat(driver1.getDriver_id(), client1.getId());
             Client client2 = new Client();
             client2.setName("Lorenzo");
             client2.setSurname("Verdi");
@@ -122,8 +123,8 @@ public class TestServlet extends HttpServlet {
     }
     
     private void testTravel(){
-        int numero1 = postManager.searchByOriginDestination("Milano", "Torino").size();
-        int numero2 = postManager.searchByOriginDestination("Torino", "Milano").size();
+        int numero1 = travelManager.searchByOriginDestination("Milano", "Torino").size();
+        int numero2 = travelManager.searchByOriginDestination("Torino", "Milano").size();
         System.out.println("Test classe Travel");
         System.out.println("Il numero di viaggi da Milano a Torino: "+numero1);
         System.out.println("Il numero di viaggi da Torino a Milano: "+numero2);
@@ -131,11 +132,12 @@ public class TestServlet extends HttpServlet {
         Date data = new Date();
         Date time = new Date();
         System.out.println("Lista di viaggi da Torino per Milano a partire da oggi: ");
-        for (Travel temp : postManager.searchByOriginDestinationDate(data, "Torino", "Milano")){
+        for (Travel temp : travelManager.searchByOriginDestinationDate(data, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
+        
         System.out.println("Lista di viaggi da Torino per Milano a partire da oggi a quest'ora");
-        for (Travel temp : postManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
+        for (Travel temp : travelManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
     }
