@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'postModule']);
+var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule', 'angularSoap']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -23,7 +23,7 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
           .when("/login",
   {   templateUrl: "pages/login.html", controller: "LoginController" })
           .when("/list",
-  {   templateUrl: "pages/list.html",  controller: "PostController"  })
+  {   templateUrl: "pages/list.html",  controller: "TravelController"  })
           .when("/post",
   {   templateUrl: "pages/post.html",  controller: "MainController"  });  
   

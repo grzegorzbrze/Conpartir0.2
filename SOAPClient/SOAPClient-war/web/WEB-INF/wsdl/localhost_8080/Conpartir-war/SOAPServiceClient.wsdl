@@ -8,31 +8,29 @@
 <message name="createClient_1">
 <part name="parameters" element="tns:createClient_1"/>
 </message>
-<message name="getDriver">
-<part name="parameters" element="tns:getDriver"/>
+<message name="getTravels">
+<part name="parameters" element="tns:getTravels"/>
 </message>
-<message name="getDriverResponse">
-<part name="parameters" element="tns:getDriverResponse"/>
+<message name="getTravelsResponse">
+<part name="parameters" element="tns:getTravelsResponse"/>
 </message>
-<message name="createPost">
-<part name="parameters" element="tns:createPost"/>
+<message name="getTravelsFrom">
+<part name="parameters" element="tns:getTravelsFrom"/>
 </message>
-<message name="createDriver">
-<part name="parameters" element="tns:createDriver"/>
+<message name="getTravelsFromResponse">
+<part name="parameters" element="tns:getTravelsFromResponse"/>
 </message>
 <portType name="SOAPServiceClient">
 <operation name="createClient_1">
 <input wsam:Action="http://SOAPServer/SOAPServiceClient/createClient_1" message="tns:createClient_1"/>
 </operation>
-<operation name="getDriver">
-<input wsam:Action="http://SOAPServer/SOAPServiceClient/getDriverRequest" message="tns:getDriver"/>
-<output wsam:Action="http://SOAPServer/SOAPServiceClient/getDriverResponse" message="tns:getDriverResponse"/>
+<operation name="getTravels">
+<input wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsRequest" message="tns:getTravels"/>
+<output wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsResponse" message="tns:getTravelsResponse"/>
 </operation>
-<operation name="createPost">
-<input wsam:Action="http://SOAPServer/SOAPServiceClient/createPost" message="tns:createPost"/>
-</operation>
-<operation name="createDriver">
-<input wsam:Action="http://SOAPServer/SOAPServiceClient/createDriver" message="tns:createDriver"/>
+<operation name="getTravelsFrom">
+<input wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsFromRequest" message="tns:getTravelsFrom"/>
+<output wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsFromResponse" message="tns:getTravelsFromResponse"/>
 </operation>
 </portType>
 <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
@@ -44,7 +42,7 @@
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="getDriver">
+<operation name="getTravels">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -53,17 +51,14 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="createPost">
+<operation name="getTravelsFrom">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
-</operation>
-<operation name="createDriver">
-<soap:operation soapAction=""/>
-<input>
+<output>
 <soap:body use="literal"/>
-</input>
+</output>
 </operation>
 </binding>
 <service name="SOAPServiceClient">
