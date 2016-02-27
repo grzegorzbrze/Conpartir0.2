@@ -85,9 +85,9 @@ public class TestServlet extends HttpServlet {
             travel1.setTime(d);
             driver1.getTravels().add(travel1);
             travel1.setDriver(driver1);
-            //driverManager.cerateDriver(driver1);
             travelManager.createTravel(travel1);
             travelManager.subFreeSeat(travel1.getTravel_id());
+            
             Client client2 = new Client();
             client2.setName("Lorenzo");
             client2.setSurname("Verdi");
@@ -96,6 +96,34 @@ public class TestServlet extends HttpServlet {
             client2.setEmail("lorenzo.verdi@gmail.com");
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
+            
+            Driver driver3 = new Driver();
+            
+            driver3.setCarModel("Renault Kangoo");
+            driver3.setCarYear(2004);
+            
+            client2.getDrivers().add(driver3);
+            driver3.setClient(client2);
+            
+            clientManager.createClient(client2);
+            driverManager.createDriver(driver3);
+            
+            Travel travel2 = new Travel();
+            travel2.setClient_id(client2.getId());
+            travel2.setClient_id(client1.getId());
+            
+            travel2.setDestination("Milano");
+            travel2.setOrigin("Torino");
+            cal = Calendar.getInstance();            
+            cal.set(2016, 3, 29, 14, 19, 35);
+            d = cal.getTime();
+            travel2.setData(d);
+            travel2.setFreeSeats(4);
+            travel2.setTime(d);
+            driver2.getTravels().add(travel2);
+            travel2.setDriver(driver3);
+            travelManager.createTravel(travel2);
+            travelManager.subFreeSeat(travel2.getTravel_id());
             
             clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
             

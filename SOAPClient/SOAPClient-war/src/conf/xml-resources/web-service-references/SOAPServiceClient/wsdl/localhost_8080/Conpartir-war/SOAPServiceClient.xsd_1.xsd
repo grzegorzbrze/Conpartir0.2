@@ -6,6 +6,10 @@
 
 <xs:element name="driver" type="tns:driver"/>
 
+<xs:element name="getClient" type="tns:getClient"/>
+
+<xs:element name="getClientResponse" type="tns:getClientResponse"/>
+
 <xs:element name="getTravels" type="tns:getTravels"/>
 
 <xs:element name="getTravelsFrom" type="tns:getTravelsFrom"/>
@@ -84,6 +88,18 @@
 <xs:element name="email" type="xs:string" minOccurs="0"/>
 <xs:element name="pass" type="xs:string" minOccurs="0"/>
 <xs:element name="urlPhoto" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClient">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getClientResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:client" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

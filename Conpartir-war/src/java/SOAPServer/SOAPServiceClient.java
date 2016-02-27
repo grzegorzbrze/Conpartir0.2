@@ -5,6 +5,7 @@
  */
 package SOAPServer;
 
+import static java.lang.System.out;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -53,21 +54,22 @@ public class SOAPServiceClient {
     
         /**
      * Web service operation
+     * @return 
      */
     @WebMethod(operationName = "getClient")
     public Client getClient(@WebParam(name = "email") String email) {
         //TODO write your implementation code here:
-        return null;
+        Client requested = clientRef.getClient(email);
+        out.println(""+requested);
+        return requested;
     }
     
 
 
     /**
-     * Web service operation
-     * @param start
-     * @param end
-     * @return 
+     * Web service operation  
      */
+    
     @WebMethod(operationName = "getTravels")
     public List<Travel> getTravels(@WebParam(name = "start") String start, @WebParam(name = "end") String end) {
         List<Travel> result = null;        
@@ -79,10 +81,6 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
-     * @param start
-     * @param end
-     * @param date
-     * @return 
      */
     @WebMethod(operationName = "getTravelsFrom")
     public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, @WebParam(name = "end") String end, @WebParam(name = "date") Date date) {

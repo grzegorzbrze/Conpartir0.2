@@ -8,8 +8,8 @@
   'use strict';
 
   var modLogin = angular.module('loginModule', ['ngRoute']);
-        modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location',
-        function($scope,$http,$routeParams,$location) {
+        modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location', '$window',
+        function($scope,$http,$routeParams,$location,$window) {
             
             $scope.home = function () {
                 
@@ -64,7 +64,9 @@
                     alert($scope.status);
                 });         
             };
-        
+            
+            $window.sessionStorage.token = data.token;
+          
      
         }]);
 

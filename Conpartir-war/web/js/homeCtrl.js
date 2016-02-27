@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule', 'angularSoap']);
+var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider

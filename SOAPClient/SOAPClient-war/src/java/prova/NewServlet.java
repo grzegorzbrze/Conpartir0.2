@@ -40,6 +40,8 @@ public class NewServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            this.createClient1("gianno", "canio", 'm', 65, "fff", "Denjer", "wdjsenf");
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -47,11 +49,14 @@ public class NewServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h3>" + this.getTravels("Roma","Lizzano") + "</h3>");
-            out.println("<h3>" + this.getTravels("Lizzano","Roma") + "</h3>");
+            out.println("<h3>" + this.getTravels("Milano","Torino") + "</h3>");
+            out.println("<h3>" + this.getTravels("Torino","Milano") + "</h3>");
+            out.println("<h3>" + this.getClient("mario.rossi@gmail.com").name + "</h3>");            
+            out.println("<h3>" + this.getClient("lorenzo@gggg.it").name + "</h3>");
             out.println("</body>");
             out.println("</html>");
-            this.createClient1("gianno", "canio", 'm', 65, "fff", "Denjer", "wdjsenf");
+           
+            
             
             
             
@@ -104,6 +109,7 @@ public class NewServlet extends HttpServlet {
         prova.SOAPServiceClient port = service.getSOAPServiceClientPort();
         
         port.createClient1(name, surname, gender, age, email, pass, urlPhoto);
+        
     }
     /*
     private String getDriver(java.lang.Long id) {
@@ -118,6 +124,11 @@ public class NewServlet extends HttpServlet {
         return port.getTravels(start, end);
         
     };
+    
+    private Client getClient (String email) {
+        prova.SOAPServiceClient port = service.getSOAPServiceClientPort();
+        return port.getClient(email);
+    }
 
  
     

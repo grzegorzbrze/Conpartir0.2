@@ -5,9 +5,6 @@
 <xsd:import namespace="http://SOAPServer/" schemaLocation="http://localhost:8080/Conpartir-war/SOAPServiceClient?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="createClient_1">
-<part name="parameters" element="tns:createClient_1"/>
-</message>
 <message name="getTravels">
 <part name="parameters" element="tns:getTravels"/>
 </message>
@@ -20,10 +17,16 @@
 <message name="getTravelsFromResponse">
 <part name="parameters" element="tns:getTravelsFromResponse"/>
 </message>
+<message name="createClient_1">
+<part name="parameters" element="tns:createClient_1"/>
+</message>
+<message name="getClient">
+<part name="parameters" element="tns:getClient"/>
+</message>
+<message name="getClientResponse">
+<part name="parameters" element="tns:getClientResponse"/>
+</message>
 <portType name="SOAPServiceClient">
-<operation name="createClient_1">
-<input wsam:Action="http://SOAPServer/SOAPServiceClient/createClient_1" message="tns:createClient_1"/>
-</operation>
 <operation name="getTravels">
 <input wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsRequest" message="tns:getTravels"/>
 <output wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsResponse" message="tns:getTravelsResponse"/>
@@ -32,16 +35,17 @@
 <input wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsFromRequest" message="tns:getTravelsFrom"/>
 <output wsam:Action="http://SOAPServer/SOAPServiceClient/getTravelsFromResponse" message="tns:getTravelsFromResponse"/>
 </operation>
+<operation name="createClient_1">
+<input wsam:Action="http://SOAPServer/SOAPServiceClient/createClient_1" message="tns:createClient_1"/>
+</operation>
+<operation name="getClient">
+<input wsam:Action="http://SOAPServer/SOAPServiceClient/getClientRequest" message="tns:getClient"/>
+<output wsam:Action="http://SOAPServer/SOAPServiceClient/getClientResponse" message="tns:getClientResponse"/>
+</operation>
 </portType>
 <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
 <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="createClient_1">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
 <operation name="getTravels">
 <soap:operation soapAction=""/>
 <input>
@@ -52,6 +56,21 @@
 </output>
 </operation>
 <operation name="getTravelsFrom">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="createClient_1">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="getClient">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

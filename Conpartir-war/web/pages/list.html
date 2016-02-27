@@ -7,11 +7,20 @@
              <input name="destinazione" class="inline col-md-3" type="text" placeholder="Destinazione" ng-model="data.to"/> 
          
         <!--  <label class="sr-only">Date</label> -->
-          <input name="giorno" class="col-md-3" type="" ng-model="data.when"/>
+          <input name="giorno" class="col-md-3" type="" ng-model="data.when"/>      
       
-      
-      <a class="btn btn-primary btn-lg col-md-2" ng-click="search(data)" role="button">Cerca</a></p>
+      <a class="btn btn-primary btn-lg col-md-2" ng-click="search(data)" role="button">Cerca</a>
+      <br>
   
-  <a class="btn btn-primary btn-lg col-md-2" ng-click="SOAPreq2()" role="button">TEST SOAP</a>
-  <br>
+  </p>
+  
+   <div class="scrollable-content" ui-scroll-bottom=''>
+    <div class="list-group">
+      <a ng-repeat=" item in travelsList" class=" list-group-item">
+        {{ item }} 
+      </a>
+
+    </div>
+  </div>
+  
 </div>
