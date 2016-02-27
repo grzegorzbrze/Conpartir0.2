@@ -11,58 +11,12 @@
         modTravel.controller('TravelController', ['$scope', '$http', '$soap',
         function($scope,$http,$soap) {
             
-            $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";           
-            $scope.query =  {};
+            $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             
-            $scope.search = function(data) {
-                $scope.query = data;
-                //alert($scope.query.from + $scope.query.to);
-                
-                $scope.SOAPreq3();
-            };
-            
-        /*    $scope.SOAPreq = function(data) {
-               
-                $http({
-                    method: 'POST',
-                    url: $scope.SOAPbase ,
-                    headers: {'Content-Type': 'text/xml'},
-                    data:  data
-                }).success(function (data)
-                {
-                    $scope.status=data;
-                    alert($scope.status);
-                });           
-                
-            }; */
-            
-            $scope.response = {};
-            
-          /*  $scope.SOAPreq2 = function () {
-                var result;
-                 var base = "http://SOAPServer" ;
-                 var action = '"' +"getClient" + '"';
-                //$soap.post($scope.SOAPbase,"getTravels", {from: "Torino", to: "Milano"});
-                
-               
-                
-                 $soap.post($scope.SOAPbase,action, {email: "mario.rossi@gmail.com"}).then(
-                        function(response){
-                            $scope.response = response;
-                            console.log("ALERT HERE" + response);                           
-                        });
-                    
-                
-               // alert(result);
-                return result;
-            }; */
-            
-            
-     
-
-            // build SOAP request
-            $scope.SOAPreq3 = function () { 
-                
+            //Metodo che prende il WSDL (descrittore di servizio) del SOAPService. 
+            //Da invocare ogni volta che viene fatta una richiesta SOAP
+            //TODO: Mettere il metodo in un service a parte
+            var getWSDL = function () {  
                 var xml = new XMLHttpRequest();
                 xml.open('GET', "http://localhost:8080/Conpartir-war/SOAPServiceClient?wsdl", true); 
                  var s =
@@ -80,20 +34,45 @@
                         '</soap:Body>' +
                         '</soap:Envelope>';
                 xml.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
+                   /* if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200) {
                             alert('done. use firebug/console to see network response');
                         }
-                    }
+                    }*/
                 }; 
                 xml.setRequestHeader('Content-Type', 'text/xml');
-                xml.send(s);
+                xml.send(s);                
+            };
+            
+            $scope.search = function(data) {
+                $scope.query = data;
+                //alert($scope.query.from + $scope.query.to);
                 
+                $scope.SOAPreq3(data);
+            };
+                     
+          
+            
+            
+     
+
+            // build SOAP request
+            $scope.SOAPreq3 = function (data) { 
+                
+               getWSDL();                
                 
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.open('POST', $scope.SOAPbase, true);     
-                var sr =
-                        '<?xml version="1.0" encoding="utf-8"?>' +
+                var sr = '<?xml version="1.0" encoding="utf-8"?>' +
+                        '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+
+                        '<soap:Body>' +
+                        '<ns0:getClient xmlns:ns0="http://SOAPServer/">' +
+                        '<email>'+ data +'</email>' +
+                        '</ns0:getClient>'+
+                        '</soap:Body>' +
+                        '</soap:Envelope>';
+                        
+                       /* '<?xml version="1.0" encoding="utf-8"?>' +
                         
                         '<soap:Envelope ' + 
                         
@@ -102,16 +81,17 @@
                         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" '+
                         '>' +
                         
-                        '<soap:Body>' +
-                            '<getClient  xmlns="http://SOAPServer/">' +
-                                '<email xsi:type="xsd:string">mario.rossi@gmail.com</email>' +                    
-                            '</getClient>' +
+                        '<soap:Body xmlns:m="http://SOAPServer/">' +
+                            '<m:getClient>' +
+                                '<m:email xsi:type="xsd:string">mario.rossi@gmail.com</m:email>' +                    
+                            '</m:getClient>' +
                         '</soap:Body>' +
-                        '</soap:Envelope>';
+                        '</soap:Envelope>'; */
+                
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200) {
-                            alert('done. use firebug/console to see network response');
+                           // alert('done. use firebug/console to see network response');
                         }
                     }
                 };
