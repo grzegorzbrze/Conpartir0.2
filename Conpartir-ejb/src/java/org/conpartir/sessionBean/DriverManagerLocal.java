@@ -51,4 +51,6 @@ public interface DriverManagerLocal {
      */
     public boolean isDriver(Long ID);
  
+    public List<Driver> getDrivers(Long client_id);
+    
 }

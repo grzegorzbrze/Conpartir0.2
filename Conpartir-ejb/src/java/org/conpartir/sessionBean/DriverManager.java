@@ -5,6 +5,7 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -52,6 +53,7 @@ public class DriverManager implements DriverManagerLocal {
         return driver;
     }
 
+    
     @Override
     public Driver getDriver(String carModel, int carYear, Long client_id) {
         Driver driver = new Driver();
@@ -87,6 +89,18 @@ public class DriverManager implements DriverManagerLocal {
             risultato = false;
         }
         return risultato;
+    }
+
+    @Override
+    public List<Driver> getDrivers(Long client_id) {
+        List<Driver> drivers = new ArrayList();
+        List<Driver> lista = driverFacade.findAll();
+        for (Driver driver : lista){
+            if (driver.getClient_id().equals(client_id)){
+                drivers.add(driver);
+            }
+        }
+        return drivers;
     }
 
     
