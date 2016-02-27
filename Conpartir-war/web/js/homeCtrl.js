@@ -24,6 +24,8 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
   {   templateUrl: "pages/login.html", controller: "LoginController" })
           .when("/list",
   {   templateUrl: "pages/list.html",  controller: "TravelController"  })
+          .when("/detail",
+  {   templateUrl: "pages/travelDetail.html",  controller: "TravelController"  })
           .when("/post",
   {   templateUrl: "pages/post.html",  controller: "MainController"  });  
   

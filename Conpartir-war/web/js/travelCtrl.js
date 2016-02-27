@@ -8,13 +8,31 @@
   'use strict';
 
   var modTravel = angular.module('travelModule', ['ngRoute']);
-        modTravel.controller('TravelController', ['$scope', '$http',
-        function($scope,$http) {
+        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location',
+        function($scope,$http, $route, $routeParams, $location) {
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
             $scope.answer;
+            $scope.showHead = false;
             var x2js = new X2JS();
+            
+            $scope.go = function (data) {
+                $location.path("/detail");
+                $location.search(data);
+                $route.reload();
+            };
+            
+            $scope.getDay = function (date) {
+                var splitter = date.indexOf('T');
+                return date.slice(0,splitter);                
+            };
+            
+             $scope.getTime = function (date) {
+                var splitter = date.indexOf('T');
+                return date.slice(splitter+1,splitter+6);
+                
+            }; 
             
             var SOAPhead = '<?xml version="1.0" encoding="utf-8"?>' +                        
                            '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+                        
@@ -42,6 +60,10 @@
                 xml.send(s);                
             };
             
+             $scope.reload = function () {
+                  $route.reload();
+              };
+            
             $scope.search = function(data) {
                               
                 $scope.SOAPtravels(data);
@@ -63,42 +85,49 @@
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200) {                     
-                           alert( xmlhttp.responseText);
+                           
                            $scope.answer= xmlhttp.responseText;
                            
                            var jsonObj = x2js.xml_str2json( $scope.answer );
-                           alert(jsonObj.return);
-                           // alert('done. use firebug/console to see network response');
+                            //console.log(jsonObj);
+                            $scope.$apply(function () {
+                                $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse;
+                                console.log($scope.travelList);  
+                                $scope.getDrivers();
+                                $scope.showHead = true;
+                            });
                         }
                     }
                 };
                 
                 var sr;
                 var action;
+                var opName;
                 if (data.when != null) {
+                    opName = "getTravelsFrom";
                     sr = SOAPhead +
-                            '<ns0:getTravelsFrom xmlns:ns0="http://SOAPServer/">' +
+                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
                             '<start>'+ data.from +'</start>' +
                             '<end>'+ data.to +'</end>' +
                             '<date>'+ data.when +'</date>' +
-                            '</ns0:getTravelsFrom>'+
+                            '</ns0:' + opName + '>'+
                             SOAPtail; 
-                    action = '"' + "http://SOAPServer" + "/getTravelsFrom" + '"' ;
+                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
                     
                 }
                 else {
+                    opName = "getTravels";
                     sr = SOAPhead +
-                            '<ns0:getTravels xmlns:ns0="http://SOAPServer/">' +
+                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
                             '<start>'+ data.from +'</start>' +
                             '<end>'+ data.to +'</end>' +
-                            '</ns0:getTravels>'+
+                            '</ns0:' + opName + '>'+
                             SOAPtail;
-                    action = '"' + "http://SOAPServer" + "/getTravels" + '"' ;
+                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
                     
                 }
                  
-            // Send the POST request      
-            
+            // Send the POST request                 
             
             xmlhttp.setRequestHeader('Content-Type', 'text/xml');
             xmlhttp.setRequestHeader('SOAPAction',action);           
@@ -108,6 +137,42 @@
         
             };
             
+            $scope.getDrivers = function () {
+                
+                for (item in $scope.travelList.return) {
+                    console.log(item);
+                    console.log(item.driver_id);
+                    var xmlhttp = new XMLHttpRequest();              
+                    xmlhttp.open('POST', $scope.SOAPbase, true);  
+                                
+                                      
+                    xmlhttp.onreadystatechange = function () {
+                     if (xmlhttp.readyState == 4) {
+                            if (xmlhttp.status == 200){                                
+                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);                               
+                                    item.driver = jsonObj.Envelope.Body.getDriverResponse; 
+                                
+                            }
+                        }
+                    }; 
+                    var sr;
+                    var action;
+                    var opName;
+                    opName = "getDriver";
+                    sr = SOAPhead +
+                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                            '<ID>'+ item.driver_id +'</ID>' +
+                            '</ns0:' + opName + '>'+
+                            SOAPtail; 
+                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
+                    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+                    xmlhttp.setRequestHeader('SOAPAction',action);
+                    xmlhttp.send(sr);
+                    // send request
+                    
+                    
+                };             
+            };
           
      
         }]);

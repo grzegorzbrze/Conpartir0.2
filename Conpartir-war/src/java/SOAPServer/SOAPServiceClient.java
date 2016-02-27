@@ -16,6 +16,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.RequestWrapper;
 import org.conpartir.entity.Client;
+import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
@@ -88,6 +89,27 @@ public class SOAPServiceClient {
         result = travelRef.searchByOriginDestinationDate(date, start, end);   
         
         return result;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getDriver")
+    public Driver getDriver(@WebParam(name = "ID") long id) {
+        Driver result = new Driver();
+        result = driverRef.getDriver(id);
+        
+        return result;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getDriverIf")
+    public List<Driver> getDriverIf(@WebParam(name = "clientID") long clientID) {
+        List<Driver> result = null;
+        //TODO write your implementation code here:
+        return null;
     }
 
 

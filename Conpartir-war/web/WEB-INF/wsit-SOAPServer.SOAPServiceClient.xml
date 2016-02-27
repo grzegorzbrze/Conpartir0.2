@@ -13,6 +13,10 @@
     <message name="getTravelsFromResponse"/>
     <message name="getClient"/>
     <message name="getClientResponse"/>
+    <message name="getDriver"/>
+    <message name="getDriverResponse"/>
+    <message name="getDriverIf"/>
+    <message name="getDriverIfResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -30,6 +34,14 @@
             <input message="tns:getClient"/>
             <output message="tns:getClientResponse"/>
         </operation>
+        <operation name="getDriver">
+            <input message="tns:getDriver"/>
+            <output message="tns:getDriverResponse"/>
+        </operation>
+        <operation name="getDriverIf">
+            <input message="tns:getDriverIf"/>
+            <output message="tns:getDriverIfResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -46,6 +58,14 @@
             <output/>
         </operation>
         <operation name="getClient">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getDriver">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getDriverIf">
             <input/>
             <output/>
         </operation>
