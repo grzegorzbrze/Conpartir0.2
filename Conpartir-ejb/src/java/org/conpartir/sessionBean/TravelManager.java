@@ -31,7 +31,8 @@ public class TravelManager implements TravelManagerLocal {
     }
 
     @Override
-    public void createTravel(Driver driver, Long client_id, String origin, String destination, Date data, Date time) {
+    public void createTravel(Driver driver, Long client_id, String origin, 
+            String destination, Date data, Date time) {
         Travel travel = new Travel();
         travel.setClient_id(client_id);
         travel.setDriver(driver);
@@ -131,6 +132,8 @@ public class TravelManager implements TravelManagerLocal {
                 if (sec2>sec1){
                     risultato = true;
                 }
+                if (sec2 == sec1)
+                    risultato = true;
             }
         }   
         return risultato;

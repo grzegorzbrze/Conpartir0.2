@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Taxi;
 import org.conpartir.entity.Travel;
 
 /**
@@ -42,5 +43,5 @@ public interface DriverManagerLocal {
      * @return 
      */
     public boolean isDriver(Long ID);
-    
+ 
 }

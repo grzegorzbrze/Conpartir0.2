@@ -5,11 +5,13 @@
  */
 package org.conpartir.sessionBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Taxi;
 import org.conpartir.facade.ClientFacadeLocal;
 
 /**

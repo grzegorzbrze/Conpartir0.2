@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Taxi;
 import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.DriverManagerLocal;
+import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
 
 /**
@@ -26,6 +28,8 @@ import org.conpartir.sessionBean.TravelManagerLocal;
  * @author Blu Light
  */
 public class TestServlet extends HttpServlet {
+    @EJB
+    private TaxiManagerLocal taxiManager;
     @EJB
     private TravelManagerLocal travelManager;
     @EJB
@@ -85,6 +89,7 @@ public class TestServlet extends HttpServlet {
             travel1.setTime(d);
             driver1.getTravels().add(travel1);
             travel1.setDriver(driver1);
+            //driverManager.cerateDriver(driver1);
             travelManager.createTravel(travel1);
             travelManager.subFreeSeat(travel1.getTravel_id());
             
@@ -97,40 +102,47 @@ public class TestServlet extends HttpServlet {
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
             
-            Driver driver3 = new Driver();
-            
-            driver3.setCarModel("Renault Kangoo");
-            driver3.setCarYear(2004);
-            
-            client2.getDrivers().add(driver3);
-            driver3.setClient(client2);
-            
-            clientManager.createClient(client2);
-            driverManager.createDriver(driver3);
-            
-            Travel travel2 = new Travel();
-            travel2.setClient_id(client2.getId());
-            travel2.setClient_id(client1.getId());
-            
-            travel2.setDestination("Milano");
-            travel2.setOrigin("Torino");
-            cal = Calendar.getInstance();            
-            cal.set(2016, 3, 29, 14, 19, 35);
-            d = cal.getTime();
-            travel2.setData(d);
-            travel2.setFreeSeats(4);
-            travel2.setTime(d);
-            driver2.getTravels().add(travel2);
-            travel2.setDriver(driver3);
-            travelManager.createTravel(travel2);
-            travelManager.subFreeSeat(travel2.getTravel_id());
-            
             clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
             
-            /*  clientManager.createClient(client2);*/
+            Client client3 = new Client();
+            client3.setName("Maria");
+            client3.setSurname("Neri");
+            client3.setGender('F');
+            client3.setAge(20);
+            client3.setEmail("maria.neri@gmail.com");
+            client3.setPass("neri");
+            client3.setUrlPhoto("root/neri");
+                        
+            Calendar cal2 = Calendar.getInstance();
+            cal2.set(2016, 4, 4, 23, 15, 25);
+            Date d2 = cal2.getTime();
+            
+            Taxi taxi1 = new Taxi();
+            
+            
+            
+            taxi1.setData(d2);
+            taxi1.setTime(d2);
+            taxi1.setOrigin("Piazzale Caio Mario");
+            taxi1.setDestination("Corso Giulio Cesare");
+            taxi1.setFreeSeats(3);
+            
+            clientManager.createClient(client3);
+            //client3.getTaxiCreated().add(taxi1);
+            taxi1.setCreator_id(client3.getId());
+            taxi1.setClient_id(client3.getId());
+            taxiManager.createTaxi(taxi1);
+            
+            //taxiManager.createTaxi(taxi1);
+            System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
+            System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
+            System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
+            System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
+            
             testClient();
             testDriver();
             testTravel();
+            testTaxi();
     }
     
     private void testClient(){
@@ -141,6 +153,7 @@ public class TestServlet extends HttpServlet {
         System.out.println("Info sul client che ha email lorenzo@gmail.com: "+clientManager.getClient("lorenzo@gmail.com").toString());
         System.out.println("Restituisci l'email del client con ID 1 : "+clientManager.getEmail((long)1));
         System.out.println("Restituisci l'email del client con ID 5: "+clientManager.getEmail((long)5));
+        System.out.println("Info sul client che ha email maria.neri@gmail.com: "+clientManager.getClient("maria.neri@gmail.com").toString());
     }
     
     private void testDriver(){
@@ -168,6 +181,17 @@ public class TestServlet extends HttpServlet {
         for (Travel temp : travelManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
+    }
+    
+    private void testTaxi(){
+        Client maria = clientManager.getClient("maria.neri@gmail.com");
+        Client mario = clientManager.getClient("mario.rossi@gmail.com");
+        System.out.println("Test classe Taxi ");
+        System.out.println("Il numero dei taxi creati da Maria Neri "+ taxiManager.getTaxiCreated(maria.getId()).size());
+        System.out.println("Il numero di taxi creati da mario.rossi@gmail.com "
+                +taxiManager.getTaxiCreated(mario.getId()).size());
+        System.out.println("Il numero di viaggi penotari da mario.rossi@gmail.com "+
+                taxiManager.getTaxisReserved(mario.getId()).size());
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
