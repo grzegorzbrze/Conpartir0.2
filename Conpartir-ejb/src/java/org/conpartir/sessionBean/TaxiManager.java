@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.conpartir.entity.Client;
 import org.conpartir.entity.Taxi;
 import org.conpartir.facade.TaxiFacadeLocal;
 

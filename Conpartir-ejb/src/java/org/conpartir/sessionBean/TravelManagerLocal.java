@@ -27,7 +27,7 @@ public interface TravelManagerLocal {
     /**
      * Permette di creare una tupla nel database tramite i valori esplici
      */
-    public void createTravel(Driver driver, Long client_id, String origin, 
+    public void createTravel(Long driver_id, Long client_id, String origin, 
             String destination, Date data, Date time);
     
     /**

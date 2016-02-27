@@ -29,7 +29,8 @@ public class ClientManager implements ClientManagerLocal {
     }
 
     @Override
-    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto) {
+    public void createClient(String name, String surname, char gender, int age,
+            String email, String pass, String urlPhoto) {
         Client nuovo  = new Client();
         nuovo.setAge(age);
         nuovo.setEmail(email);
@@ -51,7 +52,6 @@ public class ClientManager implements ClientManagerLocal {
         nuovo.setSurname(surname);
         nuovo.setPass(pass);
         nuovo.setUrlPhoto(urlPhoto);
-        nuovo.setDrivers(drivers);
         clientFacade.create(nuovo);  
     }
     

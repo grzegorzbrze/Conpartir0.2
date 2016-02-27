@@ -16,10 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,9 +32,8 @@ public class Travel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long travel_id;
     
-    @ManyToOne
-    @JoinColumn (name = "DRIVER_ID")
-    private Driver driver;
+    @Column (name = "DRIVER_ID")
+    private Long driver_id;
     
     @Column (name = "CLIENT_ID")
     private Long client_id;
@@ -63,14 +59,14 @@ public class Travel implements Serializable {
         return travel_id;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public Long getDriver_id() {
+        return driver_id;
     }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    public void setDriver_id(Long driver_id) {
+        this.driver_id = driver_id;
     }
-
+    
     public Long getClient_id() {
         return client_id;
     }
@@ -133,13 +129,15 @@ public class Travel implements Serializable {
     
     public String getTimeString(){
         Calendar cal = getCalendarTime();
-        String hour = cal.get(Calendar.HOUR) +":"+cal.get(Calendar.MINUTE)+":" + cal.get(Calendar.SECOND);
+        String hour = cal.get(Calendar.HOUR) +":"+cal.get(Calendar.MINUTE)+":" 
+                + cal.get(Calendar.SECOND);
         return hour;
     }
     
     public String getDataString(){
         Calendar cal = getCalendarData();
-        String laData = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"+cal.get(Calendar.DAY_OF_MONTH);
+        String laData = cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+"/"
+                +cal.get(Calendar.DAY_OF_MONTH);
         return laData;
     }
     
@@ -173,7 +171,7 @@ public class Travel implements Serializable {
 
     @Override
     public String toString() {
-        return "Travel{" + "travel_id=" + travel_id + ", driver=" + driver.toString() + 
+        return "Travel{" + "travel_id=" + travel_id + ", driver=" + driver_id + 
                 ", client_id=" + client_id + ", data=" + getDataString() + ", time=" + getTimeString()+
                 ", origin=" + origin + ", destination=" + destination + ", freeSeats=" +freeSeats+'}';
     }

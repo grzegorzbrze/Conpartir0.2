@@ -8,7 +8,6 @@ package org.conpartir.sessionBean;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
-import org.conpartir.entity.Client;
 import org.conpartir.entity.Taxi;
 
 /**

@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
 import org.conpartir.facade.TravelFacadeLocal;
 
@@ -27,20 +26,25 @@ public class TravelManager implements TravelManagerLocal {
 
     @Override
     public void createTravel(Travel travel) {
-        travelFacade.create(travel);
+        if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
+                travel.getTime(), travel.getOrigin(), travel.getDestination())){
+            travelFacade.create(travel);
+        }
     }
 
     @Override
-    public void createTravel(Driver driver, Long client_id, String origin, 
+    public void createTravel(Long driver_id, Long client_id, String origin, 
             String destination, Date data, Date time) {
-        Travel travel = new Travel();
-        travel.setClient_id(client_id);
-        travel.setDriver(driver);
-        travel.setData(data);
-        travel.setDestination(destination);
-        travel.setOrigin(origin);
-        travel.setTime(time);
-        travelFacade.create(travel);
+        if (!isExist(driver_id, client_id, data, time, origin, destination)){
+            Travel travel = new Travel();
+            travel.setClient_id(client_id);
+            travel.setDriver_id(driver_id);
+            travel.setData(data);
+            travel.setDestination(destination);
+            travel.setOrigin(origin);
+            travel.setTime(time);
+            travelFacade.create(travel);
+        }
     }
 
     @Override
@@ -49,7 +53,7 @@ public class TravelManager implements TravelManagerLocal {
         Long id_travel = null;
         List<Travel> list = travelFacade.findAll();
         for (Travel temp : list){
-            Long temp_driverID = temp.getDriver().getDriver_id();
+            Long temp_driverID = temp.getDriver_id();
             Long temp_clientID = temp.getClient_id();
             Date temp_data = temp.getData();
             Date temp_time = temp.getTime();
@@ -160,6 +164,16 @@ public class TravelManager implements TravelManagerLocal {
                 viaggio = temp;
         }
         return viaggio;
+    }
+    
+    protected boolean isExist(Long driver_id, Long client_id, Date data, 
+            Date time, String origine, String destination){
+        boolean risultato = true;
+        Long risID = getTravel_ID(driver_id, client_id, data, time, origine, destination);
+        if (risID == null){
+            risultato = false;
+        }
+        return risultato;
     }
     
 }

@@ -52,18 +52,6 @@ public class Client implements Serializable {
     
     @Column (name = "URLPHOTO")
     private String urlPhoto;
-    
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Driver> drivers = new ArrayList<>();
-    
-    @XmlTransient
-    public List<Driver> getDrivers() {
-        return drivers;
-    }
-
-    public void setDrivers(List<Driver> drivers) {
-        this.drivers = drivers;
-    }
         
     public String getName() {
         return name;

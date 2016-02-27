@@ -8,7 +8,6 @@ package org.conpartir.sessionBean;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
 import org.conpartir.facade.DriverFacadeLocal;
@@ -24,18 +23,20 @@ public class DriverManager implements DriverManagerLocal {
 
     @Override
     public void createDriver(Driver driver) {
-        driverFacade.create(driver);
+        if (!isExist(driver.getCarModel(), driver.getCarYear(), driver.getClient_id())){
+            driverFacade.create(driver);
+        }
     }
 
     @Override
-    public void createDriver(String carModel, int carYear, Client client, 
-            List<Travel> travels) {
-        Driver driver = new Driver();
+    public void createDriver(String carModel, int carYear, Long client_id) {
+        if (!isExist(carModel, carYear, client_id)){
+            Driver driver = new Driver();
         driver.setCarModel(carModel);
         driver.setCarYear(carYear);
-        driver.setClient(client);
-        driver.setTravels(travels);
+        driver.setClient_id(client_id);
         driverFacade.create(driver);
+        } 
     }
 
     @Override
@@ -52,6 +53,19 @@ public class DriverManager implements DriverManagerLocal {
     }
 
     @Override
+    public Driver getDriver(String carModel, int carYear, Long client_id) {
+        Driver driver = new Driver();
+        List<Driver> lista = driverFacade.findAll();
+        for (Driver temp : lista){
+            if (temp.getCarModel().equals(carModel) && temp.getCarYear() == carYear 
+                    && temp.getClient_id().equals(client_id)){
+                driver = temp;
+            }
+        }
+        return driver;
+    }
+    
+    @Override
     public boolean isDriver(Long ID) {
         boolean risultato = false;
         List<Driver> list = driverFacade.findAll();
@@ -63,5 +77,17 @@ public class DriverManager implements DriverManagerLocal {
         }
         return risultato;    
     }
-        
+    
+    
+    
+    protected boolean isExist(String carModel, int carYear, Long client_id){
+        boolean risultato = true;
+        Driver driver = getDriver(carModel, carYear, client_id);
+        if (driver.getDriver_id() == null){
+            risultato = false;
+        }
+        return risultato;
+    }
+
+    
 }

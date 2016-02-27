@@ -51,7 +51,7 @@ public class TestServlet extends HttpServlet {
     
     
     private void test(){
-        Driver driver1 = new Driver();
+            Driver driver1 = new Driver();
             driver1.setCarModel("Audi A6");
             driver1.setCarYear(2014);
                         
@@ -68,14 +68,27 @@ public class TestServlet extends HttpServlet {
             client1.setPass("rossi");
             client1.setUrlPhoto("root/rossi");
                   
-            client1.getDrivers().add(driver1);
-            client1.getDrivers().add(driver2);
+            //client1.getDrivers().add(driver1);
+            //client1.getDrivers().add(driver2);
             
-            driver1.setClient(client1);
-            driver2.setClient(client1);     
+            
             
             clientManager.createClient(client1);
-  
+            
+            
+            driver1.setClient_id(client1.getId());
+            driver2.setClient_id(client1.getId());   
+            
+            //Il driver non deve esistere perchè uguale al driver1
+            Driver driver3 = new Driver();
+            driver3.setCarModel("Audi A6");
+            driver3.setCarYear(2014);
+            driver3.setClient_id(client1.getId());
+            
+            driverManager.createDriver(driver2);
+            driverManager.createDriver(driver1);
+            driverManager.createDriver(driver3);
+            
             Travel travel1 = new Travel();
             travel1.setClient_id(client1.getId());
             
@@ -87,8 +100,7 @@ public class TestServlet extends HttpServlet {
             travel1.setData(d);
             travel1.setFreeSeats(4);
             travel1.setTime(d);
-            driver1.getTravels().add(travel1);
-            travel1.setDriver(driver1);
+            travel1.setDriver_id(driver1.getDriver_id());
             //driverManager.cerateDriver(driver1);
             travelManager.createTravel(travel1);
             travelManager.subFreeSeat(travel1.getTravel_id());

@@ -9,17 +9,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,36 +29,23 @@ public class Driver implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long driver_id;
 
-    @ManyToOne
-    @JoinColumn(name="CLIENT_ID")
-    private Client client;
+    @Column(name="CLIENT_ID")
+    private Long client_id;
 
     @Column (name = "CAR_MODEL")
     private String carModel;
     
     @Column (name = "CAR_YEAR")
     private int carYear;
+
+    public Long getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
+    }
     
-    @OneToMany (mappedBy = "driver", cascade = CascadeType.ALL)
-    private List<Travel> travels = new ArrayList();
-
-    @XmlTransient
-    public List<Travel> getTravels() {
-        return travels;
-    }
-
-    public void setTravels(List<Travel> travels) {
-        this.travels = travels;
-    }
-        
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Long getDriver_id() {
         return driver_id;
     }
@@ -88,7 +70,7 @@ public class Driver implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 37 * hash + Objects.hashCode(this.driver_id);
-        hash = 37 * hash + Objects.hashCode(this.client);
+        hash = 37 * hash + Objects.hashCode(this.client_id);
         hash = 37 * hash + Objects.hashCode(this.carModel);
         hash = 37 * hash + this.carYear;
         return hash;
@@ -103,7 +85,7 @@ public class Driver implements Serializable {
             return false;
         }
         final Driver other = (Driver) obj;
-        if (!Objects.equals(this.client, other.client)) {
+        if (!Objects.equals(this.client_id, other.client_id)) {
             return false;
         }
         return true;
@@ -111,7 +93,7 @@ public class Driver implements Serializable {
     
     @Override
     public String toString() {
-        return "Driver{" + "driver_id=" + driver_id + ", client=" + client + ", carModel=" + carModel + ", carYear=" + carYear + '}';
+        return "Driver{" + "driver_id=" + driver_id + ", client=" + client_id + ", carModel=" + carModel + ", carYear=" + carYear + '}';
     }
     
 }
