@@ -153,13 +153,13 @@ public class Peopling extends HttpServlet {
     
     public void creaTravels(){
         // parametri: citta; partenza = Torino; numeroPosto; id_client; id_driver; data; ora;
-        String[] citta = {"Roma", "Milano", "Alessandria", "Genova", "Venezia", 
-            "Novara", "Macerata", "Firenze", "Napoli", "Bologna"};
+        String[] citta = {"Roma", "Milano", "Roma", "Milano", "Novara", 
+            "Novara", "Milano", "Roma", "Cuneo", "Cuneo"};
         String partenza = "Torino";
         
         int []posti = new int[10];
         for (int i=0; i<posti.length; i++){
-            int numPosti = 1 +(int)(Math.random() * 3);//il numero max di posti è 4 + 1 autista
+            int numPosti = 2 +(int)(Math.random() * 1);//il numero max di posti è 4 + 1 autista
             posti[i] = numPosti;
         }
         
@@ -199,6 +199,16 @@ public class Peopling extends HttpServlet {
             }                
         }
         
+        System.out.println("Clienti rimasti:");
+        for (Long temp : clientiRimasti){
+            System.out.println(temp);
+        }
+        
+        System.out.println("Clienti associati: ");
+        for (Long clienti1 : clienti) {
+            System.out.println(clienti1);
+        }
+        
         Long[] id_travels = new Long[leDate.length];
        //public Long getTravel_ID(Long driver_id, Long client_id, Date data, Date time,String origine, String destination);
         for (int i=0; i<leDate.length; i++){
@@ -210,10 +220,12 @@ public class Peopling extends HttpServlet {
         int intMax = clientiRimasti.size()-1;
         int travMin = 0;
         int travMax = id_travels.length-1;
-        for (int i=0; i<30; i++){ //qui si creano le prnotazioni
+        for (int i=0; i<15; i++){ //qui si creano le prnotazioni
             int id_rimasti = intMin + (int)(Math.random() * intMax);
             int id_trav = travMin + (int)(Math.random() * travMax);
-            travelManager.addPassenger((long)id_trav, (long)id_rimasti);
+            long client_scelto = clientiRimasti.get(id_rimasti);
+            long trav_scelto = id_travels[id_trav];
+            travelManager.addPassenger(trav_scelto, client_scelto);
         }
         
         /*System.out.println("I dati sui viaggi");
