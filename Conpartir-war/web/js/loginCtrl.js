@@ -18,54 +18,79 @@
             
             $scope.master = {};
             $scope.status = {};
+            $scope.ifAlert = false;
             
             $scope.login = function(user) {
                 $scope.master = user;
                 $scope.master.use = "login";
-                if (user.email == "", user.email == undefined || user.pass == "", user.pass == undefined ) alert("Per favore, completa i campi per effettuare il login!");
-                else $scope.servletCall($scope.master);
+                if (user.email == "", user.email == undefined || user.pass == "", user.pass == undefined ){
+                    $scope.status = "Per favore, completa i campi per effettuare il login!";
+                    //alert();
+                    $scope.ifAlert = true;
+                }
+                else $scope.servletCall();
             };      
               
             $scope.register = function (user) {
                 $scope.master = user;
                 $scope.master.use = "registration";
                 var flag;
-                flag = false;  
-                
-                if (user.pass !== user.passRe) { 
-                    alert("Le password inserite sono diverse");
+                flag = false; 
+                if (user.pass == undefined) { 
+                    $scope.status = "Inserisci una password";                    
+                    $scope.ifAlert = true;
+                    flag = true; 
+                } else {
+                    if (user.pass !== user.passRe) { 
+                        $scope.status = "Le password inserite sono diverse";                    
+                        $scope.ifAlert = true;
+                        flag = true; 
+                } 
+                    
+                }    
+                                
+                          
+                if (user.email == undefined ) { 
+                    $scope.status ="Prego, inserisci un'email valida";                    
+                    $scope.ifAlert = true;
                     flag = true; 
                 }           
-                if (user.email === null) { 
-                    alert("Prego, inserisci un'email valida");
-                    flag = true; 
-                }           
-                if (user.name === null || user.surname === null) { 
-                    alert("Prego, inserisci il tuo nome!");
+                if (user.name === undefined || user.surname === undefined) { 
+                    $scope.status ="Prego, inserisci il tuo nome!";                    
+                    $scope.ifAlert = true;
                     flag = true; 
                 }
-                if (user.age === null || user.gender === null) { 
-                    alert("Per favore, completa tutti i campi.");
+                if (user.age === undefined || user.gender === undefined) { 
+                    $scope.status ="Per favore, completa tutti i campi.";                    
+                    $scope.ifAlert = true;
                     flag = true; 
                 }
                 
-                if (flag === false) $scope.servletCall($scope.master);  
+                if (flag === false) $scope.servletCall();  
             };  
             
-            $scope.servletCall = function (data){ 
+            $scope.servletCall = function (){
+                
+                $scope.ifAlert = false;
                 $http({
                     method: 'POST',
                     url: 'Registration',
                     headers: {'Content-Type': 'application/json'},
                     data:  $scope.master
-                }).success(function (data)
-                {
-                    $scope.status=data;
-                    alert($scope.status);
-                });         
-            };
-            
-            $window.sessionStorage.token = data.token;
+                }).then(function successCallback(response) {  
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    $scope.status=response.data;
+                    console.log(response);
+                    console.log($scope.status);
+                    var flag = $scope.status.charAt(1);
+                    if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
+                }, function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                   // or server returns response with an error status.
+                      });
+                  };
+            //$window.sessionStorage.token = data.token;
           
      
         }]);

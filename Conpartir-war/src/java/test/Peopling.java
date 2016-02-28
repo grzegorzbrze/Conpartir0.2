@@ -55,8 +55,8 @@ public class Peopling extends HttpServlet {
             out.println("<title>Servlet Peopling</title>");            
             out.println("</head>");
             out.println("<body>");
-            //creaClient();
-            creaDriver();
+            creaClient();
+            //creaDriver();
             out.println("<h1>Servlet Peopling è andata a buon fine " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

@@ -7,6 +7,7 @@ package SOAPServer;
 
 import static java.lang.System.out;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -73,11 +74,34 @@ public class SOAPServiceClient {
     
     @WebMethod(operationName = "getTravels")
     public List<Travel> getTravels(@WebParam(name = "start") String start, @WebParam(name = "end") String end) {
-        List<Travel> result = null;        
+        List<Travel> result = new ArrayList();       
+        List<Travel> lista = new ArrayList();
+        
         Date today = Date.from(Instant.now());        
         result = travelRef.searchByOriginDestinationDate(today, start, end);   
         
-        return result;
+       
+        int i;
+        //costruisco un travel temporaneo per mantenere l'info dell travel_id
+        for (i=0;i<result.size();i++) {
+            Travel temp = new Travel();
+            temp.setClient_id(result.get(i).getClient_id());
+            temp.setData(result.get(i).getData());
+            temp.setDestination(result.get(i).getDestination());
+            temp.setDriver_id(result.get(i).getDriver_id());
+            temp.setFreeSeats(result.get(i).getFreeSeats());
+            temp.setOrigin(result.get(i).getOrigin());
+            temp.setTime(result.get(i).getTime());
+            temp.setTravel_id(result.get(i).getTravel_id());
+            
+           // out.print(temp);
+           // out.print(result.get(i));  
+            
+            lista.add(temp);
+        }
+        
+        
+        return lista;
     }
     
      /**
@@ -109,7 +133,28 @@ public class SOAPServiceClient {
     public List<Driver> getDriverIf(@WebParam(name = "clientID") long clientID) {
         List<Driver> result = null;
         //TODO write your implementation code here:
-        return null;
+        return result;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getDriverFromTravel")
+    public List<Object> getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
+        //List<String> values = null;
+        Client clientInfo = new Client();
+        Driver driverInfo = new Driver();
+        
+        
+        clientInfo = travelRef.getInfoClientEqualDriver(travelID);
+        clientInfo.setPass(null);
+        
+        driverInfo = travelRef.getInfoDriverEqualClient(travelID);
+        
+        List<Object> prova = new ArrayList();
+        prova.add(clientInfo);
+        prova.add(driverInfo);
+        return prova;
     }
 
 

@@ -17,6 +17,8 @@
     <message name="getDriverResponse"/>
     <message name="getDriverIf"/>
     <message name="getDriverIfResponse"/>
+    <message name="getDriverFromTravel"/>
+    <message name="getDriverFromTravelResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -42,6 +44,10 @@
             <input message="tns:getDriverIf"/>
             <output message="tns:getDriverIfResponse"/>
         </operation>
+        <operation name="getDriverFromTravel">
+            <input message="tns:getDriverFromTravel"/>
+            <output message="tns:getDriverFromTravelResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -66,6 +72,10 @@
             <output/>
         </operation>
         <operation name="getDriverIf">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getDriverFromTravel">
             <input/>
             <output/>
         </operation>
@@ -163,6 +173,30 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_searchTravel_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getTravelDriver_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getTravelDriver_Output_Policy">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sp:EncryptedParts>

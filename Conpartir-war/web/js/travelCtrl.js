@@ -13,6 +13,7 @@
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
+            $scope.relatedDrivers;
             $scope.answer;
             $scope.showHead = false;
             var x2js = new X2JS();
@@ -32,8 +33,9 @@
                 var splitter = date.indexOf('T');
                 return date.slice(splitter+1,splitter+6);
                 
-            }; 
+            };
             
+            //Header e footer di una richiesta Soap
             var SOAPhead = '<?xml version="1.0" encoding="utf-8"?>' +                        
                            '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+                        
                            '<soap:Body>';
@@ -63,6 +65,19 @@
              $scope.reload = function () {
                   $route.reload();
               };
+            
+            $scope.getInfo = function () {
+                var thisObjParam = $location.search();
+                var thisObj;
+                var item;
+                
+                for (item in $scope.travelList.return) {
+                    if (item.$$hashkey == thisObjParam) {
+                        thisObj = item;
+                    } ;
+                };
+                
+            };
             
             $scope.search = function(data) {
                               
@@ -138,10 +153,11 @@
             };
             
             $scope.getDrivers = function () {
-                
+                var item;
+                var i = 0;
                 for (item in $scope.travelList.return) {
-                    console.log(item);
-                    console.log(item.driver_id);
+                    console.log("driver id cercato" + $scope.travelList.return[i].driver_id);
+                                       
                     var xmlhttp = new XMLHttpRequest();              
                     xmlhttp.open('POST', $scope.SOAPbase, true);  
                                 
@@ -149,8 +165,15 @@
                     xmlhttp.onreadystatechange = function () {
                      if (xmlhttp.readyState == 4) {
                             if (xmlhttp.status == 200){                                
-                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);                               
-                                    item.driver = jsonObj.Envelope.Body.getDriverResponse; 
+                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);  
+                                $scope.$apply(function () {                              
+                                    $scope.relatedDrivers = jsonObj.Envelope.Body.getDriverFromTravelResponse; 
+                                   
+                                    console.log("check 1" + $scope.relatedDrivers.return[0].age);
+                                    
+                                    console.log("check 1" + $scope.relatedDrivers.return[1].gender); 
+                                });
+                                   // $scope.travelList.return[i].driver = jsonObj.Envelope.Body.getDriverFromTravelResponse;
                                 
                             }
                         }
@@ -158,10 +181,10 @@
                     var sr;
                     var action;
                     var opName;
-                    opName = "getDriver";
+                    opName = "getDriverFromTravel";
                     sr = SOAPhead +
                             '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<ID>'+ item.driver_id +'</ID>' +
+                            '<travelID>'+ $scope.travelList.return[i].travel_id +'</travelID>' +
                             '</ns0:' + opName + '>'+
                             SOAPtail; 
                     action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
@@ -170,8 +193,10 @@
                     xmlhttp.send(sr);
                     // send request
                     
-                    
+                    i++;
                 };             
+                
+                console.log( "check 2" +$scope.relatedDrivers);
             };
           
      

@@ -1,12 +1,24 @@
-<div class="main-container-signin">
-      <form novalidate class="form-signin" >
-          <h2> Login!</h2>
-          <label class="sr-only">Email</label>
-          <input name="email" class="form-control" type="text" placeholder="Email" ng-model="user.email"/>
-          <label class="sr-only">Password</label>
-          <input name="password" class="form-control" type="password" placeholder="Password" ng-model="user.pass"/>          
-          <button class="btn btn-lg btn-primary btn-block" ng-click="login(user)">Login</button>
-          <p>Primo login? <a href="#/signup">Registrati qui.</a></p>
-      </form>
+<div class="panel-primary"  style="margin-right: auto; margin-left: auto">
+<form class="input-group" novalidate="" style="margin-right: auto; margin-left: auto">
+<h2> Login!</h2>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">Email</span>
+  <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
 </div>
+<p></p>
+<div class="input-group" >
+    <span class="input-group-addon" id="basic-addon2">Password</span>
+    <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
+</div>
+<p></p>
+<button class="btn btn-lg btn-primary btn-block" ng-click="login(user)">Login</button>
 
+<p></p>
+
+<p class="bg-danger" ng-show="ifAlert">{{status}}</p>
+<p>
+Primo login?
+<a href="#/signup">Registrati qui.</a>
+</p>
+</form>
+</div>

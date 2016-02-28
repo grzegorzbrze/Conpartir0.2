@@ -54,6 +54,10 @@ public class Travel implements Serializable {
 
     @Column (name = "FREE_SEATS")
     private int freeSeats;
+
+    public void setTravel_id(Long travel_id) {
+        this.travel_id = travel_id;
+    }
     
     public Long getTravel_id() {
         return travel_id;
