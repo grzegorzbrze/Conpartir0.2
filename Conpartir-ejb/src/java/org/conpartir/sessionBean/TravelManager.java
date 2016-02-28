@@ -43,7 +43,7 @@ public class TravelManager implements TravelManagerLocal {
 
     @Override
     public void createTravel(Long driver_id, Long client_id, String origin, 
-            String destination, Date data, Date time) {
+            String destination, Date data, Date time, int freeSeats) {
         if (!isExist(driver_id, client_id, data, time, origin, destination)){
             Travel travel = new Travel();
             travel.setClient_id(client_id);
@@ -52,6 +52,7 @@ public class TravelManager implements TravelManagerLocal {
             travel.setDestination(destination);
             travel.setOrigin(origin);
             travel.setTime(time);
+            travel.setFreeSeats(freeSeats);
             travelFacade.create(travel);
         }
     }
@@ -77,13 +78,26 @@ public class TravelManager implements TravelManagerLocal {
         return id_travel;
     }
 
+    protected boolean isCreatorTravel(Long client_id, Long driver_id){
+        boolean isCreator = false;
+        List <Driver> drivers = driverFacade.findAll();
+        for (Driver driver : drivers){
+            if (driver.getClient_id().equals(client_id) && driver.getDriver_id().equals(driver_id)){
+                isCreator = true;
+            }
+        }
+        return isCreator;
+    }
+    
     @Override
     public List<Travel> searchByOriginDestination(String origin, String destination) {
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin)){
-                lista.add(temp);
+                if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
+                    lista.add(temp);
+                }
             }
         }
         return lista;
@@ -96,7 +110,9 @@ public class TravelManager implements TravelManagerLocal {
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
             if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
+                if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
+                }
             }
         }
         return lista;
@@ -111,7 +127,9 @@ public class TravelManager implements TravelManagerLocal {
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
             if (temp.getData().equals(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
                     && afterTime(temp.getTime(), time)){      
+                if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
+                }
             }
         }
         return lista;
@@ -152,15 +170,20 @@ public class TravelManager implements TravelManagerLocal {
         return risultato;
     }
     
-     @Override
-    public boolean subFreeSeat(Long travel_id) {
+     
+    protected boolean subFreeSeat(Long travel_id) {
         boolean diminuito = false;
         Travel viaggio = getTravel(travel_id);
-        int viaggiResidui = viaggio.getFreeSeats();
-        if (viaggiResidui > 0){
-            viaggiResidui = viaggiResidui - 1;
-            viaggio.setFreeSeats(viaggiResidui);
-            diminuito = true;
+        List <Travel> lista = travelFacade.findAll();
+        for (Travel temp : lista){
+            if(temp.getDriver_id().equals(viaggio.getDriver_id()) &&
+                    temp.getOrigin().endsWith(viaggio.getOrigin()) && 
+                    temp.getDestination().equals(viaggio.getDestination()) && 
+                    temp.getData().equals(viaggio.getData()) && temp.getTime().equals(viaggio.getTime())
+                    && temp.getFreeSeats() != viaggio.getFreeSeats() && !temp.getTravel_id().equals(travel_id)){
+                temp.setFreeSeats(viaggio.getFreeSeats());
+                diminuito = true;
+            }       
         }
         return diminuito;
     }
@@ -203,9 +226,8 @@ public class TravelManager implements TravelManagerLocal {
             for (Client cliente : lista){
                 if (cliente.getId().equals(id_client)){
                     return cliente;
+                }
             }
-        }
-            
         }
         return new Client();
     }
@@ -223,6 +245,39 @@ public class TravelManager implements TravelManagerLocal {
             }
         }
         return new Driver();
+    }
+
+    @Override
+    public boolean addPassenger(Long travel_id, Long passengerID) {
+       boolean risultato = true; 
+       Travel trav = getTravel(travel_id);
+        if (trav.getTravel_id() != null){
+            List<Travel> prenotati = this.searchByOriginDestinationDateTime
+        (trav.getData(), trav.getTime(), trav.getOrigin(), trav.getDestination());
+        for (Travel prenotato : prenotati){
+            if (prenotato.getDriver_id().equals(trav.getDriver_id()) 
+                    && prenotato.getClient_id().equals(passengerID)){
+                risultato = false;
+            }
+        } 
+        }
+        if (risultato == true){
+            List<Travel> travels = travelFacade.findAll();
+            for (Travel temp : travels ){
+                if (temp.getTravel_id().equals(travel_id)){
+                    int viaggiRimasti = temp.getFreeSeats();
+                    if (viaggiRimasti>0){
+                        this.createTravel(temp.getDriver_id(), passengerID, temp.getOrigin(),
+                                temp.getDestination(), temp.getData(), temp.getTime(), 0);
+                        temp.setFreeSeats(viaggiRimasti-1);
+                        subFreeSeat(travel_id);
+                    }
+                    else risultato = false;
+                }
+            }
+        }
+       
+       return risultato;
     }
     
     

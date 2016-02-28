@@ -28,15 +28,7 @@ public interface ClientManagerLocal {
      * Permette di creare una tupla nel database tramite i valori esplici
      */
     public void createClient(String name, String surname, char gender, int age, 
-            String email, String pass, String urlPhoto, List<Driver> drivers);
-    
-    /**
-     * Permette di creare una tupla nel database tramite i valori esplici
-     * esclusa la lista dei driver
-     */
-    public void createClient(String name, String surname, char gender, int age, 
-            String email, String pass, String urlPhoto);
-    
+            String email, String pass, String urlPhoto);    
     
     /**
      * Il metodo verifica se la stringa email è presente nel database

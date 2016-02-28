@@ -29,13 +29,13 @@ public interface TravelManagerLocal {
      * Permette di creare una tupla nel database tramite i valori esplici
      */
     public void createTravel(Long driver_id, Long client_id, String origin, 
-            String destination, Date data, Date time);
+            String destination, Date data, Date time, int freeSeats);
     
     /**
      * Restituisce un long che rappresenta il campo travel_id del oggetto Travel
      */
-    public Long getTravel_ID(Long driver_id, Long client_id, Date data, 
-            Date time, String origine, String destination);
+    public Long getTravel_ID(Long driver_id, Long client_id, Date data, Date time, 
+            String origine, String destination);
     
     
     /**
@@ -60,11 +60,13 @@ public interface TravelManagerLocal {
      * Il metodo decrementa di 1 il numero dei posti disponibili, se possibile, e restituisce true 
      * altrimenti restituisce false
      */
-    public boolean subFreeSeat (Long travel_id);
+    //public boolean subFreeSeat (Long travel_id);
     
     public Travel getTravel(Long travelID);
     
     public Client getInfoClientEqualDriver(Long travel_id);
     
     public Driver getInfoDriverEqualClient(Long travel_id);
+    
+    public boolean addPassenger(Long travel_id, Long passengerID);
 }

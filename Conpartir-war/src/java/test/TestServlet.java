@@ -90,7 +90,7 @@ public class TestServlet extends HttpServlet {
             driverManager.createDriver(driver3);
             
             Travel travel1 = new Travel();
-            travel1.setClient_id(client1.getId());
+            travel1.setClient_id(driver1.getClient_id());
             
             travel1.setDestination("Milano");
             travel1.setOrigin("Torino");
@@ -103,7 +103,7 @@ public class TestServlet extends HttpServlet {
             travel1.setDriver_id(driver1.getDriver_id());
             //driverManager.cerateDriver(driver1);
             travelManager.createTravel(travel1);
-            travelManager.subFreeSeat(travel1.getTravel_id());
+            //travelManager.subFreeSeat(travel1.getTravel_id());
             
             Client client2 = new Client();
             client2.setName("Lorenzo");
@@ -114,7 +114,9 @@ public class TestServlet extends HttpServlet {
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
             
+            clientManager.createClient(client2);
             clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http");
+            travelManager.addPassenger(travel1.getTravel_id(), client2.getId());
             
             Client client3 = new Client();
             client3.setName("Maria");
@@ -126,7 +128,7 @@ public class TestServlet extends HttpServlet {
             client3.setUrlPhoto("root/neri");
                         
             Calendar cal2 = Calendar.getInstance();
-            cal2.set(2016, 4, 4, 23, 15, 25);
+            cal2.set(2016, 6, 14, 23, 15, 25);
             Date d2 = cal2.getTime();
             
             Taxi taxi1 = new Taxi();

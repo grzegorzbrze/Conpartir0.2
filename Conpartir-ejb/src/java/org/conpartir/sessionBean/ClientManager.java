@@ -41,19 +41,6 @@ public class ClientManager implements ClientManagerLocal {
         nuovo.setUrlPhoto(urlPhoto);
         clientFacade.create(nuovo);  
     }
-
-    @Override
-    public void createClient(String name, String surname, char gender, int age, String email, String pass, String urlPhoto, List<Driver> drivers) {
-       Client nuovo  = new Client();
-        nuovo.setAge(age);
-        nuovo.setEmail(email);
-        nuovo.setGender(gender);
-        nuovo.setName(name);
-        nuovo.setSurname(surname);
-        nuovo.setPass(pass);
-        nuovo.setUrlPhoto(urlPhoto);
-        clientFacade.create(nuovo);  
-    }
     
     @Override
     public boolean isEmail(String email) {
