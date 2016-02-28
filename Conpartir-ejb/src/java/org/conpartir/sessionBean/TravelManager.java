@@ -94,7 +94,8 @@ public class TravelManager implements TravelManagerLocal {
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
-            if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin)){
+            if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin) 
+                    && temp.getFreeSeats() > 0){
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
                 }
@@ -109,7 +110,8 @@ public class TravelManager implements TravelManagerLocal {
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
-            if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
+            if (temp.getData().after(data) && temp.getOrigin().equals(origin) 
+                    && temp.getDestination().equals(destination) && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
                 }
@@ -125,8 +127,9 @@ public class TravelManager implements TravelManagerLocal {
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
-            if (temp.getData().equals(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
-                    && afterTime(temp.getTime(), time)){      
+            if (temp.getData().equals(data) && temp.getOrigin().equals(origin) 
+                    && temp.getDestination().equals(destination) 
+                    && afterTime(temp.getTime(), time) && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
                 }
