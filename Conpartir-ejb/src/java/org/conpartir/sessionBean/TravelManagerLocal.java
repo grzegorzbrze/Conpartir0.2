@@ -8,6 +8,7 @@ package org.conpartir.sessionBean;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import org.conpartir.entity.Client;
 import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
 
@@ -63,5 +64,7 @@ public interface TravelManagerLocal {
     
     public Travel getTravel(Long travelID);
     
+    public Client getInfoClientEqualDriver(Long travel_id);
     
+    public Driver getInfoDriverEqualClient(Long travel_id);
 }

@@ -114,7 +114,7 @@ public class TestServlet extends HttpServlet {
             client2.setPass("verdi");
             client2.setUrlPhoto("root/verdi");
             
-            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http", null);
+            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http");
             
             Client client3 = new Client();
             client3.setName("Maria");
@@ -150,6 +150,11 @@ public class TestServlet extends HttpServlet {
             System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
             System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
             System.out.println("Prenotato: "+taxiManager.addPassenger(taxi1.getTaxi_id(), client1.getId()));
+            
+            System.out.println("Test sui metodi getInfoClientEqualDriver e getInfoDriverEqualDriver");
+            System.out.println(travelManager.getInfoClientEqualDriver(travel1.getTravel_id()).toString());
+            System.out.println(travelManager.getInfoDriverEqualClient(travel1.getTravel_id()).toString());
+            
             
             testClient();
             testDriver();
@@ -193,6 +198,9 @@ public class TestServlet extends HttpServlet {
         for (Travel temp : travelManager.searchByOriginDestinationDateTime(data, time, "Torino", "Milano")){
             System.out.println(temp.toString());
         }
+        
+        
+        
     }
     
     private void testTaxi(){

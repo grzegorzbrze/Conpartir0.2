@@ -11,7 +11,11 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.conpartir.entity.Client;
+import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
+import org.conpartir.facade.ClientFacadeLocal;
+import org.conpartir.facade.DriverFacadeLocal;
 import org.conpartir.facade.TravelFacadeLocal;
 
 
@@ -22,7 +26,12 @@ import org.conpartir.facade.TravelFacadeLocal;
 @Stateless
 public class TravelManager implements TravelManagerLocal {
     @EJB
+    private DriverFacadeLocal driverFacade;
+    @EJB
+    private ClientFacadeLocal clientFacade;
+    @EJB
     private TravelFacadeLocal travelFacade;
+    
 
     @Override
     public void createTravel(Travel travel) {
@@ -175,5 +184,46 @@ public class TravelManager implements TravelManagerLocal {
         }
         return risultato;
     }
+
+    @Override
+    public Client getInfoClientEqualDriver(Long travel_id) {
+        Travel travel = getTravel(travel_id); 
+        Long id_client = travel.getClient_id();
+        Long id_driver = travel.getDriver_id();
+        List<Driver> drivers = driverFacade.findAll();
+        boolean corrisponde = false;
+        for (Driver driver : drivers){
+            //qui sotto ho il controllo che verifica se il cliente e la macchina corrispondono
+            if (driver.getClient_id().equals(id_client) && driver.getDriver_id().equals(id_driver)){ 
+                corrisponde = true;
+            }
+        }
+        if (corrisponde){
+            List <Client> lista = clientFacade.findAll(); //va usato facade, se no ho problemi di accesso
+            for (Client cliente : lista){
+                if (cliente.getId().equals(id_client)){
+                    return cliente;
+            }
+        }
+            
+        }
+        return new Client();
+    }
+
+    @Override
+    public Driver getInfoDriverEqualClient(Long travel_id) {
+        Travel travel = getTravel(travel_id);
+        Long id_client = travel.getClient_id();
+        Long id_driver = travel.getDriver_id();
+         List<Driver> drivers = driverFacade.findAll();
+        for (Driver driver : drivers){
+            //qui sotto ho il controllo che verifica se il cliente e la macchina corrispondono
+            if (driver.getClient_id().equals(id_client) && driver.getDriver_id().equals(id_driver)){ 
+                return driver;
+            }
+        }
+        return new Driver();
+    }
+    
     
 }
