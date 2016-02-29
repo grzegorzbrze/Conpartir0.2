@@ -24,14 +24,14 @@
                 $route.reload();
             };
             
-            $scope.getDay = function (date) {
-                var splitter = date.indexOf('T');
-                return date.slice(0,splitter);                
+            $scope.getDay = function (data) {
+                var splitter = data.indexOf('T');
+                return data.slice(0,splitter);                
             };
             
-             $scope.getTime = function (date) {
-                var splitter = date.indexOf('T');
-                return date.slice(splitter+1,splitter+6);
+             $scope.getTime = function (data) {
+                var splitter = data.indexOf('T');
+                return data.slice(splitter+1,splitter+6);
                 
             };
             
@@ -108,6 +108,7 @@
                             $scope.$apply(function () {
                                 $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse;
                                 console.log($scope.travelList);  
+                               // console.log($scope.travelList.return[0].data);
                                 $scope.getDrivers();
                                 $scope.showHead = true;
                             });
@@ -155,8 +156,8 @@
             $scope.getDrivers = function () {
                 var item;
                 var i = 0;
-                for (item in $scope.travelList.return) {
-                    console.log("driver id cercato" + $scope.travelList.return[i].driver_id);
+                for (item in $scope.travelList) {
+                    console.log("driver id cercato " + item);
                                        
                     var xmlhttp = new XMLHttpRequest();              
                     xmlhttp.open('POST', $scope.SOAPbase, true);  
@@ -166,13 +167,13 @@
                      if (xmlhttp.readyState == 4) {
                             if (xmlhttp.status == 200){                                
                                 var jsonObj = x2js.xml_str2json(xmlhttp.responseText);  
-                                $scope.$apply(function () {                              
+                                                            
                                     $scope.relatedDrivers = jsonObj.Envelope.Body.getDriverFromTravelResponse; 
                                    
-                                    console.log("check 1" + $scope.relatedDrivers.return[0].age);
+                                   console.log("check 1" + $scope.relatedDrivers.return[0].age);
                                     
-                                    console.log("check 1" + $scope.relatedDrivers.return[1].gender); 
-                                });
+                                  // //  console.log("check 1" + $scope.relatedDrivers.return[1].gender); 
+                               //  $scope.$apply(function () { });
                                    // $scope.travelList.return[i].driver = jsonObj.Envelope.Body.getDriverFromTravelResponse;
                                 
                             }
@@ -184,7 +185,7 @@
                     opName = "getDriverFromTravel";
                     sr = SOAPhead +
                             '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<travelID>'+ $scope.travelList.return[i].travel_id +'</travelID>' +
+                            '<travelID>'+ item.return[i].travel_id +'</travelID>' +
                             '</ns0:' + opName + '>'+
                             SOAPtail; 
                     action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
