@@ -74,11 +74,12 @@ public class SOAPServiceClient {
     
     @WebMethod(operationName = "getTravels")
     public List<Travel> getTravels(@WebParam(name = "start") String start, @WebParam(name = "end") String end) {
-        List<Travel> result = new ArrayList();       
+        List<Travel> result = new ArrayList();
         List<Travel> lista = new ArrayList();
         
         Date today = Date.from(Instant.now());        
         result = travelRef.searchByOriginDestinationDate(today, start, end);   
+       
         
        
         int i;
@@ -154,6 +155,7 @@ public class SOAPServiceClient {
         List<Object> prova = new ArrayList();
         prova.add(clientInfo);
         prova.add(driverInfo);
+        out.print(prova);
         return prova;
     }
 

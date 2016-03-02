@@ -20,8 +20,8 @@
    <div class="scrollable-content">
     <div class="list-group">
         <h3 ng-show="showHead">Proposte di viaggi da <b>{{data.from}}</b> a <b>{{data.to}}</b></h3>
-      <a ng-repeat=" item in travelList.return" class="col-md-12" ng-click="go(item.$$hashKey)">
-          <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">{{item.driver.return[0].name}} partirà il {{getDay(item.data)}} alle {{getTime(item.data)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
+      <a ng-repeat=" item in travelList" class="col-md-12" ng-click="go(item.travel_id)">
+          <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
       </a>
 
     </div>

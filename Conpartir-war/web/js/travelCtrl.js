@@ -20,7 +20,7 @@
             
             $scope.go = function (data) {
                 $location.path("/detail");
-                $location.search(data);
+                $location.search("number",data);
                 $route.reload();
             };
             
@@ -68,14 +68,14 @@
             
             $scope.getInfo = function () {
                 var thisObjParam = $location.search();
+                console.log(thisObjParam);
+                console.log(thisObjParam.number);
                 var thisObj;
                 var item;
                 
-                for (item in $scope.travelList.return) {
-                    if (item.$$hashkey == thisObjParam) {
-                        thisObj = item;
-                    } ;
-                };
+                $scope.getDrivers2(thisObjParam.number);
+                
+                
                 
             };
             
@@ -85,7 +85,7 @@
             };                
           
             
-            
+            $scope.prova = {};
      
 
             // build SOAP request
@@ -104,15 +104,16 @@
                            $scope.answer= xmlhttp.responseText;
                            
                            var jsonObj = x2js.xml_str2json( $scope.answer );
-                            //console.log(jsonObj);
+                      
                             $scope.$apply(function () {
-                                $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse;
-                                console.log($scope.travelList);  
-                               // console.log($scope.travelList.return[0].data);
-                                $scope.getDrivers();
-                                $scope.showHead = true;
+                                $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
+                                console.log($scope.travelList);
+                                
+                                //$scope.getDrivers($scope.travelList);
+                               
+                               $scope.showHead = true;
                             });
-                        }
+                        } 
                     }
                 };
                 
@@ -153,11 +154,14 @@
         
             };
             
-            $scope.getDrivers = function () {
+            $scope.getDrivers = function (data) {
                 var item;
                 var i = 0;
-                for (item in $scope.travelList) {
-                    console.log("driver id cercato " + item);
+                console.log("TRAVEL ID IS " + data[i].travel_id);
+                
+                var max = Object.keys(data).length;
+                for (i=0;i<max;i++) {
+                    console.log("TRAVEL ID cercato " + data[i].travel_id);
                                        
                     var xmlhttp = new XMLHttpRequest();              
                     xmlhttp.open('POST', $scope.SOAPbase, true);  
@@ -166,11 +170,11 @@
                     xmlhttp.onreadystatechange = function () {
                      if (xmlhttp.readyState == 4) {
                             if (xmlhttp.status == 200){                                
-                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);  
-                                                            
-                                    $scope.relatedDrivers = jsonObj.Envelope.Body.getDriverFromTravelResponse; 
+                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);
+                                                                                                                          
+                                    $scope.relatedDrivers = jsonObj.Envelope.Body.getDriverFromTravelResponse.return; 
                                    
-                                   console.log("check 1" + $scope.relatedDrivers.return[0].age);
+                                   console.log("check 1" + $scope.relatedDrivers);
                                     
                                   // //  console.log("check 1" + $scope.relatedDrivers.return[1].gender); 
                                //  $scope.$apply(function () { });
@@ -185,7 +189,7 @@
                     opName = "getDriverFromTravel";
                     sr = SOAPhead +
                             '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<travelID>'+ item.return[i].travel_id +'</travelID>' +
+                            '<travelID>'+ data[i].travel_id +'</travelID>' +
                             '</ns0:' + opName + '>'+
                             SOAPtail; 
                     action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
@@ -197,7 +201,37 @@
                     i++;
                 };             
                 
-                console.log( "check 2" +$scope.relatedDrivers);
+                console.log( "check 2" + $scope.relatedDrivers);
+            };
+          
+            $scope.getDrivers2 = function (data) {
+                console.log("TRAVEL ID cercato " + data);
+                var xmlhttp = new XMLHttpRequest();                  
+                xmlhttp.open('POST', $scope.SOAPbase, true); 
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200){  
+                            var jsonObj = x2js.xml_str2json(xmlhttp.responseText);
+                            $scope.$apply = function() {
+                                $scope.relatedDriver = jsonObj.Envelope.Body.getDriverFromTravelResponse.return;
+                            };
+                        }
+                    }
+                }; 
+                var sr;
+                var action;
+                var opName;
+                opName = "getDriverFromTravel";
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                        '<travelID>'+ data+'</travelID>' +
+                        '</ns0:' + opName + '>'+
+                        SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
+                xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+                xmlhttp.setRequestHeader('SOAPAction',action);
+                xmlhttp.send(sr);
+                // send request
             };
           
      
