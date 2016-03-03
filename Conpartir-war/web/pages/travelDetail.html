@@ -1,11 +1,12 @@
-<div class="panel panel-info" ng-init="getInfo()">
+<div class="panel panel-info" >
   <div class="panel-heading">
     <h3 class="panel-title">Dettagli viaggio</h3>
   </div>
-    <div class="panel-body">
-        <h1>{{driver.return[0].email}}</h1>
-  </div>
+    <div class="panel-body" ng-init="getInfo()">
+        <span ng-bind="prova.email"></span>
+        <span ng-bind="prova.name"></span>
+        <span ng-bind="prova.surname"></span>
+        <span ng-bind="prova.carModel"></span>
+      </div>
+  
 </div>
-
-
-<button ng-click="reload()">clickme</button>

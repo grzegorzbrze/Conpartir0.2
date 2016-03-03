@@ -7,16 +7,29 @@
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
-            $scope.answer;
-            $scope.driver;
+            $scope.lista;
+            $scope.nome;
+            $scope.email;
+            
+            
+            $scope.prova;
             var x2js = new X2JS();
             
             $scope.getInfo = function () {
                 var thisObjParam = $location.search();
-               $scope.getDriver(thisObjParam.number);
-               //$timeout( $scope.reload() , 40);
-                console.log("check 2 result "+ $scope.driver);
+              
+                $scope.getDriver(thisObjParam.number);
                 
+                               
+                                
+                $scope.prova = shared.getData();
+                console.log("after shared prova is " + $scope.prova);
+               // $scope.email = shared.getData().return[0].email;
+              /*  $scope.nome = $scope.prova.return[0].nome;
+              
+                $scope.lista.email = $scope.prova.return[0].email;
+                $scope.lista.nome = $scope.prova.return[0].nome; */
+              
             };
 
             //Header e footer di una richiesta Soap
@@ -29,7 +42,7 @@
             
              $scope.reload = function () {
                   $route.reload();
-                  alert(shared.getData());
+                 
               };
               
             $scope.getDriver = function (data) {
@@ -38,15 +51,17 @@
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200){  
-                             $scope.answer = xmlhttp.responseText;
-                            var jsonObj = x2js.xml_str2json($scope.answer );
-                            console.log("Check: jsonObj is " + jsonObj);
+                            var answer = xmlhttp.responseText;
+                            var jsonObj = x2js.xml_str2json(answer );
+                            //console.log("Check: jsonObj is " + jsonObj);
                             
                          $scope.$apply(function () { 
-                                $scope.driver = jsonObj.Envelope.Body.getDriverFromTravelResponse.return;
-                                console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return);                                
-                                console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return[0].email);
-                                shared.setData(jsonObj.Envelope.Body.getDriverFromTravelResponse.return[0]);
+                                answer = jsonObj.Envelope.Body.getDriverFromTravelResponse;
+                                //console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return);                                
+                                //console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return[0].email);
+                                shared.setData(answer.return[0].name, answer.return[0].surname, answer.return[0].email, answer.return[1].carModel);
+                                console.log(answer);
+                                console.log(answer.return[0]);
                             });
                             }
                         }

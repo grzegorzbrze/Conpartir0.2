@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule']);
+var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'serviceModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -33,28 +33,10 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
 });
 
 
-    //Factory per dati condivisi
-    myapp.factory('shared', function () {
-        var data;
-
-        return {
-            getData: function () {
-                // console.log(data + ' was given as data');
-                return data;
-            },
-            setData: function (x) {
-                // console.log('setting ' + data + ' as data');
-                data = x;
-            }
 
 
-
-        };
-    });
-
-
-  myapp.controller("MainController", ['$scope', '$http', '$uibModal',
-      function($scope, $http, $uibModal) {
+  myapp.controller("MainController", ['$scope', '$http', 
+      function($scope, $http) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;

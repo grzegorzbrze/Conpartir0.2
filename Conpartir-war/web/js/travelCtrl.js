@@ -14,7 +14,7 @@
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
             $scope.relatedDrivers;
-            $scope.answer;
+         
             $scope.showHead = false;
             $scope.new;
             $scope.relatedDriver;
@@ -96,9 +96,9 @@
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200) {                     
                            
-                           $scope.answer= xmlhttp.responseText;
+                           var answer= xmlhttp.responseText;
                            
-                           var jsonObj = x2js.xml_str2json( $scope.answer );
+                           var jsonObj = x2js.xml_str2json( answer );
                       
                             $scope.$apply(function () {
                                 $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
