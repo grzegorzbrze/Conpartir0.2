@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule']);
+var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.bootstrap', 'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -25,12 +25,34 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'ui.boo
           .when("/list",
   {   templateUrl: "pages/list.html",  controller: "TravelController"  })
           .when("/detail",
-  {   templateUrl: "pages/travelDetail.html",  controller: "TravelController"  })
+  {   templateUrl: "pages/travelDetail.html",  controller: "DetailController"  })
           .when("/post",
   {   templateUrl: "pages/post.html",  controller: "MainController"  });  
   
   
 });
+
+
+    //Factory per dati condivisi
+    myapp.factory('shared', function () {
+        var data;
+
+        return {
+            getData: function () {
+                // console.log(data + ' was given as data');
+                return data;
+            },
+            setData: function (x) {
+                // console.log('setting ' + data + ' as data');
+                data = x;
+            }
+
+
+
+        };
+    });
+
+
   myapp.controller("MainController", ['$scope', '$http', '$uibModal',
       function($scope, $http, $uibModal) {
          

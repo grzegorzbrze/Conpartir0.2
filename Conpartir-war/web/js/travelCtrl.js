@@ -8,20 +8,29 @@
   'use strict';
 
   var modTravel = angular.module('travelModule', ['ngRoute']);
-        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location',
-        function($scope,$http, $route, $routeParams, $location) {
+        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location', 'shared',
+        function($scope,$http, $route, $routeParams, $location, shared) {
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
             $scope.relatedDrivers;
             $scope.answer;
             $scope.showHead = false;
+            $scope.new;
+            $scope.relatedDriver;
             var x2js = new X2JS();
             
             $scope.go = function (data) {
+                shared.setData($scope.travelList);
                 $location.path("/detail");
                 $location.search("number",data);
+                shared.setData($scope.travelList);
                 $route.reload();
+            };
+            
+            $scope.getBack = function () {
+                alert(shared.getData());
+                
             };
             
             $scope.getDay = function (data) {
@@ -34,7 +43,6 @@
                 return data.slice(splitter+1,splitter+6);
                 
             };
-            
             //Header e footer di una richiesta Soap
             var SOAPhead = '<?xml version="1.0" encoding="utf-8"?>' +                        
                            '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+                        
@@ -65,20 +73,7 @@
              $scope.reload = function () {
                   $route.reload();
               };
-            
-            $scope.getInfo = function () {
-                var thisObjParam = $location.search();
-                console.log(thisObjParam);
-                console.log(thisObjParam.number);
-                var thisObj;
-                var item;
-                
-                $scope.getDrivers2(thisObjParam.number);
-                
-                
-                
-            };
-            
+              
             $scope.search = function(data) {
                               
                 $scope.SOAPtravels(data);
@@ -107,10 +102,8 @@
                       
                             $scope.$apply(function () {
                                 $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
-                                console.log($scope.travelList);
-                                
-                                //$scope.getDrivers($scope.travelList);
-                               
+                               // console.log($scope.travelList);
+                                                             
                                $scope.showHead = true;
                             });
                         } 
@@ -212,9 +205,12 @@
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200){  
                             var jsonObj = x2js.xml_str2json(xmlhttp.responseText);
-                            $scope.$apply = function() {
-                                $scope.relatedDriver = jsonObj.Envelope.Body.getDriverFromTravelResponse.return;
-                            };
+                         $scope.$apply(function () {
+                                $scope.new = jsonObj.Envelope.Body.getDriverFromTravelResponse.return;
+                               //console.log (jsonObj);
+                               //console.log($scope.relatedDriver);
+                                $scope.showHead = true;
+                         });
                         }
                     }
                 }; 
@@ -236,5 +232,7 @@
           
      
         }]);
+    
+    
 
 })();

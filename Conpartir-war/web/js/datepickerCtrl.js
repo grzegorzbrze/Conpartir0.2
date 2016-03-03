@@ -3,8 +3,9 @@
   'use strict';
 
 
-var modDate = angular.module('dateModule');
-        modDate.controller('DatepickerCtrl', function ($scope) {
+var modDate = angular.module('dateModule', ['ngRoute']);
+        modDate.controller('DatepickerCtrl', ['$scope',
+        function ($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
@@ -14,17 +15,33 @@ var modDate = angular.module('dateModule');
     $scope.dt = null;
   };
 
-  // Disable weekend selection
-  $scope.disabled = function(date, mode) {
-    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  $scope.inlineOptions = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
   };
 
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+  // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
+
   $scope.toggleMin = function() {
-    $scope.minDate = $scope.minDate ? null : new Date();
+    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
   };
 
   $scope.toggleMin();
-  $scope.maxDate = new Date(2020, 5, 22);
 
   $scope.open1 = function() {
     $scope.popup1.opened = true;
@@ -36,11 +53,6 @@ var modDate = angular.module('dateModule');
 
   $scope.setDate = function(year, month, day) {
     $scope.dt = new Date(year, month, day);
-  };
-
-  $scope.dateOptions = {
-    formatYear: 'yy',
-    startingDay: 1
   };
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
@@ -59,19 +71,20 @@ var modDate = angular.module('dateModule');
   tomorrow.setDate(tomorrow.getDate() + 1);
   var afterTomorrow = new Date();
   afterTomorrow.setDate(tomorrow.getDate() + 1);
-  $scope.events =
-    [
-      {
-        date: tomorrow,
-        status: 'full'
-      },
-      {
-        date: afterTomorrow,
-        status: 'partially'
-      }
-    ];
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: 'full'
+    },
+    {
+      date: afterTomorrow,
+      status: 'partially'
+    }
+  ];
 
-  $scope.getDayClass = function(date, mode) {
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0,0,0,0);
 
@@ -85,8 +98,9 @@ var modDate = angular.module('dateModule');
     }
 
     return '';
-  };
-});
+  }
+        
+}]);
 
 
 })();
