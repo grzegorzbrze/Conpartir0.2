@@ -18,6 +18,7 @@ hs_err_pid*
 /build/
 /Conpartir-war/build/
 /Conpartir-war/dist/
+/Conpartir-war/nbproject/
 /SOAPClient/nbproject/private/
 /SOAPClient/SOAPClient-war/nbproject/private/
 /SOAPClient/SOAPClient-ejb/nbproject/private/
