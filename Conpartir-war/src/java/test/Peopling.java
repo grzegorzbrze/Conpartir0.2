@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.ClientManagerLocal;
+import org.conpartir.sessionBean.CommentMagangerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
 
@@ -25,6 +27,8 @@ import org.conpartir.sessionBean.TravelManagerLocal;
  * @author Blu Light
  */
 public class Peopling extends HttpServlet {
+    @EJB
+    private CommentMagangerLocal commentManager;
     @EJB
     private TravelManagerLocal travelManager;
     @EJB
@@ -175,7 +179,7 @@ public class Peopling extends HttpServlet {
         Date[] leDate = new Date[10];
         for (int i=0; i<leDate.length; i++){
             Calendar cal = Calendar.getInstance();
-            int mese = 2 + (int)(Math.random() * 3);
+            int mese = 2 + (int)(Math.random() * 2);
             int giorno = 2 + (int)(Math.random() * 27);
             int ora = 5 + (int)(Math.random() * 18);
             int minuti = 1 + (int)(Math.random() * 59);
@@ -225,7 +229,10 @@ public class Peopling extends HttpServlet {
             int id_trav = travMin + (int)(Math.random() * travMax);
             long client_scelto = clientiRimasti.get(id_rimasti);
             long trav_scelto = id_travels[id_trav];
-            travelManager.addPassenger(trav_scelto, client_scelto);
+            boolean aggiunto = travelManager.addPassenger(trav_scelto, client_scelto);
+            if (aggiunto){
+                creaComment(trav_scelto, client_scelto);
+            }
         }
         
         /*System.out.println("I dati sui viaggi");
@@ -239,6 +246,34 @@ public class Peopling extends HttpServlet {
         for (Long tempClient : clientiRimasti){
             System.out.println("ID_clienti: "+tempClient);
         }*/
+        
+        
+    }
+    
+    public void creaComment(Long id_travel, Long author){
+        String [] testi = {"é stato un viaggio bellissimo, grazie", 
+            "autista era molto professionale", 
+            "macchina pulita e autista molto bravo", 
+            "rispettato il tempo previsto, molto cordiale e simpatico",
+            "guidava meglio di me!", 
+            "autista parlava troppo", 
+            "ci siamo persi, autista non conosceva la strada",
+            "il prezzo era troppo alto per la tratta", 
+            "non ci andrò mai più in quella macchina",
+            "anche mia nonna sapeva guidare meglio di lui"};
+        
+        int[] feedbacks = {5, 4, 5, 5, 5, 3, 2, 2, 1, 1};
+        Travel viaggio = travelManager.getTravel(id_travel);
+        Long autista = viaggio.getDriver_id();
+        Date dataCommento = viaggio.getData();
+        Date oraCommento = viaggio.getTime();
+        int indice = (int)(Math.random()*9);
+        
+        //public void createComment(Long id_author, Long id_clientJudged, Long id_travel, 
+        //    String comment, int feedback, Date comment_date, Date commet_hour);
+        commentManager.createComment(author, autista, id_travel, testi[indice], 
+                feedbacks[indice], dataCommento, oraCommento);
+        
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
