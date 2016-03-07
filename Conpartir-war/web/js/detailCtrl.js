@@ -19,11 +19,9 @@
                 var thisObjParam = $location.search();
               
                 $scope.getDriver(thisObjParam.number);
-                
-                               
-                                
                 $scope.prova = shared.getData();
-                console.log("after shared prova is " + $scope.prova);
+                
+               // console.log("after shared prova is " + $scope.prova);
                // $scope.email = shared.getData().return[0].email;
               /*  $scope.nome = $scope.prova.return[0].nome;
               
@@ -57,11 +55,8 @@
                             
                          $scope.$apply(function () { 
                                 answer = jsonObj.Envelope.Body.getDriverFromTravelResponse;
-                                //console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return);                                
-                                //console.log("item is " +  jsonObj.Envelope.Body.getDriverFromTravelResponse.return[0].email);
                                 shared.setData(answer.return[0].name, answer.return[0].surname, answer.return[0].email, answer.return[1].carModel);
-                                console.log(answer);
-                                console.log(answer.return[0]);
+                                
                             });
                             }
                         }

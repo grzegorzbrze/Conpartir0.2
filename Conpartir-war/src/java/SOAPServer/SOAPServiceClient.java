@@ -6,6 +6,8 @@
 package SOAPServer;
 
 import static java.lang.System.out;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,9 +111,17 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getTravelsFrom")
-    public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, @WebParam(name = "end") String end, @WebParam(name = "date") Date date) {
-        List<Travel> result = null;                
-        result = travelRef.searchByOriginDestinationDate(date, start, end);   
+    public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, @WebParam(name = "end") String end, @WebParam(name = "date") String date) {
+        List<Travel> result = null; 
+        Date when = null;       
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try { 
+            when = format.parse(date); 
+        }
+        catch (Exception e) {
+        }
+        //System.out.println(when); 
+        result = travelRef.searchByOriginDestinationDate(when, start, end);   
         
         return result;
     }

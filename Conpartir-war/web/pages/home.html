@@ -1,32 +1,21 @@
-<!--<script src="js/manageList.js"></script>
- Google Maps 
-<script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="js/GoogleMap.js"></script>
-<script>
-    $(function () {
-        $("#calendar").datepicker();
-    });
-</script>-->
-    
-
-
-
-
-<div class="central-panel">
-    
-    <div class="central-panel-position .container-fluid">   
-         <div class="page-header">
-            <h1> Benvenuti su Conpartir <small>Subtext for header</small></h1>
-        </div>  
+<div class="panel panel-heading">
+    <div class="page-header">
+        <h1> Benvenuti su Conpartir </h1>
+        <small>Viaggia dove vuoi, con chi vuoi</small>
     </div>
-    
+    <div class="panel-body">    
+        <h2>Ricerca rapida viaggio</h2>
+        <div class="form-horizontal"> 
+            <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>            
+            <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/>
+            <input name="giorno"  id="datepicker" type=""  ng-model="data.when"/>  
+            <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
+        </div>    
+    </div>
+  
 </div>
 
-
-
-
-
-<div ng-controller="SliderController">
+<!-- <div ng-controller="SliderController">
   <h4>Pager</h4>
   <uib-pager total-items="totalItems" ng-model="currentPage"></uib-pager>
 </div>
@@ -47,14 +36,10 @@
     
     <button ng-click="check()" class="btn" />
   
-  </div>
-
-
+  </div> -->
 
 
 
         
  
-        
- 
-   
+      

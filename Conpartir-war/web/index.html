@@ -15,7 +15,10 @@
       
     <link href="frameworks/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="frameworks/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="frameworks/bootstrap/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
     <link href="css/override.css" rel="stylesheet">
+    
+    
     
     
      <!-- Angular Js Main and Services -->
@@ -24,8 +27,12 @@
     <script src="frameworks/angularJs/angular-touch.min.js"></script>
     <script src="frameworks/angularJs/angular-animate.min.js"></script>
         
-    <!-- Angular Bootstrap UI 
-    <script src="frameworks/ui-bootstrap-tpls-0.14.3.js"></script>-->
+    <!-- Mobile Angular UI 
+    <script src="frameworks/mobileAngularUI/js/mobile-angular-ui.min.js"></script>   
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-base.min.css" />
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-hover.min.css" />
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-desktop.min.css" />-->
+
     
         <!-- Angular Js Controllers -->
     <script src="js/loginCtrl.js"></script>
@@ -35,6 +42,12 @@
     <script src="js/sliderCtrl.js"></script> 
     <script src="js/datepickerCtrl.js"></script> 
     <script src="js/homeCtrl.js"></script>
+    
+     
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.min.css">
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.structure.min.css">     
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.theme.min.css">
+     <script src="frameworks/jqueryUI/jquery-ui.min.js"></script>
 
   
   <body ng-app = "myApp" ng-controller = "MainController">
@@ -43,7 +56,7 @@
       <div class="container">
       	<div class="navbar-header">
 			<ul class="nav navbar-nav">
-                            <li class="active"><a href="#/"><span class="glyphicon glyphicon-home"></span></a></li>
+                          <li><a href="#/home"><i class="glyphicon glyphicon-home"></i></a></li>
                           <li><a href="#/cars">Cars</a></li>
                           <li><a href="#/taxis">Taxis</a></li>
                           <li><a href="#/list">Post your travel</a></li>                          
@@ -79,6 +92,7 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
+        <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/carousel.js"></script>
     
     <script src="frameworks/xml2json.min.js"></script>

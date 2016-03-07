@@ -108,6 +108,7 @@ public class TravelManager implements TravelManagerLocal {
 
     @Override
     public List<Travel> searchByOriginDestinationDate(Date data, String origin, String destination) {
+        //System.out.println("data impostata: " + data);
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
@@ -116,6 +117,7 @@ public class TravelManager implements TravelManagerLocal {
                     && temp.getDestination().equals(destination) && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
+                    //System.out.println("data successiva trovata: " + temp.getData());
                 }
             }
         }

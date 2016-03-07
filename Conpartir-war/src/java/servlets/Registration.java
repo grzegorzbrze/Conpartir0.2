@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -142,15 +143,17 @@ public class Registration extends HttpServlet {
          
          if (emailCheck == true) {
              if (use.equals("registration")){
-                 //Da inserire un alert: si sta cercando di registrare un utente con una mail già utilizzata
+                 //alert: si sta cercando di registrare un utente con una mail già utilizzata
                  res = "1 Errore: questa mail è già stata usata per la registrazione di un altro account!";
                   }
             else {
                  //Da inserire il login
                  if (password.equals(clientManager.getClient(email).getPass())) {
-                     //login corretto
-                     
+                     //login corretto                     
                      res = "Login effettuato con successo!";
+                     Cookie userCookie = new Cookie("name","value");
+                     userCookie.setMaxAge(60);
+                     response.addCookie(userCookie);
                  }
                  else {
                      res = "3 Errore: password errata";                

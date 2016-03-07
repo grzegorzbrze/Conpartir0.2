@@ -30,6 +30,10 @@
                 }
                 else $scope.servletCall();
             };      
+            
+            $scope.FBLogin = function () {
+                 $location.path("/FBLogin");
+            };
               
             $scope.register = function (user) {
                 $scope.master = user;
@@ -69,6 +73,18 @@
                 if (flag === false) $scope.servletCall();  
             };  
             
+      /*      function parseCookies (request) {
+                var list = {},
+                rc = request.headers.cookie;
+                console.log('req head cookie' + request.headers);
+                console.log('req head cookie' + rc);
+                rc && rc.split(';').forEach(function( cookie ) {
+                    var parts = cookie.split('=');
+                    list[parts.shift().trim()] = decodeURI(parts.join('='));
+                });
+                return list;
+            } */
+            
             $scope.servletCall = function (){
                 
                 $scope.ifAlert = false;
@@ -85,6 +101,27 @@
                     console.log($scope.status);
                     var flag = $scope.status.charAt(1);
                     if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
+                    
+                    var cookieName = "somecookie";
+                    var cookies = []; 
+                    cookies = parseCookies(response);
+                    
+                    console.log('cookies' + cookies);
+                    //console.log(cookies[0].name + cookies[0].value);
+                   /* if (cookies != null)
+                    {
+                        for(item in cookies)
+                        {
+                            Cookie cookie = cookies[i];
+                            if (cookieName.equals(cookie.getName()))
+                            {
+                                doSomethingWith(cookie.getValue());
+                            }
+                            else  {     }
+                        }
+                    }
+                   */
+                    
                 }, function errorCallback(response) {
                     // called asynchronously if an error occurs
                    // or server returns response with an error status.

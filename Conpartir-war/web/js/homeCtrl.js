@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 
-var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'serviceModule']);
+var myapp = angular.module('myApp', 
+['ngRoute', 'ngTouch' , 'ngAnimate',
+    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'serviceModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
-          .when("/", "/home",
+          .when( "/",
+  {   templateUrl: "pages/home.html", controller: "MainController" })
+          .when( "/home",
   {   templateUrl: "pages/home.html", controller: "MainController" })    
           .when("/about",
   {   templateUrl: "pages/about.html", controller: "MainController" })
@@ -22,6 +26,8 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'loginM
   {   templateUrl: "pages/signup.html", controller: "LoginController" })
           .when("/login",
   {   templateUrl: "pages/login.html", controller: "LoginController" })
+     .when("/FBLogin",
+  {   templateUrl: "pages/FBLogin.html", controller: "LoginController" })
           .when("/list",
   {   templateUrl: "pages/list.html",  controller: "TravelController"  })
           .when("/detail",
@@ -60,9 +66,11 @@ var myapp = angular.module('myApp', ['ngRoute', 'ngTouch' , 'ngAnimate', 'loginM
             $scope.addSlide(i+1);
         }
         
-        // Fine Carousel
-        
-    
+        // Fine Carousel    
+       
+          $(function() {
+              $( "#datepicker" ).datepicker();
+          });
         
   
       
