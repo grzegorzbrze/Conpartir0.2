@@ -92,8 +92,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                                    // obj = res;
                                    // return obj;
                                 }
-                                 
+                                  delete res["_xmlns:ns2"];
+                                  delete res["__prefix"];
                                 obj = res; 
+                                
                                 return res;
                      })
                              .error(function (data, status, headers, config) {

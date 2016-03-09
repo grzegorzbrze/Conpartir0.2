@@ -107,58 +107,13 @@
                   });
               };
 
-            $scope.asyncSearch = function(data) {
-                
-                var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
-                console.log("data formattata " +when);
-                if (when !== null && when != "") {             
-                    var month = when.slice(0,2);
-                    var day = when.slice(3,5);
-                    var year= when.slice(6,10);
-                    when = day + '-' + month + '-' + year;
-             
-                    data.when = when;
-                }
-                
-                console.log("formato richiesta " + data.to + data.from + " " + data.when); 
-                
-                
-                  var deferred = $q.defer();
-               
-                    deferred.resolve(toDo(data), function() {$scope.$apply(); });
-                                             
-                 /*  return $q(function(resolve, reject) {
-                     
-                       $timeout (function() { showList(); }, 50);
-
-                   }); */
-                  return deferred.promise;
-              };   
+     
               
-              var toDo = function (data,int) {    
-                  $scope.prova = shared.getTravels(data); 
-                };
-              
-            $scope.callAsyncSearch = function (data) {
-                  var promise = $scope.asyncSearch(data);
-                  promise.finally(function(data) {        
-                     // $scope.$apply(); 
-                      console.log("check 1 scope prova = " +$scope.prova);
-                       
-                   /*  
-                      $scope.prova = shared.getData(); 
-                    showList(); */
-                      console.log("check 1/2 scope prova = " +$scope.prova);
-                      //alert('Success: ' + greeting);
-                  }, function(reason) {
-                      alert('Failed: ' + reason);
-                      
-                  }, function(update) {
-                      alert('Got notification: ' + update);
-                  });
-              };
+           
             
             $scope.search = function(data) { 
+                $scope.prova =null;
+                $scope.showHead = false;
               //  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
              
                // var when = $('#datepicker').datepicker({ dateFormat: "yy-mm-dd" }).val();
@@ -180,29 +135,25 @@
                    
                  //   console.log("contenuto dello scope prima della showlist " + $scope.prova);
                  //   showList();
-                     
-               
-                   
-          
-               
                 shared.getTravels(data).then(function(promise) {
-                     var prova = shared.getData();
-                     for(var i in prova.return) {            
-                         if(isArray(prova.return[i])) {
-                             $scope.prova = prova;
-                             
-                             console.log("is Array");
-                             $scope.isArray = true;
-                         }
-                         else {
-                             $scope.isSingleElement = true;
-                             console.log("is Single Element");
-                             $scope.prova = prova.return;
-                             
-                         }
+                     var prova = shared.getData(); 
+                     
+                     if(isArray(prova.return)) {
+                         $scope.prova = prova.return;   
+                         console.log("is Array");
+                         $scope.isArray = true;
                      }
+                     else {
+                         $scope.isSingleElement = true;
+                         console.log("is Single Element");
+                         
+                         $scope.prova=  prova;
+                         
+                         }
+                     
                      console.log("scope prova is " + $scope.prova);
-                 });
+                     showList();
+                });
                
           
             };   
@@ -225,123 +176,6 @@
             };
      
 
-            // build SOAP request
-            $scope.SOAPtravels = function (data) { 
-                //get WSDL dal serviceCtrl
-                if(gotWSDL==false){
-                    shared.getWSDL();
-                    gotWSDL=true;
-                }               
-                
-             var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open('POST', $scope.SOAPbase, true);  
-                                
-                                      
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 200) {                     
-                           
-                           var answer= xmlhttp.responseText;
-                           
-                           var jsonObj = x2js.xml_str2json( answer );
-                      
-                            $scope.$apply(function () {
-                                
-                                if (data.when != null) { 
-                                    $scope.travelList = jsonObj.Envelope.Body.getTravelsFromResponse.return;
-                                }
-                                else {
-                                    $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
-                                }
-                               // console.log($scope.travelList);
-                               
-                               shared.setData($scope.travelList);
-                               //$scope.prova = shared.getData();
-                               //$scope.reload2($scope.prova);
-                               showList();
-                              
-                            });
-                        } 
-                    }
-                };
-                
-                
-                
-                var sr;
-                var action;
-                var opName;
-                if (data.when != null) {
-                    opName = "getTravelsFrom";
-                    sr = SOAPhead +
-                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<start>'+ data.from +'</start>' +
-                            '<end>'+ data.to +'</end>' +
-                            '<date>'+ data.when +'</date>' +
-                            '</ns0:' + opName + '>'+
-                            SOAPtail; 
-                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
-                    
-                }
-                else {
-                    opName = "getTravels";
-                    sr = SOAPhead +
-                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<start>'+ data.from +'</start>' +
-                            '<end>'+ data.to +'</end>' +
-                            '</ns0:' + opName + '>'+
-                            SOAPtail;
-                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
-                    
-                }
-                 
-            // Send the POST request                 
-            
-            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-            xmlhttp.setRequestHeader('SOAPAction',action);           
-            xmlhttp.send(sr);
-            // send request
-            // ... 
-                /*
-            $timeout(function () {
-            $scope.travelList = shared.getTravels(data);    
-            $scope.showHead = true;
-            console.log($scope.travelList);
-                      }, 30);*/
-            };
-    
-          
-            $scope.getDrivers2 = function (data) {
-                console.log("TRAVEL ID cercato " + data);
-                var xmlhttp = new XMLHttpRequest();                  
-                xmlhttp.open('POST', $scope.SOAPbase, true); 
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 200){  
-                            var jsonObj = x2js.xml_str2json(xmlhttp.responseText);
-                         $scope.$apply(function () {
-                                $scope.new = jsonObj.Envelope.Body.getDriverFromTravelResponse.return;
-                               //console.log (jsonObj);
-                               //console.log($scope.relatedDriver);
-                                $scope.showHead = true;
-                         });
-                        }
-                    }
-                }; 
-                var sr;
-                var action;
-                var opName;
-                opName = "getDriverFromTravel";
-                sr = SOAPhead +
-                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                        '<travelID>'+ data+'</travelID>' +
-                        '</ns0:' + opName + '>'+
-                        SOAPtail; 
-                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
-                xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-                xmlhttp.setRequestHeader('SOAPAction',action);
-                xmlhttp.send(sr);
-                // send request
-            };
             
             
           
