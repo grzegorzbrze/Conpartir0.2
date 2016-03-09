@@ -18,10 +18,6 @@ var myapp = angular.module('myApp',
   {   templateUrl: "pages/about.html", controller: "MainController" })
           .when("/account",
   {   templateUrl: "pages/account.html", controller: "MainController" })
-          .when("/taxis", 
-  {   templateUrl: "pages/taxis.html", controller: "PostController" })
-          .when("/cars",
-  {   templateUrl: "pages/cars.html", controller: "PostController"   })
           .when("/signup",
   {   templateUrl: "pages/signup.html", controller: "LoginController" })
           .when("/login",

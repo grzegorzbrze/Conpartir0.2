@@ -1,0 +1,46 @@
+<div class="panel-body" style="margin-right: auto; margin-left: auto">
+      <form novalidate class="input-group" style="margin-right: auto; margin-left: auto">
+          <h2></h2>
+          <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">Email</span>
+              <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
+          </div>  
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon2">Password</span>
+              <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
+          </div>
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon3">RePassword</span>
+              <input class="form-control" type="password" ng-model="user.passRe" aria-describedby="basic-addon3" name="password2">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon4">Nome</span>
+              <input name="name" class="form-control" type="text" ng-model="user.name" aria-describedby="basic-addon4">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon5">Cognome</span>
+              <input name="name" class="form-control" type="text" ng-model="user.surname" aria-describedby="basic-addon5">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon6">Età</span>
+              <input name="name" class="form-control" type="text" ng-model="user.age" aria-describedby="basic-addon6">
+          </div>   
+          <p></p>
+          <div class="radio-inline-panel">
+              <label>Gender: </label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="user.gender" ng-value="'M'"/>M</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="user.gender" ng-value="'F'"/>F</label>
+          </div>
+          <p></p>
+          <button class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Sign up</button>
+          
+          <p></p>
+          <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
+      </form>
+
+</div>

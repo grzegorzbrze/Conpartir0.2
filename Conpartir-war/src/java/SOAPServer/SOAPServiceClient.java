@@ -169,6 +169,44 @@ public class SOAPServiceClient {
         return prova;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "createCarTravel")
+    @Oneway
+    public void createCarTravel(@WebParam(name = "email") String email, @WebParam(name = "id") Long id , @WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "when") String when, @WebParam(name = "freeSeats") int freeSeats) {
+        Client clientInfo = new Client();
+        Driver driverInfo = new Driver();
+        Travel nuovoViaggio = new Travel();
+        driverInfo = driverRef.getDriver(id);
+        clientInfo = clientRef.getClient(email);
+        
+        Date data = null;       
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try { 
+            data = format.parse(when); 
+        }
+        catch (Exception e) {
+        }
+        nuovoViaggio.setClient_id(clientInfo.getId());
+        nuovoViaggio.setFreeSeats(freeSeats);
+        nuovoViaggio.setDestination(to);
+        nuovoViaggio.setOrigin(from);
+        nuovoViaggio.setData(data);
+        nuovoViaggio.setDriver_id(id);
+        //TODO: NUOVOVIAGGIO.SETTIME
+        travelRef.createTravel(nuovoViaggio);
+       
+    }
+
+    /**
+     * Web service operation
+    
+    @WebMethod(operationName = "createTaxiTravel")
+    @Oneway
+    public void createTaxiTravel(@WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "day") String day, @WebParam(name = "hour") String hour) {
+    }
+ */
 
     
 }

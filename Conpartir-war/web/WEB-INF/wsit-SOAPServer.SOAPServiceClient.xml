@@ -19,6 +19,8 @@
     <message name="getDriverIfResponse"/>
     <message name="getDriverFromTravel"/>
     <message name="getDriverFromTravelResponse"/>
+    <message name="createCarTravel"/>
+    <message name="createCarTravelResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -48,6 +50,10 @@
             <input message="tns:getDriverFromTravel"/>
             <output message="tns:getDriverFromTravelResponse"/>
         </operation>
+        <operation name="createCarTravel">
+            <input message="tns:createCarTravel"/>
+            <output message="tns:createCarTravelResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -76,6 +82,10 @@
             <output/>
         </operation>
         <operation name="getDriverFromTravel">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="createCarTravel">
             <input/>
             <output/>
         </operation>
@@ -197,6 +207,30 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getTravelDriver_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createTaxiTravel_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createTaxiTravel_Output_Policy">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sp:EncryptedParts>

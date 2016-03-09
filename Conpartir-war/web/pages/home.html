@@ -5,10 +5,11 @@
     </div>
     <div class="panel-body">    
         <h2>Ricerca rapida viaggio</h2>
+        <small>Dicci dove vuoi andare oppure passa alla <a href="#/list">ricerca avanzata</a></small>
         <div class="form-horizontal"> 
             <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>            
             <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/>
-            <input name="giorno"  id="datepicker" type=""  ng-model="data.when"/>  
+            
             <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
         </div>    
     </div>
