@@ -1,15 +1,34 @@
-<div class="panel panel-heading">
+<div class="panel panel-heading" >
   <h2>Benvenuto!</h2>
   <p>Da qui puoi iniziare la ricerca dei passaggi.</p>
-  <div class="form-horizontal"> 
-      <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/> 
-      
-      <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/> 
-     
-      <input name="giorno" class="input-group-lg" type=""  ng-model="data.when"/>  
   
-  <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
-   </div> 
+  <div class="panel panel-body">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a aria-controls="cars" role="tab" data-toggle="tab" ng-click="tab('car')">Cars</a></li>
+    <li role="presentation">
+        <a aria-controls="taxis" role="tab" data-toggle="tab"  ng-click="tab('taxi')">Taxi</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="cars" ng-show="showCar">
+        <div class="form-horizontal"> 
+            <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
+            <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/>     
+            <input name="giorno"  id="datepicker"/>   
+             <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
+            
+        </div> 
+    </div>
+    <div role="tabpanel" class="tab-pane" id="taxis" ng-show="showTaxi">...</div>
+  </div>
+
+</div>
+  
+  
   
  
 </div>
@@ -18,9 +37,15 @@
    <div class="scrollable-content">
     <div class="list-group">
         <h3 ng-show="showHead">Proposte di viaggi da <b>{{data.from}}</b> a <b>{{data.to}}</b></h3>
-      <a ng-repeat=" item in travelList" class="col-md-12" ng-click="go(item.travel_id)">
+      <a ng-repeat=" item in prova" class="col-md-12" ng-click="go(item.travel_id)">
           <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
       </a>
+        
+    <!--     <a ng-show="isSingleElement" ng-model="prova" class="col-md-12" ng-click="go(item.travel_id)">
+          <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
+      </a>
+    
+    <span ng-repeat=" item in prova" >{{item.data}}</span> -->
 
     </div>
    </div>

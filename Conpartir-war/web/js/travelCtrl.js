@@ -8,8 +8,14 @@
   'use strict';
 
   var modTravel = angular.module('travelModule', ['ngRoute']);
-        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location', 'shared',
-        function($scope,$http, $route, $routeParams, $location, shared) {
+        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location','$timeout','$q','shared',
+        function($scope,$http, $route, $routeParams, $location,$timeout,$q, shared) {
+            
+             $(document).ready(function() {
+                $( "#datepicker" ).datepicker({
+                    dateFormat: "yyyy-mm-dd"
+                });
+            });
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
@@ -18,7 +24,16 @@
             $scope.showHead = false;
             $scope.new;
             $scope.relatedDriver;
-            var x2js = new X2JS();
+            $scope.prova;
+            $scope.showCar = true;
+            $scope.showTaxi = false;           
+            
+            var gotWSDL = false;
+            
+            var callback = function(){
+                $scope.$apply();
+            };
+            
             
             $scope.go = function (data) {
                 shared.setData($scope.travelList);
@@ -26,6 +41,13 @@
                 $location.search("number",data);
                 shared.setData($scope.travelList);
                 $route.reload();
+            };
+            
+            
+            
+            $scope.tab = function(data) {
+                if (data=="car") {$scope.showCar = true, $scope.showTaxi = false; };
+                if (data=="taxi") {$scope.showTaxi = true, $scope.showCar = false; }
             };
             
             $scope.getBack = function () {
@@ -49,46 +71,169 @@
                            '<soap:Body>';
             var SOAPtail =  '</soap:Body>' +
                             '</soap:Envelope>';
-              
-            
-            //Metodo che prende il WSDL (descrittore di servizio) del SOAPService. 
-            //Da invocare ogni volta che viene fatta una richiesta SOAP
-            //TODO: Mettere il metodo in un service a parte
-            var getWSDL = function () {  
-                var xml = new XMLHttpRequest();
-                xml.open('GET', "http://localhost:8080/Conpartir-war/SOAPServiceClient?wsdl", true); 
-                 var s = SOAPhead + SOAPtail;
-                       
-                xml.onreadystatechange = function () {
-                   /* if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 200) {
-                            alert('done. use firebug/console to see network response');
-                        }
-                    }*/
-                }; 
-                xml.setRequestHeader('Content-Type', 'text/xml');
-                xml.send(s);                
-            };
-            
+             
              $scope.reload = function () {
                   $route.reload();
               };
               
-            $scope.search = function(data) {
-                              
-                $scope.SOAPtravels(data);
-            };                
-          
+           var okToGreet = function (name) {
+                  return true;
+              };
+              
+              $scope.asyncGreet = function(name) {
+                  var deferred = $q.defer();
+                  setTimeout(function() {
+                      deferred.notify('About to greet ' + name + '.');
+                      if (okToGreet(name)) {
+                          deferred.resolve('Hello, ' + name + '!');
+                      } else {
+                          deferred.reject('Greeting ' + name + ' is not allowed.');
+                      }                     
+                  }, 1000);
+                  return deferred.promise;
+              };
+              
+              $scope.name;
+
+              $scope.callAsyncGreet = function (data) {
+                  $scope.promise = $scope.asyncGreet(data);
+                  $scope.promise.then(function(greeting) {
+                      alert('Success: ' + greeting);
+                  }, function(reason) {
+                      alert('Failed: ' + reason);
+                      $scope.nome = "niente";
+                  }, function(update) {
+                      alert('Got notification: ' + update);
+                  });
+              };
+
+            $scope.asyncSearch = function(data) {
+                
+                var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
+                console.log("data formattata " +when);
+                if (when !== null && when != "") {             
+                    var month = when.slice(0,2);
+                    var day = when.slice(3,5);
+                    var year= when.slice(6,10);
+                    when = day + '-' + month + '-' + year;
+             
+                    data.when = when;
+                }
+                
+                console.log("formato richiesta " + data.to + data.from + " " + data.when); 
+                
+                
+                  var deferred = $q.defer();
+               
+                    deferred.resolve(toDo(data), function() {$scope.$apply(); });
+                                             
+                 /*  return $q(function(resolve, reject) {
+                     
+                       $timeout (function() { showList(); }, 50);
+
+                   }); */
+                  return deferred.promise;
+              };   
+              
+              var toDo = function (data,int) {    
+                  $scope.prova = shared.getTravels(data); 
+                };
+              
+            $scope.callAsyncSearch = function (data) {
+                  var promise = $scope.asyncSearch(data);
+                  promise.finally(function(data) {        
+                     // $scope.$apply(); 
+                      console.log("check 1 scope prova = " +$scope.prova);
+                       
+                   /*  
+                      $scope.prova = shared.getData(); 
+                    showList(); */
+                      console.log("check 1/2 scope prova = " +$scope.prova);
+                      //alert('Success: ' + greeting);
+                  }, function(reason) {
+                      alert('Failed: ' + reason);
+                      
+                  }, function(update) {
+                      alert('Got notification: ' + update);
+                  });
+              };
             
-            $scope.prova = {};
+            $scope.search = function(data) { 
+              //  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+             
+               // var when = $('#datepicker').datepicker({ dateFormat: "yy-mm-dd" }).val();
+               // when = when.replace('/','-');
+               // when = when.replace('/','-');
+                var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
+                console.log("data formattata " +when);
+                if (when !== null && when != "") {             
+                    var month = when.slice(0,2);
+                    var day = when.slice(3,5);
+                    var year= when.slice(6,10);
+                    when = day + '-' + month + '-' + year;
+             
+                    data.when = when;
+                }
+                
+                console.log("formato richiesta " + data.to + data.from + " " + data.when);  
+               
+                   
+                 //   console.log("contenuto dello scope prima della showlist " + $scope.prova);
+                 //   showList();
+                     
+               
+                   
+          
+               
+                shared.getTravels(data).then(function(promise) {
+                     var prova = shared.getData();
+                     for(var i in prova.return) {            
+                         if(isArray(prova.return[i])) {
+                             $scope.prova = prova;
+                             
+                             console.log("is Array");
+                             $scope.isArray = true;
+                         }
+                         else {
+                             $scope.isSingleElement = true;
+                             console.log("is Single Element");
+                             $scope.prova = prova.return;
+                             
+                         }
+                     }
+                     console.log("scope prova is " + $scope.prova);
+                 });
+               
+          
+            };   
+           $scope.isArray = false; 
+           $scope.isSingleElement = false;
+            
+            var isArray = function(what) {              
+                return Object.prototype.toString.call(what) === '[object Array]';
+
+            };
+            
+            var showList = function() {
+                
+                 //$scope.prova = shared.getData2(callback);
+                 
+                $timeout(function() { $scope.showHead = true;
+                
+                console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
+            },60);
+            };
      
 
             // build SOAP request
             $scope.SOAPtravels = function (data) { 
+                //get WSDL dal serviceCtrl
+                if(gotWSDL==false){
+                    shared.getWSDL();
+                    gotWSDL=true;
+                }               
                 
-               getWSDL();                
-                
-                var xmlhttp = new XMLHttpRequest();
+             var xmlhttp = new XMLHttpRequest();
                 xmlhttp.open('POST', $scope.SOAPbase, true);  
                                 
                                       
@@ -101,14 +246,26 @@
                            var jsonObj = x2js.xml_str2json( answer );
                       
                             $scope.$apply(function () {
-                                $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
+                                
+                                if (data.when != null) { 
+                                    $scope.travelList = jsonObj.Envelope.Body.getTravelsFromResponse.return;
+                                }
+                                else {
+                                    $scope.travelList = jsonObj.Envelope.Body.getTravelsResponse.return;
+                                }
                                // console.log($scope.travelList);
-                                                             
-                               $scope.showHead = true;
+                               
+                               shared.setData($scope.travelList);
+                               //$scope.prova = shared.getData();
+                               //$scope.reload2($scope.prova);
+                               showList();
+                              
                             });
                         } 
                     }
                 };
+                
+                
                 
                 var sr;
                 var action;
@@ -143,59 +300,15 @@
             xmlhttp.setRequestHeader('SOAPAction',action);           
             xmlhttp.send(sr);
             // send request
-            // ...
-        
+            // ... 
+                /*
+            $timeout(function () {
+            $scope.travelList = shared.getTravels(data);    
+            $scope.showHead = true;
+            console.log($scope.travelList);
+                      }, 30);*/
             };
-            
-            $scope.getDrivers = function (data) {
-                var item;
-                var i = 0;
-                console.log("TRAVEL ID IS " + data[i].travel_id);
-                
-                var max = Object.keys(data).length;
-                for (i=0;i<max;i++) {
-                    console.log("TRAVEL ID cercato " + data[i].travel_id);
-                                       
-                    var xmlhttp = new XMLHttpRequest();              
-                    xmlhttp.open('POST', $scope.SOAPbase, true);  
-                                
-                                      
-                    xmlhttp.onreadystatechange = function () {
-                     if (xmlhttp.readyState == 4) {
-                            if (xmlhttp.status == 200){                                
-                                var jsonObj = x2js.xml_str2json(xmlhttp.responseText);
-                                                                                                                          
-                                    $scope.relatedDrivers = jsonObj.Envelope.Body.getDriverFromTravelResponse.return; 
-                                   
-                                   console.log("check 1" + $scope.relatedDrivers);
-                                    
-                                  // //  console.log("check 1" + $scope.relatedDrivers.return[1].gender); 
-                               //  $scope.$apply(function () { });
-                                   // $scope.travelList.return[i].driver = jsonObj.Envelope.Body.getDriverFromTravelResponse;
-                                
-                            }
-                        }
-                    }; 
-                    var sr;
-                    var action;
-                    var opName;
-                    opName = "getDriverFromTravel";
-                    sr = SOAPhead +
-                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<travelID>'+ data[i].travel_id +'</travelID>' +
-                            '</ns0:' + opName + '>'+
-                            SOAPtail; 
-                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;   
-                    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-                    xmlhttp.setRequestHeader('SOAPAction',action);
-                    xmlhttp.send(sr);
-                    // send request
-                    
-                    i++;
-                };             
-                
-                console.log( "check 2" + $scope.relatedDrivers);
-            };
+    
           
             $scope.getDrivers2 = function (data) {
                 console.log("TRAVEL ID cercato " + data);
@@ -229,6 +342,8 @@
                 xmlhttp.send(sr);
                 // send request
             };
+            
+            
           
      
         }]);
