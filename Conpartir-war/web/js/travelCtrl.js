@@ -8,8 +8,8 @@
   'use strict';
 
   var modTravel = angular.module('travelModule', ['ngRoute']);
-        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location','$timeout','$q','shared',
-        function($scope,$http, $route, $routeParams, $location,$timeout,$q, shared) {
+        modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location','$timeout','shared',
+        function($scope,$http, $route, $routeParams, $location,$timeout, shared) {
             
              $(document).ready(function() {
                 $( "#datepicker" ).datepicker({
@@ -75,7 +75,7 @@
              $scope.reload = function () {
                   $route.reload();
               };
-              
+          /*    
            var okToGreet = function (name) {
                   return true;
               };
@@ -91,7 +91,7 @@
                       }                     
                   }, 1000);
                   return deferred.promise;
-              };
+              }; 
               
               $scope.name;
 
@@ -105,7 +105,7 @@
                   }, function(update) {
                       alert('Got notification: ' + update);
                   });
-              };
+              };*/
 
      
               

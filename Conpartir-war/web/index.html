@@ -26,6 +26,7 @@
     <script src="frameworks/angularJs/angular-route.min.js"></script>    
     <script src="frameworks/angularJs/angular-touch.min.js"></script>
     <script src="frameworks/angularJs/angular-animate.min.js"></script>
+    <script src="frameworks/angularJs/angular-cookies.js"></script>
         
     <!-- Mobile Angular UI 
     <script src="frameworks/mobileAngularUI/js/mobile-angular-ui.min.js"></script>   
@@ -38,7 +39,9 @@
     <script src="js/loginCtrl.js"></script>
     <script src="js/travelCtrl.js"></script>
     <script src="js/detailCtrl.js"></script>
-    <script src="js/serviceCtrl.js"></script> 
+    <script src="js/accountCtrl.js"></script>
+    <script src="js/serviceCtrl.js"></script>
+    <script src="js/authCtrl.js"></script> 
     <script src="js/sliderCtrl.js"></script> 
     <script src="js/datepickerCtrl.js"></script> 
     <script src="js/homeCtrl.js"></script>
@@ -64,8 +67,10 @@
 		</div>
         <div id="navbar" class="navbar-collapse collapse">
             <div class="navbar-form navbar-right">
-                <div class="form-group">
-                    <a href="#/login"> <button class="btn btn-success" id="loginbutton">Login</button></a>
+                <div class="form-group" ng-init="checkAuth()">
+                    <a href="#/login" ng-show="loginShow"> <button class="btn btn-success" id="loginbutton">Login</button></a>
+                    <a href="#/account" ng-show="isAuthorized"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
+                
                 </div>
             </div>           
         </div>       
@@ -91,7 +96,7 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
-        <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/carousel.js"></script>
     
     <script src="frameworks/xml2json.min.js"></script>

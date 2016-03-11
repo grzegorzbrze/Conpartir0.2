@@ -39,6 +39,42 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
             },
             
+            getClient: function (email) {                
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "getClient";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ email +'</email>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getClientResponse;
+                    console.log("oggetto ottenuto = " );
+                    console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;           
+                    return res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                     
+            },
+            
             getTravels: function (input) {
                 var res;
                 var sr;
@@ -103,114 +139,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      });
                      
                      return promise;
-  
-                
-                
-           
-            }, /*    .then(function successCallback(response) {
-                    // this callback will be called asynchronously
-                    //     // when the response is available
-                     
-                           
-                           var jsonObj = x2js.xml_str2json( response );
-                    
-                    if (data.when != null) { 
-                                    res = jsonObj.Envelope.Body.getTravelsFromResponse.return;
-                                    console.log("oggetto ottenuto = " );
-                                    console.log(res);
-                                    obj = res;
-                                    return obj;
-                                    
-                                }
-                                else {
-                                    res = jsonObj.Envelope.Body.getTravelsResponse.return; 
-                                     console.log("oggetto ottenuto = " );
-                                    console.log(res);
-                                    obj = res;
-                                    return obj;
-                                }
-                 }, function errorCallback(response) {
-                     // called asynchronously if an error occurs
-                     //     // or server returns response with an error status.
-                 });
-                                
-                
-                
-                
-           
             }, 
-            
-            
-            
-            getTravels2: function (data) {
-                var res;
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open('POST', SOAPbase, true);  
-                                
-                                      
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 200) {                     
-                           
-                           var answer= xmlhttp.responseText;
-                           
-                           var jsonObj = x2js.xml_str2json( answer );
-                         
-                                if (data.when != null) { 
-                                    res = jsonObj.Envelope.Body.getTravelsFromResponse.return;
-                                    console.log("oggetto ottenuto = " );
-                                    console.log(res);
-                                    obj = res;
-                                    return obj;
-                                    
-                                }
-                                else {
-                                    res = jsonObj.Envelope.Body.getTravelsResponse.return; 
-                                     console.log("oggetto ottenuto = " );
-                                    console.log(res);
-                                    obj = res;
-                                    return obj;
-                                }
-                               // console.log($scope.travelList);
-                        } 
-                    }
-                };
-                
-                var sr;
-                var action;
-                var opName;
-                if (data.when != null) {
-                    opName = "getTravelsFrom";
-                    sr = SOAPhead +
-                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<start>'+ data.from +'</start>' +
-                            '<end>'+ data.to +'</end>' +
-                            '<date>'+ data.when +'</date>' +
-                            '</ns0:' + opName + '>'+
-                            SOAPtail; 
-                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
-                    
-                }
-                else {
-                    opName = "getTravels";
-                    sr = SOAPhead +
-                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<start>'+ data.from +'</start>' +
-                            '<end>'+ data.to +'</end>' +
-                            '</ns0:' + opName + '>'+
-                            SOAPtail;
-                    action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
-                    
-                }
-                 
-            // Send the POST request                 
-            
-            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-            xmlhttp.setRequestHeader('SOAPAction',action);           
-            xmlhttp.send(sr);
-            // send request
-            // ...
-            }, */ /*  */
             
             getData: function () {
                 // console.log(obj + ' was returned as data');

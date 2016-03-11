@@ -20,7 +20,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
          
         return {
             
-            isAuth: function() {
+            isAuthenticated: function() {
                 var res=false;
                 var cookie = sessionStorage.getItem('conpCookie');
                 if(cookie !== null) res=true;

@@ -5,8 +5,8 @@
  */
 
 var myapp = angular.module('myApp', 
-['ngRoute', 'ngTouch' , 'ngAnimate',
-    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'serviceModule']);
+['ngRoute', 'ngTouch' , 'ngAnimate', 'ngCookies',
+    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'accountModule' , 'serviceModule', 'authModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -17,7 +17,7 @@ var myapp = angular.module('myApp',
           .when("/about",
   {   templateUrl: "pages/about.html", controller: "MainController" })
           .when("/account",
-  {   templateUrl: "pages/account.html", controller: "MainController" })
+  {   templateUrl: "pages/account.html", controller: "AccountController" })
           .when("/signup",
   {   templateUrl: "pages/signup.html", controller: "LoginController" })
           .when("/login",
@@ -37,11 +37,25 @@ var myapp = angular.module('myApp',
 
 
 
-  myapp.controller("MainController", ['$scope', '$http', 
-      function($scope, $http) {
+  myapp.controller("MainController", ['$scope', '$http', 'auth',
+      function($scope, $http, auth) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
+      $scope.loginShow = true;
+      
+      $scope.isAuthorized;
+      
+      $scope.checkAuth = function () {
+          var res = auth.isAuthenticated();
+          if (res === true){ 
+              $scope.isAuthorized = true; 
+              $scope.loginShow = false;
+          }
+          else $scope.isAuthorized = false;
+          
+      };
+      
       
       //Inizio carousel della home
      

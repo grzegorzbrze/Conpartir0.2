@@ -7,9 +7,9 @@
 (function () {
   'use strict';
 
-  var modLogin = angular.module('loginModule', ['ngRoute']);
-        modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location', '$window',
-        function($scope,$http,$routeParams,$location,$window) {
+  var modLogin = angular.module('loginModule', ['ngRoute','ngCookies']);
+        modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location','$cookies','auth',
+        function($scope,$http,$routeParams,$location,$cookies,auth) {
             
             $scope.home = function () {
                 
@@ -29,6 +29,7 @@
                     $scope.ifAlert = true;
                 }
                 else $scope.servletCall();
+                
             };      
             
             $scope.FBLogin = function () {
@@ -73,17 +74,15 @@
                 if (flag === false) $scope.servletCall();  
             };  
             
-      /*      function parseCookies (request) {
-                var list = {},
-                rc = request.headers.cookie;
-                console.log('req head cookie' + request.headers);
-                console.log('req head cookie' + rc);
-                rc && rc.split(';').forEach(function( cookie ) {
-                    var parts = cookie.split('=');
-                    list[parts.shift().trim()] = decodeURI(parts.join('='));
-                });
-                return list;
-            } */
+                  
+            // example of checking whether cookie is enabled
+            var checkCookieEnabled = function () {
+                if (navigator.cookieEnabled) {
+                    alert("yes cookies");
+                } else {
+                    alert("no cookies");
+                }
+            };
             
             $scope.servletCall = function (){
                 
@@ -93,42 +92,39 @@
                     url: 'Registration',
                     headers: {'Content-Type': 'application/json'},
                     data:  $scope.master
-                }).then(function successCallback(response) {  
+                })
+                        .success( function (data, status, header) {
+                            //checkCookieEnabled();
+                            
+                            console.log("doc method for reading cookie " + document.cookie);
+                           
+                            var ckValue = $cookies.get('conpCookie');
+                            auth.saveCookie('conpCookie',ckValue);
+                            //sessionStorage.setItem('conpCookie', ckValue);
+                            //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
+                        })
+                        
+                        .then(function successCallback(data, status, header) {  
                     // this callback will be called asynchronously
                     // when the response is available
-                    $scope.status=response.data;
-                    console.log(response);
+                    $scope.status=data.data;
+                    console.log(data);
                     console.log($scope.status);
                     var flag = $scope.status.charAt(1);
                     if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
-                    
-                    var cookieName = "somecookie";
-                    var cookies = []; 
-                    cookies = parseCookies(response);
-                    
-                    console.log('cookies' + cookies);
-                    //console.log(cookies[0].name + cookies[0].value);
-                   /* if (cookies != null)
-                    {
-                        for(item in cookies)
-                        {
-                            Cookie cookie = cookies[i];
-                            if (cookieName.equals(cookie.getName()))
-                            {
-                                doSomethingWith(cookie.getValue());
-                            }
-                            else  {     }
-                        }
+                    else { 
+                        $location.path('/account');
+                        $location.search('email',$scope.master.email);
                     }
-                   */
+                    //controllo del servizio auth
+                    //console.log(auth.isAuth());
                     
                 }, function errorCallback(response) {
                     // called asynchronously if an error occurs
                    // or server returns response with an error status.
                       });
                   };
-            //$window.sessionStorage.token = data.token;
-          
+            
      
         }]);
 

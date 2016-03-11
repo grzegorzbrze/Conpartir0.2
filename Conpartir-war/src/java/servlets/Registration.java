@@ -151,8 +151,10 @@ public class Registration extends HttpServlet {
                  if (password.equals(clientManager.getClient(email).getPass())) {
                      //login corretto                     
                      res = "Login effettuato con successo!";
-                     Cookie userCookie = new Cookie("name","value");
-                     userCookie.setMaxAge(60);
+                     
+                     Cookie userCookie = new Cookie("conpCookie","randomValueHere");
+                     //imposta la validità dei cookie a 5 minuti
+                     userCookie.setMaxAge(60*5);
                      response.addCookie(userCookie);
                  }
                  else {

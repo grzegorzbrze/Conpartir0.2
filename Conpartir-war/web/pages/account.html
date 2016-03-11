@@ -1,8 +1,74 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" ng-init="onLoad()">
   <div class="panel-heading">
     <h3 class="panel-title">Area Personale</h3>
   </div>
   <div class="panel-body">
-    Panel content
+      
+        <div >           
+            <div id="info">
+                <h3 id="name">Ciao {{clientInfo.name}}</h3>
+                <small> Qui puoi rivedere le informazioni relative al tuo account.</small>
+                <br />
+            </div>
+            <!--<blockquote id="foto" style="align:right"> user foto </blockquote>-->
+            <button type="button" class="btn btn-primary btn-lg" onclick="modify()">
+                Modifica o aggiorna le tue informazioni personali.
+            </button>
+            <br />
+            <button type="button" class="btn btn-primary btn-lg" onclick="pass()">
+                Offri un passaggio.
+            </button>
+        </div>
+        <br />       
+
+        <div class="proj-account">
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#profile" aria-controls="home" role="tab" data-toggle="tab">Info Personali</a></li>
+                    <li role="presentation"><a href="#carProfile" aria-controls="profile" role="tab" data-toggle="tab">Info Veicolo</a></li>
+                    <li role="presentation"><a href="#feedback" aria-controls="messages" role="tab" data-toggle="tab">Storico Feedback</a></li>
+                    </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="profile">
+                        <dl class="dl-horizontal" ng-model="clientInfo">
+                            <dt>Nome e Cognome</dt>
+                            <dd>{{clientInfo.name}} {{clientInfo.surname}}</dd>
+                            <dt>Sesso</dt>
+                            <dd>{{clientInfo.gender}}</dd>
+                            <dt>Età:</dt>
+                            <dd>{{clientInfo.age}} anni</dd>
+                            <dt>Email</dt>
+                            <dd>{{clientInfo.email}}</dd>
+                       
+
+                        </dl>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="carProfile">
+                        <dl class="dl-horizontal">
+                            <dt>Modello:</dt>
+                            <dd>...</dd>
+                            <dt>Colore:</dt>
+                            <dd>...</dd>
+                            <dt>Posti a sedere:</dt>
+                            <dd>...</dd>
+                            <dt>Grandezza bagagliaio:</dt>
+                            <dd>...</dd>
+
+                        </dl>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="feedback">...</div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+
   </div>
 </div>
+
+
