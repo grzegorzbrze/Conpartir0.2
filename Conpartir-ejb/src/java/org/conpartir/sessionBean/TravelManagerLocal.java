@@ -21,9 +21,9 @@ public interface TravelManagerLocal {
     
     /**
      * Permette di creare una tupla nel database tramite un oggetto di tipo post
-     * @param post
+     * @param travel
      */
-    public void createTravel(Travel post);
+    public void createTravel(Travel travel);
     
     /**
      * Permette di creare una tupla nel database tramite i valori esplici
@@ -48,7 +48,7 @@ public interface TravelManagerLocal {
      * Il metodo risponde alla ricerca per destinazione, data e punto di partenza
      * Restituisce una lista di viaggi possibili
      */
-    public List<Travel> searchByOriginDestinationDate(Date data, String destination, String origin);
+    public List<Travel> searchByOriginDestinationDate(Date data, String origin, String destination);
     
     /**
      * Il metodo risponde alla ricerca per destinazione, ora e punto di partenza
@@ -80,5 +80,8 @@ public interface TravelManagerLocal {
      */    
     public Driver getInfoDriverEqualClient(Long travel_id);
     
+    /**
+     * Il metodo aggiungere passeggero al viaggio se non ne fa già parte
+     */
     public boolean addPassenger(Long travel_id, Long passengerID);
 }

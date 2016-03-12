@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -55,6 +53,10 @@ public class Taxi implements Serializable {
         return taxi_id;
     }
 
+    public void setTaxi_id(Long taxi_id) {
+        this.taxi_id = taxi_id;
+    }
+    
     public Long getCreator_id() {
         return creator_id;
     }

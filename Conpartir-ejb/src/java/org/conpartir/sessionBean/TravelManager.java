@@ -5,7 +5,6 @@
  */
 package org.conpartir.sessionBean;
 
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

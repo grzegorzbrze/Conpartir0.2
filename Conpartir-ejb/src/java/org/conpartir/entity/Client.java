@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Client implements Serializable, User {
+public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column (name = "CLIENT_ID")

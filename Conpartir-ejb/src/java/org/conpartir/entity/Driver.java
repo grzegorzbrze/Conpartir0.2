@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Driver implements Serializable, User {
+public class Driver implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Column (name = "DRIVER_ID")
@@ -48,6 +48,10 @@ public class Driver implements Serializable, User {
         return driver_id;
     }
 
+    public void setDriver_id(Long driver_id) {
+        this.driver_id = driver_id;
+    }
+    
     public String getCarModel() {
         return carModel;
     }

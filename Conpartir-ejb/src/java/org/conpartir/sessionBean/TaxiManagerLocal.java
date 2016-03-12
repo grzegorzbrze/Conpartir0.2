@@ -44,7 +44,7 @@ public interface TaxiManagerLocal {
      * Il metodo risponde alla ricerca per destinazione, data e punto di partenza
      * Restituisce una lista di taxi possibili
      */
-    public List<Taxi> searchByOriginDestinationDate(Date data, String destination, String origin);
+    public List<Taxi> searchByOriginDestinationDate(Date data, String origin, String destination);
     
     /**
      * Il metodo risponde alla ricerca per destinazione, ora e punto di partenza
@@ -52,6 +52,9 @@ public interface TaxiManagerLocal {
      */
     public List<Taxi> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination);
     
+    /**
+     * Il metodo restituisce un taxi che ha l'id pari a taxi_id
+     */
     public Taxi getTaxi(Long taxi_id);
     
 }
