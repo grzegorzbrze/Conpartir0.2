@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -231,15 +232,19 @@ public class TestServlet extends HttpServlet {
             out.println("<title>Servlet TestServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            test();
+            //test();
                         
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
+        RequestDispatcher rd = request.getRequestDispatcher("/ProvaFB.html");
+        rd.include(request, response);
     }
 
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
