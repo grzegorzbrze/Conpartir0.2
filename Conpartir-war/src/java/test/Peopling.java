@@ -10,11 +10,13 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.conpartir.entity.Comment;
 import org.conpartir.entity.Driver;
 import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.ClientManagerLocal;
@@ -68,7 +70,7 @@ public class Peopling extends HttpServlet {
     }
 
     private int dimensione = 14;
-    
+    String[] email = new String[dimensione];
     
     
     
@@ -78,7 +80,6 @@ public class Peopling extends HttpServlet {
         String[] cognomi = {"Rossi", "Russo", "Ferrari", "Neri", "Bianchi", "Rosso", "Esposito", 
             "Bianchi", "Romano", "Colombo", "Ricci", "Greco", "Conti", "Lombardi"};
         char[] genders = {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'F', 'F', 'F', 'F'};
-        String[] email = new String[dimensione];
         int[] eta = new int[dimensione];
         String[] paths = new String[dimensione];
         
@@ -247,7 +248,7 @@ public class Peopling extends HttpServlet {
             System.out.println("ID_clienti: "+tempClient);
         }*/
         
-        
+        stampaCommenti();
     }
     
     public void creaComment(Long id_travel, Long author){
@@ -274,6 +275,19 @@ public class Peopling extends HttpServlet {
         commentManager.createComment(author, autista, id_travel, testi[indice], 
                 feedbacks[indice], dataCommento, oraCommento);
         
+    }
+    
+    public void stampaCommenti(){
+        for (int i=0; i<email.length; i++){
+            Long id_cliente = clientManager.getClient(email[i]).getId();
+            List<Comment> lista = commentManager.getCommentReceived(id_cliente);
+            System.out.println("Ecco i commenti sul cliente "+email[i]);
+            for (Comment commento : lista){
+                System.out.println("Commento da client: "+commento.getId_author()+
+                        " testo: "+commento.getComment());
+            }
+            System.out.println("Il feedback del cliente è: "+ commentManager.getAverageFeedback(id_cliente));
+        }
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

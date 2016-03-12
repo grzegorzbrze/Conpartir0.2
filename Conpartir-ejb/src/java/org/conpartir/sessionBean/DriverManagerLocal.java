@@ -8,7 +8,6 @@ package org.conpartir.sessionBean;
 import java.util.List;
 import javax.ejb.Local;
 import org.conpartir.entity.Driver;
-import org.conpartir.entity.Travel;
 
 /**
  *
@@ -30,10 +29,11 @@ public interface DriverManagerLocal {
     
     /**
      * Restituisce l'oggetto di tipo driver, se esiste, ricercato per ID
+     * del driver.
      * @param ID
      * @return 
      */
-    public Driver getDriver(Long ID);
+    public Driver getDriver(Long driver_ID);
     
      /**
      * Restituisce l'oggetto di tipo driver, se esiste, ricercato per chiave esterna

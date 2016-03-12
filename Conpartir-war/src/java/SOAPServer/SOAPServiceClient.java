@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,6 +42,7 @@ public class SOAPServiceClient {
     private TravelManagerLocal travelRef;
     @EJB
     private DriverManagerLocal driverRef;
+    
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Web Service Operation")
@@ -143,10 +145,8 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getDriverIf")
-    public List<Driver> getDriverIf(@WebParam(name = "clientID") long clientID) {
-        List<Driver> result = null;
-        //TODO write your implementation code here:
-        return result;
+    public List<Driver> getDrivers(@WebParam(name = "clientID") long clientID) {
+        return driverRef.getDrivers(clientID);
     }
 
     /**
@@ -177,28 +177,22 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "createCarTravel")
     @Oneway
     public void createCarTravel(@WebParam(name = "email") String email, @WebParam(name = "id") Long id , @WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "when") String when, @WebParam(name = "freeSeats") int freeSeats) {
-        Client clientInfo = new Client();
-        Driver driverInfo = new Driver();
-        Travel nuovoViaggio = new Travel();
-        driverInfo = driverRef.getDriver(id);
-        clientInfo = clientRef.getClient(email);
-        
-        Date data = null;       
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        /* nota: in questo metodo id è del driver
+        nota: il formato della stringa when è il seguente dd-MM-yy:HH:mm:SS
+        nota: se la data ha qualche problema ad essere parselizzata usa la data odierna
+        */
+        Client clientInfo = clientRef.getClient(email);
+        Date data;       
+        DateFormat format = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
         try { 
             data = format.parse(when); 
         }
         catch (Exception e) {
+            data = new Date();
+            
         }
-        nuovoViaggio.setClient_id(clientInfo.getId());
-        nuovoViaggio.setFreeSeats(freeSeats);
-        nuovoViaggio.setDestination(to);
-        nuovoViaggio.setOrigin(from);
-        nuovoViaggio.setData(data);
-        nuovoViaggio.setDriver_id(id);
-        //TODO: NUOVOVIAGGIO.SETTIME
-        travelRef.createTravel(nuovoViaggio);
-       
+        
+        travelRef.createTravel(id, clientInfo.getId(), from, to, data, data, freeSeats);
     }
 
     /**
