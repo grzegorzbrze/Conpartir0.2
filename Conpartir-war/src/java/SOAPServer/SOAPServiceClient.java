@@ -19,7 +19,9 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.RequestWrapper;
 import org.conpartir.entity.Client;
+import org.conpartir.entity.Comment;
 import org.conpartir.entity.Driver;
+import org.conpartir.entity.Taxi;
 import org.conpartir.entity.Travel;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
@@ -197,6 +199,86 @@ public class SOAPServiceClient {
         //TODO: NUOVOVIAGGIO.SETTIME
         travelRef.createTravel(nuovoViaggio);
        
+    }
+
+    /**
+     * Web service operation
+     * Restituisce una lista di commenti associati all'utente che li ha ricevuti
+     * Match da fare tra clientId e Id_clientJudged
+     */
+    @WebMethod(operationName = "getComments")
+    public List<Comment> getComments(@WebParam(name = "clientId") long clientId) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * Restituisce il valore complessivo dei feedback ricevuti da un utente 
+     * Match da fare tra clientId e Id_clientJudged
+     */
+    @WebMethod(operationName = "getFeedbackValue")
+    public int getFeedbacks(@WebParam(name = "clientId") long clientId) {
+        int mediaFeedback = 0;
+        //TODO write your implementation code here:
+        return mediaFeedback;
+    }
+
+    /**
+     * Web service operation
+     * restituisce i commenti scritti da un utente
+     * match su Id_author
+     */
+    @WebMethod(operationName = "getCommentsPosted")
+    public List<Comment> getCommentsPosted(@WebParam(name = "authorId") long authorId) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * Restituisce una list con gli ultimi tot commenti fatti in ordine di tempo 
+     * max 10
+     * da usare per mostrare l'attività degli utenti in homepage
+     */
+    @WebMethod(operationName = "getLatestComments")
+    public List<Comment> getLatestComments() {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * Analogo di getTravels, per i Taxi
+     */
+    @WebMethod(operationName = "getTaxiTravels")
+    public List<Taxi> getTaxiTravels(@WebParam(name = "from") String from, @WebParam(name = "to") String to) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * Analogo di getTravelsFrom per i Taxi
+     * PERO', in questo caso nell'oggetto dateTime verrà incluso anche il tempo secondo il formato "2016-05-04T00:00:00". 
+     * Il motivo è che per i taxi è anche importante sapere l'ora
+     */
+    @WebMethod(operationName = "getTaxiTravelsFrom")
+    public List<Taxi> getTaxiTravelsFrom(@WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "dateTime") String dateTime) {
+        //TODO write your implementation code here:
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * Idea di metodo secondario per i taxi
+     * restituire tutti i viaggi in taxi in partenza da quel momento in poi
+     * in una situazione reale servirebbe anche un parametro FROM per definire in quale città si cerca, nel nostro caso è solo Torino quindi l'ho omesso
+     */
+    @WebMethod(operationName = "getTaxiIncoming")
+    public List<Taxi> getTaxiIncoming(@WebParam(name = "dateTime") String dateTime) {
+        //TODO write your implementation code here:
+        return null;
     }
 
     /**
