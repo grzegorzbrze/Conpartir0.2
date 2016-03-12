@@ -8,6 +8,9 @@ package servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -32,6 +35,8 @@ public class Registration extends HttpServlet {
     
     @EJB
     private ClientManagerLocal clientManager;
+    
+    List<Cookie> issuedCookies = new ArrayList();
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,11 +74,39 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
-    
+    //check dei cookie
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+   /*         throws ServletException, IOException {
         processRequest(request, response);
+    }*/ 
+    { 
+        Boolean flag = false;
+        Cookie[] toCheck = request.getCookies();
+        if(toCheck[0].getMaxAge()==0) {  
+            try {
+                response.sendError(403, "expired Cookie");
+            } catch (IOException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        
+        for(int i=0;i<issuedCookies.size();i++) {
+            if (issuedCookies.get(i).getValue().equals(toCheck[0].getValue())) flag = true;
+            //out.println("cookie now " + issuedCookies.get(i).getValue() + " compared with " + toCheck[0].getValue());
+        }
+        if(flag==false) {
+             try {
+                response.sendError(403, "Cookie not found");
+            } catch (IOException ex) {
+                Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+            response.setStatus(200);
+        }
+        
+        
     }
 
     /**
@@ -90,14 +123,8 @@ public class Registration extends HttpServlet {
      
      @Override
      protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-     {   String enteredValue;
-         // gets all the selected options from the client browser
-         String[] selectedOptions = request.getParameterValues("options");
-         // gets the enteredValue fields value
-         enteredValue = request.getParameter("enteredValue");
-         
+     {         
          response.setContentType("text/html");
-         PrintWriter printWriter;  
          StringBuffer sb = new StringBuffer();
          
          try 
@@ -137,7 +164,7 @@ public class Registration extends HttpServlet {
              gender = (String) joUser.get("gender");
          }         
          email = (String) joUser.get("email");
-         password = (String) joUser.get("pass");       
+         password = (String) joUser.get("pass");      
          
          Boolean emailCheck = clientManager.isEmail(email);
          
@@ -154,26 +181,23 @@ public class Registration extends HttpServlet {
                      
                      Cookie userCookie = new Cookie("conpCookie","randomValueHere");
                      //imposta la validità dei cookie a 5 minuti
-                     userCookie.setMaxAge(60*5);
+                     userCookie.setMaxAge(60*5);                     
+                     issuedCookies.add(userCookie);
                      response.addCookie(userCookie);
                  }
                  else {
                      res = "3 Errore: password errata";                
-                 }            
-                                            
-            }
-             
+                 }                         
+            }             
          }
          else { 
             if (use.equals("registration")){
-                clientManager.createClient(name, surname, gender.charAt(0), age, email, password, null); 
-                
+                clientManager.createClient(name, surname, gender.charAt(0), age, email, password, null);                 
                 res = "Registrazione effettuata con successo!";
             }
             else {
                 //Da inserire un alert: si sta tentando un login con un'email non presente
                 res = "2 Errore: l'email inserita non è presente nei nostri database.";
-                            
             }
          } 
                          

@@ -7,6 +7,10 @@
             
             $scope.clientInfo;
             
+            $scope.check = function() {
+                auth.checkAuth(sessionStorage.getItem("conpCookie"));
+            };
+            
            $scope.onLoad = function() {
              if (auth.isAuthenticated() == false) {
                  alert("Per favore, effettua il login");

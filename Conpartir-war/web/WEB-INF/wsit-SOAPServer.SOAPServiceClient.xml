@@ -15,12 +15,28 @@
     <message name="getClientResponse"/>
     <message name="getDriver"/>
     <message name="getDriverResponse"/>
-    <message name="getDriverIf"/>
-    <message name="getDriverIfResponse"/>
-    <message name="getDriverFromTravel"/>
-    <message name="getDriverFromTravelResponse"/>
     <message name="createCarTravel"/>
     <message name="createCarTravelResponse"/>
+    <message name="getComments"/>
+    <message name="getCommentsResponse"/>
+    <message name="getFeedbackValue"/>
+    <message name="getFeedbackValueResponse"/>
+    <message name="getLatestComments"/>
+    <message name="getLatestCommentsResponse"/>
+    <message name="getTaxiTravels"/>
+    <message name="getTaxiTravelsResponse"/>
+    <message name="getTaxiTravelsFrom"/>
+    <message name="getTaxiTravelsFromResponse"/>
+    <message name="createCommet"/>
+    <message name="createCommetResponse"/>
+    <message name="getDriverFromTravel"/>
+    <message name="getDriverFromTravelResponse"/>
+    <message name="createDriver"/>
+    <message name="createDriverResponse"/>
+    <message name="getDrivers"/>
+    <message name="getDriversResponse"/>
+    <message name="createTaxiTravel"/>
+    <message name="createTaxiTravelResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -42,17 +58,49 @@
             <input message="tns:getDriver"/>
             <output message="tns:getDriverResponse"/>
         </operation>
-        <operation name="getDriverIf">
-            <input message="tns:getDriverIf"/>
-            <output message="tns:getDriverIfResponse"/>
+        <operation name="createCarTravel">
+            <input message="tns:createCarTravel"/>
+            <output message="tns:createCarTravelResponse"/>
+        </operation>
+        <operation name="getComments">
+            <input message="tns:getComments"/>
+            <output message="tns:getCommentsResponse"/>
+        </operation>
+        <operation name="getFeedbackValue">
+            <input message="tns:getFeedbackValue"/>
+            <output message="tns:getFeedbackValueResponse"/>
+        </operation>
+        <operation name="getLatestComments">
+            <input message="tns:getLatestComments"/>
+            <output message="tns:getLatestCommentsResponse"/>
+        </operation>
+        <operation name="getTaxiTravels">
+            <input message="tns:getTaxiTravels"/>
+            <output message="tns:getTaxiTravelsResponse"/>
+        </operation>
+        <operation name="getTaxiTravelsFrom">
+            <input message="tns:getTaxiTravelsFrom"/>
+            <output message="tns:getTaxiTravelsFromResponse"/>
+        </operation>
+        <operation name="createCommet">
+            <input message="tns:createCommet"/>
+            <output message="tns:createCommetResponse"/>
         </operation>
         <operation name="getDriverFromTravel">
             <input message="tns:getDriverFromTravel"/>
             <output message="tns:getDriverFromTravelResponse"/>
         </operation>
-        <operation name="createCarTravel">
-            <input message="tns:createCarTravel"/>
-            <output message="tns:createCarTravelResponse"/>
+        <operation name="createDriver">
+            <input message="tns:createDriver"/>
+            <output message="tns:createDriverResponse"/>
+        </operation>
+        <operation name="getDrivers">
+            <input message="tns:getDrivers"/>
+            <output message="tns:getDriversResponse"/>
+        </operation>
+        <operation name="createTaxiTravel">
+            <input message="tns:createTaxiTravel"/>
+            <output message="tns:createTaxiTravelResponse"/>
         </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
@@ -77,7 +125,31 @@
             <input/>
             <output/>
         </operation>
-        <operation name="getDriverIf">
+        <operation name="createCarTravel">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getComments">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getFeedbackValue">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getLatestComments">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getTaxiTravels">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getTaxiTravelsFrom">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="createCommet">
             <input/>
             <output/>
         </operation>
@@ -85,7 +157,15 @@
             <input/>
             <output/>
         </operation>
-        <operation name="createCarTravel">
+        <operation name="createDriver">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getDrivers">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="createTaxiTravel">
             <input/>
             <output/>
         </operation>
@@ -231,6 +311,102 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createTaxiTravel_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getFeedback_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getFeedback_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriverFromTravel_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriverFromTravel_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriverIf_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getDriverIf_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getCommentsPosted_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getCommentsPosted_Output_Policy">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sp:EncryptedParts>

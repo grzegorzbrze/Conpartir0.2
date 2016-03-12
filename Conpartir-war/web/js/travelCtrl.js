@@ -14,7 +14,10 @@
              $(document).ready(function() {
                 $( "#datepicker" ).datepicker({
                     dateFormat: "yyyy-mm-dd"
-                });
+                });    
+                $('#timepicker').timepicker();
+        
+                
             });
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -75,42 +78,6 @@
              $scope.reload = function () {
                   $route.reload();
               };
-          /*    
-           var okToGreet = function (name) {
-                  return true;
-              };
-              
-              $scope.asyncGreet = function(name) {
-                  var deferred = $q.defer();
-                  setTimeout(function() {
-                      deferred.notify('About to greet ' + name + '.');
-                      if (okToGreet(name)) {
-                          deferred.resolve('Hello, ' + name + '!');
-                      } else {
-                          deferred.reject('Greeting ' + name + ' is not allowed.');
-                      }                     
-                  }, 1000);
-                  return deferred.promise;
-              }; 
-              
-              $scope.name;
-
-              $scope.callAsyncGreet = function (data) {
-                  $scope.promise = $scope.asyncGreet(data);
-                  $scope.promise.then(function(greeting) {
-                      alert('Success: ' + greeting);
-                  }, function(reason) {
-                      alert('Failed: ' + reason);
-                      $scope.nome = "niente";
-                  }, function(update) {
-                      alert('Got notification: ' + update);
-                  });
-              };*/
-
-     
-              
-           
-            
             $scope.search = function(data) { 
                 $scope.prova =null;
                 $scope.showHead = false;
@@ -120,7 +87,7 @@
                // when = when.replace('/','-');
                // when = when.replace('/','-');
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
-                console.log("data formattata " +when);
+                
                 if (when !== null && when != "") {             
                     var month = when.slice(0,2);
                     var day = when.slice(3,5);
@@ -130,10 +97,17 @@
                     data.when = when;
                 }
                 
-                console.log("formato richiesta " + data.to + data.from + " " + data.when);  
-               
-                   
+                var time =  $('#timepicker').timepicker().val();
+                var ind = time.indexOf(" ");
+                var hourMinutes = time.slice(0,ind);
+                time = hourMinutes + ":00";
+                
+                 data.when = data.when +":"+ time;
+                  
+                console.log("formato richiesta " + data.to + data.from + " il giorno " + data.when);  
+              
                  //   console.log("contenuto dello scope prima della showlist " + $scope.prova);
+                 //   formato richiesto per la data/tempo : "dd-MM-yy:HH:mm:SS"
                  //   showList();
                 shared.getTravels(data).then(function(promise) {
                      var prova = shared.getData(); 

@@ -31,6 +31,44 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 sessionStorage.setItem(ckName,ckValue);
             },
             
+            checkAuth: function (cookie) {
+                $http({
+                    method: 'GET',
+                    url: 'Registration',
+                    headers: {'Content-Type': 'application/text'},
+                    Cookie: cookie
+                    
+                })
+                        .success( function (data, status, header) {
+                            //checkCookieEnabled();
+                            
+                            console.log("servlet response " + data + status);
+                           
+                           
+                            //sessionStorage.setItem('conpCookie', ckValue);
+                            //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
+                        })
+                        
+                        .then(function successCallback(data, status, header) {  
+                    // this callback will be called asynchronously
+                    // when the response is available
+                   
+                    console.log(data);
+                    console.log(status);
+                    //controllo del servizio auth
+                    //console.log(auth.isAuth());
+                    
+                }, function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                   // or server returns response with an error status.
+                      });
+                  
+                
+            },
+            
+            
+            
+            
             
             getData: function () {
                 // console.log(obj + ' was returned as data');
@@ -40,12 +78,9 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             },
             
             
-            setData: function (name,surname,email,carModel) {
+            setData: function (data) {
                 // console.log('setting ' + data + ' as data');
-                obj.name = name;
-                obj.surname = surname;
-                obj.email = email;
-                obj.carModel = carModel;
+                obj = data;
             }
 
 
