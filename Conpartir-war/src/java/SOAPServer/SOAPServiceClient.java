@@ -28,6 +28,9 @@ import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
 
+import com.google.gson.Gson;
+
+
 
 /**
  *
@@ -146,10 +149,26 @@ public class SOAPServiceClient {
      * Web service operation  
      */
     @WebMethod(operationName = "getTravels")
-    public List<Travel> getTravels(@WebParam(name = "start") String start, 
+    public List<String> getTravels(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end) {
         List<Travel> viaggi = travelRef.searchByOriginDestination(start, end);
-        return copiaViaggi(viaggi);
+        List<String> stringhe = new ArrayList();
+        for (Travel viaggio : viaggi){
+            String email = clientRef.getEmail(viaggio.getClient_id());
+            Client cliente = clientRef.getClient(email);
+            cliente.setPass(null);
+            Driver driver = driverRef.getDriver(viaggio.getDriver_id());
+            
+            Gson gson = new Gson();
+            String utente = gson.toJson(cliente);
+            String autista = gson.toJson(driver);
+            String travel = gson.toJson(viaggio);
+            
+            String jsonString = utente+autista+travel;
+            stringhe.add(jsonString);
+        }
+        
+        return stringhe;
     }
     
      /**
@@ -314,5 +333,7 @@ public class SOAPServiceClient {
         }
         return data;
     }
+    
+    
     
 }
