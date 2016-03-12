@@ -4,8 +4,8 @@
 var modService = angular.module('serviceModule', ['ngRoute']);
 
     //Factory per dati condivisi
-   modService.factory('shared', [ '$http',
-   function ($http) {
+   modService.factory('shared', [ '$http','$location' ,'auth',
+   function ($http, $location, auth) {
         var data;
         var obj = {};
         
@@ -37,6 +37,11 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 xml.setRequestHeader('Content-Type', 'text/xml');
                 xml.send(s);                
             
+            },
+            
+            logout: function () {
+                auth.delCookie('conpCookie');
+                $location.path("/");                
             },
             
             getClient: function (email) {                
@@ -111,7 +116,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      }                  
                      })
                              .success(function (data, status, headers, config) {
-                                 var jsonObj = x2js.xml_str2json( data );
+                                 var jsonObj = data ;
                     
                     if (input.when != null) { 
                                     res = jsonObj.Envelope.Body.getTravelsFromResponse;
@@ -146,8 +151,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                  console.log("sto passando un oggetto obj = " );
                  console.log(obj);
                 return obj;
-            },
-            
+            },            
             
             setData: function (name,surname,email,carModel) {
                 // console.log('setting ' + data + ' as data');

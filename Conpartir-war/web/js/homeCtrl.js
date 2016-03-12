@@ -37,23 +37,31 @@ var myapp = angular.module('myApp',
 
 
 
-  myapp.controller("MainController", ['$scope', '$http', 'auth',
-      function($scope, $http, auth) {
+  myapp.controller("MainController", ['$scope', '$http', 'shared', 'auth',
+      function($scope, $http, shared ,auth) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
-      $scope.loginShow = true;
+      $scope.loginShow;
       
       $scope.isAuthorized;
       
+      //Non funziona, il problema sembra essere auth.Autenticated
+      //TODO: CHECK
       $scope.checkAuth = function () {
           var res = auth.isAuthenticated();
           if (res === true){ 
               $scope.isAuthorized = true; 
               $scope.loginShow = false;
           }
-          else $scope.isAuthorized = false;
-          
+          else {
+              $scope.loginShow = true;
+              $scope.isAuthorized = false;
+          }
+      };
+      
+      $scope.logout = function () {
+          shared.logout();
       };
       
       

@@ -54,7 +54,7 @@
      <script src="frameworks/jqueryUI/jquery-ui.min.js"></script>
 
   
-  <body ng-app = "myApp" ng-controller = "MainController">
+  <body ng-app = "myApp" ng-controller = "MainController" ng-init="checkAuth()">
 
       <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -68,10 +68,10 @@
 		</div>
         <div id="navbar" class="navbar-collapse collapse">
             <div class="navbar-form navbar-right">
-                <div class="form-group" ng-init="checkAuth()">
+                <div class="form-group">
                     <a href="#/login" ng-show="loginShow"> <button class="btn btn-success" id="loginbutton">Login</button></a>
                     <a href="#/account" ng-show="isAuthorized"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
-                
+                    <button ng-show="isAuthorized" class="btn btn-danger" id="accountbutton" ng-click="">Logout</button>
                 </div>
             </div>           
         </div>       

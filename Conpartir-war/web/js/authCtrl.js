@@ -31,6 +31,10 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 sessionStorage.setItem(ckName,ckValue);
             },
             
+            delCookie: function(ckName) {
+                sessionStorage.remove(ckName);
+            },
+            
             checkAuth: function (cookie) {
                 $http({
                     method: 'GET',
@@ -55,6 +59,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                    
                     console.log(data);
                     console.log(status);
+                    if (status==200) return true;
                     //controllo del servizio auth
                     //console.log(auth.isAuth());
                     

@@ -175,12 +175,30 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getTravelsFrom")
-    public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, 
+    public List<String> getTravelsFrom(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end, @WebParam(name = "when") String when) {
         
         Date data = convertiStringa(when);
         List<Travel> viaggi = travelRef.searchByOriginDestinationDate(data, start, end);
-        return copiaViaggi(viaggi);   
+        List<String> stringhe = new ArrayList();
+        for (Travel viaggio : viaggi){
+            String email = clientRef.getEmail(viaggio.getClient_id());
+            Client cliente = clientRef.getClient(email);
+            cliente.setPass(null);
+            Driver driver = driverRef.getDriver(viaggio.getDriver_id());
+            
+            Gson gson = new Gson();
+            String utente = gson.toJson(cliente);
+            String autista = gson.toJson(driver);
+            String travel = gson.toJson(viaggio);
+            
+            String jsonString = utente+autista+travel;
+            stringhe.add(jsonString);
+        }
+        
+        
+        
+        return stringhe;   
     }
 
      /**

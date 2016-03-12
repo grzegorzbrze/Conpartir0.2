@@ -11,15 +11,11 @@
         modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location','$cookies','auth',
         function($scope,$http,$routeParams,$location,$cookies,auth) {
             
-            $scope.home = function () {
-                
-                
-            };
-            
+            $scope.home = function () { 
+            };            
             $scope.master = {};
             $scope.status = {};
-            $scope.ifAlert = false;
-            
+            $scope.ifAlert = false;            
             $scope.login = function(user) {
                 $scope.master = user;
                 $scope.master.use = "login";
@@ -50,11 +46,8 @@
                         $scope.status = "Le password inserite sono diverse";                    
                         $scope.ifAlert = true;
                         flag = true; 
-                } 
-                    
+                    }
                 }    
-                                
-                          
                 if (user.email == undefined ) { 
                     $scope.status ="Prego, inserisci un'email valida";                    
                     $scope.ifAlert = true;
@@ -69,20 +62,9 @@
                     $scope.status ="Per favore, completa tutti i campi.";                    
                     $scope.ifAlert = true;
                     flag = true; 
-                }
-                
+                }                
                 if (flag === false) $scope.servletCall();  
-            };  
-            
-                  
-            // example of checking whether cookie is enabled
-            var checkCookieEnabled = function () {
-                if (navigator.cookieEnabled) {
-                    alert("yes cookies");
-                } else {
-                    alert("no cookies");
-                }
-            };
+            }; 
             
             $scope.servletCall = function (){
                 

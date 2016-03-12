@@ -83,7 +83,7 @@ public class Registration extends HttpServlet {
     { 
         Boolean flag = false;
         Cookie[] toCheck = request.getCookies();
-        if(toCheck[0].getMaxAge()==0) {  
+        if(toCheck[0] != null && toCheck[0].getMaxAge()==0) {  
             try {
                 response.sendError(403, "expired Cookie");
             } catch (IOException ex) {
