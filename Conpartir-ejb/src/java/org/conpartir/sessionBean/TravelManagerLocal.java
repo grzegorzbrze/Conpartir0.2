@@ -64,8 +64,20 @@ public interface TravelManagerLocal {
     
     public Travel getTravel(Long travelID);
     
+    /**
+     * 
+     * Il metodo cerca il proprietario della macchina che ha giudato nel viaggio
+     * con id = travel_id se esiste. 
+     * Restituisce l'oggetto di tipo Client
+     */
     public Client getInfoClientEqualDriver(Long travel_id);
     
+    /**
+     * 
+     * Il metodo cerca la macchina che è stata giudata nel viaggio
+     * con id = travel_id se esiste. 
+     * Restituisce l'oggetto di tipo Driver
+     */    
     public Driver getInfoDriverEqualClient(Long travel_id);
     
     public boolean addPassenger(Long travel_id, Long passengerID);

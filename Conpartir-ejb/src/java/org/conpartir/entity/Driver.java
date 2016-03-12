@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Driver implements Serializable {
+public class Driver implements Serializable, User {
     private static final long serialVersionUID = 1L;
     @Id
     @Column (name = "DRIVER_ID")

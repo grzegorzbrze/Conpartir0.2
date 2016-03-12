@@ -6,18 +6,13 @@
 package org.conpartir.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
-public class Client implements Serializable {
+public class Client implements Serializable, User {
     private static final long serialVersionUID = 1L;
     @Id
     @Column (name = "CLIENT_ID")

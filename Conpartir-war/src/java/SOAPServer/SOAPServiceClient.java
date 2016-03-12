@@ -24,6 +24,7 @@ import org.conpartir.entity.Comment;
 import org.conpartir.entity.Driver;
 import org.conpartir.entity.Taxi;
 import org.conpartir.entity.Travel;
+import org.conpartir.entity.User;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
@@ -60,19 +61,13 @@ public class SOAPServiceClient {
         clientRef.createClient(name, surname, gender, age, email, pass, urlPhoto);
     } 
     
-        /**
+     /**
      * Web service operation
-     * @return 
      */
     @WebMethod(operationName = "getClient")
     public Client getClient(@WebParam(name = "email") String email) {
-        //TODO write your implementation code here:
-        Client requested = clientRef.getClient(email);
-        out.println(""+requested);
-        return requested;
+        return clientRef.getClient(email);
     }
-    
-
 
     /**
      * Web service operation  
@@ -80,34 +75,22 @@ public class SOAPServiceClient {
     
     @WebMethod(operationName = "getTravels")
     public List<Travel> getTravels(@WebParam(name = "start") String start, @WebParam(name = "end") String end) {
-        List<Travel> result = new ArrayList();
+        List<Travel> viaggi = travelRef.searchByOriginDestination(start, end);
         List<Travel> lista = new ArrayList();
-        
-        Date today = Date.from(Instant.now());        
-        result = travelRef.searchByOriginDestinationDate(today, start, end);   
-       
-        
-       
-        int i;
         //costruisco un travel temporaneo per mantenere l'info dell travel_id
-        for (i=0;i<result.size();i++) {
+        //usato per ovviare al problema del servizo che non vede id_driver
+        for (Travel viaggio : viaggi) {
             Travel temp = new Travel();
-            temp.setClient_id(result.get(i).getClient_id());
-            temp.setData(result.get(i).getData());
-            temp.setDestination(result.get(i).getDestination());
-            temp.setDriver_id(result.get(i).getDriver_id());
-            temp.setFreeSeats(result.get(i).getFreeSeats());
-            temp.setOrigin(result.get(i).getOrigin());
-            temp.setTime(result.get(i).getTime());
-            temp.setTravel_id(result.get(i).getTravel_id());
-            
-           // out.print(temp);
-           // out.print(result.get(i));  
-            
+            temp.setClient_id(viaggio.getClient_id());
+            temp.setData(viaggio.getData());
+            temp.setDestination(viaggio.getDestination());
+            temp.setDriver_id(viaggio.getDriver_id());
+            temp.setFreeSeats(viaggio.getFreeSeats());
+            temp.setOrigin(viaggio.getOrigin());
+            temp.setTime(viaggio.getTime());
+            temp.setTravel_id(viaggio.getTravel_id());
             lista.add(temp);
         }
-        
-        
         return lista;
     }
     
@@ -116,18 +99,18 @@ public class SOAPServiceClient {
      */
     @WebMethod(operationName = "getTravelsFrom")
     public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, @WebParam(name = "end") String end, @WebParam(name = "date") String date) {
-        List<Travel> result = null; 
-        Date when = null;       
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        /*nota: il formato della stringa when è il seguente dd-MM-yy:HH:mm:SS
+        nota: se la data ha qualche problema ad essere parselizzata usa la data odierna
+        */
+        Date when;    
+        DateFormat format = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
         try { 
             when = format.parse(date); 
         }
         catch (Exception e) {
+            when = new Date();
         }
-        //System.out.println(when); 
-        result = travelRef.searchByOriginDestinationDate(when, start, end);   
-        
-        return result;
+        return travelRef.searchByOriginDestinationDate(when, start, end);   
     }
 
     /**
@@ -135,10 +118,7 @@ public class SOAPServiceClient {
      */
     @WebMethod(operationName = "getDriver")
     public Driver getDriver(@WebParam(name = "ID") long id) {
-        Driver result = new Driver();
-        result = driverRef.getDriver(id);
-        
-        return result;
+        return driverRef.getDriver(id);
     }
 
     /**
@@ -153,22 +133,17 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getDriverFromTravel")
-    public List<Object> getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
+    public List<User> getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
         //List<String> values = null;
-        Client clientInfo = new Client();
-        Driver driverInfo = new Driver();
+        Client clientInfo = travelRef.getInfoClientEqualDriver(travelID);
+        Driver driverInfo = travelRef.getInfoDriverEqualClient(travelID);
         
-        
-        clientInfo = travelRef.getInfoClientEqualDriver(travelID);
         clientInfo.setPass(null);
         
-        driverInfo = travelRef.getInfoDriverEqualClient(travelID);
-        
-        List<Object> prova = new ArrayList();
-        prova.add(clientInfo);
-        prova.add(driverInfo);
-        out.print(prova);
-        return prova;
+        List<User> lista = new ArrayList();
+        lista.add(clientInfo);
+        lista.add(driverInfo);
+        return lista;
     }
 
     /**
@@ -191,7 +166,6 @@ public class SOAPServiceClient {
             data = new Date();
             
         }
-        
         travelRef.createTravel(id, clientInfo.getId(), from, to, data, data, freeSeats);
     }
 
