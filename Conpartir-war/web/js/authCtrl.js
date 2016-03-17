@@ -23,7 +23,10 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             isAuthenticated: function() {
                 var res=false;
                 var cookie = sessionStorage.getItem('conpCookie');
-                if(cookie !== null) res=true;
+                if(cookie) { 
+                    res=true;
+                    //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
+                };
                 return res; 
             },
             
@@ -32,7 +35,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             },
             
             delCookie: function(ckName) {
-                sessionStorage.remove(ckName);
+                sessionStorage.removeItem(ckName);
             },
             
             checkAuth: function (cookie) {
@@ -77,8 +80,8 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             
             getData: function () {
                 // console.log(obj + ' was returned as data');
-                 console.log("sto passando un oggetto obj = " );
-                 console.log(obj);
+                 //console.log("sto passando un oggetto obj = " );
+                 //console.log(obj);
                 return obj;
             },
             

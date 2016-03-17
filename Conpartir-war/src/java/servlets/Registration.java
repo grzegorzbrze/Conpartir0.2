@@ -179,7 +179,12 @@ public class Registration extends HttpServlet {
                      //login corretto                     
                      res = "Login effettuato con successo!";
                      
-                     Cookie userCookie = new Cookie("conpCookie","randomValueHere");
+                     String ckValue;
+                     double val =  Math.random() * 5000;
+                     ckValue = "random" + val;
+
+                     
+                     Cookie userCookie = new Cookie("conpCookie",ckValue);
                      //imposta la validità dei cookie a 5 minuti
                      userCookie.setMaxAge(60*5);                     
                      issuedCookies.add(userCookie);

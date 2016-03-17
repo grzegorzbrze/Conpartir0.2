@@ -17,11 +17,13 @@
                  $location.path('/login');
                 }
              else {
-                 var self = $location.search();
+                 var self= $location.search(); 
+                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
+                        
                  shared.getClient(self.email).then(function(promise) {
                      var prova = shared.getData(); 
                      $scope.clientInfo = prova.return;
-                     console.log($scope.clientInfo);
+                     //console.log($scope.clientInfo);
                      
                  });
              };   

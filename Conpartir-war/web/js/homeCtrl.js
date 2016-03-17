@@ -37,8 +37,8 @@ var myapp = angular.module('myApp',
 
 
 
-  myapp.controller("MainController", ['$scope', '$http', 'shared', 'auth',
-      function($scope, $http, shared ,auth) {
+  myapp.controller("MainController", ['$scope', '$http','$route', '$timeout', 'shared', 'auth',
+      function($scope, $http, $route,$timeout,shared ,auth) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
@@ -50,7 +50,7 @@ var myapp = angular.module('myApp',
       //TODO: CHECK
       $scope.checkAuth = function () {
           var res = auth.isAuthenticated();
-          if (res === true){ 
+          if (res){ 
               $scope.isAuthorized = true; 
               $scope.loginShow = false;
           }
@@ -62,6 +62,10 @@ var myapp = angular.module('myApp',
       
       $scope.logout = function () {
           shared.logout();
+          $timeout(function() {
+          $route.reload();
+              
+          }  ,20);
       };
       
       
