@@ -27,7 +27,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                     res=true;
                     //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
                 };
-                return res; 
+                return cookie; 
             },
             
             saveCookie: function(ckName,ckValue) {
@@ -38,7 +38,9 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 sessionStorage.removeItem(ckName);
             },
             
-            checkAuth: function (cookie) {
+            checkAuth: function (cookie) {                
+                var promise; 
+                promise =
                 $http({
                     method: 'GET',
                     url: 'Registration',
@@ -49,28 +51,16 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                         .success( function (data, status, header) {
                             //checkCookieEnabled();
                             
-                            console.log("servlet response " + data + status);
-                           
-                           
-                            //sessionStorage.setItem('conpCookie', ckValue);
+                            console.log("servlet response " + data + status);                         
+                             //sessionStorage.setItem('conpCookie', ckValue);
                             //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
                         })
+                                .error(function (data, status, headers, config) {
+                                 return {"status": false};
+                     });
                         
-                        .then(function successCallback(data, status, header) {  
-                    // this callback will be called asynchronously
-                    // when the response is available
-                   
-                    console.log(data);
-                    console.log(status);
-                    if (status==200) return true;
-                    //controllo del servizio auth
-                    //console.log(auth.isAuth());
-                    
-                }, function errorCallback(response) {
-                    // called asynchronously if an error occurs
-                   // or server returns response with an error status.
-                      });
-                  
+                return promise;
+                        
                 
             },
             

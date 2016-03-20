@@ -6,7 +6,7 @@
 
 var myapp = angular.module('myApp', 
 ['ngRoute', 'ngTouch' , 'ngAnimate', 'ngCookies',
-    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'accountModule' , 'serviceModule', 'authModule']);
+    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'postModule' ,'accountModule' , 'serviceModule', 'authModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -29,7 +29,7 @@ var myapp = angular.module('myApp',
           .when("/detail",
   {   templateUrl: "pages/travelDetail.html",  controller: "DetailController"  })
           .when("/post",
-  {   templateUrl: "pages/post.html",  controller: "MainController"  });  
+  {   templateUrl: "pages/post.html",  controller: "PostController"  });  
   
   
 });

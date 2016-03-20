@@ -12,6 +12,11 @@ and open the template in the editor.
     position: relative;
 }
 
+.adjust {
+    margin-right: auto; 
+    margin-left: auto;
+}
+
 
 .main-container{
     

@@ -16,26 +16,32 @@
             $scope.master = {};
             $scope.status = {};
             $scope.ifAlert = false;
-                  $scope.loginShow;
-      
-      $scope.isAuthorized;
+            $scope.loginShow = true;
+            $scope.isAuthorized = false;
       
       //Non funziona, il problema sembra essere auth.Autenticated
       //TODO: CHECK
       $scope.checkAuth = function () {
-          var flag = login.getAuth();
-          console.log("login is " + flag);
-          if (flag == true){ 
-              $scope.isAuthorized = true; 
-              $scope.loginShow = false;
-          }
-          else {
-              $scope.loginShow = true;
-              $scope.isAuthorized = false;
-          }
-          
-          
-      };
+          var flag;
+          $timeout (function() {} , 50 );
+              login.getAuth().then(
+                      function successCallback(data) {  
+                    if (data.status==200) 
+                    {
+                        flag = true;                     
+                       //console.log("flag vale" + flag);
+                      
+                    }; 
+                    if (flag == true){ 
+                           $scope.isAuthorized = true; 
+                           $scope.loginShow = false;
+                       }
+                       else {
+                           $scope.loginShow = true;
+                           $scope.isAuthorized = false;
+                       }           
+                });
+            };
             
             $scope.login = function(user) {
                 $scope.master = user;
@@ -121,11 +127,14 @@
             $scope.logout = function () {
                 login.logout();
                 $location.path("/"); 
-                $scope.checkAuth(); 
+                $scope.loginShow= true;
+                $scope.isAuthorized= false;
+                //$scope.checkAuth(); 
                 $timeout( 
                                 function() {
                                     $window.location.reload();
                                     console.log("reloaded");
+                                    
                                 },
                                 10
                                         ); 
@@ -139,7 +148,8 @@
    function ($http, $location, $cookies, auth) {
         var data;
         var obj = {};
-        var isAuth;
+        var cookieAuth;
+        
         return {
             
             doLogin: function (input) {
@@ -169,9 +179,15 @@
                 
             },
             
-            getAuth: function() {  
-                isAuth = auth.isAuthenticated();               
-                return isAuth;
+            getAuth: function() {
+                var isAuth;
+                cookieAuth = auth.isAuthenticated();
+                
+                //qui ci va una promise ....
+               var promise;
+                promise = auth.checkAuth(cookieAuth);
+                return promise;
+                
             },
             
             logout: function () {

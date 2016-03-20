@@ -1,5 +1,11 @@
-<div class="panel-body" style="margin-right: auto; margin-left: auto">
-      <form novalidate class="input-group" style="margin-right: auto; margin-left: auto">
+<div class="adjust panel-body" ng-init="check()">
+    
+    
+    <span class="bg-danger" ng-if="notLogged"> 
+        Attenzione. Per proporre viaggio, devi essere registrato e loggato sul sito. <br>
+        Fai il login prima di postare! 
+    </span>
+      <form novalidate class="adjust input-group">
           <h2></h2>
           <div class="input-group ">
               <span class="input-group-addon" id="basic-addon1">Email</span>
