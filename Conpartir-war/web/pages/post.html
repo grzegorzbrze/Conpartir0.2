@@ -8,42 +8,38 @@
       <form novalidate class="adjust input-group">
           <h2></h2>
           <div class="input-group ">
-              <span class="input-group-addon" id="basic-addon1">Email</span>
-              <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
+              <span class="input-group-addon" id="basic-addon1">Partenza</span>
+              <input class="form-control" type="text" ng-model="travel.from" aria-describedby="basic-addon1" name="email">
           </div>  
           <p></p>
           <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon2">Password</span>
-              <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
+              <span class="input-group-addon" id="basic-addon2">Destinazione</span>
+              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="password">
           </div>
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon3">RePassword</span>
-              <input class="form-control" type="password" ng-model="user.passRe" aria-describedby="basic-addon3" name="password2">
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon4">Nome</span>
-              <input name="name" class="form-control" type="text" ng-model="user.name" aria-describedby="basic-addon4">
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon5">Cognome</span>
-              <input name="name" class="form-control" type="text" ng-model="user.surname" aria-describedby="basic-addon5">
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon6">Età</span>
-              <input name="name" class="form-control" type="text" ng-model="user.age" aria-describedby="basic-addon6">
-          </div>   
           <p></p>
           <div class="radio-inline-panel">
-              <label>Gender: </label>
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="user.gender" ng-value="'M'"/>M</label>
-            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="user.gender" ng-value="'F'"/>F</label>
+              <label>Tipo di viaggio: </label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="isCarTravel" ng-value="true" ng-click="mode()"/>Macchina</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="isTaxiTravel" ng-value="true" ng-click="mode()"/>Taxi</label>
           </div>
           <p></p>
-          <button class="btn btn-lg btn-primary btn-block" ng-click="register(user)">Sign up</button>
+         <div class="input-group" ng-show="isCarTravel">
+              <span class="input-group-addon" >Macchina</span>
+              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="password">
+          </div>
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon4">Data</span>
+              <input class="form-control" type="text" name="giorno"  id="datepicker"/>
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon5">Ora</span>
+              <input  id="timepicker" placeholder="Ora" type="text" class="form-control" ng-model="travel.time">         </div> 
+          <p></p>
+          
+          
+          <button class="btn btn-lg btn-primary btn-block" ng-click="post(travel)">Post</button>
           
           <p></p>
           <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
