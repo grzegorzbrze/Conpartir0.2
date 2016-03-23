@@ -6,6 +6,7 @@
         function($scope,$http,$location,auth,shared) {
             
             $scope.clientInfo;
+            $scope.show = [true, false, false];
             
             $scope.check = function() {
                 auth.checkAuth(sessionStorage.getItem("conpCookie"));
@@ -27,7 +28,19 @@
                      
                  });
              };   
-           };            
+           };         
+           
+           $scope.tab = function(data) {
+                if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
+                if (data=="cars") {$scope.show[0] = false, $scope.show[1] = true; $scope.show[2] = false; };
+                if (data=="feed") {$scope.show[0] = false, $scope.show[1] = false; $scope.show[2] = true; };
+                
+            };
+            
+            $scope.alert = function() {
+              alert("Aggiungere una macchina al tuo profilo ti permetterà di offrire viaggi con quella macchina. \n\
+                     Se non l'hai mai fatto, inizia subito per poter offrire un passaggio!");  
+            };
      
         }]);
 

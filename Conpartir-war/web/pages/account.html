@@ -4,13 +4,14 @@
   </div>
   <div class="panel-body">
       
-        <div style="height: 300px "> 
+        <div style="height: 280px "> 
             <div id="foto" class="box-container"> <img src="default-avatar250.jpg" alt="user image"></div>           
             <div id="info">
                 <h3 id="name">Ciao {{clientInfo.name}}</h3>
                 <small> Qui puoi rivedere le informazioni relative al tuo account.</small>
                 <br />
             </div>
+            
            <!---->
             <button type="button" class="btn btn-primary btn-lg" onclick="modify()">
                 Modifica il profilo.
@@ -26,14 +27,14 @@
             <div role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#profile" aria-controls="home" role="tab" data-toggle="tab">Info Personali</a></li>
-                    <li role="presentation"><a href="#carProfile" aria-controls="profile" role="tab" data-toggle="tab">Info Veicolo</a></li>
-                    <li role="presentation"><a href="#feedback" aria-controls="messages" role="tab" data-toggle="tab">Storico Feedback</a></li>
+                    <li role="presentation" class="active"><a aria-controls="home" role="tab" data-toggle="tab"  ng-click="tab('self')">Info Personali</a></li>
+                    <li role="presentation"><a aria-controls="profile" role="tab" data-toggle="tab"  ng-click="tab('cars')">Info Veicolo</a></li>
+                    <li role="presentation"><a aria-controls="messages" role="tab" data-toggle="tab"  ng-click="tab('feed')">Storico Feedback</a></li>
                     </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="profile">
+                    <div role="tabpanel" id="profile" ng-show="show[0]">
                         <dl class="dl-horizontal" ng-model="clientInfo">
                             <dt>Nome e Cognome</dt>
                             <dd>{{clientInfo.name}} {{clientInfo.surname}}</dd>
@@ -47,7 +48,9 @@
 
                         </dl>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="carProfile">
+                    <div role="tabpanel"  id="carProfile" ng-show="show[1]">
+                        <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()"></i>
+                        
                         <dl class="dl-horizontal">
                             <dt>Modello:</dt>
                             <dd>...</dd>
@@ -57,10 +60,12 @@
                             <dd>...</dd>
                             <dt>Grandezza bagagliaio:</dt>
                             <dd>...</dd>
+                            
+                            
 
                         </dl>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="feedback">...</div>
+                    <div role="tabpanel" id="feedback" ng-show="show[2]">...</div>
                     
                 </div>
 
@@ -71,8 +76,3 @@
 
   </div>
 </div>
-
- <button type="button" class="btn btn-primary btn-lg" ng-click="check()">
-               PROVA
-            </button>
-
