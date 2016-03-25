@@ -102,6 +102,7 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "getDrivers")
     public List<Driver> getDrivers(@WebParam(name = "clientEmail") String clientEmail) {
         List<Driver> lista = new ArrayList();
+        
         Client cliente = clientRef.getClient(clientEmail);
         List<Driver> drivers = driverRef.getDrivers(cliente.getId());
         for (Driver driver : drivers){

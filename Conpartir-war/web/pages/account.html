@@ -5,8 +5,8 @@
   <div class="panel-body">
       
         <div style="height: 280px "> 
-            <div id="foto" class="box-container"> <img src="default-avatar250.jpg" alt="user image"></div>           
-            <div id="info">
+            <div id="foto" class="box-container "> <img src="default-avatar250.jpg" alt="user image"></div>           
+            <div class="center">
                 <h3 id="name">Ciao {{clientInfo.name}}</h3>
                 <small> Qui puoi rivedere le informazioni relative al tuo account.</small>
                 <br />
@@ -49,21 +49,21 @@
                         </dl>
                     </div>
                     <div role="tabpanel"  id="carProfile" ng-show="show[1]">
-                        <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()"></i>
-                        
-                        <dl class="dl-horizontal">
+                        <div></div> 
+                         
+                        <div class="btn-group"  role="group" aria-label="...">
+                            <button type="button" ng-repeat="item in driversInfo" class="btn btn-default" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
+                        </div>                        
+                        <br/>   
+                        <dl class="dl-horizontal" ng-model="selectedCar">
                             <dt>Modello:</dt>
-                            <dd>...</dd>
-                            <dt>Colore:</dt>
-                            <dd>...</dd>
-                            <dt>Posti a sedere:</dt>
-                            <dd>...</dd>
-                            <dt>Grandezza bagagliaio:</dt>
-                            <dd>...</dd>
-                            
-                            
-
+                            <dd>{{selectedCar.carModel}}</dd>
+                            <dt>Anno:</dt>
+                            <dd>{{selectedCar.carYear}}</dd>
                         </dl>
+                            <div></div>    
+                        <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()"></i>
+                    
                     </div>
                     <div role="tabpanel" id="feedback" ng-show="show[2]">...</div>
                     

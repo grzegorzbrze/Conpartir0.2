@@ -21,7 +21,7 @@ and open the template in the editor.
 .main-container{
     
   position: absolute;
-  text-align: center;
+  // text-align: center;
   top: 70px;
   left: 15%;
   right: 15%;
@@ -62,6 +62,10 @@ and open the template in the editor.
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
+}
+
+.center {
+    text-align: center;
 }
 
 /*

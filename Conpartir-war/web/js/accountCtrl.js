@@ -2,11 +2,12 @@
   'use strict';
 
   var modAccount = angular.module('accountModule', ['ngRoute']);
-        modAccount.controller('AccountController', ['$scope', '$http', '$location','auth','shared',
-        function($scope,$http,$location,auth,shared) {
+        modAccount.controller('AccountController', ['$scope', '$http', '$location','$window','auth','shared',
+        function($scope,$http,$location,$window,auth,shared) {
             
             $scope.clientInfo;
-            $scope.driverInfo;
+            $scope.driversInfo;
+            $scope.selectedCar;
             $scope.show = [true, false, false];
             
             $scope.check = function() {
@@ -21,14 +22,14 @@
              else {
                  var self= $location.search();
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
-                   $scope.loadDrivers();      
+                      
                  shared.getClient(self.email).then(function(promise) {
                      var prova = shared.getData(); 
                      $scope.clientInfo = prova.return;
                      //console.log($scope.clientInfo);
                      
                  });
-                 
+                 $scope.loadDrivers();   
                  
              };   
            };      
@@ -40,17 +41,32 @@
                  shared.getDrivers(self.email).then(function(promise) {
                      var prova = shared.getData(); 
                      $scope.driversInfo = prova.return;
-                     console.log($scope.driversInfo);
-                     
+                     //console.log($scope.driversInfo);
+                     $scope.selectedCar = $scope.driversInfo[0];
                  });
                
                
-           }, 
+           }; 
            
            $scope.tab = function(data) {
                 if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
                 if (data=="cars") {$scope.show[0] = false, $scope.show[1] = true; $scope.show[2] = false; };
                 if (data=="feed") {$scope.show[0] = false, $scope.show[1] = false; $scope.show[2] = true; };
+                
+            };
+            
+            $scope.carInfo = function(data) {
+                var item; 
+                  console.log("data is " + data);
+                for (item in $scope.driversInfo) {
+                  console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
+                    if (item.driver_id == data) { 
+                        $scope.selectedCar = item; 
+                        
+                    }; 
+                };
+                console.log("selected car " + $scope.selectedCar.carModel);
+              //  $window.location.reload();
                 
             };
             

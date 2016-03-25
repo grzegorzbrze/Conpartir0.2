@@ -62,8 +62,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                         .success(function (data, status, headers, config) {
                             var jsonObj = x2js.xml_str2json( data );
                     res = jsonObj.Envelope.Body.getClientResponse;
-                    console.log("oggetto ottenuto = " );
-                    console.log(res);
+                    //console.log("oggetto ottenuto = " );
+                    //console.log(res);
                     delete res["_xmlns:ns2"];
                     delete res["__prefix"];
                     obj = res;           
@@ -157,7 +157,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 var opName = "getDrivers";           
                 sr = SOAPhead +
                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                           '<email>'+ email +'</email>' +
+                           '<clientEmail>'+ email +'</clientEmail>' +
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
