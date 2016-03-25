@@ -37,12 +37,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 xml.setRequestHeader('Content-Type', 'text/xml');
                 xml.send(s);                
             
-            },
-            
-            logout: function () {
-                auth.delCookie('conpCookie');
-                $location.path("/");                
-            },
+            },           
+          
             
             getClient: function (email) {                
                 var res;
@@ -80,6 +76,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise;                     
             },
             
+            
+            
             getTravels: function (input) {
                 var res;
                 var sr;
@@ -116,28 +114,32 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      }                  
                      })
                              .success(function (data, status, headers, config) {
-                                 var jsonObj = data ;
-                    
+                                 var jsonObj = x2js.xml_str2json( data );
+                                 console.log("read obj "+jsonObj);
+                   
                     if (input.when != null) { 
                                     res = jsonObj.Envelope.Body.getTravelsFromResponse;
-                                    console.log("oggetto ottenuto = " );
-                                    console.log(res);
+                                  //  console.log("oggetto ottenuto = " );
+                                  //  console.log(res);
                                    // obj = res;
                                    // return obj;
                                     
                                 }
                                 else {
                                     res = jsonObj.Envelope.Body.getTravelsResponse; 
-                                     console.log("oggetto ottenuto = " );
-                                    console.log(res);
+                                   //console.log("oggetto ottenuto = " );
+                                   // console.log(res);
                                    // obj = res;
                                    // return obj;
                                 }
                                   delete res["_xmlns:ns2"];
                                   delete res["__prefix"];
-                                obj = res; 
+                                  
+                            
+                                obj = res;
                                 
-                                return res;
+                                
+                                //return res;
                      })
                              .error(function (data, status, headers, config) {
                                  return {"status": false};
@@ -145,6 +147,42 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      
                      return promise;
             }, 
+            
+            getDrivers: function (email) {                
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "getDrivers";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ email +'</email>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getDriversResponse;
+                    console.log("oggetto ottenuto = " );
+                    console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;           
+                    return res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                     
+            },
             
             getData: function () {
                 // console.log(obj + ' was returned as data');

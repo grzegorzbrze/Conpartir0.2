@@ -29,6 +29,7 @@ import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
 
 import com.google.gson.Gson;
+import static java.lang.System.out;
 
 
 
@@ -99,12 +100,16 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getDrivers")
-    public List<Driver> getDrivers(@WebParam(name = "clientID") long clientID) {
+    public List<Driver> getDrivers(@WebParam(name = "clientEmail") String clientEmail) {
         List<Driver> lista = new ArrayList();
-        List<Driver> drivers = driverRef.getDrivers(clientID);
+        Client cliente = clientRef.getClient(clientEmail);
+        
+        cliente.getId();
+        out.println("id = " +cliente.getId());
+        List<Driver> drivers = driverRef.getDrivers(cliente.getId());
         for (Driver driver : drivers){
             Driver temp = new Driver();
-            temp.setClient_id(clientID);
+            temp.setClient_id(cliente.getId());
             temp.setCarModel(driver.getCarModel());
             temp.setCarYear(driver.getCarYear());
             temp.setDriver_id(driver.getDriver_id());
@@ -160,12 +165,14 @@ public class SOAPServiceClient {
             Driver driver = driverRef.getDriver(viaggio.getDriver_id());
             
             Gson gson = new Gson();
-            String utente = gson.toJson(cliente);
-            String autista = gson.toJson(driver);
-            String travel = gson.toJson(viaggio);
+            String utente = '"' + "client" + '"' +':' + gson.toJson(cliente);
+            String autista = '"' + "client" + '"' +':' + gson.toJson(driver);
+            String travel = '"' + "client" + '"' +':' + gson.toJson(viaggio);
             
-            String jsonString = utente+autista+travel;
-            stringhe.add(jsonString);
+            String jsonString ='{'+ utente+','+ autista+','+ travel +'}';
+            
+            String prova = gson.toJson(jsonString);
+            stringhe.add(prova);
         }
         
         return stringhe;
@@ -188,11 +195,16 @@ public class SOAPServiceClient {
             Driver driver = driverRef.getDriver(viaggio.getDriver_id());
             
             Gson gson = new Gson();
-            String utente = gson.toJson(cliente);
-            String autista = gson.toJson(driver);
-            String travel = gson.toJson(viaggio);
             
-            String jsonString = utente+autista+travel;
+            String client = "client";
+            String drive = "driver";
+            String trav = "travel";
+            
+           String utente = '"' + client + '"' +':' + gson.toJson(cliente);
+            String autista = '"' + drive + '"' +':' + gson.toJson(driver);
+            String travel = '"' + trav + '"' +':' + gson.toJson(viaggio);
+            
+           String jsonString ='{'+ utente+','+ autista+','+ travel +'}';
             stringhe.add(jsonString);
         }
         
@@ -204,7 +216,7 @@ public class SOAPServiceClient {
      /**
      * Web service operation
      */
-    @WebMethod(operationName = "createCommet")
+    @WebMethod(operationName = "createComment")
     public void createCommet(@WebParam(name = "author_id") long author_id, 
             @WebParam(name = "clientJudged_id") long clientJudged_id, 
             @WebParam(name = "travel_id") long travel_id, 

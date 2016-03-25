@@ -101,8 +101,8 @@
                     // this callback will be called asynchronously
                     // when the response is available
                     $scope.status=data.data;
-                    console.log(data.status);
-                    console.log($scope.status);
+                   // console.log(data.status);
+                    // console.log($scope.status);
                     var flag = data.data.charAt(1);
                     if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
                     else { 
@@ -126,17 +126,17 @@
             
             $scope.logout = function () {
                 login.logout();
-                $location.path("/"); 
+                
                 $scope.loginShow= true;
                 $scope.isAuthorized= false;
+                $location.path("/"); 
                 //$scope.checkAuth(); 
                 $timeout( 
                                 function() {
                                     $window.location.reload();
                                     console.log("reloaded");
-                                    
                                 },
-                                10
+                                20
                                         ); 
               
       };

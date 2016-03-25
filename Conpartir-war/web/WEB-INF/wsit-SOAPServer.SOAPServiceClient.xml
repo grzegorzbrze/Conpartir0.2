@@ -27,8 +27,6 @@
     <message name="getTaxiTravelsResponse"/>
     <message name="getTaxiTravelsFrom"/>
     <message name="getTaxiTravelsFromResponse"/>
-    <message name="createCommet"/>
-    <message name="createCommetResponse"/>
     <message name="getDriverFromTravel"/>
     <message name="getDriverFromTravelResponse"/>
     <message name="createDriver"/>
@@ -37,6 +35,8 @@
     <message name="getDriversResponse"/>
     <message name="createTaxiTravel"/>
     <message name="createTaxiTravelResponse"/>
+    <message name="createComment"/>
+    <message name="createCommentResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -82,10 +82,6 @@
             <input message="tns:getTaxiTravelsFrom"/>
             <output message="tns:getTaxiTravelsFromResponse"/>
         </operation>
-        <operation name="createCommet">
-            <input message="tns:createCommet"/>
-            <output message="tns:createCommetResponse"/>
-        </operation>
         <operation name="getDriverFromTravel">
             <input message="tns:getDriverFromTravel"/>
             <output message="tns:getDriverFromTravelResponse"/>
@@ -101,6 +97,10 @@
         <operation name="createTaxiTravel">
             <input message="tns:createTaxiTravel"/>
             <output message="tns:createTaxiTravelResponse"/>
+        </operation>
+        <operation name="createComment">
+            <input message="tns:createComment"/>
+            <output message="tns:createCommentResponse"/>
         </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
@@ -149,10 +149,6 @@
             <input/>
             <output/>
         </operation>
-        <operation name="createCommet">
-            <input/>
-            <output/>
-        </operation>
         <operation name="getDriverFromTravel">
             <input/>
             <output/>
@@ -166,6 +162,10 @@
             <output/>
         </operation>
         <operation name="createTaxiTravel">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="createComment">
             <input/>
             <output/>
         </operation>
@@ -407,6 +407,30 @@
         </wsp:ExactlyOne>
     </wsp:Policy>
     <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_getCommentsPosted_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createCommet_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="SOAPServiceClientPortBinding_createCommet_Output_Policy">
         <wsp:ExactlyOne>
             <wsp:All>
                 <sp:EncryptedParts>

@@ -113,7 +113,15 @@
                      var prova = shared.getData(); 
                      
                      if(isArray(prova.return)) {
-                         $scope.prova = prova.return;   
+                         
+                      /*   for (var item in prova.return) {
+                             var it = item;
+                             console.log(it);
+                             item = JSON.parse(it);
+                         }*/
+                         $scope.prova = JSON.parse(prova.return[0]);
+                         
+                         console.log($scope.prova);
                          console.log("is Array");
                          $scope.isArray = true;
                      }

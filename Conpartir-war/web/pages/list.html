@@ -14,7 +14,7 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="cars" ng-show="showCar">
+    <div role="tabpanel" id="cars" ng-show="showCar">
         <p> </p>
         <div class="form-horizontal"> 
             <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
@@ -26,7 +26,7 @@
             
         </div> 
     </div>
-    <div role="tabpanel" class="tab-pane" id="taxis" ng-show="showTaxi">...</div>
+    <div role="tabpanel" id="taxis" ng-show="showTaxi">...</div>
   </div>
 
 </div>
@@ -40,8 +40,8 @@
    <div class="scrollable-content">
     <div ng-show="showHead" class="panel">
         <h3 >Proposte di viaggi da <b>{{data.from}}</b> a <b>{{data.to}}</b></h3>
-      <a ng-repeat=" item in prova" class="list-group col-md-12" ng-click="go(item.travel_id)">
-          <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
+      <a ng-repeat=" item in prova" class="list-group col-md-12" ng-click="go(item.travel.travel_id)">
+          <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{item.travel.data}} alle {{item.travel.time}}</div> <div class="col-md-2 list-group-item">{{item.travel.freeSeats}} posti</div>          
       </a>
         
     <!--     <a ng-show="isSingleElement" ng-model="prova" class="col-md-12" ng-click="go(item.travel_id)">

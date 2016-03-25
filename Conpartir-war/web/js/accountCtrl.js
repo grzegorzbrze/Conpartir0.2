@@ -6,6 +6,7 @@
         function($scope,$http,$location,auth,shared) {
             
             $scope.clientInfo;
+            $scope.driverInfo;
             $scope.show = [true, false, false];
             
             $scope.check = function() {
@@ -18,17 +19,33 @@
                  $location.path('/login');
                 }
              else {
-                 var self= $location.search(); 
+                 var self= $location.search();
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
-                        
+                   $scope.loadDrivers();      
                  shared.getClient(self.email).then(function(promise) {
                      var prova = shared.getData(); 
                      $scope.clientInfo = prova.return;
                      //console.log($scope.clientInfo);
                      
                  });
+                 
+                 
              };   
-           };         
+           };      
+           
+           $scope.loadDrivers = function () {
+               var self= $location.search(); 
+                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
+                        
+                 shared.getDrivers(self.email).then(function(promise) {
+                     var prova = shared.getData(); 
+                     $scope.driversInfo = prova.return;
+                     console.log($scope.driversInfo);
+                     
+                 });
+               
+               
+           }, 
            
            $scope.tab = function(data) {
                 if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
