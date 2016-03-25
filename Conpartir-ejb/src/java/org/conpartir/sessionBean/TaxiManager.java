@@ -7,6 +7,8 @@ package org.conpartir.sessionBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -186,5 +188,12 @@ public class TaxiManager implements TaxiManagerLocal {
     
     }
     
-    
+    protected List<Taxi> sortListByDate(List<Taxi> taxis){
+        Collections.sort(taxis, new Comparator<Taxi>() {
+            public int compare(Taxi tax1, Taxi tax2) {
+                return tax1.getData().compareTo(tax2.getData());
+            }
+        });
+        return taxis;
+    }
 }

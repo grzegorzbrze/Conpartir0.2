@@ -10,7 +10,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Driver;
-import org.conpartir.entity.Travel;
 import org.conpartir.facade.DriverFacadeLocal;
 
 /**
@@ -103,5 +102,4 @@ public class DriverManager implements DriverManagerLocal {
         return drivers;
     }
 
-    
 }

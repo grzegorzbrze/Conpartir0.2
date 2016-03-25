@@ -103,9 +103,6 @@ public class SOAPServiceClient {
     public List<Driver> getDrivers(@WebParam(name = "clientEmail") String clientEmail) {
         List<Driver> lista = new ArrayList();
         Client cliente = clientRef.getClient(clientEmail);
-        
-        cliente.getId();
-        out.println("id = " +cliente.getId());
         List<Driver> drivers = driverRef.getDrivers(cliente.getId());
         for (Driver driver : drivers){
             Driver temp = new Driver();
@@ -253,14 +250,21 @@ public class SOAPServiceClient {
 
     /**
      * Web service operation
-     * Restituisce una list con gli ultimi numMax commenti fatti in ordine di tempo 
+     * Restituisce una list con gli ultimi numMax commenti ricevuti in ordine di tempo 
      * max 10
      * da usare per mostrare l'attività degli utenti in homepage
      */
-    @WebMethod(operationName = "getLatestComments")
-    public List<Comment> getLatestComments(@WebParam(name = "numMax") int numMax) {
-        //TODO write your implementation code here:
-        return null;
+    @WebMethod(operationName = "getLatestReceivedComments")
+    public List<Comment> getLatestReceivedComments(@WebParam(name = "clientEmail") String clientEmail, @WebParam(name = "numMax") int numMax) {
+        Client cliente = clientRef.getClient(clientEmail);
+        List<Comment> commenti = commentRef.getCommentReceived(cliente.getId());
+        List<Comment> primiNCommenti = new ArrayList();
+        for (int i=0; i<numMax; i++){
+            if (i<commenti.size()){
+                primiNCommenti.add(i, commenti.get(i));
+            }
+        }
+        return primiNCommenti;
     }
     
     /**
@@ -363,7 +367,7 @@ public class SOAPServiceClient {
         }
         return data;
     }
-    
+ 
     
     
 }

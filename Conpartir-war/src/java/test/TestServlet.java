@@ -8,7 +8,10 @@ package test;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,9 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.conpartir.entity.Client;
+import org.conpartir.entity.Comment;
 import org.conpartir.entity.Driver;
 import org.conpartir.entity.Taxi;
 import org.conpartir.entity.Travel;
+import org.conpartir.sessionBean.CommentMagangerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
@@ -29,6 +34,8 @@ import org.conpartir.sessionBean.TravelManagerLocal;
  * @author Blu Light
  */
 public class TestServlet extends HttpServlet {
+    @EJB
+    private CommentMagangerLocal commentManager;
     @EJB
     private TaxiManagerLocal taxiManager;
     @EJB
@@ -217,6 +224,41 @@ public class TestServlet extends HttpServlet {
                 taxiManager.getTaxisReserved(mario.getId()).size());
     }
     
+    public void testSort(){
+        List<Travel> lista = travelManager.searchByOriginDestination("Torino", "Milano");
+        System.out.println("I viaggi prima dell'ordinamento: ");
+        for (Travel temp : lista){
+            System.out.println("ID_Travel: "+temp.getTravel_id()+" Data: " + temp.getDataString()+ " Tempo "+temp.getTimeString());
+        }
+        Collections.sort(lista, new Comparator<Travel>() {
+        public int compare(Travel m1, Travel m2) {
+            return m1.getData().compareTo(m2.getData());
+    }
+});
+        System.out.println("I viaggi dopo l'ordinamento: ");
+       for (Travel temp : lista){
+            System.out.println("ID_Travel: "+temp.getTravel_id()+" Data: " + temp.getDataString()+ " Tempo: "+temp.getTimeString());
+        } 
+    }
+    
+    public void testComment(){
+        String email2 = "Luca.Russo@gmail.com";
+        String email1 = "Andrea.Rossi@gmail.com";
+        String email8 = "Giulia.Bianchi@gmail.com";
+        List<Comment> lista1 = commentManager.getCommentReceived((long)1);
+        List<Comment> lista2 = commentManager.getCommentReceived((long)2);
+        List<Comment> lista8 = commentManager.getCommentReceived((long)8);
+        for(Comment temp : lista1){
+            System.out.println("Commenti sul client con ID 1 e email "+email1+": "+temp.getComment());
+        }
+        for(Comment temp : lista2){
+            System.out.println("Commenti sul client con ID 2 e email "+email2+": "+temp.getComment());
+        }
+        for(Comment temp : lista8){
+            System.out.println("Commenti sul client con ID 8 e email "+email8+": "+temp.getComment());
+        }
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //clientManager.addClient("Mario", "Rossi", 'M', 27, "mario.rossi@gmail.com", "rossi", "root/rossi");
@@ -233,13 +275,14 @@ public class TestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             //test();
-                        
+            //testSort();
+            //testComment();
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-        RequestDispatcher rd = request.getRequestDispatcher("/ProvaFB.html");
-        rd.include(request, response);
+        //RequestDispatcher rd = request.getRequestDispatcher("/ProvaFB.html");
+        //rd.include(request, response);
     }
 
     

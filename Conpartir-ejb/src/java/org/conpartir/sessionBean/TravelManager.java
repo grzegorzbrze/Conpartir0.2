@@ -7,6 +7,8 @@ package org.conpartir.sessionBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -102,7 +104,7 @@ public class TravelManager implements TravelManagerLocal {
             }
         }       
         
-        return lista;
+        return sortListByDate(lista);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class TravelManager implements TravelManagerLocal {
                 }
             }
         }
-        return lista;
+        return sortListByDate(lista);
     }
 
     @Override
@@ -138,62 +140,9 @@ public class TravelManager implements TravelManagerLocal {
                 }
             }
         }
-        return lista;
+        return sortListByDate(lista);
     }
     
-    /**
-     * Restituisce true se l'ora temp2 è dopo l'ora temp1  
-     * @param tempo1
-     * @param tempo2
-     * @return 
-     */
-    protected boolean afterTime(Date tempo1, Date tempo2){
-        boolean risultato = false;
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(tempo1);
-        int ora1 = calendar1.get(Calendar.HOUR_OF_DAY);
-        int min1 = calendar1.get(Calendar.MINUTE);
-        int sec1 = calendar1.get(Calendar.SECOND);
-        calendar1.setTime(tempo2);
-        int ora2 = calendar1.get(Calendar.HOUR_OF_DAY);
-        int min2 = calendar1.get(Calendar.MINUTE);
-        int sec2 = calendar1.get(Calendar.SECOND);
-        if (ora2 > ora1){
-            risultato = true;
-        }
-        if (ora2 == ora1){
-            if (min2 > min1){
-                risultato = true;
-            }
-            if (min2 == min1){
-                if (sec2>sec1){
-                    risultato = true;
-                }
-                if (sec2 == sec1)
-                    risultato = true;
-            }
-        }   
-        return risultato;
-    }
-    
-     
-    protected boolean subFreeSeat(Long travel_id) {
-        boolean diminuito = false;
-        Travel viaggio = getTravel(travel_id);
-        List <Travel> lista = travelFacade.findAll();
-        for (Travel temp : lista){
-            if(temp.getDriver_id().equals(viaggio.getDriver_id()) &&
-                    temp.getOrigin().endsWith(viaggio.getOrigin()) && 
-                    temp.getDestination().equals(viaggio.getDestination()) && 
-                    temp.getData().equals(viaggio.getData()) && temp.getTime().equals(viaggio.getTime())
-                    && temp.getFreeSeats() != viaggio.getFreeSeats() && !temp.getTravel_id().equals(travel_id)){
-                temp.setFreeSeats(viaggio.getFreeSeats());
-                diminuito = true;
-            }       
-        }
-        return diminuito;
-    }
-
     @Override
     public Travel getTravel(Long travelID) {
         Travel viaggio = new Travel();
@@ -204,16 +153,6 @@ public class TravelManager implements TravelManagerLocal {
         return viaggio;
     }
     
-    protected boolean isExist(Long driver_id, Long client_id, Date data, 
-            Date time, String origine, String destination){
-        boolean risultato = true;
-        Long risID = getTravel_ID(driver_id, client_id, data, time, origine, destination);
-        if (risID == null){
-            risultato = false;
-        }
-        return risultato;
-    }
-
     @Override
     public Client getInfoClientEqualDriver(Long travel_id) {
         Travel travel = getTravel(travel_id); 
@@ -237,7 +176,7 @@ public class TravelManager implements TravelManagerLocal {
         }
         return new Client();
     }
-
+    
     @Override
     public Driver getInfoDriverEqualClient(Long travel_id) {
         Travel travel = getTravel(travel_id);
@@ -284,7 +223,76 @@ public class TravelManager implements TravelManagerLocal {
         }
        
        return risultato;
+    }    
+    
+    /**
+     * Restituisce true se l'ora temp2 è dopo l'ora temp1  
+     * @param tempo1
+     * @param tempo2
+     * @return 
+     */
+    protected boolean afterTime(Date tempo1, Date tempo2){
+        boolean risultato = false;
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(tempo1);
+        int ora1 = calendar1.get(Calendar.HOUR_OF_DAY);
+        int min1 = calendar1.get(Calendar.MINUTE);
+        int sec1 = calendar1.get(Calendar.SECOND);
+        calendar1.setTime(tempo2);
+        int ora2 = calendar1.get(Calendar.HOUR_OF_DAY);
+        int min2 = calendar1.get(Calendar.MINUTE);
+        int sec2 = calendar1.get(Calendar.SECOND);
+        if (ora2 > ora1){
+            risultato = true;
+        }
+        if (ora2 == ora1){
+            if (min2 > min1){
+                risultato = true;
+            }
+            if (min2 == min1){
+                if (sec2>sec1){
+                    risultato = true;
+                }
+                if (sec2 == sec1)
+                    risultato = true;
+            }
+        }   
+        return risultato;
+    }
+     
+    protected boolean subFreeSeat(Long travel_id) {
+        boolean diminuito = false;
+        Travel viaggio = getTravel(travel_id);
+        List <Travel> lista = travelFacade.findAll();
+        for (Travel temp : lista){
+            if(temp.getDriver_id().equals(viaggio.getDriver_id()) &&
+                    temp.getOrigin().endsWith(viaggio.getOrigin()) && 
+                    temp.getDestination().equals(viaggio.getDestination()) && 
+                    temp.getData().equals(viaggio.getData()) && temp.getTime().equals(viaggio.getTime())
+                    && temp.getFreeSeats() != viaggio.getFreeSeats() && !temp.getTravel_id().equals(travel_id)){
+                temp.setFreeSeats(viaggio.getFreeSeats());
+                diminuito = true;
+            }       
+        }
+        return diminuito;
     }
     
+    protected boolean isExist(Long driver_id, Long client_id, Date data, 
+            Date time, String origine, String destination){
+        boolean risultato = true;
+        Long risID = getTravel_ID(driver_id, client_id, data, time, origine, destination);
+        if (risID == null){
+            risultato = false;
+        }
+        return risultato;
+    }
     
+    protected List<Travel> sortListByDate(List<Travel> travels){
+        Collections.sort(travels, new Comparator<Travel>() {
+            public int compare(Travel trav1, Travel trav2) {
+                return trav1.getData().compareTo(trav2.getData());
+            }
+        });
+        return travels;
+    }
 }
