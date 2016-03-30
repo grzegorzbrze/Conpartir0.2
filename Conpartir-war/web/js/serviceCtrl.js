@@ -8,6 +8,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
    function ($http, $location, auth) {
         var data;
         var obj = {};
+        var driversObj = {};
+        var clientObj = {};
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -19,7 +21,6 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var x2js = new X2JS();
          
         return {
-            
             //Metodo che prende il WSDL (descrittore di servizio) del SOAPService. 
             //Da invocare ogni volta che viene fatta una richiesta SOAP
             getWSDL: function () {                
@@ -37,8 +38,91 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 xml.setRequestHeader('Content-Type', 'text/xml');
                 xml.send(s);                
             
-            },           
-          
+            },
+            
+           createCarTravel: function (input) { 
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "createCarTravel";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ input.email +'</email>' +
+                           '<id>'+ input.id +'</id>' +
+                           '<from>' +input.from + '</from>' +
+                           '<to>' +input.to +'</to>' +
+                           '<when>' + input.when+'</when>' +
+                           '<freeSeats>' + input.freeSeats + '</freeSeats>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            /* var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.createCarTravelResponse;
+                    //console.log("oggetto ottenuto = " );
+                    //console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;           
+                    return res; */
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;             
+           
+           },
+           
+           createTaxiTravel: function (input) { 
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "createCarTravel";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<creator_id>'+ input.email +'</creator_id>' +
+                           '<client_id>'+ input.id +'</client_id>' +
+                           '<origin>' +input.from + '</origin>' +
+                           '<destination>' +input.to +'</destination>' +
+                           '<freeSeats>' + input.freeSeats + '</freeSeats>' +
+                           '<when>' + input.when+'</when>' +                           
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                          /*  var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.createTaxiTravelResponse;
+                    //console.log("oggetto ottenuto = " );
+                    //console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;           
+                    return res; */
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;             
+           
+           },
             
             getClient: function (email) {                
                 var res;
@@ -66,7 +150,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                     //console.log(res);
                     delete res["_xmlns:ns2"];
                     delete res["__prefix"];
-                    obj = res;           
+                    obj = res;
+                    clientObj = res;
                     return res;
                 })
                         .error(function (data, status, headers, config) {
@@ -75,8 +160,6 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 
                 return promise;                     
             },
-            
-            
             
             getTravels: function (input) {
                 var res;
@@ -170,11 +253,12 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                         .success(function (data, status, headers, config) {
                             var jsonObj = x2js.xml_str2json( data );
                     res = jsonObj.Envelope.Body.getDriversResponse;
-                    console.log("oggetto ottenuto = " );
-                    console.log(res);
+                   /* console.log("oggetto ottenuto = " );
+                    console.log(res); */
                     delete res["_xmlns:ns2"];
                     delete res["__prefix"];
-                    obj = res;           
+                    
+                    driversObj = res.return;           
                     return res;
                 })
                         .error(function (data, status, headers, config) {
@@ -184,12 +268,19 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise;                     
             },
             
-            getData: function () {
-                // console.log(obj + ' was returned as data');
-                 console.log("sto passando un oggetto obj = " );
-                 console.log(obj);
+            getData: function () {                
+               //  console.log("sto passando un oggetto obj = " );
+                // console.log(obj);
                 return obj;
-            },            
+            },
+            
+            getCars: function () {
+                return driversObj;
+            },
+            
+            getClientInfo: function () {
+                return clientObj;
+            }, 
             
             setData: function (name,surname,email,carModel) {
                 // console.log('setting ' + data + ' as data');

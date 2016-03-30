@@ -14,7 +14,7 @@
           <p></p>
           <div class="input-group" >
               <span class="input-group-addon" id="basic-addon2">Destinazione</span>
-              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="password">
+              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="destination">
           </div>
           <p></p>
           <div class="radio-inline-panel">
@@ -23,10 +23,20 @@
             <label class="radio-inline" ><input type="radio" name="optradio" ng-model="isTaxiTravel" ng-value="true" ng-click="mode()"/>Taxi</label>
           </div>
           <p></p>
-         <div class="input-group" ng-show="isCarTravel">
-              <span class="input-group-addon" >Macchina</span>
-              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="password">
-          </div>
+         
+         <div class="input-group dropdown" ng-show="isCarTravel">
+              <span class="input-group-addon" id="basic-addon7">Macchina</span> 
+               <input class="form-control" type="text" ng-model="travel.carModel" aria-describedby="basic-addon7" name="car">
+         </div>
+           <div class="input-group center" ng-show="isCarTravel">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+                 Scegli il modello
+                 <span class="caret"></span>
+             </button>
+             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">                 
+                 <li ng-repeat="item in cars"><a ng-click="select(item.driver_id,item.carModel)">{{item.carModel}}</a></li>
+             </ul></div>
+          
           <p></p>
           <div class="input-group" >
               <span class="input-group-addon" id="basic-addon4">Data</span>
@@ -36,6 +46,11 @@
           <div class="input-group" >
               <span class="input-group-addon" id="basic-addon5">Ora</span>
               <input  id="timepicker" placeholder="Ora" type="text" class="form-control" ng-model="travel.time">         </div> 
+          <p></p>
+           <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon6">Posti Liberi</span>
+              <input class="form-control" type="text" ng-model="travel.freeSeats" aria-describedby="basic-addon7" name="car">
+                 </div> 
           <p></p>
           
           

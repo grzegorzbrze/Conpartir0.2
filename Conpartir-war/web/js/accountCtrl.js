@@ -39,8 +39,8 @@
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
                         
                  shared.getDrivers(self.email).then(function(promise) {
-                     var prova = shared.getData(); 
-                     $scope.driversInfo = prova.return;
+                     var prova = shared.getCars(); 
+                     $scope.driversInfo = prova;
                      //console.log($scope.driversInfo);
                      $scope.selectedCar = $scope.driversInfo[0];
                  });
