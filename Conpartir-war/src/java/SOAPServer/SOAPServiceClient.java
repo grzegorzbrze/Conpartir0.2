@@ -145,12 +145,12 @@ public class SOAPServiceClient {
         /* nota: in questo metodo id è del driver*/
         Client clientInfo = clientRef.getClient(email);
         Long clientId = clientInfo.getId();
-        //out.println("info " +clientId);
+        
         Date data = convertiStringa(when);
         
         travelRef.createTravel(id, clientId, from, to, data, data, freeSeats);
         
-       // travelRef.createTravel(1L,1L,"Torino","Alessandria",data,data,5);
+       
     }
     
      /**
