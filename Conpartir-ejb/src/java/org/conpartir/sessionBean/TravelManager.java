@@ -118,7 +118,6 @@ public class TravelManager implements TravelManagerLocal {
                     && temp.getDestination().equals(destination) && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     lista.add(temp);
-                    //System.out.println("data successiva trovata: " + temp.getData());
                 }
             }
         }
@@ -199,12 +198,12 @@ public class TravelManager implements TravelManagerLocal {
         if (trav.getTravel_id() != null){
             List<Travel> prenotati = this.searchByOriginDestinationDateTime
         (trav.getData(), trav.getTime(), trav.getOrigin(), trav.getDestination());
-        for (Travel prenotato : prenotati){
-            if (prenotato.getDriver_id().equals(trav.getDriver_id()) 
-                    && prenotato.getClient_id().equals(passengerID)){
-                risultato = false;
-            }
-        } 
+            for (Travel prenotato : prenotati){
+                if (prenotato.getDriver_id().equals(trav.getDriver_id()) 
+                        && prenotato.getClient_id().equals(passengerID)){
+                    risultato = false;
+                }
+            } 
         }
         if (risultato == true){
             List<Travel> travels = travelFacade.findAll();
@@ -221,7 +220,6 @@ public class TravelManager implements TravelManagerLocal {
                 }
             }
         }
-       
        return risultato;
     }    
     

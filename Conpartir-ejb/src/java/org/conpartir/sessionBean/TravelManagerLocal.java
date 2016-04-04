@@ -20,7 +20,7 @@ import org.conpartir.entity.Travel;
 public interface TravelManagerLocal {
     
     /**
-     * Permette di creare una tupla nel database tramite un oggetto di tipo post
+     * Permette di creare una tupla nel database tramite un oggetto di tipo travel
      * @param travel
      */
     public void createTravel(Travel travel);
