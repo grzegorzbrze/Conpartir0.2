@@ -26,6 +26,7 @@ import org.conpartir.sessionBean.CommentMagangerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.google.gson.Gson;
 
@@ -173,10 +174,10 @@ public class SOAPServiceClient {
      * Web service operation  
      */
     @WebMethod(operationName = "getTravels")
-    public List<String> getTravels(@WebParam(name = "start") String start, 
+    public List<Travel> getTravels(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end) {
         List<Travel> viaggi = travelRef.searchByOriginDestination(start, end);
-        List<String> stringhe = new ArrayList();
+        /*List<String> stringhe = new ArrayList();
         for (Travel viaggio : viaggi){
             String email = clientRef.getEmail(viaggio.getClient_id());
             Client cliente = clientRef.getClient(email);
@@ -185,28 +186,37 @@ public class SOAPServiceClient {
             
             Gson gson = new Gson();
             String utente = '"' + "client" + '"' +':' + gson.toJson(cliente);
-            String autista = '"' + "client" + '"' +':' + gson.toJson(driver);
-            String travel = '"' + "client" + '"' +':' + gson.toJson(viaggio);
+            String autista = '"' + "driver" + '"' +':' + gson.toJson(driver);
+            String travel = '"' + "travel" + '"' +':' + gson.toJson(viaggio);
             
             String jsonString ='{'+ utente+','+ autista+','+ travel +'}';
+            String travelXml = "<email>"+cliente.getEmail()+"</email>";
+            /*
+            '<email>'+ input.email +'</email>' +
+                           '<id>'+ input.id +'</id>' +
+                           '<from>' +input.from + '</from>' +
+                           '<to>' +input.to +'</to>' +
+                           '<when>' + input.when+'</when>' +
+                           '<freeSeats>' + input.freeSeats + '</freeSeats>'
             
             String prova = gson.toJson(jsonString);
-            stringhe.add(prova);
-        }
+            //stringhe.add(prova);
+            
+        }*/
         
-        return stringhe;
+        return viaggi;
     }
     
      /**
      * Web service operation
      */
     @WebMethod(operationName = "getTravelsFrom")
-    public List<String> getTravelsFrom(@WebParam(name = "start") String start, 
+    public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end, @WebParam(name = "when") String when) {
         
         Date data = convertiStringa(when);
         List<Travel> viaggi = travelRef.searchByOriginDestinationDate(data, start, end);
-        List<String> stringhe = new ArrayList();
+        /*List<String> stringhe = new ArrayList();
         for (Travel viaggio : viaggi){
             String email = clientRef.getEmail(viaggio.getClient_id());
             Client cliente = clientRef.getClient(email);
@@ -227,9 +237,9 @@ public class SOAPServiceClient {
             stringhe.add(jsonString);
         }
         
+        */
         
-        
-        return stringhe;   
+        return viaggi;   
     }
 
      /**
