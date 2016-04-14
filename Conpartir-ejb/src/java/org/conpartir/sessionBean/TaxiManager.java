@@ -51,6 +51,9 @@ public class TaxiManager implements TaxiManagerLocal {
             taxi.setFreeSeats(freeSeat);
             taxiFacade.create(taxi);
         }
+        else {
+           // System.out.println("warning" + creator_id +' '+ id_client + "free seats " + freeSeat);
+        }
     }
 
     @Override

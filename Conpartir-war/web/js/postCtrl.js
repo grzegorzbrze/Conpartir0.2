@@ -7,7 +7,6 @@
           
           $scope.notLogged = true;
           $scope.isCarTravel = false;
-          $scope.isTaxiTravel = false;
           $scope.clientInfo;
           $scope.cars;
           $scope.travel;
@@ -18,7 +17,9 @@
                 });    
                 $('#timepicker').timepicker({
                     showMeridian : false,
+                    defaultTime : false,
                     maxHours : 24
+                    
                 });    
                 $('#timepicker').timepicker().on('changeTime.timepicker', function(e) {
                     //console.log('The time is ' + e.time.value);
@@ -47,12 +48,14 @@
           
           $scope.mode = function () {
               if($scope.isCarTravel===true){ 
-                  $scope.isTaxiTravel=false;
                   $scope.cars = shared.getCars();
                   //$scope.clientInfo = shared.getClientInfo();
                   //console.log("macchine" +$scope.cars);
+              }
+              else {
+                  
               };
-              if($scope.isTaxiTravel===true) $scope.isCarTravel=false;
+             
           };
           
           $scope.post = function (input) {
@@ -70,9 +73,14 @@
                 
                 $scope.travel.email = sessionStorage.getItem('email');
                 console.log($scope.travel);
-                shared.createCarTravel($scope.travel).then(function(promise) {
-                    
-                });
+                if( $scope.isCarTravel === true) { 
+                    shared.createCarTravel($scope.travel).then(function(promise) {
+                    });
+                }
+                else {
+                   shared.createTaxiTravel($scope.travel).then(function(promise) {
+                    }); 
+                }
           };
           
           $scope.select = function (dataId,dataModel) {

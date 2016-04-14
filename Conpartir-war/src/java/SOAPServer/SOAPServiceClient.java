@@ -150,6 +150,27 @@ public class SOAPServiceClient {
         
     }
     
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "createTaxiTravel")
+    public void createTaxiTravel(
+            @WebParam(name = "email") String email,
+            @WebParam(name = "origin") String origin, 
+            @WebParam(name = "destination") String destination, 
+            @WebParam(name = "freeSeats") int freeSeats, 
+            @WebParam(name = "when") String when){
+        
+        Client clientInfo = clientRef.getClient(email);
+        Long clientId = clientInfo.getId();
+        Long creatorId = clientId;
+        
+        Date data = convertiStringa(when);
+        taxiRef.createTaxi(creatorId, clientId, data, data, origin, destination, freeSeats);
+        
+    }
+    
+    
      /**
      * Web service operation  
      */
@@ -217,7 +238,7 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "createComment")
-    public void createCommet(@WebParam(name = "author_id") long author_id, 
+    public void createComment(@WebParam(name = "author_id") long author_id, 
             @WebParam(name = "clientJudged_id") long clientJudged_id, 
             @WebParam(name = "travel_id") long travel_id, 
             @WebParam(name = "comment") String comment, 
@@ -270,18 +291,6 @@ public class SOAPServiceClient {
         return primiNCommenti;
     }
     
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "createTaxiTravel")
-    public void createTaxiTravel(@WebParam(name = "creator_id") long creator_id, 
-            @WebParam(name = "client_id") long client_id, 
-            @WebParam(name = "origin") String origin, 
-            @WebParam(name = "destination") String destination, 
-            @WebParam(name = "freeSeat") int freeSeat, @WebParam(name = "when") String when){
-        Date data = convertiStringa(when);
-        taxiRef.createTaxi(creator_id, client_id, data, data, origin, destination, freeSeat);
-    }
     
     /**
      * Web service operation

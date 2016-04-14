@@ -88,11 +88,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 var action;
                 var opName;
                 var promise;
-                var opName = "createCarTravel";           
+                var opName = "createTaxiTravel";           
                 sr = SOAPhead +
                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                           '<creator_id>'+ input.email +'</creator_id>' +
-                           '<client_id>'+ input.id +'</client_id>' +
+                           '<email>'+ input.email +'</email>' +
                            '<origin>' +input.from + '</origin>' +
                            '<destination>' +input.to +'</destination>' +
                            '<freeSeats>' + input.freeSeats + '</freeSeats>' +
