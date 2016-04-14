@@ -37,6 +37,11 @@ public interface TravelManagerLocal {
     public Long getTravel_ID(Long driver_id, Long client_id, Date data, Date time, 
             String origine, String destination);
     
+    /**
+     * Il metodo ricerca tutti i viaggi di un certo utente a partire da data e tempo
+     * Restituisce una lista di viaggi
+     */
+    public List<Travel> getClientTravel(Long client_id, Date data, Date time);
     
     /**
      * Il metodo risponde alla ricerca più generale per destinazione e punto di partenza

@@ -209,7 +209,12 @@ public class TestServlet extends HttpServlet {
             System.out.println(temp.toString());
         }
         
-        
+        String email8 = "Giulia.Bianchi@gmail.com";
+        Client giulia = clientManager.getClient(email8);
+        System.out.println("Lista di viaggi di Giulia.Bianchi@gmail.com a partire da oggi a quest'ora");
+        for (Travel temp : travelManager.getClientTravel(giulia.getId(), data, time)){
+            System.out.println(temp.toString());
+        }
         
     }
     
@@ -277,6 +282,7 @@ public class TestServlet extends HttpServlet {
             //test();
             //testSort();
             //testComment();
+            testTravel();
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");

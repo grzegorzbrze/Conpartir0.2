@@ -16,7 +16,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
 import org.conpartir.entity.Client;
 import org.conpartir.entity.Comment;
 import org.conpartir.entity.Driver;
@@ -29,7 +28,6 @@ import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
 
 import com.google.gson.Gson;
-import static java.lang.System.out;
 
 
 
@@ -237,6 +235,21 @@ public class SOAPServiceClient {
      /**
      * Web service operation
      */
+    @WebMethod(operationName = "getClientTravel")
+    public List<Travel> getClientTravel(@WebParam(name = "email") String email) {
+        List<Travel> lista = new ArrayList();
+        if (email != null){
+            Client temp = clientRef.getClient(email);
+            Date data = new Date();
+            lista = travelRef.getClientTravel(temp.getId(), data, data);
+        }
+        return lista;
+    }
+ 
+    
+     /**
+     * Web service operation
+     */
     @WebMethod(operationName = "createComment")
     public void createComment(@WebParam(name = "author_id") long author_id, 
             @WebParam(name = "clientJudged_id") long clientJudged_id, 
@@ -379,7 +392,8 @@ public class SOAPServiceClient {
         }
         return data;
     }
- 
+
+   
     
     
 }
