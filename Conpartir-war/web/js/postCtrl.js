@@ -16,7 +16,14 @@
                 $( "#datepicker" ).datepicker({
                     dateFormat: "yyyy-mm-dd"
                 });    
-                $('#timepicker').timepicker();                       
+                $('#timepicker').timepicker({
+                    showMeridian : false,
+                    maxHours : 24
+                });    
+                $('#timepicker').timepicker().on('changeTime.timepicker', function(e) {
+                    //console.log('The time is ' + e.time.value);
+                    $scope.travel.hour = e.time.value;
+                });
             });
           
           $scope.check = function () {
@@ -49,15 +56,18 @@
           };
           
           $scope.post = function (input) {
-               var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();                
+               var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
+               
+                     
                 if (when !== null && when != "") {             
                     var month = when.slice(0,2);
                     var day = when.slice(3,5);
                     var year= when.slice(6,10);
                     when = day + '-' + month + '-' + year;
-             
-                    $scope.travel.when = when;
+                    
                 }
+                $scope.travel.when = when +':'+ $scope.travel.hour+ ":00";
+                
                 $scope.travel.email = sessionStorage.getItem('email');
                 console.log($scope.travel);
                 shared.createCarTravel($scope.travel).then(function(promise) {
@@ -68,10 +78,14 @@
           $scope.select = function (dataId,dataModel) {
               $scope.travel.id = dataId;
               $scope.travel.carModel = dataModel;
-          };
-                
-        }]);
+          }; 
+          
     
+    
+                
+        }]);  
+    
+   
     
 
 })();
