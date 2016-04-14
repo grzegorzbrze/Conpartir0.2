@@ -120,7 +120,7 @@ public class TaxiManager implements TaxiManagerLocal {
                 taxies.add(temp);
             }
         }
-        return taxies;
+        return sortListByDate(taxies);
     }
 
     @Override
@@ -129,11 +129,16 @@ public class TaxiManager implements TaxiManagerLocal {
         List <Taxi> viaggi = taxiFacade.findAll();
         for (Taxi temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
-            if (temp.getData().after(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){      
+            if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){
+                if(temp.getData().after(data)){
                     lista.add(temp);
+                }
+                if (temp.getData().equals(data)){
+                    lista.add(temp);
+                }
             }
         }
-        return lista;
+        return sortListByDate(lista);
     }
 
     @Override
@@ -143,12 +148,16 @@ public class TaxiManager implements TaxiManagerLocal {
         List <Taxi> viaggi = taxiFacade.findAll();
         for (Taxi temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
-            if (temp.getData().equals(data) && temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
-                    && afterTime(temp.getTime(), time)){ 
+            if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){
+                if(temp.getData().equals(data) && afterTime(temp.getTime(), time)){
                     lista.add(temp);
+                }
+                if(temp.getData().after(data)){
+                    lista.add(temp);
+                }       
             }
         }
-        return lista;
+        return sortListByDate(lista);
     }
     
     /**
