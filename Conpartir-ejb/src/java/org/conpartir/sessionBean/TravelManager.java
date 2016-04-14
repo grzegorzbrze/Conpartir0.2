@@ -37,25 +37,33 @@ public class TravelManager implements TravelManagerLocal {
 
     @Override
     public void createTravel(Travel travel) {
-        if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
-                travel.getTime(), travel.getOrigin(), travel.getDestination())){
-            travelFacade.create(travel);
+        if (travel.getDriver_id() != null && travel.getClient_id() != null && 
+                travel.getOrigin() != null && travel.getDestination() != null && 
+                travel.getData().toString() != null && travel.getTime().toString() != null
+                && travel.getFreeSeats() != 0){
+            if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
+                    travel.getTime(), travel.getOrigin(), travel.getDestination())){
+                travelFacade.create(travel);
+            }
         }
     }
 
     @Override
     public void createTravel(Long driver_id, Long client_id, String origin, 
             String destination, Date data, Date time, int freeSeats) {
-        if (!isExist(driver_id, client_id, data, time, origin, destination)){
-            Travel travel = new Travel();
-            travel.setClient_id(client_id);
-            travel.setDriver_id(driver_id);
-            travel.setData(data);
-            travel.setDestination(destination);
-            travel.setOrigin(origin);
-            travel.setTime(time);
-            travel.setFreeSeats(freeSeats);
-            travelFacade.create(travel);
+        if (driver_id != null && client_id != null && origin != null && destination != null
+                && data.toString() != null && time.toString() != null && freeSeats != 0 ){
+            if (!isExist(driver_id, client_id, data, time, origin, destination)){
+                Travel travel = new Travel();
+                travel.setClient_id(client_id);
+                travel.setDriver_id(driver_id);
+                travel.setData(data);
+                travel.setDestination(destination);
+                travel.setOrigin(origin);
+                travel.setTime(time);
+                travel.setFreeSeats(freeSeats);
+                travelFacade.create(travel);
+            }
         }
     }
 
@@ -71,10 +79,14 @@ public class TravelManager implements TravelManagerLocal {
             Date temp_time = temp.getTime();
             String temp_origine = temp.getOrigin();
             String temp_destination = temp.getDestination();
-            if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id) &&
-                    temp_data.equals(data) && temp_time.equals(time) && 
-                    temp_origine.equals(origine) && temp_destination.equals(destination)){
-                id_travel = temp.getTravel_id();
+            if (temp_driverID != null && temp_clientID != null && 
+                    temp_data.toString() != null && temp_time.toString() != null
+                    && temp_origine != null && temp_destination != null){
+                if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id) &&
+                        temp_data.equals(data) && temp_time.equals(time) && 
+                        temp_origine.equals(origine) && temp_destination.equals(destination)){
+                    id_travel = temp.getTravel_id();
+                }
             }
         }
         return id_travel;

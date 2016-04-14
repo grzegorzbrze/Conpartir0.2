@@ -5,13 +5,10 @@
  */
 package org.conpartir.sessionBean;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.conpartir.entity.Client;
-import org.conpartir.entity.Driver;
-import org.conpartir.entity.Taxi;
 import org.conpartir.facade.ClientFacadeLocal;
 
 /**
@@ -25,21 +22,30 @@ public class ClientManager implements ClientManagerLocal {
     
     @Override
     public void createClient(Client client) {
-       clientFacade.create(client);
+        String genere = Character.toString(client.getGender());
+        if (client.getName() != null && client.getSurname() != null && 
+                genere != null && client.getAge() != 0 && client.getEmail() != null && 
+                client.getPass() != null && client.getUrlPhoto() != null){
+            clientFacade.create(client);
+        }
     }
 
     @Override
     public void createClient(String name, String surname, char gender, int age,
             String email, String pass, String urlPhoto) {
-        Client nuovo  = new Client();
-        nuovo.setAge(age);
-        nuovo.setEmail(email);
-        nuovo.setGender(gender);
-        nuovo.setName(name);
-        nuovo.setSurname(surname);
-        nuovo.setPass(pass);
-        nuovo.setUrlPhoto(urlPhoto);
-        clientFacade.create(nuovo);  
+        String genere = Character.toString(gender);
+        if (name != null && surname != null && genere != null && age != 0 &&
+                email != null && pass != null && urlPhoto != null ){
+            Client nuovo  = new Client();
+            nuovo.setAge(age);
+            nuovo.setEmail(email);
+            nuovo.setGender(gender);
+            nuovo.setName(name);
+            nuovo.setSurname(surname);
+            nuovo.setPass(pass);
+            nuovo.setUrlPhoto(urlPhoto);
+            clientFacade.create(nuovo); 
+        } 
     }
     
     @Override

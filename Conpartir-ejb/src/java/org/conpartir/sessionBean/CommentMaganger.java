@@ -28,21 +28,31 @@ public class CommentMaganger implements CommentMagangerLocal {
     
     @Override
     public void createComment(Comment comment) {
-        commentFacade.create(comment);
+        if (comment.getId_author() != null && comment.getId_clientJudged() != null
+                && comment.getId_travel() != null && comment.getComment() != null
+                && comment.getFeedback() != 0 && comment.getComment_date().toString() != null
+                && comment.getCommet_hour().toString() != null){
+            commentFacade.create(comment);
+        }
     }
 
     @Override
-    public void createComment(Long id_author, Long id_clientJudged, Long id_travel, String comment, int feedback, Date comment_date, Date commet_hour) {
-        Comment commento = new Comment();
-        commento.setId_author(id_author);
-        commento.setId_clientJudged(id_clientJudged);
-        commento.setId_travel(id_travel);
-        commento.setComment(comment);
-        commento.setFeedback(feedback);
-        commento.setComment_date(comment_date);
-        commento.setCommet_hour(commet_hour);
-        commentFacade.create(commento);
-    }
+    public void createComment(Long id_author, Long id_clientJudged, Long id_travel, 
+            String comment, int feedback, Date comment_date, Date comment_hour) {
+        if (id_author != null && id_clientJudged != null && id_travel != null &&
+                comment != null && feedback != 0 && comment_date.toString() != null
+                && comment_hour.toString() != null){
+            Comment commento = new Comment();
+            commento.setId_author(id_author);
+            commento.setId_clientJudged(id_clientJudged);
+            commento.setId_travel(id_travel);
+            commento.setComment(comment);
+            commento.setFeedback(feedback);
+            commento.setComment_date(comment_date);
+            commento.setCommet_hour(comment_hour);
+            commentFacade.create(commento);
+            }
+        }
 
     @Override
     public List<Comment> getCommentWritten(Long id_client) {

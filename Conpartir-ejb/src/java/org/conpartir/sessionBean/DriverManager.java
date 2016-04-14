@@ -23,20 +23,25 @@ public class DriverManager implements DriverManagerLocal {
 
     @Override
     public void createDriver(Driver driver) {
-        if (!isExist(driver.getCarModel(), driver.getCarYear(), driver.getClient_id())){
-            driverFacade.create(driver);
+        if (driver.getCarModel() != null && driver.getCarYear() != 0 && 
+                driver.getClient_id() != null){
+            if (!isExist(driver.getCarModel(), driver.getCarYear(), driver.getClient_id())){
+                driverFacade.create(driver);
+            }
         }
     }
 
     @Override
     public void createDriver(String carModel, int carYear, Long client_id) {
-        if (!isExist(carModel, carYear, client_id)){
-            Driver driver = new Driver();
-        driver.setCarModel(carModel);
-        driver.setCarYear(carYear);
-        driver.setClient_id(client_id);
-        driverFacade.create(driver);
-        } 
+        if (carModel != null && carYear != 0 && client_id != null){
+            if (!isExist(carModel, carYear, client_id)){
+                Driver driver = new Driver();
+                driver.setCarModel(carModel);
+                driver.setCarYear(carYear);
+                driver.setClient_id(client_id);
+                driverFacade.create(driver);
+            }
+        }
     }
 
     @Override

@@ -27,21 +27,30 @@ public class TaxiManager implements TaxiManagerLocal {
     
     @Override
     public void createTaxi(Taxi taxi) {
-        taxiFacade.create(taxi);
+        if(taxi.getCreator_id() != null && taxi.getClient_id() != null &&
+                taxi.getData().toString() != null && taxi.getTime() != null && 
+                taxi.getOrigin() != null && taxi.getDestination() != null && 
+                taxi.getFreeSeats() != 0){
+            taxiFacade.create(taxi);
+        }
     }
 
     @Override
     public void createTaxi(Long creator_id, Long id_client, Date data, Date time,
             String origin, String destination, int freeSeat) {
-        Taxi taxi = new Taxi();
-        taxi.setCreator_id(creator_id);
-        taxi.setClient_id(id_client);
-        taxi.setData(data);
-        taxi.setTime(time);
-        taxi.setOrigin(origin);
-        taxi.setDestination(destination);
-        taxi.setFreeSeats(freeSeat);
-        taxiFacade.create(taxi);
+        if (creator_id != null && id_client != null && data.toString() != null &&
+                time.toString() != null && origin != null && destination != null
+                && freeSeat != 0){
+            Taxi taxi = new Taxi();
+            taxi.setCreator_id(creator_id);
+            taxi.setClient_id(id_client);
+            taxi.setData(data);
+            taxi.setTime(time);
+            taxi.setOrigin(origin);
+            taxi.setDestination(destination);
+            taxi.setFreeSeats(freeSeat);
+            taxiFacade.create(taxi);
+        }
     }
 
     @Override
