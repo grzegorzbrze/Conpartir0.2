@@ -132,6 +132,7 @@ public class SOAPServiceClient {
         return lista;
     }
     
+    
      /**
      * Web service operation
      */

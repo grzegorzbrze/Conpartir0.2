@@ -11,21 +11,20 @@
         modTravel.controller('TravelController', ['$scope', '$http', '$route', '$routeParams','$location','$timeout','shared',
         function($scope,$http, $route, $routeParams, $location,$timeout, shared) {
             
-             $(document).ready(function() {
+            $(document).ready(function() {
                 $( "#datepicker" ).datepicker({
                     dateFormat: "yyyy-mm-dd"
                 });    
-                $('#timepicker').timepicker();
-        
-                
+                $('#timepicker').timepicker({
+                    showMeridian : false,
+                    defaultTime : false,
+                    maxHours : 24
+                });
             });
             
             $scope.SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
             $scope.travelList;
-            $scope.relatedDrivers;
-         
             $scope.showHead = false;
-            $scope.new;
             $scope.relatedDriver;
             $scope.prova;
             $scope.showCar = true;
@@ -37,7 +36,6 @@
                 $scope.$apply();
             };
             
-            
             $scope.go = function (data) {
                 shared.setData($scope.travelList);
                 $location.path("/detail");
@@ -46,16 +44,13 @@
                 $route.reload();
             };
             
-            
-            
             $scope.tab = function(data) {
                 if (data=="car") {$scope.showCar = true, $scope.showTaxi = false; };
                 if (data=="taxi") {$scope.showTaxi = true, $scope.showCar = false; }
             };
             
             $scope.getBack = function () {
-                alert(shared.getData());
-                
+                alert(shared.getData());                
             };
             
             $scope.getDay = function (data) {
@@ -65,42 +60,35 @@
             
              $scope.getTime = function (data) {
                 var splitter = data.indexOf('T');
-                return data.slice(splitter+1,splitter+6);
-                
+                return data.slice(splitter+1,splitter+6);                
             };
-            //Header e footer di una richiesta Soap
-            var SOAPhead = '<?xml version="1.0" encoding="utf-8"?>' +                        
-                           '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'+                        
-                           '<soap:Body>';
-            var SOAPtail =  '</soap:Body>' +
-                            '</soap:Envelope>';
-             
+                    
              $scope.reload = function () {
                   $route.reload();
               };
+              
             $scope.search = function(data) { 
                 $scope.prova =null;
                 $scope.showHead = false;
-              //  $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-             
-               // var when = $('#datepicker').datepicker({ dateFormat: "yy-mm-dd" }).val();
-               // when = when.replace('/','-');
-               // when = when.replace('/','-');
+            
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
                 
                 if (when !== null && when != "") {             
                     var month = when.slice(0,2);
                     var day = when.slice(3,5);
                     var year= when.slice(6,10);
-                    when = day + '-' + month + '-' + year;
-             
+                    when = day + '-' + month + '-' + year; }
+                
                     data.when = when;
-                }
+               
                 
                 var time =  $('#timepicker').timepicker().val();
-                var ind = time.indexOf(" ");
-                var hourMinutes = time.slice(0,ind);
-                time = hourMinutes + ":00";
+                if (time !== null && time != "") { 
+                    var ind = time.indexOf(" ");
+                    
+                    var hourMinutes = time.slice(0,ind);
+                    time = hourMinutes + ":00";
+                }
                 
                  data.when = data.when +":"+ time;
                   
@@ -110,32 +98,39 @@
                  //   formato richiesto per la data/tempo : "dd-MM-yy:HH:mm:SS"
                  //   showList();
                 shared.getTravels(data).then(function(promise) {
-                     var prova = shared.getData(); 
-                     
-                     if(isArray(prova.return)) {
-                         
-                      /*   for (var item in prova.return) {
-                             var it = item;
-                             console.log(it);
-                             item = JSON.parse(it);
-                         }*/
-                         $scope.prova = JSON.parse(prova.return[0]);
-                         
-                         console.log($scope.prova);
+                     var prova = shared.getData();                      
+                     if(isArray(prova.return)) {                       
+                         $scope.prova = prova.return;
+                        console.log($scope.prova);
                          console.log("is Array");
                          $scope.isArray = true;
+                         
+                         for (var i in $scope.prova) {
+                             shared.getDriverFromTravel(i.return.travel_id).then(function(promise) {
+                                 $scope.relatedDriver = shared.getData();
+                                 console.log("scope relatedDriver is " + $scope.relatedDriver); 
+                                 showList();
+                             });
+                         }
                      }
                      else {
                          $scope.isSingleElement = true;
-                         console.log("is Single Element");
+                         console.log("is Single Element");                         
+                         $scope.prova=  prova;  
+                         console.log($scope.prova);
                          
-                         $scope.prova=  prova;
-                         
-                         }
+                         shared.getDriverFromTravel($scope.prova.return.travel_id).then(function(promise) {
+                             $scope.relatedDriver = shared.getData();
+                             console.log("scope relatedDriver is " + $scope.relatedDriver); 
+                             showList();
+                         });
+                     }                     
                      
-                     console.log("scope prova is " + $scope.prova);
-                     showList();
+                     
+                    
                 });
+                
+               
                
           
             };   
@@ -147,14 +142,13 @@
 
             };
             
-            var showList = function() {
+            var showList = function() {                
+                 //$scope.prova = shared.getData2(callback);                 
                 
-                 //$scope.prova = shared.getData2(callback);
-                 
-                $timeout(function() { $scope.showHead = true;
-                
-                console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
-            },60);
+                    $scope.showHead = true;         
+                    
+                    console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
+            //$timeout(function() { },60);
             };
      
 
