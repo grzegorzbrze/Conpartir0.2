@@ -213,10 +213,13 @@ public class SOAPServiceClient {
      */
     @WebMethod(operationName = "getTravelsFrom")
     public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, 
-            @WebParam(name = "end") String end, @WebParam(name = "when") String when) {
+            @WebParam(name = "end") String end, @WebParam(name = "date") String date) {
         
-        Date data = convertiStringa(when);
-        List<Travel> viaggi = travelRef.searchByOriginDestinationDate(data, start, end);
+        Date data = convertiStringa(date);
+        System.out.println("cerco viaggi a partire dalla data" + data);
+        
+        List<Travel> viaggi = travelRef.searchByOriginDestinationDateTime(data, data, start, end);
+        
         /*List<String> stringhe = new ArrayList();
         for (Travel viaggio : viaggi){
             String email = clientRef.getEmail(viaggio.getClient_id());
@@ -394,6 +397,7 @@ public class SOAPServiceClient {
 
     protected Date convertiStringa(String when){
         Date data;       
+        System.out.println("cerco di parsare la stringa" + when);
         DateFormat format = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
         try { 
             data = format.parse(when); 

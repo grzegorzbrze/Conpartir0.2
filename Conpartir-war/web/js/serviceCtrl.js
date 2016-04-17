@@ -183,7 +183,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      })
                              .success(function (data, status, headers, config) {
                                  var jsonObj = x2js.xml_str2json( data );
-                                 console.log("read obj "+jsonObj);
+                                //console.log("read obj"); 
+                                //console.log(jsonObj);
                    
                     if (input.when != null) { 
                                     res = jsonObj.Envelope.Body.getTravelsFromResponse;

@@ -83,20 +83,24 @@
                
                 
                 var time =  $('#timepicker').timepicker().val();
-                if (time !== null && time != "") { 
+                if (time !== null && time !== "") { 
                     var ind = time.indexOf(" ");
+                    var hour = time.slice(0,time.indexOf(':'));
+                    var minutes = time.slice(time.indexOf(":"),ind+1);
+                    if (minutes === null || minutes === "") { minutes = "00";};
+                    //var hourMinutes = time.slice(0,ind);
+                    time = hour +':'+ minutes + ":00";
                     
-                    var hourMinutes = time.slice(0,ind);
-                    time = hourMinutes + ":00";
+                 data.when = data.when +":"+ time;
+                }
+                else {
+                    data.when = data.when +":00:00:00";
                 }
                 
-                 data.when = data.when +":"+ time;
                   
                 console.log("formato richiesta " + data.to + data.from + " il giorno " + data.when);  
               
-                 //   console.log("contenuto dello scope prima della showlist " + $scope.prova);
-                 //   formato richiesto per la data/tempo : "dd-MM-yy:HH:mm:SS"
-                 //   showList();
+              
                 shared.getTravels(data).then(function(promise) {
                      var prova = shared.getData();                      
                      if(isArray(prova.return)) {                       
@@ -104,24 +108,32 @@
                         console.log($scope.prova);
                          console.log("is Array");
                          $scope.isArray = true;
+                         var item;
                          
-                         for (var i in $scope.prova) {
-                             shared.getDriverFromTravel(i.return.travel_id).then(function(promise) {
+                         var k = prova.return.length;
+                         var i;
+                        console.log(k);
+                         for (i=0;i<k;i++) {
+                             console.log($scope.prova[i]);
+                             shared.getDriverFromTravel($scope.prova[i].travel_id).then(function(promise) {
                                  $scope.relatedDriver = shared.getData();
-                                 console.log("scope relatedDriver is " + $scope.relatedDriver); 
+                                 //console.log("scope relatedDriver is " ); 
+                                 //console.log($scope.relatedDriver);
                                  showList();
                              });
                          }
                      }
                      else {
                          $scope.isSingleElement = true;
+                         console.log($scope.prova);
                          console.log("is Single Element");                         
                          $scope.prova=  prova;  
-                         console.log($scope.prova);
+                         
                          
                          shared.getDriverFromTravel($scope.prova.return.travel_id).then(function(promise) {
-                             $scope.relatedDriver = shared.getData();
-                             console.log("scope relatedDriver is " + $scope.relatedDriver); 
+                             $scope.relatedDriver = shared.getData();   
+                             //console.log("scope relatedDriver is " ); 
+                             //console.log($scope.relatedDriver);
                              showList();
                          });
                      }                     
@@ -147,7 +159,7 @@
                 
                     $scope.showHead = true;         
                     
-                    console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
+                   // console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
             //$timeout(function() { },60);
             };
      
