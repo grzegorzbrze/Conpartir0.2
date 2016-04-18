@@ -65,13 +65,14 @@
                   $route.reload();
               };
               
-            $scope.search = function(data) { 
-                 $scope.travelList =null;
+            $scope.search = function(data) {
+                $scope.travelList =null;
                 $scope.showHead = false;
-            
+                $scope.empty = false;
+                
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
                 
-                if (when !== null && when != "") {             
+                if (when !== null && when !== "") {             
                     var month = when.slice(0,2);
                     var day = when.slice(3,5);
                     var year= when.slice(6,10);
@@ -97,51 +98,58 @@
                 console.log("formato richiesta " + data.to + data.from + " il giorno " + data.when);  
               
                 shared.getTravels(data).then(function(promise) {
-                     var prova = shared.getData();                      
-                     if(isArray(prova.return)) {                       
-                         $scope.travelList = prova.return;
-                        console.log($scope.travelList);
-                         console.log("is Array");
-                         var item;                         
-                         var k = prova.return.length;
-                         var i;
-                        console.log(k);
-                         for (i=0;i<k;i++) {
-                             console.log($scope.travelList[i]);
-                             shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {
-                                 $scope.relatedDriver = shared.getData();
-                                 //console.log("scope relatedDriver is " ); 
-                                 //console.log($scope.relatedDriver);
-                                 showList();
-                             });
-                         }
-                     }
-                     else {
-                         console.log($scope.travelList);
-                         console.log("is Single Element");                         
-                         $scope.travelList=  prova;  
-                         
-                         
-                         shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
-                             $scope.relatedDriver = shared.getData();   
-                             //console.log("scope relatedDriver is " ); 
-                             //console.log($scope.relatedDriver);
-                             showList();
-                         });
-                     }       
-                });
-                
-            };   
+                     var prova = shared.getData(); 
+                                         
+                     if (jQuery.isEmptyObject( prova )){ 
+                         emptyResult();                         
+                     } 
+                     else {  
+                         if(isArray(prova.return)) {   
+                             $scope.travelList = prova.return;  
+                             //console.log($scope.travelList);
+                             console.log("is Array");
+                             var item;                         
+                             var k = prova.return.length;
+                             var i;
+                             
+                             for (i=0;i<k;i++) {
+                                 console.log($scope.travelList[i]);
+                                 shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {
+                                     $scope.relatedDriver = shared.getData();
+                                      //console.log("scope relatedDriver is " ); 
+                                        //console.log($scope.relatedDriver);
+                                        showList();
+                                    });
+                                }
+                            }
+                            else {
+                                //console.log($scope.travelList);  
+                                console.log("is Single Element");  
+                                $scope.travelList=  prova;  
+                                
+                                shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
+                                    $scope.relatedDriver = shared.getData();                                
+                                    //console.log("scope relatedDriver is " ); 
+                                    //console.log($scope.relatedDriver);
+                                    showList();
+                                });
+                            }  
+                        }  
+                    });
+                };   
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
 
             };
             
             var showList = function() { 
-                    $scope.showHead = true;        
-                    
+                    $scope.showHead = true;   
                    // console.log("contenuto dello scope dopo la showlist " + $scope.travelList); 
             //$timeout(function() { },60);
+            };
+            
+            var emptyResult = function () {
+                $scope.empty = true;
             };
      
 

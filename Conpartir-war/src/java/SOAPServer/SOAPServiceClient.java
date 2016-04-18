@@ -219,7 +219,7 @@ public class SOAPServiceClient {
         System.out.println("cerco viaggi a partire dalla data" + data);
         
         List<Travel> viaggi = travelRef.searchByOriginDestinationDateTime(data, data, start, end);
-        
+        System.out.println (viaggi);
         
         return viaggi;   
     }
