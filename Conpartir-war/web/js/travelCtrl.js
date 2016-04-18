@@ -26,9 +26,9 @@
             $scope.travelList;
             $scope.showHead = false;
             $scope.relatedDriver;
-            $scope.prova;
             $scope.showCar = true;
-            $scope.showTaxi = false;           
+            $scope.showTaxi = false;
+            $scope.empty = false;
             
             var gotWSDL = false;
             
@@ -37,10 +37,8 @@
             };
             
             $scope.go = function (data) {
-                shared.setData($scope.travelList);
                 $location.path("/detail");
                 $location.search("number",data);
-                shared.setData($scope.travelList);
                 $route.reload();
             };
             
@@ -68,7 +66,7 @@
               };
               
             $scope.search = function(data) { 
-                $scope.prova =null;
+                 $scope.travelList =null;
                 $scope.showHead = false;
             
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
@@ -96,26 +94,21 @@
                 else {
                     data.when = data.when +":00:00:00";
                 }
-                
-                  
                 console.log("formato richiesta " + data.to + data.from + " il giorno " + data.when);  
-              
               
                 shared.getTravels(data).then(function(promise) {
                      var prova = shared.getData();                      
                      if(isArray(prova.return)) {                       
-                         $scope.prova = prova.return;
-                        console.log($scope.prova);
+                         $scope.travelList = prova.return;
+                        console.log($scope.travelList);
                          console.log("is Array");
-                         $scope.isArray = true;
-                         var item;
-                         
+                         var item;                         
                          var k = prova.return.length;
                          var i;
                         console.log(k);
                          for (i=0;i<k;i++) {
-                             console.log($scope.prova[i]);
-                             shared.getDriverFromTravel($scope.prova[i].travel_id).then(function(promise) {
+                             console.log($scope.travelList[i]);
+                             shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {
                                  $scope.relatedDriver = shared.getData();
                                  //console.log("scope relatedDriver is " ); 
                                  //console.log($scope.relatedDriver);
@@ -124,42 +117,30 @@
                          }
                      }
                      else {
-                         $scope.isSingleElement = true;
-                         console.log($scope.prova);
+                         console.log($scope.travelList);
                          console.log("is Single Element");                         
-                         $scope.prova=  prova;  
+                         $scope.travelList=  prova;  
                          
                          
-                         shared.getDriverFromTravel($scope.prova.return.travel_id).then(function(promise) {
+                         shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
                              $scope.relatedDriver = shared.getData();   
                              //console.log("scope relatedDriver is " ); 
                              //console.log($scope.relatedDriver);
                              showList();
                          });
-                     }                     
-                     
-                     
-                    
+                     }       
                 });
                 
-               
-               
-          
             };   
-           $scope.isArray = false; 
-           $scope.isSingleElement = false;
-            
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
 
             };
             
-            var showList = function() {                
-                 //$scope.prova = shared.getData2(callback);                 
-                
-                    $scope.showHead = true;         
+            var showList = function() { 
+                    $scope.showHead = true;        
                     
-                   // console.log("contenuto dello scope dopo la showlist " + $scope.prova); 
+                   // console.log("contenuto dello scope dopo la showlist " + $scope.travelList); 
             //$timeout(function() { },60);
             };
      

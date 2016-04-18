@@ -220,28 +220,6 @@ public class SOAPServiceClient {
         
         List<Travel> viaggi = travelRef.searchByOriginDestinationDateTime(data, data, start, end);
         
-        /*List<String> stringhe = new ArrayList();
-        for (Travel viaggio : viaggi){
-            String email = clientRef.getEmail(viaggio.getClient_id());
-            Client cliente = clientRef.getClient(email);
-            cliente.setPass(null);
-            Driver driver = driverRef.getDriver(viaggio.getDriver_id());
-            
-            Gson gson = new Gson();
-            
-            String client = "client";
-            String drive = "driver";
-            String trav = "travel";
-            
-           String utente = '"' + client + '"' +':' + gson.toJson(cliente);
-            String autista = '"' + drive + '"' +':' + gson.toJson(driver);
-            String travel = '"' + trav + '"' +':' + gson.toJson(viaggio);
-            
-           String jsonString ='{'+ utente+','+ autista+','+ travel +'}';
-            stringhe.add(jsonString);
-        }
-        
-        */
         
         return viaggi;   
     }
