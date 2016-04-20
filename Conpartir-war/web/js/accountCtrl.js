@@ -24,14 +24,10 @@
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
                       
                  shared.getClient(self.email).then(function(promise) {
-                     var prova = shared.getData(); 
-                     $scope.clientInfo = prova;
-                     console.log(prova);
-                     console.log(prova.return);
-                     
+                     var prova = shared.getClientInfo(); 
+                     $scope.clientInfo = prova.return;
                  });
-                 $scope.loadDrivers();   
-                 
+                 $scope.loadDrivers();  
              };   
            };      
            
@@ -45,9 +41,7 @@
                      //console.log($scope.driversInfo);
                      $scope.selectedCar = $scope.driversInfo[0];
                  });
-               
-               
-           }; 
+             }; 
            
            $scope.tab = function(data) {
                 if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
@@ -58,12 +52,11 @@
             
             $scope.carInfo = function(data) {
                 var item; 
-                  console.log("data is " + data);
+                  //console.log("data is " + data);
                 for (item in $scope.driversInfo) {
-                  console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
+                  //console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
                     if (item.driver_id == data) { 
-                        $scope.selectedCar = item; 
-                        
+                        $scope.selectedCar = item;                         
                     }; 
                 };
                 console.log("selected car " + $scope.selectedCar.carModel);

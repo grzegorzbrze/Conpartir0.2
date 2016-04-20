@@ -12,7 +12,7 @@
         function($scope,$http, $route, $routeParams, $location,$timeout, shared) {
             
             $(document).ready(function() {
-                $( "#datepicker" ).datepicker({
+                $("#datepicker" ).datepicker({
                     dateFormat: "yyyy-mm-dd"
                 });    
                 $('#timepicker').timepicker({
@@ -81,9 +81,7 @@
                     data.when = when;               
                 
                 var time =  $('#timepicker').timepicker().val();
-                if (time !== null && time !== "") { 
-                    
-                    
+                if (time !== null && time !== "") {
                     var hour = time.slice(0,time.indexOf(':'));
                     var minutes = time.slice(time.indexOf(":"));
                     if (minutes === null || minutes === "") { minutes = "00";};
@@ -148,6 +146,7 @@
                         }  
                     });
                 };   
+                
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
 

@@ -21,7 +21,7 @@
       //TODO: CHECK
       $scope.checkAuth = function () {
           var flag;
-          $timeout (function() {} , 50 );
+          $timeout (function() {} , 10 );
           login.getAuth().then(
                   function successCallback(data) { 
                       if (data.status==200)  {
