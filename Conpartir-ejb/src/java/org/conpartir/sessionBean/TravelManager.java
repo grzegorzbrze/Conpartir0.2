@@ -159,7 +159,7 @@ public class TravelManager implements TravelManagerLocal {
     public List<Travel> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination) {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
          List <Travel> lista2 = new ArrayList();
-        List <Travel> lista = searchByOriginDestinationDate(data, origin, destination);
+        //List <Travel> lista = searchByOriginDestinationDate(data, origin, destination);
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente

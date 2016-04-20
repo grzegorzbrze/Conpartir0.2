@@ -48,7 +48,7 @@ var myapp = angular.module('myApp',
       
       //Non funziona, il problema sembra essere auth.Autenticated
       //TODO: CHECK
-      $scope.checkAuth = function () {
+    /*  $scope.checkAuth = function () {
           var res = auth.isAuthenticated();
           if (res){ 
               $scope.isAuthorized = true; 
@@ -68,7 +68,7 @@ var myapp = angular.module('myApp',
           }  ,20);
       };
       
-      
+      */
       //Inizio carousel della home
      
        $scope.myInterval = 5000;

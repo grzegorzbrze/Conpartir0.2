@@ -11,8 +11,6 @@
         modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location','$cookies','$timeout','$window','shared','login','auth',
         function($scope,$http,$routeParams,$location,$cookies,$timeout,$window,shared,login,auth) {
             
-            $scope.home = function () { 
-            };            
             $scope.master = {};
             $scope.status = {};
             $scope.ifAlert = false;
@@ -24,22 +22,20 @@
       $scope.checkAuth = function () {
           var flag;
           $timeout (function() {} , 50 );
-              login.getAuth().then(
-                      function successCallback(data) {  
-                    if (data.status==200) 
-                    {
-                        flag = true;                     
-                       //console.log("flag vale" + flag);
-                      
-                    }; 
-                    if (flag == true){ 
-                           $scope.isAuthorized = true; 
-                           $scope.loginShow = false;
-                       }
-                       else {
-                           $scope.loginShow = true;
-                           $scope.isAuthorized = false;
-                       }           
+          login.getAuth().then(
+                  function successCallback(data) { 
+                      if (data.status==200)  {
+                          flag = true;    //console.log("flag vale" + flag);       
+                        }; 
+                      if (flag === true){
+                          $scope.isAuthorized = true; 
+                          $scope.loginShow = false;
+                      }
+                      else {
+                          console.log(data.status);
+                          $scope.loginShow = true;
+                          $scope.isAuthorized = false;
+                      }           
                 });
             };
             
@@ -113,33 +109,25 @@
                         $timeout( 
                                 function() {
                                     $window.location.reload();
-                                },
-                                10
-                                        ); 
-                        
+                                }, 10); 
                     }
-                    
-                     
                  });
-                
             };
             
             $scope.logout = function () {
-                login.logout();
+                login.doLogout();
                 
                 $scope.loginShow= true;
                 $scope.isAuthorized= false;
                 $location.path("/"); 
+                $location.url($location.path());
                 //$scope.checkAuth(); 
-                $timeout( 
-                                function() {
-                                    $window.location.reload();
-                                    console.log("reloaded");
-                                },
-                                20
-                                        ); 
-              
-      };
+                $timeout(function() {
+                    // $window.location.reload();
+                    
+                        console.log("reloaded");
+                    },20 ); 
+                };
             
      
         }]);
@@ -190,7 +178,7 @@
                 
             },
             
-            logout: function () {
+            doLogout: function () {
                 auth.delCookie('conpCookie');
                 sessionStorage.clear();
                               

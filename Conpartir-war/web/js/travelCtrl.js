@@ -78,24 +78,24 @@
                     var year= when.slice(6,10);
                     when = day + '-' + month + '-' + year; }
                 
-                    data.when = when;
-               
+                    data.when = when;               
                 
                 var time =  $('#timepicker').timepicker().val();
                 if (time !== null && time !== "") { 
-                    var ind = time.indexOf(" ");
+                    
+                    
                     var hour = time.slice(0,time.indexOf(':'));
-                    var minutes = time.slice(time.indexOf(":"),ind+1);
+                    var minutes = time.slice(time.indexOf(":"));
                     if (minutes === null || minutes === "") { minutes = "00";};
                     //var hourMinutes = time.slice(0,ind);
-                    time = hour +':'+ minutes + ":00";
+                    time = hour + minutes + ":00";
                     
                  data.when = data.when +":"+ time;
                 }
                 else {
                     data.when = data.when +":00:00:00";
                 }
-                console.log("formato richiesta " + data.to + data.from + " il giorno " + data.when);  
+                console.log("formato richiesta a " + data.to +" da " + data.from + " il giorno " + data.when);  
               
                 shared.getTravels(data).then(function(promise) {
                      var prova = shared.getData(); 
@@ -110,29 +110,40 @@
                              console.log("is Array");
                              var item;                         
                              var k = prova.return.length;
-                             var i;
-                             
+                             var i;                             
                              for (i=0;i<k;i++) {
-                                 console.log($scope.travelList[i]);
+                                 
+                                 $scope.travelList[i].driver = {};
                                  shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {
-                                     $scope.relatedDriver = shared.getData();
+                                     
                                       //console.log("scope relatedDriver is " ); 
-                                        //console.log($scope.relatedDriver);
-                                        showList();
-                                    });
-                                }
+                                      //  console.log($scope.relatedDriver);
+                                       
+                                    $scope.relatedDriver = shared.getData();
+                                    /* console.log("check1");
+                                    console.log($scope.relatedDriver);
+                                    
+                                   $scope.travelList[i].driver = $scope.relatedDriver;
+                            console.log($scope.travelList); */  
+                                    
+                                    });  
+                            }
+                                 showList();
                             }
                             else {
                                 //console.log($scope.travelList);  
                                 console.log("is Single Element");  
-                                $scope.travelList=  prova;  
+                                $scope.travelList=  prova; 
+                                //$scope.travelList.driver = {};
                                 
                                 shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
-                                    $scope.relatedDriver = shared.getData();                                
+                                                                 
                                     //console.log("scope relatedDriver is " ); 
                                     //console.log($scope.relatedDriver);
-                                    showList();
+                                    $scope.relatedDriver = shared.getData();   
+                                    //$scope.travelList.driver = $scope.relatedDriver.return;
                                 });
+                                showList();
                             }  
                         }  
                     });
@@ -144,21 +155,13 @@
             
             var showList = function() { 
                     $scope.showHead = true;   
-                   // console.log("contenuto dello scope dopo la showlist " + $scope.travelList); 
+                    
+                    // console.log("contenuto dello scope dopo la showlist " + $scope.travelList); 
             //$timeout(function() { },60);
             };
             
             var emptyResult = function () {
                 $scope.empty = true;
-            };
-     
-
-            
-            
-          
-     
+            };          
         }]);
-    
-    
-
 })();

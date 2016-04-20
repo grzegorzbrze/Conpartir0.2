@@ -25,8 +25,9 @@
                       
                  shared.getClient(self.email).then(function(promise) {
                      var prova = shared.getData(); 
-                     $scope.clientInfo = prova.return;
-                     //console.log($scope.clientInfo);
+                     $scope.clientInfo = prova;
+                     console.log(prova);
+                     console.log(prova.return);
                      
                  });
                  $scope.loadDrivers();   
