@@ -8,46 +8,38 @@
   'use strict';
 
   var modLogin = angular.module('loginModule', ['ngRoute','ngCookies']);
-        modLogin.controller('LoginController', ['$scope', '$http', '$routeParams', '$location','$cookies','$timeout','$window','shared','login','auth',
-        function($scope,$http,$routeParams,$location,$cookies,$timeout,$window,shared,login,auth) {
+        modLogin.controller('LoginController', ['$scope', '$http','$route' ,'$routeParams','$location','$cookies','$timeout','$window','shared','login','auth',
+        function($scope,$http,$route,$routeParams,$location,$cookies,$timeout,$window,shared,login,auth) {
             
             $scope.master = {};
             $scope.status = {};
             $scope.ifAlert = false;
-            $scope.loginShow = true;
             $scope.isAuthorized = false;
-      
-      //Non funziona, il problema sembra essere auth.Autenticated
-      //TODO: CHECK
-      $scope.checkAuth = function () {
-          var flag;
-          $timeout (function() {} , 10 );
-          login.getAuth().then(
-                  function successCallback(data) { 
-                      if (data.status==200)  {
-                          flag = true;    //console.log("flag vale" + flag);       
-                        }; 
-                      if (flag === true){
-                          $scope.isAuthorized = true; 
-                          $scope.loginShow = false;
-                      }
-                      else {
-                          console.log(data.status);
-                          $scope.loginShow = true;
-                          $scope.isAuthorized = false;
-                      }           
+            
+            //Da rivedere ...
+            $scope.checkAuth = function () {
+                login.getAuth().then(function (data) { 
+                    if (data.status==200)  {
+                        console.log("sono qui!");
+                        $scope.isAuthorized = true; 
+                    }
+                    else {
+                        console.log("No, sono qui!");
+                        $scope.isAuthorized = false;
+                    };
                 });
             };
             
+            //non aggiorna la pagina
             $scope.login = function(user) {
                 $scope.master = user;
                 $scope.master.use = "login";
                 if (user.email == "", user.email == undefined || user.pass == "", user.pass == undefined ){
-                    $scope.status = "Per favore, completa i campi per effettuare il login!";
-                    //alert();
+                    $scope.status = "Per favore, completa i campi per effettuare il login!";                    
                     $scope.ifAlert = true;
                 }
                 else $scope.servletCall();
+                 console.log("1" + $scope.isAuthorized);
                 
             };      
             
@@ -92,41 +84,40 @@
             $scope.servletCall = function (){
                 
                 $scope.ifAlert = false;
-                login.doLogin($scope.master).then(function (data, status, headers, config) {
-                    
+                login.doLogin($scope.master).then(function (data, status, headers, config) {                    
                     // this callback will be called asynchronously
                     // when the response is available
                     $scope.status=data.data;
-                   // console.log(data.status);
-                    // console.log($scope.status);
                     var flag = data.data.charAt(1);
                     if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
-                    else { 
-                        $location.path('/account');
-                        $location.search('email',$scope.master.email);
-                        sessionStorage.setItem("email",$scope.master.email);                        
-                        $scope.checkAuth();
-                        $timeout( 
-                                function() {
-                                    $window.location.reload();
-                                }, 10); 
+                    else {
+                        
+                        $scope.isAuthorized = login.getData(); 
+                        console.log("2" + $scope.isAuthorized);
+                        sessionStorage.setItem("email",$scope.master.email); 
+                        $location.path('/account'); 
+                        var x =$route.current.templateUrl + $location.url();
+                        console.log(x);
+                        $route.reload();
+                      //$window.location.replace(x);
+                        //$window.location.search('email',$scope.master.email);
+                      
                     }
                  });
             };
             
+            //Non cancella il cookie
             $scope.logout = function () {
                 login.doLogout();
-                
-                $scope.loginShow= true;
                 $scope.isAuthorized= false;
                 $location.path("/"); 
                 $location.url($location.path());
-                //$scope.checkAuth(); 
-                $timeout(function() {
-                    // $window.location.reload();
-                    
-                        console.log("reloaded");
-                    },20 ); 
+              
+//                $timeout(function() {
+//                   // $route.reload();
+//                    
+//                        console.log("reloaded");
+//                    },20 ); 
                 };
             
      
@@ -157,14 +148,19 @@
                             auth.saveCookie('conpCookie',ckValue);
                             //sessionStorage.setItem('conpCookie', ckValue);
                             //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
+                            obj = true;
                         })
                                 .error(function (data, status, headers, config) {
+                                      obj = false;
                                  return {"status": false};
                      });
-                        
-                       
-                      return promise;
+                     return promise;
                 
+            },   
+            
+           doLogout: function () {
+                auth.delCookie('conpCookie');
+                sessionStorage.clear();                              
             },
             
             getAuth: function() {
@@ -174,15 +170,10 @@
                 //qui ci va una promise ....
                var promise;
                 promise = auth.checkAuth(cookieAuth);
-                return promise;
-                
+                return promise;                
             },
             
-            doLogout: function () {
-                auth.delCookie('conpCookie');
-                sessionStorage.clear();
-                              
-            },
+          
             
             getData: function () {
                 // console.log(obj + ' was returned as data');                

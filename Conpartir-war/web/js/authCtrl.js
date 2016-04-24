@@ -45,8 +45,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                     method: 'GET',
                     url: 'Registration',
                     headers: {'Content-Type': 'application/text'},
-                    Cookie: cookie
-                    
+                    Cookie: cookie                    
                 })
                         .success( function (data, status, header) {
                             //checkCookieEnabled();
@@ -60,24 +59,14 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                      });
                         
                 return promise;
-                        
-                
             },
             
-            
-            
-            
-            
             getData: function () {
-                // console.log(obj + ' was returned as data');
-                 //console.log("sto passando un oggetto obj = " );
-                 //console.log(obj);
                 return obj;
             },
             
             
             setData: function (data) {
-                // console.log('setting ' + data + ' as data');
                 obj = data;
             }
 

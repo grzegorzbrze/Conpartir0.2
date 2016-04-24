@@ -152,13 +152,49 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 var action;
                 var opName;
                 var promise;
+                opName = "getTravelsFrom";
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                        '<start>'+ input.from +'</start>' +
+                        '<end>'+ input.to +'</end>' +
+                        '<date>'+ input.when +'</date>' +
+                        '</ns0:' + opName + '>'+
+                        SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                    
+           
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                         'Content-Type' : "text/xml;charset=utf-8",
+                         'SOAPAction': action
+                     }                  
+                     })
+                             .success(function (data, status, headers, config) {
+                                 var jsonObj = x2js.xml_str2json( data );                         
+                                 res = jsonObj.Envelope.Body.getTravelsFromResponse;                            
+                                 delete res["_xmlns:ns2"];
+                                 delete res["__prefix"];   
+                                 obj = res;
+                     })
+                             .error(function (data, status, headers, config) {
+                                 return {"status": false};
+                     });
+                     
+                     return promise;
+            }, 
+            
+             getTaxiTravels: function (input) {
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
                 //if (input.when != null) {
-                    opName = "getTravelsFrom";
+                    opName = "getTaxiTravelsFrom";
                     sr = SOAPhead +
                             '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
-                            '<start>'+ input.from +'</start>' +
-                            '<end>'+ input.to +'</end>' +
-                            '<date>'+ input.when +'</date>' +
+                            '<from>'+ input.from +'</from>' +
+                            '<to>'+ input.to +'</to>' +
+                            '<dateTime>'+ input.when +'</dateTime>' +
                             '</ns0:' + opName + '>'+
                             SOAPtail; 
                     action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
@@ -171,21 +207,15 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      })
                              .success(function (data, status, headers, config) {
                                  var jsonObj = x2js.xml_str2json( data );                         
-                                 res = jsonObj.Envelope.Body.getTravelsFromResponse;                                                                  
-                                  //  console.log("oggetto ottenuto = " );
-                                  //  console.log(res);
-                                   // obj = res;
-                                   // return obj;                            
+                                 res = jsonObj.Envelope.Body.getTaxiTravelsFromResponse; 
                                  delete res["_xmlns:ns2"];
                                  delete res["__prefix"];   
                                  obj = res;
                                 
-                                 //return res;
                      })
                              .error(function (data, status, headers, config) {
                                  return {"status": false};
-                     });
-                     
+                     });                     
                      return promise;
             }, 
             

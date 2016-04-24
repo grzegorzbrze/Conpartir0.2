@@ -19,14 +19,25 @@
         <div class="form-horizontal"> 
             <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
             <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/>     
-            <input name="giorno"  id="datepicker"/>
+            <input name="giorno"  id="datepicker" data-provide="datepicker-inline"/>
            
-            <input id="timepicker" placeholder="Ora" type="text" class="input-small" ng-model="data.time">        
+            <input id="timepicker" placeholder="Ora" type="text" class="input-small" ng-model="data.time" data-provide="timepicker-inline">        
              <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
             
         </div> 
     </div>
-    <div role="tabpanel" id="taxis" ng-show="showTaxi">...</div>
+    <div role="tabpanel" id="taxis" ng-show="showTaxi">
+    <p> </p>
+        <div class="form-horizontal"> 
+            <input name="partenza" class="input-group-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
+            <input name="destinazione" class="input-group-lg" type="text" placeholder="Destinazione" ng-model="data.to"/>     
+            <input name="giorno"  id="datepicker2"  data-provide="datepicker-inline"/>
+           
+            <input id="timepicker2" placeholder="Ora" type="text" class="input-small" ng-model="data.time"  data-provide="timepicker-inline">        
+             <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
+            
+        </div>    
+    </div>
   </div>
 
 </div>
