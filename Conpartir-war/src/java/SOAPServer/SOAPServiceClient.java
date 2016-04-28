@@ -316,7 +316,7 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "getTaxiTravelsFrom")
     public List<Taxi> getTaxiTravelsFrom(@WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "dateTime") String dateTime) {
         Date data = convertiStringa(dateTime);
-        List<Taxi> taxis = taxiRef.searchByOriginDestinationDate(data, from, to);
+        List<Taxi> taxis = taxiRef.searchByOriginDestinationDateTime(data, data, from, to);
         return copiaTaxi(taxis);
     }
     
@@ -375,7 +375,6 @@ public class SOAPServiceClient {
 
     protected Date convertiStringa(String when){
         Date data;       
-        System.out.println("cerco di parsare la stringa" + when);
         DateFormat format = new SimpleDateFormat("dd-MM-yy:HH:mm:SS");
         try { 
             data = format.parse(when); 

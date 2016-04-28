@@ -147,17 +147,28 @@ public class TaxiManager implements TaxiManagerLocal {
     @Override
     public List<Taxi> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination) {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
-        List <Taxi> lista = searchByOriginDestinationDate(data, origin, destination);
+        List <Taxi> lista = new ArrayList();
         List <Taxi> viaggi = taxiFacade.findAll();
-        for (Taxi temp : viaggi){
-            //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
-            if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){
-                if(temp.getData().equals(data) && afterTime(temp.getTime(), time)){
-                    lista.add(temp);
+        
+        for (Taxi temp : viaggi){            
+              if ("undefined".equals(destination)){ 
+                if(temp.getOrigin().equals(origin) && temp.getFreeSeats() > 0) {
+                    if(temp.getData().equals(data) && afterTime(temp.getTime(), time)){
+                        lista.add(temp);
+                    }
+                    if(temp.getData().after(data)){
+                        lista.add(temp);
+                    }       
+                } 
+              } else {
+                  if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) && temp.getFreeSeats() > 0){   
+                    if(temp.getData().equals(data) && afterTime(temp.getTime(), time)){
+                        lista.add(temp);
+                    }
+                    if(temp.getData().after(data)){
+                        lista.add(temp);
+                    }             
                 }
-                if(temp.getData().after(data)){
-                    lista.add(temp);
-                }       
             }
         }
         return sortListByDate(lista);
