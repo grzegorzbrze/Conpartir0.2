@@ -158,7 +158,8 @@ public class TravelManager implements TravelManagerLocal {
     @Override
     public List<Travel> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination) {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
-         List <Travel> lista = new ArrayList();
+         List <Travel> lista2 = new ArrayList();
+        //List <Travel> lista = searchByOriginDestinationDate(data, origin, destination);
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
@@ -166,12 +167,12 @@ public class TravelManager implements TravelManagerLocal {
                     && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
                     if(temp.getData().after(data) || temp.getData().equals(data) && afterTime(temp.getTime(), time) ){
-                        lista.add(temp);
+                        lista2.add(temp);
                     }
                 }
             }
         }
-        return sortListByDate(lista);
+        return sortListByDate(lista2);
     }
     
     @Override

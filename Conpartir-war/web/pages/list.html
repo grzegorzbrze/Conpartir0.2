@@ -2,7 +2,7 @@
   <h2>Benvenuto!</h2>
   <p>Da qui puoi iniziare la ricerca dei passaggi.</p>
   
-  <div class="panel panel-body">
+  <div class="panel panel-body" style="margin-top:30px">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -24,7 +24,8 @@
             <input id="timepicker" placeholder="Ora" type="text" class="input-small" ng-model="data.time" data-provide="timepicker-inline">        
              <a class="btn btn-primary btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
             
-        </div> 
+        </div>
+        
     </div>
     <div role="tabpanel" id="taxis" ng-show="showTaxi">
     <p> </p>
@@ -38,6 +39,7 @@
             
         </div>    
     </div>
+      <p class="bg-danger center" ng-show="ifAlert">{{alert}}</p>
   </div>
 
 </div>

@@ -37,7 +37,9 @@
             $scope.showCar = true;
             $scope.showTaxi = false;
             $scope.empty = false;
-            
+            $scope.ifAlert = false;
+            $scope.alert;
+                        
             var gotWSDL = false;
             
             var callback = function(){
@@ -69,26 +71,61 @@
                   $route.reload();
               };
               
+              $scope.exit = function () {
+                  return;
+              };
+              
             $scope.search = function(data) {
+                $scope.ifAlert = false;
                 $scope.travelList =null;
                 $scope.showHead = false;
                 $scope.empty = false;
                 
+                  if(jQuery.isEmptyObject( data )) {
+                    $scope.alert = "Per favore, compila il form."; 
+                    $scope.ifAlert = true;
+                    return;
+                }      
+             
                 if($scope.showCar===true) searchCar(data);
                 else searchTaxi(data);
             };
             
-            var searchCar = function (data) {
+            var searchCar = function (data) {                            
+                
+                if(jQuery.isEmptyObject( data.from )) { 
+                    $scope.alert = "Per favore, inserisci una località di partenza."; 
+                    $scope.ifAlert = true;
+                    return;
+                } 
+                
+                 if(jQuery.isEmptyObject( data.to )) { 
+                    $scope.alert = "Per favore, inserisci una località di arrivo."; 
+                    $scope.ifAlert = true;
+                    return;
+                    
+                } 
                 
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
                 
-                if (when !== null && when !== "") {             
-                    var month = when.slice(0,2);
-                    var day = when.slice(3,5);
-                    var year= when.slice(6,10);
-                    when = day + '-' + month + '-' + year; }
+                if(when === null || when === "") { 
+                    $scope.alert = "Per favore, inserisci una data."; 
+                    $scope.ifAlert = true;
+                    return;
+                } 
+                var month = when.slice(0,2);
+                var day = when.slice(3,5);
+                var year= when.slice(6,10);
+                when = day + '-' + month + '-' + year;
                 
-                    data.when = when;               
+//                if (when !== null && when !== "") {
+//                    var month = when.slice(0,2);
+//                    var day = when.slice(3,5);
+//                    var year= when.slice(6,10);
+//                    when = day + '-' + month + '-' + year;
+//                }
+                
+                data.when = when; 
                 
                 var time =  $('#timepicker').timepicker().val();
                 if (time !== null && time !== "") {
@@ -141,13 +178,30 @@
             };   
             
             var searchTaxi = function (data) {
-                var when = $('#datepicker2').datepicker({dateFormat: "yyyy-mm-dd" }).val();                
-                if (when !== null && when !== "") {
-                    var month = when.slice(0,2);
-                    var day = when.slice(3,5);
-                    var year= when.slice(6,10);
-                    when = day + '-' + month + '-' + year; 
-                }  
+                
+                if(jQuery.isEmptyObject( data.from )) { 
+                    $scope.alert = "Per favore, inserisci una via di partenza."; 
+                    $scope.ifAlert = true;
+                    return;
+                } 
+                
+                var when = $('#datepicker2').datepicker({dateFormat: "yyyy-mm-dd" }).val();
+                
+                if(when == null || when == "") { 
+                    $scope.alert = "Per favore, inserisci una data."; 
+                    $scope.ifAlert = true;
+                    return;
+                } 
+                var month = when.slice(0,2);
+                var day = when.slice(3,5);
+                var year= when.slice(6,10);
+                when = day + '-' + month + '-' + year;
+//                if (when !== null && when !== "") {
+//                    var month = when.slice(0,2);
+//                    var day = when.slice(3,5);
+//                    var year= when.slice(6,10);
+//                    when = day + '-' + month + '-' + year; 
+//                }  
                 data.when = when;               
                 
                 var time =  $('#timepicker2').timepicker().val();
