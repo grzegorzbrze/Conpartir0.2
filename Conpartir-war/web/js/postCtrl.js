@@ -53,14 +53,12 @@
                   //console.log("macchine" +$scope.cars);
               }
               else {
-                  
               };
              
           };
           
           $scope.post = function (input) {
                var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
-               
                      
                 if (when !== null && when != "") {             
                     var month = when.slice(0,2);
@@ -81,6 +79,9 @@
                    shared.createTaxiTravel($scope.travel).then(function(promise) {
                     }); 
                 }
+                
+                $location.path('/');
+                alert ("viaggio postato con successo!");
           };
           
           $scope.select = function (dataId,dataModel) {

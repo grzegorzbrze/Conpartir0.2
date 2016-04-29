@@ -53,8 +53,15 @@
             };
             
             $scope.tab = function(data) {
-                if (data=="car") {$scope.showCar = true, $scope.showTaxi = false;  };
-                if (data=="taxi") {$scope.showTaxi = true, $scope.showCar = false;  }
+                if (data=="car") { 
+                    $scope.showCar = true;
+                    $scope.showTaxi = false;  };
+                if (data=="taxi") {
+                    $scope.showTaxi = true;
+                    $scope.showCar = false;  
+                }
+                $scope.showHead = false;
+                $scope.ifAlert = false;
             };
             
             $scope.getDay = function (data) {
@@ -69,10 +76,6 @@
                     
              $scope.reload = function () {
                   $route.reload();
-              };
-              
-              $scope.exit = function () {
-                  return;
               };
               
             $scope.search = function(data) {
