@@ -2,11 +2,13 @@
   'use strict';
 
   var modDetail = angular.module('detailModule', ['ngRoute']);
-        modDetail.controller('DetailController', ['$scope', '$http', '$route', '$routeParams','$location','$timeout' , 'shared',
-        function($scope,$http, $route, $routeParams, $location, $timeout, shared) {
+        modDetail.controller('DetailController', ['$scope', '$route', '$location', 'shared', 'auth',
+        function($scope, $route, $location, shared, auth) {
            
             $scope.travel;
             $scope.detail;
+            $scope.ifAlert = false;
+            $scope.alert;
             
             $scope.getDay = function (data) {
                 var splitter = data.indexOf('T');
@@ -21,7 +23,7 @@
             $scope.getInfo = function () {
                 var driverIdParam = $location.search().number;
                 $scope.travel = shared.getData();
-                console.log($scope.travel);
+                //console.log($scope.travel);
                 shared.getDriverFromTravel( driverIdParam).then(function(promise){
                     $scope.detail = shared.getData();
                 });                
@@ -29,11 +31,19 @@
             
             $scope.book = function () {
                 var input = {};
-                input.travelId = $scope.travel.travel_id;
-                input.passengerId = "2";
-              shared.bookTravel(input).then(function (promise) {
-                 //status? 
-              });  
+                if (auth.isAuthenticated()==false) {
+                     $scope.ifAlert = true;
+                     $scope.alert = "Devi fare il login per prenotare un viaggio.";                    
+                }
+                else { 
+                    input.travelId = $scope.travel.travel_id;
+                    input.email = sessionStorage.getItem("email");
+                    shared.bookTravel(input).then(function (promise) {
+                        console.log(promise.status);
+                        //status? 
+                    });  
+                }
+               
             },
 
                         

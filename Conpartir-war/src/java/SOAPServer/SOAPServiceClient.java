@@ -58,7 +58,9 @@ public class SOAPServiceClient {
      */
     @WebMethod(operationName = "addPassenger")
     public void addPassenger(@WebParam(name = "travel_id") long travel_id, 
-            @WebParam(name = "passenger_id") long passenger_id ){
+            @WebParam(name = "email") String email ){
+        long passenger_id = clientRef.getClient(email).getId();
+        //System.out.println("metodo addPassenger " + passenger_id + " " + travel_id);
         travelRef.addPassenger(travel_id, passenger_id);
     }
     

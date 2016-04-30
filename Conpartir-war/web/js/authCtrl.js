@@ -20,14 +20,17 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
          
         return {
             
+            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
             isAuthenticated: function() {
-                var res=false;
+                
                 var cookie = sessionStorage.getItem('conpCookie');
                 if(cookie) { 
-                    res=true;
                     //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
-                };
-                return cookie; 
+                    return cookie;
+                }
+                else {return false;};
+                
+                
             },
             
             saveCookie: function(ckName,ckValue) {
@@ -38,6 +41,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 sessionStorage.removeItem(ckName);
             },
             
+            //controlla se l'utente è loggato, interrogando la servlet
             checkAuth: function (cookie) {                
                 var promise; 
                 promise =

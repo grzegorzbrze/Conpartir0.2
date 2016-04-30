@@ -3,6 +3,8 @@
         <img id="foto" src="{{detail.return[0].urlPhoto}}" alt="user image">
         <h3>Posti liberi: {{travel.freeSeats}}</h4>
         <button class="btn-lg" ng-click="book()">Prenota</button>
+        <br>
+        <div class="bg-danger center" ng-show="ifAlert">{{alert}}</div>
     </div>
     <div class="panel-info col-lg-9"  style="float:left">
         <div class="panel-heading center">

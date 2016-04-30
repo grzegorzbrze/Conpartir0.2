@@ -43,6 +43,7 @@ public class TravelManager implements TravelManagerLocal {
                 && travel.getFreeSeats() != 0){
             if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
                     travel.getTime(), travel.getOrigin(), travel.getDestination())){
+                System.out.println("debug 2" + travel.toString());
                 travelFacade.create(travel);
             }
         }
@@ -249,6 +250,7 @@ public class TravelManager implements TravelManagerLocal {
                         this.createTravel(temp.getDriver_id(), passengerID, temp.getOrigin(),
                                 temp.getDestination(), temp.getData(), temp.getTime(), 0);
                         temp.setFreeSeats(viaggiRimasti-1);
+                       
                         subFreeSeat(travel_id);
                     }
                     else risultato = false;

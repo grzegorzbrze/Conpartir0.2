@@ -18,16 +18,21 @@
             
             //Da rivedere ...
             $scope.checkAuth = function () {
-                login.getAuth().then(function (data) { 
-                    if (data.status==200)  {
-                        console.log("sono qui!");
-                        $scope.isAuthorized = true; 
-                    }
-                    else {
-                        console.log("No, sono qui!");
-                        $scope.isAuthorized = false;
-                    };
-                });
+                
+                if (auth.isAuthenticated()==false) {
+                    $scope.isAuthorized = false;
+                }
+                else $scope.isAuthorized = true;
+                
+//                login.getAuth().then(function (data) { 
+//                    if (data.status==200)  {                        
+//                        $scope.isAuthorized = true; 
+//                    }
+//                    else {                        
+//                        $scope.isAuthorized = false;
+//                    };
+//                });
+    
             };
             
             //non aggiorna la pagina
@@ -94,7 +99,7 @@
                         
                         $scope.isAuthorized = login.getData(); 
                         console.log("2" + $scope.isAuthorized);
-                        sessionStorage.setItem("email",$scope.master.email); 
+                        sessionStorage.setItem("email",$scope.master.email);
                         $location.path('/account'); 
                         var x =$route.current.templateUrl + $location.url();
                         console.log(x);

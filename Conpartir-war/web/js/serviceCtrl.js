@@ -86,7 +86,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 sr = SOAPhead +
                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
                            '<travel_id>'+ input.travelId +'</travel_id>' +
-                           '<passenger_id>'+ input.passengerId +'</passenger_id>' +
+                           '<email>'+ input.email +'</email>' +
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
