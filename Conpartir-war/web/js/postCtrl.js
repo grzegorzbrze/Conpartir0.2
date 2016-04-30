@@ -79,7 +79,6 @@
                    shared.createTaxiTravel($scope.travel).then(function(promise) {
                     }); 
                 }
-                
                 $location.path('/');
                 alert ("viaggio postato con successo!");
           };

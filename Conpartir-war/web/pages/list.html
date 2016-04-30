@@ -49,7 +49,7 @@
    <div class="scrollable-content">
     <div ng-show="showHead" class="panel">
         <h3 >Proposte di viaggi da <b>{{data.from}}</b> a <b>{{data.to}}</b></h3>
-      <a ng-repeat=" item in travelList" class="list-group col-md-12" ng-click="go(item.travel_id)">
+      <a ng-repeat=" item in travelList" class="list-group col-md-12" ng-click="go(item)">
           <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
       </a>
         

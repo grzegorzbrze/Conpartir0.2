@@ -302,12 +302,9 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return clientObj;
             }, 
             
-            setData: function (name,surname,email,carModel) {
+            setData: function (object) {
                 // console.log('setting ' + data + ' as data');
-                obj.name = name;
-                obj.surname = surname;
-                obj.email = email;
-                obj.carModel = carModel;
+                obj = object;
             }
 
 

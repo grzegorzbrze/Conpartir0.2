@@ -47,8 +47,10 @@
             };
             
             $scope.go = function (data) {
+                shared.setData(data);
+                
                 $location.path("/detail");
-                $location.search("number",data);
+                $location.search("number",data.travel_id);
                 $route.reload();
             };
             
@@ -120,13 +122,6 @@
                 var day = when.slice(3,5);
                 var year= when.slice(6,10);
                 when = day + '-' + month + '-' + year;
-                
-//                if (when !== null && when !== "") {
-//                    var month = when.slice(0,2);
-//                    var day = when.slice(3,5);
-//                    var year= when.slice(6,10);
-//                    when = day + '-' + month + '-' + year;
-//                }
                 
                 data.when = when; 
                 
