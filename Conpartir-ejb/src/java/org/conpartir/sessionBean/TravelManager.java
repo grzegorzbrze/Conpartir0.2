@@ -43,7 +43,6 @@ public class TravelManager implements TravelManagerLocal {
                 && travel.getFreeSeats() != 0){
             if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
                     travel.getTime(), travel.getOrigin(), travel.getDestination())){
-                System.out.println("debug 2" + travel.toString());
                 travelFacade.create(travel);
             }
         }
@@ -53,7 +52,7 @@ public class TravelManager implements TravelManagerLocal {
     public void createTravel(Long driver_id, Long client_id, String origin, 
             String destination, Date data, Date time, int freeSeats) {
         if (driver_id != null && client_id != null && origin != null && destination != null
-                && data.toString() != null && time.toString() != null && freeSeats != 0 ){
+                && data.toString() != null && time.toString() != null  ){
             if (!isExist(driver_id, client_id, data, time, origin, destination)){
                 Travel travel = new Travel();
                 travel.setClient_id(client_id);
@@ -232,11 +231,14 @@ public class TravelManager implements TravelManagerLocal {
        boolean risultato = true; 
        Travel trav = getTravel(travel_id);
         if (trav.getTravel_id() != null){
-            List<Travel> prenotati = this.searchByOriginDestinationDateTime
-        (trav.getData(), trav.getTime(), trav.getOrigin(), trav.getDestination());
+            List<Travel> prenotati = travelFacade.findAll();
+                    /*this.searchByOriginDestinationDateTime
+        (trav.getData(), trav.getTime(), trav.getOrigin(), trav.getDestination());*/
             for (Travel prenotato : prenotati){
                 if (prenotato.getDriver_id().equals(trav.getDriver_id()) 
-                        && prenotato.getClient_id().equals(passengerID)){
+                        && prenotato.getClient_id().equals(passengerID) && 
+                        prenotato.getOrigin().equals(trav.getOrigin()) && prenotato.getDestination().equals(trav.getDestination())
+                        && equalsDate(prenotato.getData(),trav.getData()) && prenotato.getTime().equals(trav.getTime())){
                     risultato = false;
                 }
             } 
