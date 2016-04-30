@@ -39,6 +39,8 @@
     <message name="createCommentResponse"/>
     <message name="getClientTravel"/>
     <message name="getClientTravelResponse"/>
+    <message name="addPassenger"/>
+    <message name="addPassengerResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -108,6 +110,10 @@
             <input message="tns:getClientTravel"/>
             <output message="tns:getClientTravelResponse"/>
         </operation>
+        <operation name="addPassenger">
+            <input message="tns:addPassenger"/>
+            <output message="tns:addPassengerResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -176,6 +182,10 @@
             <output/>
         </operation>
         <operation name="getClientTravel">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addPassenger">
             <input/>
             <output/>
         </operation>

@@ -65,7 +65,16 @@
                         <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()"></i>
                     
                     </div>
-                    <div role="tabpanel" id="feedback" ng-show="show[2]">...</div>
+                    <div role="tabpanel" id="feedback" ng-show="show[2]">
+                        <dl class="dl-horizontal" ng-repeat="commenti in commentInfo">
+                           
+                            <dt>Autore:</dt>
+                            <dd>{{commenti.id_author}}</dd>
+                            <dt>Testo:</dt>
+                            <dd>{{commenti.comment}}</dd>
+                        
+                        </dl>             
+                    </div>
                     
                 </div>
 

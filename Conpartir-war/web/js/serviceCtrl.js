@@ -10,6 +10,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var obj = {};
         var driversObj = {};
         var clientObj = {};
+        var commentObj = {};
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -74,7 +75,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise;             
            
            },
-            
+                       
             bookTravel: function (input) { 
                var res;
                 var sr;
@@ -283,11 +284,41 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise; 
             },
             
+            getLatestReceivedComments: function(email, numMax){
+                var res;
+                var opName = "getLatestReceivedComments";
+                var sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<clientEmail>' + email + '</clientEmail>' +
+                           '<numMax>' + numMax + '</numMax>'+
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                var action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                var promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                }).success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getLatestReceivedCommentsResponse;
+                  
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    
+                    commentObj = res.return;           
+                    return res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise; 
+            },
+            
             getDrivers: function (email) {                
                 var res;
                 var sr;
                 var action;
-                var opName;
                 var promise;
                 var opName = "getDrivers";           
                 sr = SOAPhead +
@@ -336,10 +367,11 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             setData: function (object) {
                 // console.log('setting ' + data + ' as data');
                 obj = object;
+            },
+            
+            getComments: function(){
+                return commentObj;
             }
-
-
-
         };
     }]);
        

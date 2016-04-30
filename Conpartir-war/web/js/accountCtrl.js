@@ -28,6 +28,7 @@
                      $scope.clientInfo = prova.return;
                  });
                  $scope.loadDrivers();  
+                 $scope.getLatestComment();
              };   
            };      
            
@@ -62,6 +63,16 @@
                 console.log("selected car " + $scope.selectedCar.carModel);
               //  $window.location.reload();
                 
+            };
+            
+            $scope.getLatestComment = function(){
+                var self= $location.search(); 
+                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
+                        
+                 shared.getLatestReceivedComments(self.email,10).then(function(promise) {
+                     var prova = shared.getComments(); 
+                     $scope.commentInfo = prova;
+                 });
             };
             
             $scope.alert = function() {
