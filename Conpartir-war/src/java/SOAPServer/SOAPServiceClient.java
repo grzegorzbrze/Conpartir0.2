@@ -216,11 +216,7 @@ public class SOAPServiceClient {
             @WebParam(name = "end") String end, @WebParam(name = "date") String date) {
         
         Date data = convertiStringa(date);
-        System.out.println("cerco viaggi a partire dalla data" + data);
-        
         List<Travel> viaggi = travelRef.searchByOriginDestinationDateTime(data, data, start, end);
-        System.out.println (viaggi);
-        
         return viaggi;   
     }
 

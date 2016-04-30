@@ -83,7 +83,7 @@ public class TravelManager implements TravelManagerLocal {
                     temp_data.toString() != null && temp_time.toString() != null
                     && temp_origine != null && temp_destination != null){
                 if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id) &&
-                        temp_data.equals(data) && temp_time.equals(time) && 
+                        equalsDate(temp_data,data) && temp_time.equals(time) && 
                         temp_origine.equals(origine) && temp_destination.equals(destination)){
                     id_travel = temp.getTravel_id();
                 }
@@ -112,7 +112,7 @@ public class TravelManager implements TravelManagerLocal {
                 if (temp.getData().after(data) ){
                     lista.add(temp);
                 }
-                if (temp.getData().equals(data) && afterTime(temp.getTime(), time)){
+                if (equalsDate(temp.getData(),data) && afterTime(temp.getTime(), time)){
                     lista.add(temp);
                 }
             }
@@ -146,7 +146,7 @@ public class TravelManager implements TravelManagerLocal {
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
                     && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
-                    if(temp.getData().after(data) || temp.getData().equals(data) ){
+                    if(temp.getData().after(data) || equalsDate(temp.getData(),data)){
                         lista.add(temp);
                     }
                 }
@@ -158,21 +158,23 @@ public class TravelManager implements TravelManagerLocal {
     @Override
     public List<Travel> searchByOriginDestinationDateTime(Date data, Date time, String origin, String destination) {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
-         List <Travel> lista2 = new ArrayList();
-        //List <Travel> lista = searchByOriginDestinationDate(data, origin, destination);
+        List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
                     && temp.getFreeSeats() > 0){      
                 if(isCreatorTravel(temp.getClient_id(), temp.getDriver_id())){
-                    if(temp.getData().after(data) || temp.getData().equals(data) && afterTime(temp.getTime(), time) ){
-                        lista2.add(temp);
+                    if (temp.getData().after(data) ){
+                        lista.add(temp);
+                    }
+                    if (equalsDate(temp.getData(),data) && afterTime(time, temp.getTime())){
+                        lista.add(temp);
                     }
                 }
             }
         }
-        return sortListByDate(lista2);
+        return sortListByDate(lista);
     }
     
     @Override
@@ -254,7 +256,27 @@ public class TravelManager implements TravelManagerLocal {
             }
         }
        return risultato;
-    }    
+    } 
+    
+    /**
+     * Restituisce true se la data1 è uguale alla data2 
+     */
+    protected boolean equalsDate(Date data1, Date data2){
+        boolean uguali = false;
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(data1);
+        int anno1 = calendario.get(Calendar.YEAR);
+        int mese1 = calendario.get(Calendar.MONTH);
+        int giorno1 = calendario.get(Calendar.DAY_OF_MONTH);
+        calendario.setTime(data2);
+        int anno2 = calendario.get(Calendar.YEAR);
+        int mese2 = calendario.get(Calendar.MONTH);
+        int giorno2 = calendario.get(Calendar.DAY_OF_MONTH);
+        if (anno1 == anno2 && mese1 == mese2 && giorno1 == giorno2){
+            uguali = true;
+        }
+        return uguali;
+    }
     
     /**
      * Restituisce true se l'ora temp2 è dopo l'ora temp1  
@@ -326,5 +348,5 @@ public class TravelManager implements TravelManagerLocal {
         });
         return travels;
     }
-
+   
 }
