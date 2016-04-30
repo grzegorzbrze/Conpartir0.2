@@ -40,7 +40,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
             },
             
-           createCarTravel: function (input) { 
+            createCarTravel: function (input) { 
                var res;
                 var sr;
                 var action;
@@ -55,6 +55,37 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                            '<to>' +input.to +'</to>' +
                            '<when>' + input.when+'</when>' +
                            '<freeSeats>' + input.freeSeats + '</freeSeats>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                    
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;             
+           
+           },
+            
+            bookTravel: function (input) { 
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "addPassenger";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<travel_id>'+ input.travelId +'</travel_id>' +
+                           '<passenger_id>'+ input.passengerId +'</passenger_id>' +
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;

@@ -53,12 +53,18 @@ public class SOAPServiceClient {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Web Service Operation")
 
-    /*    @WebMethod(operationName = "createClient")
-    @Oneway
-    public void createClient(@WebParam(name = "client") Client client) {
-    clientRef.createClient(client);
-    }*/
-
+     /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "addPassenger")
+    public void addPassenger(@WebParam(name = "travel_id") long travel_id, 
+            @WebParam(name = "passenger_id") long passenger_id ){
+        travelRef.addPassenger(travel_id, passenger_id);
+    }
+    
+     /**
+     * Web service operation
+     */    
     @WebMethod(operationName = "createClient_1")
     @RequestWrapper(className = "createClient_1")
     @Oneway

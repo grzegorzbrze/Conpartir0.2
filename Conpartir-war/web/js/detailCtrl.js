@@ -26,6 +26,15 @@
                     $scope.detail = shared.getData();
                 });                
             };
+            
+            $scope.book = function () {
+                var input = {};
+                input.travelId = $scope.travel.travel_id;
+                input.passengerId = "2";
+              shared.bookTravel(input).then(function (promise) {
+                 //status? 
+              });  
+            },
 
                         
              $scope.reload = function () {
