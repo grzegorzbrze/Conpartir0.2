@@ -47,10 +47,13 @@
             };
             
             $scope.go = function (data) {
-                shared.setData(data);
-                
+                shared.setTravelInfo(data);
+                var type;
+                if($scope.showCar = true)  type = 1;
+                else type = 2;
                 $location.path("/detail");
                 $location.search("number",data.travel_id);
+                $location.search("type",type);
                 $route.reload();
             };
             

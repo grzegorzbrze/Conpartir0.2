@@ -389,6 +389,25 @@ public class SOAPServiceClient {
         return data;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getSpecificCarTravel")
+    public Travel getSpecificCarTravel(@WebParam(name = "travel_id") long travel_id) {
+        Travel result = travelRef.getTravel(travel_id);
+        
+        return result;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getSpecificTaxiTravel")
+    public Taxi getSpecificTaxiTravel(@WebParam(name = "travel_id") long taxi_id) {
+        Taxi result = taxiRef.getTaxi(taxi_id);
+        return result;
+    }
+
    
     
     

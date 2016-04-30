@@ -10,6 +10,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var obj = {};
         var driversObj = {};
         var clientObj = {};
+        var travelObj = {};
         var commentObj = {};
         
         //variabili per le richieste SOAP
@@ -140,8 +141,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise;             
            
            },
-            
-            getClient: function (email) {                
+           
+           getClient: function (email) {                
                 var res;
                 var sr;
                 var action;
@@ -178,7 +179,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise;                     
             },
             
-            getTravels: function (input) {
+           getTravels: function (input) {
                 var res;
                 var sr;
                 var action;
@@ -214,7 +215,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      return promise;
             }, 
             
-             getTaxiTravels: function (input) {
+           getTaxiTravels: function (input) {
                 var res;
                 var sr;
                 var action;
@@ -250,6 +251,76 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                      });                     
                      return promise;
             }, 
+            
+            getSpecificCarTravel: function (travel_id) {
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                opName = "getSpecificCarTravel";
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                        '<travel_id>'+ travel_id +'</travel_id>' +
+                        '</ns0:' + opName + '>'+
+                        SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                    
+           
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                         'Content-Type' : "text/xml;charset=utf-8",
+                         'SOAPAction': action
+                     }                  
+                     })
+                             .success(function (data, status, headers, config) {
+                                 var jsonObj = x2js.xml_str2json( data );                         
+                                 res = jsonObj.Envelope.Body.getSpecificCarTravelResponse;                            
+                                 delete res["_xmlns:ns2"];
+                                 delete res["__prefix"];   
+                                 travelObj = res;
+                     })
+                             .error(function (data, status, headers, config) {
+                                 return {"status": false};
+                     });
+                     
+                     return promise;
+                
+            },
+            
+            getSpecificTaxiTravel : function (taxi_id) {
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                opName = "getSpecificTaxiTravel";
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                        '<taxi_id>'+ taxi_id +'</taxi_id>' +
+                        '</ns0:' + opName + '>'+
+                        SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                    
+           
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                         'Content-Type' : "text/xml;charset=utf-8",
+                         'SOAPAction': action
+                     }                  
+                     })
+                             .success(function (data, status, headers, config) {
+                                 var jsonObj = x2js.xml_str2json( data );                         
+                                 res = jsonObj.Envelope.Body.getSpecificTaxiTravelResponse;                            
+                                 delete res["_xmlns:ns2"];
+                                 delete res["__prefix"];   
+                                 travelObj = res;
+                     })
+                             .error(function (data, status, headers, config) {
+                                 return {"status": false};
+                     });
+                     
+                     return promise;
+                
+            },
             
             getDriverFromTravel: function (travelID) { var res;
                 var sr;
@@ -362,10 +433,17 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
             getClientInfo: function () {
                 return clientObj;
-            }, 
+            },
+            
+            getTravelInfo: function () {
+                return travelObj;
+            },
+            
+            setTravelInfo: function (object) {
+                travelObj = object;                
+            },
             
             setData: function (object) {
-                // console.log('setting ' + data + ' as data');
                 obj = object;
             },
             

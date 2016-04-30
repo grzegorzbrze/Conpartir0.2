@@ -21,19 +21,39 @@
             };
                         
             $scope.getInfo = function () {
-                var driverIdParam = $location.search().number;
-                $scope.travel = shared.getData();
-                //console.log($scope.travel);
-                shared.getDriverFromTravel( driverIdParam).then(function(promise){
+                var travelIdParam = $location.search().number;
+                var type = $location.search().type;
+                
+                $scope.travel = shared.getTravelInfo();
+                
+                
+                if (jQuery.isEmptyObject($scope.travel) && type == 1) { 
+                    shared.getSpecificCarTravel( travelIdParam).then(function (promise) {
+                        $scope.travel = shared.getTravelInfo().return;
+                    });
+                };
+                if (jQuery.isEmptyObject($scope.travel) && type == 2) { 
+                    shared.getSpecificTaxiTravel( travelIdParam).then(function (promise) {
+                         $scope.travel = shared.getTravelInfo().return;
+                     }); 
+                 };
+                
+                shared.getDriverFromTravel( travelIdParam).then(function(promise){
                     $scope.detail = shared.getData();
                 });                
             };
+            
+            $scope.login = function () {
+                $location.path("/login");
+                $location.search("from","detail");
+                $route.reload();
+            },
             
             $scope.book = function () {
                 var input = {};
                 if (auth.isAuthenticated()==false) {
                      $scope.ifAlert = true;
-                     $scope.alert = "Devi fare il login per prenotare un viaggio.";                    
+                     // $scope.alert = "Devi fare il login per prenotare un viaggio.";                    
                 }
                 else { 
                     input.travelId = $scope.travel.travel_id;

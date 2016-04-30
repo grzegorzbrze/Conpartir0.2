@@ -98,11 +98,18 @@
                     else {
                         
                         $scope.isAuthorized = login.getData(); 
-                        console.log("2" + $scope.isAuthorized);
+                       // console.log("2" + $scope.isAuthorized);
                         sessionStorage.setItem("email",$scope.master.email);
+                        
+                        if ($location.search().from == "detail") {
+                          $window.history.back();
+                            $route.reload();
+                            return;
+                            
+                        };  
                         $location.path('/account'); 
-                        var x =$route.current.templateUrl + $location.url();
-                        console.log(x);
+                        //var x =$route.current.templateUrl + $location.url();
+                        //console.log(x);
                         $route.reload();
                       //$window.location.replace(x);
                         //$window.location.search('email',$scope.master.email);
