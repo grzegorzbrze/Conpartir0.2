@@ -27,8 +27,6 @@
             $scope.getInfo = function () {
                 var travelIdParam = $location.search().number;
                 var type = $location.search().type;
-                if(type===1) isCarTravel = true;
-                if(type===2) isTaxiTravel = false;
                 
                 //controllo che l'utente sia loggato
                 if (auth.isAuthenticated()===false) {
@@ -38,7 +36,13 @@
                     $scope.allowBooking = true;
                 };
                 
-                $scope.travel = shared.getTravelInfo();                
+                if(type==1) isCarTravel = true;
+                if(type==2) isTaxiTravel = true;
+                
+             //   console.log(type); console.log(isCarTravel);
+                
+                $scope.travel = shared.getTravelInfo();
+                //console.log(jQuery.isEmptyObject($scope.travel));                 console.log(isCarTravel);
                 //gli If seguenti ricaricano i dati del travel dalla SOAP nel caso non fossero presenti in shared.getTravelInfo
                 //Questo può accadere se per esempio si ritorna a questa pagina dopo che la si è abbandonata
                 if (jQuery.isEmptyObject($scope.travel) && isCarTravel == true) {                     
@@ -46,8 +50,7 @@
                         $scope.travel = shared.getTravelInfo().return;
                     });
                 };
-                if (jQuery.isEmptyObject($scope.travel) && isTaxiTravel == true) { 
-                    
+                if (jQuery.isEmptyObject($scope.travel) && isTaxiTravel == true) {                     
                     shared.getSpecificTaxiTravel( travelIdParam).then(function (promise) {
                          $scope.travel = shared.getTravelInfo().return;
                      });
