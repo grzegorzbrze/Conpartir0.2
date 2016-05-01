@@ -7,7 +7,8 @@
             
             $scope.clientInfo;
             $scope.driversInfo;
-            $scope.bookedTravelsInfo;
+            $scope.bookedTravelsInfo = { items: []};
+            $scope.postedTravelsInfo = {items: []};
             $scope.selectedCar;
             
             $scope.show = [true, false, false];  
@@ -46,7 +47,7 @@
                   //console.log("data is " + data);
                 for (item in $scope.driversInfo) {
                   //console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
-                    if (item.driver_id == data) { 
+                    if (item.driver_id === data) { 
                         $scope.selectedCar = item;                         
                     }; 
                 };
@@ -78,13 +79,20 @@
                  shared.getDrivers(self.email).then(function(promise) {
                      var prova = shared.getCars(); 
                      $scope.driversInfo = prova;
-                     //console.log($scope.driversInfo);
-                     $scope.selectedCar = $scope.driversInfo[0];      
-                     var k;
-                     for (k=0;k<$scope.driversInfo.length;k++) { 
-                         myDriverIds[k] = $scope.driversInfo[k].driver_id;
-                     };
-                     console.log(myDriverIds);
+                     
+                     if(!isArray($scope.driversInfo)) {
+                          $scope.selectedCar = $scope.driversInfo;
+                          myDriverIds[0] = $scope.driversInfo.driver_id;
+                         
+                     }
+                     else{
+                         $scope.selectedCar = $scope.driversInfo[0]; 
+                         var k;
+                         for (k=0;k<$scope.driversInfo.length;k++) { 
+                             myDriverIds[k] = $scope.driversInfo[k].driver_id;
+                         };     
+                     };             
+                     // console.log(myDriverIds);
                  });
              }; 
              
@@ -96,13 +104,24 @@
                     var res = shared.getBookedTravels();
                     
                      if(isArray(res.return)) {  
-                         
-                         $scope.bookedTravelsInfo = res.return;
+                       
+                         //console.log('res');
+                         //console.log(res);
+                         var i;                         
+                        for (i=0;i<res.return.length;i++) {
+                             if(myDriverIds.includes(res.return[i].driver_id)) { $scope.postedTravelsInfo.items.push(res.return[i]); }
+                             else { $scope.bookedTravelsInfo.items.push(res.return[i]); };                         
+                         };
                      }
                      else {
-                         $scope.bookedTravelsInfo = res;
+                         if(myDriverIds.includes(res.driver_id)) { $scope.postedTravelsInfo.items.push(res.return); }
+                         else { $scope.bookedTravelsInfo.items.push(res.return); }
+                         
                      };
-                    
+                     
+                    /* console.log($scope.bookedTravelsInfo);
+                      console.log($scope.postedTravelsInfo);
+                    */
                  });
                  
                 

@@ -90,11 +90,18 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">Prenotazioni e Viaggi</h3>
+    <h3 class="panel-title"> Viaggi e Prenotazioni</h3>
   </div>
     <div class="panel-body"> 
-        <div class="proj-account"> 
-        <a ng-repeat=" item in bookedTravelsInfo" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</a>
-        </div>
+        <div class="proj-account">
+            <dl> <dt>Viaggi Prenotati:</dt>
+                <dd>
+                <span ng-repeat=" item in bookedTravelsInfo.items" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</span> 
+                </dd>
+                <dt>Viaggi Postati:</dt>
+                <dd>
+                <span ng-repeat=" item in postedTravelsInfo.items" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</span> 
+                </dd>
+       </dl> </div>
     </div>
 </div>
