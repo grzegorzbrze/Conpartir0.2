@@ -12,6 +12,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var clientObj = {};
         var travelObj = {};
         var commentObj = {};
+        var bookedTravelsObj = {};
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -322,6 +323,40 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 
             },
             
+            getClientTravel: function (email) { 
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "getClientTravel";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ email +'</email>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getClientTravelResponse;
+                    
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    bookedTravelsObj = res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise; 
+            },
+            
             getDriverFromTravel: function (travelID) { var res;
                 var sr;
                 var action;
@@ -449,6 +484,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
             getComments: function(){
                 return commentObj;
+            },
+            
+           getBookedTravels: function(){
+                return bookedTravelsObj;
             }
         };
     }]);

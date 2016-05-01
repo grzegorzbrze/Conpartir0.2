@@ -85,3 +85,14 @@
 
   </div>
 </div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Prenotazioni e Viaggi</h3>
+  </div>
+    <div class="panel-body"> 
+        <div class="proj-account"> 
+        <a ng-repeat=" item in bookedTravelsInfo" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</a>
+        </div>
+    </div>
+</div>

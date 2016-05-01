@@ -7,43 +7,33 @@
             
             $scope.clientInfo;
             $scope.driversInfo;
+            $scope.bookedTravelsInfo;
             $scope.selectedCar;
-            $scope.show = [true, false, false];
+            
+            $scope.show = [true, false, false];  
+            var myDriverIds = [];           
+            var self= $location.search(); 
+            
+            var isArray = function(what) {              
+                return Object.prototype.toString.call(what) === '[object Array]';
+            };
+            
+             $scope.getDay = function (data) {
+                var splitter = data.indexOf('T');
+                return data.slice(0,splitter);                
+            };
+            
+             $scope.getTime = function (data) {
+                var splitter = data.indexOf('T');
+                return data.slice(splitter+1,splitter+6);                
+            };
+               
             
             $scope.check = function() {
                 auth.checkAuth(sessionStorage.getItem("conpCookie"));
             };
             
-           $scope.onLoad = function() {
-             if (auth.isAuthenticated() == false) {
-                 alert("Per favore, effettua il login");
-                 $location.path('/login');
-                }
-             else {
-                 var self= $location.search();
-                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
-                      
-                 shared.getClient(self.email).then(function(promise) {
-                     var prova = shared.getClientInfo(); 
-                     $scope.clientInfo = prova.return;
-                 });
-                 $scope.loadDrivers();  
-                 $scope.getLatestComment();
-             };   
-           };      
-           
-           $scope.loadDrivers = function () {
-               var self= $location.search(); 
-                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
-                        
-                 shared.getDrivers(self.email).then(function(promise) {
-                     var prova = shared.getCars(); 
-                     $scope.driversInfo = prova;
-                     //console.log($scope.driversInfo);
-                     $scope.selectedCar = $scope.driversInfo[0];
-                 });
-             }; 
-           
+            
            $scope.tab = function(data) {
                 if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
                 if (data=="cars") {$scope.show[0] = false, $scope.show[1] = true; $scope.show[2] = false; };
@@ -65,9 +55,61 @@
                 
             };
             
-            $scope.getLatestComment = function(){
-                var self= $location.search(); 
+           $scope.onLoad = function() {
+             if (auth.isAuthenticated() == false) {
+                 alert("Per favore, effettua il login");
+                 $location.path('/login');
+                }
+             else {
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
+                      
+                 shared.getClient(self.email).then(function(promise) {
+                     var prova = shared.getClientInfo(); 
+                     $scope.clientInfo = prova.return;
+                 });
+                 $scope.loadDrivers();  
+                 $scope.getLatestComment();
+                 $scope.loadBookedTravels();
+             };   
+           };      
+           
+           $scope.loadDrivers = function () {
+                  if(self.email === undefined) self.email = sessionStorage.getItem('email');                     
+                 shared.getDrivers(self.email).then(function(promise) {
+                     var prova = shared.getCars(); 
+                     $scope.driversInfo = prova;
+                     //console.log($scope.driversInfo);
+                     $scope.selectedCar = $scope.driversInfo[0];      
+                     var k;
+                     for (k=0;k<$scope.driversInfo.length;k++) { 
+                         myDriverIds[k] = $scope.driversInfo[k].driver_id;
+                     };
+                     console.log(myDriverIds);
+                 });
+             }; 
+             
+            
+            
+            $scope.loadBookedTravels = function () {
+                if(self.email === undefined) self.email = sessionStorage.getItem('email');
+                shared.getClientTravel(self.email).then (function(promise) {
+                    var res = shared.getBookedTravels();
+                    
+                     if(isArray(res.return)) {  
+                         
+                         $scope.bookedTravelsInfo = res.return;
+                     }
+                     else {
+                         $scope.bookedTravelsInfo = res;
+                     };
+                    
+                 });
+                 
+                
+            };
+            
+            $scope.getLatestComment = function(){
+                if(self.email === undefined) self.email = sessionStorage.getItem('email');
                         
                  shared.getLatestReceivedComments(self.email,10).then(function(promise) {
                      var prova = shared.getComments(); 

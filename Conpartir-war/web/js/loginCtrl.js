@@ -123,8 +123,7 @@
                 login.doLogout();
                 $scope.isAuthorized= false;
                 $location.path("/"); 
-                $location.url($location.path());
-              
+                $location.url($location.path());              
 //                $timeout(function() {
 //                   // $route.reload();
 //                    
