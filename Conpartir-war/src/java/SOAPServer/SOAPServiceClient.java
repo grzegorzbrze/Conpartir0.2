@@ -29,6 +29,7 @@ import org.conpartir.sessionBean.TravelManagerLocal;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.google.gson.Gson;
+import org.conpartir.temp.CommentTemp;
 
 
 
@@ -288,17 +289,28 @@ public class SOAPServiceClient {
      * da usare per mostrare l'attività degli utenti in homepage
      */
     @WebMethod(operationName = "getLatestReceivedComments")
-    public List<Comment> getLatestReceivedComments(@WebParam(name = "clientEmail") String clientEmail, @WebParam(name = "numMax") int numMax) {
+    public List<CommentTemp> getLatestReceivedComments(@WebParam(name = "clientEmail") String clientEmail, @WebParam(name = "numMax") int numMax) {
         Client cliente = clientRef.getClient(clientEmail);
         List<Comment> commenti = commentRef.getCommentReceived(cliente.getId());
-        List<Comment> primiNCommenti = new ArrayList();
+        List<CommentTemp> commentTemp = new ArrayList();
         for (int i=0; i<numMax; i++){
             if (i<commenti.size()){
-                primiNCommenti.add(i, commenti.get(i));
+                CommentTemp temp = new CommentTemp();
+                Long tempID = commenti.get(i).getId_author();
+                String tempEmail = clientRef.getEmail(tempID);
+                Client client = clientRef.getClient(tempEmail);
+                client.setPass("");
+                temp.setNomeAutore(client.getName());
+                temp.setCognomeAutore(client.getSurname());
+                temp.setTestoCommento(commenti.get(i).getComment());
+                temp.setFeedBackCommento(commenti.get(i).getFeedback());
+                commentTemp.add(temp);
             }
         }
-        return primiNCommenti;
+        return commentTemp;
     }
+    
+    
     
     
     /**

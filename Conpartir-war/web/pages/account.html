@@ -69,9 +69,11 @@
                         <dl class="dl-horizontal" ng-repeat="commenti in commentInfo">
                            
                             <dt>Autore:</dt>
-                            <dd>{{commenti.id_author}}</dd>
+                            <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
                             <dt>Testo:</dt>
-                            <dd>{{commenti.comment}}</dd>
+                            <dd>{{commenti.testoCommento}}</dd>
+                            <dt> Feedback </dt>
+                            <dd> {{commenti.feedBackCommento}}</dd>
                         
                         </dl>             
                     </div>

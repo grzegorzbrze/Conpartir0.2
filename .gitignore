@@ -12,6 +12,7 @@
 hs_err_pid*
 /Conpartir-ejb/build/
 /Conpartir-ejb/dist/
+/Conpartir-ejb/nbproject/private/
 /nbproject/private/
 /nbproject/private/private.properties
 /dist/
