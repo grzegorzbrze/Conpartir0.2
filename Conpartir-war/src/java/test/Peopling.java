@@ -100,7 +100,7 @@ public class Peopling extends HttpServlet {
         
         if (paths.length == cognomi.length){
             for (int i=0; i<paths.length; i++){
-                    paths[i] = "root/"+cognomi[i];   
+                    paths[i] = /*"root/"+cognomi[i]*/ "http://oi65.tinypic.com/2dlufo.jpg";   
             }
         }
         
