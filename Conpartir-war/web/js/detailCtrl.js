@@ -7,9 +7,13 @@
            
             $scope.travel;
             $scope.detail;
+            $scope.allowBooking = true;
             $scope.ifAlert = false;
-            $scope.alert;
-            
+            $scope.ifTimeAlert = false;
+            $scope.alertMsg = "";
+            var isCarTravel;
+            var isTaxiTravel;
+             
             $scope.getDay = function (data) {
                 var splitter = data.indexOf('T');
                 return data.slice(0,splitter);                
@@ -23,24 +27,55 @@
             $scope.getInfo = function () {
                 var travelIdParam = $location.search().number;
                 var type = $location.search().type;
+                if(type===1) isCarTravel = true;
+                if(type===2) isTaxiTravel = false;
                 
-                $scope.travel = shared.getTravelInfo();
+                //controllo che l'utente sia loggato
+                if (auth.isAuthenticated()===false) {
+                     $scope.allowBooking = false;           
+                }
+                else { 
+                    $scope.allowBooking = true;
+                };
                 
-                
-                if (jQuery.isEmptyObject($scope.travel) && type == 1) { 
+                $scope.travel = shared.getTravelInfo();                
+                //gli If seguenti ricaricano i dati del travel dalla SOAP nel caso non fossero presenti in shared.getTravelInfo
+                //Questo può accadere se per esempio si ritorna a questa pagina dopo che la si è abbandonata
+                if (jQuery.isEmptyObject($scope.travel) && isCarTravel == true) {                     
                     shared.getSpecificCarTravel( travelIdParam).then(function (promise) {
                         $scope.travel = shared.getTravelInfo().return;
                     });
                 };
-                if (jQuery.isEmptyObject($scope.travel) && type == 2) { 
+                if (jQuery.isEmptyObject($scope.travel) && isTaxiTravel == true) { 
+                    
                     shared.getSpecificTaxiTravel( travelIdParam).then(function (promise) {
                          $scope.travel = shared.getTravelInfo().return;
-                     }); 
-                 };
-                
+                     });
+                 };                
                 shared.getDriverFromTravel( travelIdParam).then(function(promise){
                     $scope.detail = shared.getData();
-                });                
+                });
+                // A questo punto sono sicuro di avere tutti i dati
+                
+                var today = new Date();                
+                var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
+                var travelDataCompleta = new Date(data);
+                
+                var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60;
+                
+                if (timeDiff <= 30 && isCarTravel===true){
+                    $scope.ifTimeAlert = true;
+                    $scope.allowBooking = false;
+                    console.log("meno di trenta minuti al viaggio");
+                } 
+                 if (timeDiff <= 15 && isTaxiTravel===true){
+                     $scope.ifTimeAlert = true;                     
+                    $scope.allowBooking = false;
+                     console.log("meno di trenta minuti al viaggio");
+                 }
+                
+               
+                
             };
             
             $scope.login = function () {
@@ -51,19 +86,21 @@
             
             $scope.book = function () {
                 var input = {};
-                if (auth.isAuthenticated()==false) {
-                     $scope.ifAlert = true;
-                     // $scope.alert = "Devi fare il login per prenotare un viaggio.";                    
-                }
-                else { 
-                    input.travelId = $scope.travel.travel_id;
-                    input.email = sessionStorage.getItem("email");
-                    shared.bookTravel(input).then(function (promise) {
-                        console.log(promise.status);
-                        //status? 
-                    });  
-                }
-               
+                input.travelId = $scope.travel.travel_id;
+                input.email = sessionStorage.getItem("email");
+                
+                if (input.email === $scope.detail.return[0].email) {  
+                    alert('Non puoi prenotare un tuo stesso viaggio');
+                    return;
+                };                    
+                shared.bookTravel(input).then(function (promise) {
+                    if (promise.status === 200) {
+                        $scope.alert = "Prenotazione effettuata con successo!";
+                    }
+                    else {
+                        $scope.alert = "Qualcosa è andato storto con la prenotazione.";
+                    }
+                });                  
             },
 
                         

@@ -2,9 +2,13 @@
     <div class="box-container col-lg-3 center"> 
         <img id="foto" src="{{detail.return[0].urlPhoto}}" alt="user image">
         <h3>Posti liberi: {{travel.freeSeats}}</h4>
-        <button class="btn-lg" ng-click="book()">Prenota</button>
+        <button class="btn-lg" ng-click="book()" ng-show="allowBooking">Prenota</button>
         
-        <div class="bg-danger center" ng-show="ifAlert" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a ng-click="login()">Vuoi farlo ora?</a></div>
+        <div class="bg-danger center" ng-hide="allowBooking" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a ng-click="login()">Vuoi farlo ora?</a></div>
+        
+         <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>         
+         
+         <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
     </div>
     <div class="panel-info col-lg-9"  style="float:left">
         <div class="panel-heading center">

@@ -23,9 +23,9 @@ and open the template in the editor.
   position: absolute;
   // text-align: center;
   top: 70px;
-  left: 15%;
-  right: 15%;
-  width: 60%;
+  left: 10%;
+  right: 10%;
+  width: 70%;
 }
 
 .box-container {
