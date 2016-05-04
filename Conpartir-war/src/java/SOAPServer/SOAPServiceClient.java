@@ -29,8 +29,11 @@ import org.conpartir.sessionBean.TravelManagerLocal;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.google.gson.Gson;
+import java.util.Objects;
 import org.conpartir.temp.CommentTemp;
-
+import org.conpartir.temp.AccountDataTemp;
+import org.conpartir.temp.DriverTemp;
+import org.conpartir.temp.TravelTemp;
 
 
 /**
@@ -82,8 +85,66 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getClient")
-    public Client getClient(@WebParam(name = "email") String email) {
-        return clientRef.getClient(email);
+    public AccountDataTemp getClient(@WebParam(name = "email") String email) {
+        AccountDataTemp user = new AccountDataTemp();
+        Client userData = clientRef.getClient(email);
+        
+        Long ID = userData.getId();
+                
+        user.setAge(userData.getAge());
+        user.setEmail(email);
+        user.setGender(userData.getGender());
+        user.setName(userData.getName());
+        user.setSurname(userData.getSurname());
+        user.setUrlPhoto(userData.getUrlPhoto());
+        
+        List<Driver> driversData = driverRef.getDrivers(ID);
+        List<DriverTemp> driversList = new ArrayList();
+        int i;
+        for(i=0;i<driversData.size();i++) {
+            DriverTemp driverTemp = new DriverTemp ();
+            
+            driverTemp.setCarModel(driversData.get(i).getCarModel());
+            driverTemp.setCarYear(driversData.get(i).getCarYear());
+            
+            driversList.add(driverTemp);
+        }
+        
+        user.setDrivers(driversList);
+        
+        Date today = new Date();
+                
+        List<Travel> travelsData = travelRef.getClientTravel(userData.getId(), today, today);
+        List<TravelTemp> postedTravelsList = new ArrayList();
+        List<TravelTemp> bookedTravelsList = new ArrayList();
+        
+        for(i=0;i<travelsData.size();i++) {
+            TravelTemp temp = new TravelTemp();
+            temp.setData(travelsData.get(i).getData());
+            temp.setDestination(travelsData.get(i).getDestination());
+            temp.setOrigin(travelsData.get(i).getOrigin());
+            temp.setFreeSeats(travelsData.get(i).getFreeSeats());
+            temp.setTime(travelsData.get(i).getTime());
+            temp.setTravel_id(travelsData.get(i).getTravel_id());
+            int j;
+            boolean isPostedTravel = false;
+            
+            for (j=0;j<driversData.size();j++) {
+                if (Objects.equals(travelsData.get(i).getDriver_id(), driversData.get(j).getDriver_id())) {
+                    isPostedTravel = true;
+                }
+            }
+            
+            if (isPostedTravel == true) postedTravelsList.add(temp);
+            else bookedTravelsList.add(temp);
+            
+            user.setBookedTravels(bookedTravelsList);
+            user.setPostedTravels(postedTravelsList);
+            
+        
+        }
+        
+        return user;
     }
 
      /**

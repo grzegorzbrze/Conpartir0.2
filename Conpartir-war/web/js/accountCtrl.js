@@ -11,6 +11,7 @@
             $scope.postedTravelsInfo = {items: []};
             $scope.isAuth;
             $scope.selectedCar;
+            $scope.closeTravels;
             
             $scope.show = [true, false, false];  
             var myDriverIds = [];           
@@ -68,25 +69,19 @@
             
            $scope.onLoad = function() {
                $scope.check();
-              
-//             if (auth.isAuthenticated() == false) {
-//                 alert("Per favore, effettua il login");
-//                 $location.path('/login');
-//                }
-//             else {
-                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
-                      
-                 shared.getClient(self.email).then(function(promise) {
-                     var prova = shared.getClientInfo(); 
-                     $scope.clientInfo = prova.return;
-                 });
-                 $scope.loadDrivers();  
-                 $scope.getLatestComment();
-                 $scope.loadBookedTravels();
-             };   
-           //};      
+               
+               if(self.email === undefined) self.email = sessionStorage.getItem('email');
+               
+               shared.getClient(self.email).then(function(promise) {
+                   var prova = shared.getClientInfo(); 
+                   $scope.clientInfo = prova.return;
+               });
+               $scope.loadDrivers();  
+               $scope.getLatestComment();
+               $scope.loadBookedTravels();
+           };   
            
-           $scope.loadDrivers = function () {
+            $scope.loadDrivers = function () {
                   if(self.email === undefined) self.email = sessionStorage.getItem('email');                     
                  shared.getDrivers(self.email).then(function(promise) {
                      var prova = shared.getCars(); 
@@ -109,16 +104,12 @@
              }; 
              
             
-            
             $scope.loadBookedTravels = function () {
                 if(self.email === undefined) self.email = sessionStorage.getItem('email');
                 shared.getClientTravel(self.email).then (function(promise) {
                     var res = shared.getBookedTravels();
                     
                      if(isArray(res.return)) {  
-                       
-                         //console.log('res');
-                         //console.log(res);
                          var i;                         
                         for (i=0;i<res.return.length;i++) {
                              if(myDriverIds.includes(res.return[i].driver_id)) { $scope.postedTravelsInfo.items.push(res.return[i]); }
@@ -131,9 +122,18 @@
                          
                      };
                      
-                    /* console.log($scope.bookedTravelsInfo);
-                      console.log($scope.postedTravelsInfo);
-                    */
+                     
+                     //manca per i postedTravels
+                  var today = new Date();
+                  var j;
+                  for (j=0;j<$scope.bookedTravelsInfo.items.length;j++) {
+                       var data = $scope.getDay($scope.bookedTravelsInfo.items[j].data) + 'T' + $scope.getTime($scope.bookedTravelsInfo.items[j].time) + ':00';
+                        var travelDataCompleta = new Date(data);
+                        var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;
+                      
+                      if( timeDiff <= 2) $scope.closeTravels = true;
+                  }
+                  
                  });
                  
                 
