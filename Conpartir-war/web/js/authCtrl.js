@@ -8,6 +8,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
    function ($http,$cookies) {
         var data;
         var obj = {};
+        var self = this;
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -20,21 +21,54 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
          
         return {
             
-            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
-            isAuthenticated: function() {
+             doLogin: function (input) {
+                var promise;
+               promise = $http({
+                    method: 'POST',
+                    url: 'Registration',
+                    headers: {'Content-Type': 'application/json'},
+                    data:  input
+                })
+                        .success( function (data, status, header) {
+                            //checkCookieEnabled();                            
+                            console.log("doc method for reading cookie " + document.cookie);                           
+                            var ckValue = $cookies.get('conpCookie');    
+                            sessionStorage.setItem("conpCookie",ckValue);
+                            //sessionStorage.setItem('conpCookie', ckValue);
+                            //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
+                            obj = true;
+                        })
+                                .error(function (data, status, headers, config) {
+                                      obj = false;
+                                 return {"status": false};
+                     });
+                     return promise;
                 
-                var cookie = sessionStorage.getItem('conpCookie');
-                if(cookie) { 
-                    //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
-                    return cookie;
-                }
-                else {return false;};
-                
-                
+            },  
+            
+//            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
+//            isAuthenticated: function() {
+//                
+//                var cookie = sessionStorage.getItem('conpCookie');
+//                if(cookie) { 
+//                    //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
+//                    return cookie;
+//                }
+//                else {return false;};           
+//                
+//            },
+            
+            doLogout: function () { 
+                sessionStorage.removeItem('conpCookie');
+                sessionStorage.clear();                              
+                console.log(sessionStorage.getItem("conpCookie"));
+                obj = false;
             },
             
+                        
             saveCookie: function(ckName,ckValue) {
                 sessionStorage.setItem(ckName,ckValue);
+                
             },
             
             delCookie: function(ckName) {
@@ -52,9 +86,9 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                     Cookie: cookie                    
                 })
                         .success( function (data, status, header) {
-                            //checkCookieEnabled();
-                            
-                            console.log("servlet response " + data + status);                         
+                            //checkCookieEnabled();                            
+                            console.log("servlet response " + data + status); 
+                             obj = true;
                              //sessionStorage.setItem('conpCookie', ckValue);
                             //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
                         })

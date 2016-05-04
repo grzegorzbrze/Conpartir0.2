@@ -10,26 +10,64 @@ and open the template in the editor.
 
 .body{
     position: relative;
+    background-color: #333;
+    
 }
-
 .adjust {
     margin-right: auto; 
     margin-left: auto;
 }
 
-
-.main-container{
-    
-  position: absolute;
+.main-container{    
+  position: relative;
   // text-align: center;
-  top: 70px;
-  left: 10%;
-  right: 10%;
+  top: 70px; 
   width: 70%;
+  margin-right: auto; 
+  margin-left: auto;
+
 }
 
 .box-container {
     float: right;
+}
+
+.panel,
+.panel-body,
+.panel-heading,
+.panel-group,
+.panel-default,
+.panel-primary{
+    border-radius: 4px;
+    background-color: #E0E0E0;
+}
+
+/*.panel-primary {
+    border-color: #c30;
+}
+
+.panel-primary > .panel-heading {
+    background-image: linear-gradient(to bottom, #c30 0px, orangered 100%);
+    background-repeat: repeat-x;
+}  */
+
+
+.panel-trasparent inherit .panel{
+    
+    background-color: activeborder;  
+    
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #111;    
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.tab-content {
+    margin-left: 15%;
+    margin-right: 15%;
+        
 }
 
 .btn-block {

@@ -55,7 +55,7 @@
      <script src="frameworks/jqueryUI/jquery-ui.min.js"></script>
 
   
-  <body ng-app = "myApp" ng-controller = "MainController">
+  <body ng-app = "myApp" ng-controller = "MainController" class="body">
 
       <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -73,6 +73,7 @@
                     <a href="#/login" ><button class="btn btn-success" id="loginbutton">Login</button></a>
                 </div>
                 <div class="form-group" ng-if="isAuthorized">
+                    <a href="#/account"> <button class="bg-danger btn btn-link"><i class="glyphicon glyphicon-exclamation-sign"></i></button></a>
                     <a href="#/account"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
                     <button class="btn btn-danger" id="accountbutton" ng-click="logout()">Logout</button>
                 </div>
@@ -81,8 +82,8 @@
         </div>
     </nav>
       
-   <div class="main-container" style="margin-right: auto; margin-left: auto"  >
-           <ng-view style="margin-right: auto; margin-left: auto"></ng-view> 
+   <div class="main-container adjust">
+           <ng-view></ng-view> 
     </div>       
    
       <footer class="footer"> 

@@ -9,6 +9,7 @@
             $scope.driversInfo;
             $scope.bookedTravelsInfo = { items: []};
             $scope.postedTravelsInfo = {items: []};
+            $scope.isAuth;
             $scope.selectedCar;
             
             $scope.show = [true, false, false];  
@@ -27,11 +28,20 @@
              $scope.getTime = function (data) {
                 var splitter = data.indexOf('T');
                 return data.slice(splitter+1,splitter+6);                
-            };
-               
+            };        
+                        
             
             $scope.check = function() {
-                auth.checkAuth(sessionStorage.getItem("conpCookie"));
+                auth.checkAuth(sessionStorage.getItem("conpCookie")).then(function (promise){
+                    if (promise.status==200) $scope.isAuth = true;
+                    else $scope.isAuth=false;
+                    
+                     if ($scope.isAuth == false) {
+                         alert("Per favore, effettua il login");
+                         $location.path('/login');
+                         return;
+                     }
+                });
             };
             
             
@@ -57,11 +67,13 @@
             };
             
            $scope.onLoad = function() {
-             if (auth.isAuthenticated() == false) {
-                 alert("Per favore, effettua il login");
-                 $location.path('/login');
-                }
-             else {
+               $scope.check();
+              
+//             if (auth.isAuthenticated() == false) {
+//                 alert("Per favore, effettua il login");
+//                 $location.path('/login');
+//                }
+//             else {
                  if(self.email === undefined) self.email = sessionStorage.getItem('email');
                       
                  shared.getClient(self.email).then(function(promise) {
@@ -72,7 +84,7 @@
                  $scope.getLatestComment();
                  $scope.loadBookedTravels();
              };   
-           };      
+           //};      
            
            $scope.loadDrivers = function () {
                   if(self.email === undefined) self.email = sessionStorage.getItem('email');                     

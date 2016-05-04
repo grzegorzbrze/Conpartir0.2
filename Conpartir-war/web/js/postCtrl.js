@@ -2,8 +2,8 @@
   'use strict';
 
   var modPost = angular.module('postModule', ['ngRoute']);
-  modPost.controller('PostController', ['$scope', '$route', '$routeParams','$location','$timeout' ,'login', 'shared',
-      function($scope,$route, $routeParams, $location, $timeout,login, shared) {
+  modPost.controller('PostController', ['$scope', '$route', '$routeParams','$location','$timeout' , 'shared',
+      function($scope,$route, $routeParams, $location, $timeout, shared) {
           
           $scope.notLogged = true;
           $scope.isCarTravel = false;

@@ -51,6 +51,7 @@
                 var type;
                 if($scope.showCar = true)  type = 1;
                 else type = 2;
+                //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
                 $location.search("number",data.travel_id);
                 $location.search("type",type);

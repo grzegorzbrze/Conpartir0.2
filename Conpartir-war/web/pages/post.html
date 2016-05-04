@@ -1,10 +1,10 @@
-<div class="adjust panel-body" ng-init="check()">
+<div class="adjust" ng-init="check()">
     
-    
-    <span class="bg-danger center" ng-if="notLogged"> 
-        Attenzione. Per proporre viaggio, devi essere registrato e loggato sul sito. <br>
-        Fai il login prima di postare! 
-    </span>
+    <div class="panel-body center">
+    <div class=" bg-danger " ng-if="notLogged"> 
+        <span>Attenzione. Per proporre viaggio, devi essere registrato e loggato sul sito. <br>
+        Fai il login prima di postare! </span>
+    </div>
       <form novalidate class="adjust input-group">
           <h2></h2>
           <div class="input-group ">
@@ -60,5 +60,6 @@
           <p></p>
           <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
       </form>
+    </div>
 
 </div>

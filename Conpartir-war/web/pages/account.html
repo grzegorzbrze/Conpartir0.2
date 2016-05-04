@@ -4,8 +4,8 @@
   </div>
   <div class="panel-body">
       
-        <div style="height: 280px "> 
-            <div id="foto" class="box-container "> <img src="default-avatar250.jpg" alt="user image"></div>           
+        <div> 
+            <div id="foto" class="box-container "> <img src="defaultpic_sm.png" alt="user image"></div>           
             <div class="center">
                 <h3 id="name">Ciao {{clientInfo.name}}</h3>
                 <small> Qui puoi rivedere le informazioni relative al tuo account.</small>
@@ -51,7 +51,7 @@
                     <div role="tabpanel"  id="carProfile" ng-show="show[1]">
                         <div></div> 
                          
-                        <div class="btn-group"  role="group" aria-label="...">
+                        <div class="btn-group"  ng-show="isArray(driversInfo)" role="group" aria-label="...">
                             <button type="button" ng-repeat="item in driversInfo" class="btn btn-default" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
                         </div>                        
                         <br/>   
