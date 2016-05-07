@@ -26,13 +26,11 @@ import org.conpartir.sessionBean.CommentMagangerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import com.google.gson.Gson;
 import java.util.Objects;
 import org.conpartir.temp.CommentTemp;
 import org.conpartir.temp.AccountDataTemp;
 import org.conpartir.temp.DriverTemp;
+import org.conpartir.temp.TaxiTemp;
 import org.conpartir.temp.TravelTemp;
 
 
@@ -141,7 +139,42 @@ public class SOAPServiceClient {
             user.setBookedTravels(bookedTravelsList);
             user.setPostedTravels(postedTravelsList);
             
-        
+             List<Taxi> createdTaxisData = taxiRef.getTaxiCreated(userData.getId());
+             List<TaxiTemp> postedTaxiList = new ArrayList();
+             List<TaxiTemp> bookedTaxiList = new ArrayList();
+             
+             for(i=0;i<createdTaxisData.size();i++) {
+                 if (createdTaxisData.get(i).getData().after(today)) {
+                     TaxiTemp temp2 = new TaxiTemp();
+                     temp2.setData(createdTaxisData.get(i).getData());
+                     temp2.setDestination(createdTaxisData.get(i).getDestination());
+                     temp2.setOrigin(createdTaxisData.get(i).getOrigin());
+                     temp2.setFreeSeats(createdTaxisData.get(i).getFreeSeats());
+                     temp2.setTime(createdTaxisData.get(i).getTime());
+                     temp2.setTaxi_id(createdTaxisData.get(i).getTaxi_id());
+                     
+                     postedTaxiList.add(temp2);                     
+                 }
+             }
+                 
+              List<Taxi> bookedTaxisData = taxiRef.getTaxisReserved(userData.getId());
+             
+            for(i=0;i<bookedTaxisData.size();i++) {
+                 if (bookedTaxisData.get(i).getData().after(today)) {
+                     TaxiTemp temp2 = new TaxiTemp();
+                     temp2.setData(bookedTaxisData.get(i).getData());
+                     temp2.setDestination(bookedTaxisData.get(i).getDestination());
+                     temp2.setOrigin(bookedTaxisData.get(i).getOrigin());
+                     temp2.setFreeSeats(bookedTaxisData.get(i).getFreeSeats());
+                     temp2.setTime(bookedTaxisData.get(i).getTime());
+                     temp2.setTaxi_id(bookedTaxisData.get(i).getTaxi_id());
+                     
+                     bookedTaxiList.add(temp2);                     
+                 }
+             }
+               
+            user.setBookedTaxis(bookedTaxiList);
+            user.setPostedTaxis(postedTaxiList);
         }
         
         return user;

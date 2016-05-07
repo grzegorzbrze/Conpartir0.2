@@ -2,8 +2,8 @@
   'use strict';
 
   var modPost = angular.module('postModule', ['ngRoute']);
-  modPost.controller('PostController', ['$scope', '$route', '$routeParams','$location','$timeout' , 'shared',
-      function($scope,$route, $routeParams, $location, $timeout, shared) {
+  modPost.controller('PostController', ['$scope', '$route', '$routeParams','$location','$timeout' , 'shared', 'auth',
+      function($scope,$route, $routeParams, $location, $timeout, shared, auth) {
           
           $scope.notLogged = true;
           $scope.isCarTravel = false;
@@ -26,16 +26,14 @@
                     $scope.travel.hour = e.time.value;
                 });
             });
+        
           
           $scope.check = function () {
               var flag;
-              login.getAuth().then(
-                      function successCallback(data) {  
-                    if (data.status==200) 
-                    {
-                        flag = true;                     
-                       //console.log("flag vale" + flag);
-                    }; 
+
+              auth.checkAuth().then(function (promise) {
+                    if (promise.status==200) 
+                    {  flag = true; }; 
                     if (flag == true){ 
                           $scope.notLogged = false; 
                        }

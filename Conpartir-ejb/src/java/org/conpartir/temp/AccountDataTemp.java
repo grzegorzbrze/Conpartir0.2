@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 
 @XmlRootElement(name = "AccountDataTemp")
-@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto", "drivers","postedTravels","bookedTravels"})
+@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto", "drivers","postedTravels","bookedTravels","postedTaxis","bookedTaxis"})
 public class AccountDataTemp {
     
     private String name;
@@ -30,7 +30,33 @@ public class AccountDataTemp {
     
     private String urlPhoto;
     
-    private List<DriverTemp> drivers;
+    private List<DriverTemp> drivers; 
+    
+    private List<TravelTemp> postedTravels;
+    
+    private List<TravelTemp> bookedTravels;
+    
+    private List<TaxiTemp> postedTaxis;
+    
+    private List<TaxiTemp> bookedTaxis;
+
+    public List<TaxiTemp> getPostedTaxis() {
+        return postedTaxis;
+    }
+
+    public void setPostedTaxis(List<TaxiTemp> postedTaxis) {
+        this.postedTaxis = postedTaxis;
+    }
+
+    public List<TaxiTemp> getBookedTaxis() {
+        return bookedTaxis;
+    }
+
+    public void setBookedTaxis(List<TaxiTemp> bookedTaxis) {
+        this.bookedTaxis = bookedTaxis;
+    }
+    
+
 
     public List<TravelTemp> getPostedTravels() {
         return postedTravels;
@@ -48,10 +74,6 @@ public class AccountDataTemp {
         this.bookedTravels = bookedTravels;
     }
     
-    private List<TravelTemp> postedTravels;
-    
-    private List<TravelTemp> bookedTravels;
-
     public Integer getAge() {
         return age;
     }

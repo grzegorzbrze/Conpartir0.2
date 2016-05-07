@@ -93,15 +93,24 @@
     <h3 class="panel-title"> Viaggi e Prenotazioni</h3>
   </div>
     <div class="panel-body"> 
-        <div class="proj-account">
-            <dl> <dt>Viaggi Prenotati:</dt>
-                <dd>
-                <span ng-repeat=" item in bookedTravelsInfo.items" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</span> 
+        <div class="panel" ng-show="ready">
+            <dl ng-show="showBooked"> <dt>Viaggi Prenotati:</dt>
+                <dd ng-repeat=" item in bookedTravelsInfo" class="list-group col-md-12 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
+                <dd ng-repeat=" item in bookedTaxisInfo" class="list-group col-md-12 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                </dd>
+            </dl>
+            <dl ng-show="showPosted">
                 <dt>Viaggi Postati:</dt>
-                <dd>
-                <span ng-repeat=" item in postedTravelsInfo.items" class="list-group col-md-12"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</span> 
+                 <dd ng-repeat=" item in postedTravelsInfo" class="list-group col-md-12 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
-       </dl> </div>
+                <dd ng-repeat=" item in postedTaxisInfo" class="list-group col-md-12 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                </dd>
+            </dl>
+        </div>
     </div>
 </div>

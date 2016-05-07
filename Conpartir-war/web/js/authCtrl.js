@@ -47,16 +47,16 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             },  
             
 //            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
-//            isAuthenticated: function() {
-//                
-//                var cookie = sessionStorage.getItem('conpCookie');
-//                if(cookie) { 
-//                    //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
-//                    return cookie;
-//                }
-//                else {return false;};           
-//                
-//            },
+            isAuthenticated: function() {
+                
+                var cookie = sessionStorage.getItem('conpCookie');
+                if(cookie) { 
+                    //console.log("recuperato cookie " + cookie + "dalla sessionstorage");
+                    return cookie;
+                }
+                else {return false;};           
+                
+            },
             
             doLogout: function () { 
                 sessionStorage.removeItem('conpCookie');

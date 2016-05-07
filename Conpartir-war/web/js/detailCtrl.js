@@ -23,14 +23,24 @@
                 var splitter = data.indexOf('T');
                 return data.slice(splitter+1,splitter+6);                
             };
+            
+             $scope.checkAuth = function () {                
+                auth.checkAuth().then(function (promise) {
+                   if (promise.status == 200 )  $scope.isAuthorized = true;
+                    else $scope.isAuthorized = false;                    
+                });
+    
+            };
                         
             $scope.getInfo = function () {
                 var travelIdParam = $location.search().number;
                 var type = $location.search().type;
                 
                 //controllo che l'utente sia loggato
+                
+                     console.log(auth.isAutenticated());
                 if (auth.isAuthenticated()===false) {
-                     $scope.allowBooking = false;           
+                     $scope.allowBooking = false;    
                 }
                 else { 
                     $scope.allowBooking = true;

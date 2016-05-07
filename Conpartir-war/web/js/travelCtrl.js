@@ -176,7 +176,7 @@
                             showList();
                         }  
                     }  
-                });
+                })
             };   
             
             var searchTaxi = function (data) {
