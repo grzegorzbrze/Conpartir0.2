@@ -38,7 +38,7 @@
                 
                 //controllo che l'utente sia loggato
                 
-                     console.log(auth.isAutenticated());
+                     console.log(auth.isAuthenticated);
                 if (auth.isAuthenticated()===false) {
                      $scope.allowBooking = false;    
                 }

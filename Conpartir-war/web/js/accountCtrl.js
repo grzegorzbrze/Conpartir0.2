@@ -117,23 +117,27 @@
                    if (jQuery.isEmptyObject( $scope.clientInfo.postedTravels ) == false)  {
                        if (!isArray($scope.clientInfo.postedTravels))  $scope.postedTravelsInfo = [ $scope.clientInfo.postedTravels]; 
                        else  $scope.postedTravelsInfo = $scope.clientInfo.postedTravels; 
+                       checkCloseTravels($scope.postedTravelsInfo);
                        $scope.showPosted=true;
                    }
                    if (jQuery.isEmptyObject( $scope.clientInfo.postedTaxis ) == false ) {
                        if (!isArray($scope.clientInfo.postedTaxis))  $scope.postedTaxisInfo = [ $scope.clientInfo.postedTaxis]; 
                        else  $scope.postedTaxisInfo = $scope.clientInfo.postedTaxis; 
+                       checkCloseTravels($scope.postedTaxisInfo);
                        $scope.showPosted=true;
                    }
                    
                    $scope.showBooked=false;
                    if (jQuery.isEmptyObject( $scope.clientInfo.bookedTravels ) == false) {
-                        if (!isArray($scope.clientInfo.bookedTravels) && jQuery.isEmptyObject( $scope.clientInfo.bookedTravels ) == false) $scope.bookedTravelsInfo = [ $scope.clientInfo.bookedTravels ];
+                        if (!isArray($scope.clientInfo.bookedTravels)) $scope.bookedTravelsInfo = [ $scope.clientInfo.bookedTravels ];
                         else $scope.bookedTravelsInfo =  $scope.clientInfo.bookedTravels;
+                        checkCloseTravels($scope.bookedTravelsInfo);
                          $scope.showBooked=true;                    
                    } 
                    if (jQuery.isEmptyObject( $scope.clientInfo.bookedTaxis ) == false) {                        
                         if (!isArray($scope.clientInfo.bookedTaxis)) $scope.bookedTaxisInfo = [ $scope.clientInfo.bookedTaxis ];
                         else $scope.bookedTaxisInfo =  $scope.clientInfo.bookedTaxis; 
+                        checkCloseTravels($scope.bookedTaxisInfo);
                         $scope.showBooked=true;
                     }
                        
@@ -144,16 +148,18 @@
               var checkCloseTravels = function (item) { 
                    var today = new Date(); 
                    var obj;
-                   //console.log(item.data);
+                   if (jQuery.isEmptyObject(item)) return;
+                   console.log(item[0]);
                    
-                   if (!isArray(item)) { 
-                       var data = $scope.getDay(item.data) + 'T' + $scope.getTime(item.time) + ':00';
+                   if (item.length===1) { 
+                       console.log('here');
+                       var data = $scope.getDay(item[0].data) + 'T' + $scope.getTime(item[0].time) + ':00';
                        var travelDataCompleta = new Date(data);
                        var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;        
                        if( timeDiff <= 2) $scope.closeTravels = true; 
                    }
                    else{
-                      
+                      console.log('here3');
                        for (obj in item) {
                            var data = $scope.getDay(obj.data) + 'T' + $scope.getTime(obj.time) + ':00';
                            var travelDataCompleta = new Date(data);
@@ -161,76 +167,12 @@
                            if( timeDiff <= 2) $scope.closeTravels = true;
                        }
                    }
-                  
-                 
-                  
                    
-                   
+                   console.log($scope.closeTravels);
                };              
-               //$scope.loadDrivers();  
                $scope.getLatestComment();
-               //$scope.loadBookedTravels();
            };   
            
-//            Metodo precedente per recuperare i drivers
-//            $scope.loadDrivers = function () {
-//                  if(self.email === undefined) self.email = sessionStorage.getItem('email');                     
-//                 shared.getDrivers(self.email).then(function(promise) {
-//                     var prova = shared.getCars(); 
-//                     $scope.driversInfo = prova;
-//                     
-//                     if(!isArray($scope.driversInfo)) {
-//                          $scope.selectedCar = $scope.driversInfo;
-//                          myDriverIds[0] = $scope.driversInfo.driver_id;
-//                         
-//                     }
-//                     else{
-//                         $scope.selectedCar = $scope.driversInfo[0]; 
-//                         var k;
-//                         for (k=0;k<$scope.driversInfo.length;k++) { 
-//                             myDriverIds[k] = $scope.driversInfo[k].driver_id;
-//                         };     
-//                     };             
-//                     // console.log(myDriverIds);
-//                 });
-//             }; 
-             
-            
-//            $scope.loadBookedTravels = function () {
-//                if(self.email === undefined) self.email = sessionStorage.getItem('email');
-//                shared.getClientTravel(self.email).then (function(promise) {
-//                    var res = shared.getBookedTravels();
-//                    
-//                     if(isArray(res.return)) {  
-//                         var i;                         
-//                        for (i=0;i<res.return.length;i++) {
-//                             if(myDriverIds.includes(res.return[i].driver_id)) { $scope.postedTravelsInfo.items.push(res.return[i]); }
-//                             else { $scope.bookedTravelsInfo.items.push(res.return[i]); };                         
-//                         };
-//                     }
-//                     else {
-//                         if(myDriverIds.includes(res.driver_id)) { $scope.postedTravelsInfo.items.push(res.return); }
-//                         else { $scope.bookedTravelsInfo.items.push(res.return); }
-//                         
-//                     };
-//                     
-//                     
-//                     //manca per i postedTravels
-//                  var today = new Date();
-//                  var j;
-//                  for (j=0;j<$scope.bookedTravelsInfo.items.length;j++) {
-//                       var data = $scope.getDay($scope.bookedTravelsInfo.items[j].data) + 'T' + $scope.getTime($scope.bookedTravelsInfo.items[j].time) + ':00';
-//                        var travelDataCompleta = new Date(data);
-//                        var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;
-//                      
-//                      if( timeDiff <= 2) $scope.closeTravels = true;
-//                  }
-//                  
-//                 });
-//                 
-//                
-//            };
-            
             $scope.getLatestComment = function(){
                 if(self.email === undefined) self.email = sessionStorage.getItem('email');                        
                  shared.getLatestReceivedComments(self.email,10).then(function(promise) {

@@ -161,15 +161,18 @@ public class SOAPServiceClient {
              
             for(i=0;i<bookedTaxisData.size();i++) {
                  if (bookedTaxisData.get(i).getData().after(today)) {
-                     TaxiTemp temp2 = new TaxiTemp();
-                     temp2.setData(bookedTaxisData.get(i).getData());
-                     temp2.setDestination(bookedTaxisData.get(i).getDestination());
-                     temp2.setOrigin(bookedTaxisData.get(i).getOrigin());
-                     temp2.setFreeSeats(bookedTaxisData.get(i).getFreeSeats());
-                     temp2.setTime(bookedTaxisData.get(i).getTime());
-                     temp2.setTaxi_id(bookedTaxisData.get(i).getTaxi_id());
+                     //mi assicuro che il qui il creatore del taxi non sia lo stesso cliente. I taxi creati appaiono già nel'altra lista
+                     if (bookedTaxisData.get(i).getCreator_id() != userData.getId()) {
+                         TaxiTemp temp2 = new TaxiTemp();
+                         temp2.setData(bookedTaxisData.get(i).getData());
+                         temp2.setDestination(bookedTaxisData.get(i).getDestination());
+                         temp2.setOrigin(bookedTaxisData.get(i).getOrigin());
+                         temp2.setFreeSeats(bookedTaxisData.get(i).getFreeSeats());
+                         temp2.setTime(bookedTaxisData.get(i).getTime());
+                         temp2.setTaxi_id(bookedTaxisData.get(i).getTaxi_id());
                      
-                     bookedTaxiList.add(temp2);                     
+                     bookedTaxiList.add(temp2);               
+                     }      
                  }
              }
                

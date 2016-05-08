@@ -95,20 +95,24 @@
     <div class="panel-body"> 
         <div class="panel" ng-show="ready">
             <dl ng-show="showBooked"> <dt>Viaggi Prenotati:</dt>
-                <dd ng-repeat=" item in bookedTravelsInfo" class="list-group col-md-12 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                <dd ng-repeat=" item in bookedTravelsInfo" class="col-md-10 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                    <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
-                <dd ng-repeat=" item in bookedTaxisInfo" class="list-group col-md-12 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                <dd ng-repeat=" item in bookedTaxisInfo" class="col-md-10 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
+                    <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
             </dl>
-            <dl ng-show="showPosted">
+            <dl ng-show="showPosted" style="margin-top: 15px">
                 <dt>Viaggi Postati:</dt>
-                 <dd ng-repeat=" item in postedTravelsInfo" class="list-group col-md-12 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                 <dd ng-repeat=" item in postedTravelsInfo" class="col-md-10 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                    <div class="col-md-9 list-group-item" ng-click="go(item)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
-                <dd ng-repeat=" item in postedTaxisInfo" class="list-group col-md-12 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> <div class="col-md-9 list-group-item" ng-click="go(item)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                <dd ng-repeat=" item in postedTaxisInfo" class="col-md-10 center">
+                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
+                    <div class="col-md-9 list-group-item" ng-click="go(item)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
                 </dd>
             </dl>
         </div>
