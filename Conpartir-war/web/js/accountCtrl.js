@@ -37,18 +37,14 @@
             };        
             
             
-            $scope.go = function (data) {
+            $scope.go = function (data,int) {
                 shared.setTravelInfo(data);
-                var type;
-                //provvisorio
-                type=1;
-//                if($scope.showCar = true)  type = 1;
-//                else type = 2;
+                
                 //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
                 $location.url($location.path());
                 $location.search("number",data.travel_id);
-                $location.search("type",type);
+                $location.search("type",int);
                   $route.reload();
             };
                         
@@ -144,31 +140,39 @@
                   $scope.ready = true;
               });
                
-               //non va
               var checkCloseTravels = function (item) { 
                    var today = new Date(); 
                    var obj;
                    if (jQuery.isEmptyObject(item)) return;
-                   console.log(item[0]);
+                 //  console.log(item[0]);
                    
-                   if (item.length===1) { 
-                       console.log('here');
-                       var data = $scope.getDay(item[0].data) + 'T' + $scope.getTime(item[0].time) + ':00';
-                       var travelDataCompleta = new Date(data);
-                       var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;        
-                       if( timeDiff <= 2) $scope.closeTravels = true; 
-                   }
-                   else{
-                      console.log('here3');
-                       for (obj in item) {
-                           var data = $scope.getDay(obj.data) + 'T' + $scope.getTime(obj.time) + ':00';
+//                   if (item.length===1) { 
+//                      // console.log('here');
+//                       var data = $scope.getDay(item[0].data) + 'T' + $scope.getTime(item[0].time) + ':00';
+//                       var travelDataCompleta = new Date(data);
+//                       var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;        
+//                       if( timeDiff <= 2) $scope.closeTravels = true; 
+//                   }
+//                   else{
+//                    console.log('here3');
+//                       for (obj in item) {
+//                           var data = $scope.getDay(obj.data) + 'T' + $scope.getTime(obj.time) + ':00';
+//                           var travelDataCompleta = new Date(data);
+//                           var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;
+//                           if( timeDiff <= 2) $scope.closeTravels = true;
+//                       }
+//                   }
+                    console.log('here4');
+                    var i;
+                       for (i=0;i<item.length;i++) {
+                          var data = $scope.getDay(item[i].data) + 'T' + $scope.getTime(item[i].time) + ':00';
                            var travelDataCompleta = new Date(data);
                            var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;
-                           if( timeDiff <= 2) $scope.closeTravels = true;
+                          if( timeDiff <= 2) $scope.closeTravels = true;
                        }
-                   }
+
                    
-                   console.log($scope.closeTravels);
+                   console.log("close travels = " + $scope.closeTravels);
                };              
                $scope.getLatestComment();
            };   

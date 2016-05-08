@@ -73,7 +73,7 @@
                     <a href="#/login" ><button class="btn btn-success" id="loginbutton">Login</button></a>
                 </div>
                 <div class="form-group" ng-if="isAuthorized">
-                    <a href="#/account" ng-show="closeTravels" ng-controller="AccountController"> <i class="glyphicon glyphicon-exclamation-sign"></i></a>
+                    <a href="#/account" ng-controller="AccountController"> <i  ng-show="closeTravels" class="glyphicon glyphicon-exclamation-sign"></i></a>
                     <a href="#/account"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
                     <button class="btn btn-danger" id="accountbutton" ng-click="logout()">Logout</button>
                 </div>

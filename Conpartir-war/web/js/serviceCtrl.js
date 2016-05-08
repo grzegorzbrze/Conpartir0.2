@@ -357,7 +357,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return promise; 
             },
             
-            getDriverFromTravel: function (travelID) { var res;
+            getDriverFromTravel: function (travelID) { 
+                var res;
                 var sr;
                 var action;
                 var opName;

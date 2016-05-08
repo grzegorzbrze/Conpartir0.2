@@ -227,8 +227,10 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "getDriverFromTravel")
     public List<Object> getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
         //List<String> values = null;
-        Client clientInfo = travelRef.getInfoClientEqualDriver(travelID);
-        Driver driverInfo = travelRef.getInfoDriverEqualClient(travelID);
+        
+        
+        Client clientInfo = clientRef.getClient(travelRef.getInfoClientEqualDriver(travelID).getEmail());
+        Driver driverInfo = driverRef.getDriver(travelRef.getInfoDriverEqualClient(travelID).getDriver_id());
         
         clientInfo.setPass(null);
         
