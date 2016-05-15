@@ -46,6 +46,29 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 
             },  
             
+            doRegister : function(input) { 
+                var promise;
+               promise = $http({
+                    method: 'POST',
+                    url: 'Registration',
+                    headers: {'Content-Type': 'application/json'},
+                    data:  input
+                })
+                        .success( function (data, status, header) {
+                            //checkCookieEnabled();                            
+                                                                           
+                            //sessionStorage.setItem('conpCookie', ckValue);
+                            //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
+                            obj = true;
+                        })
+                                .error(function (data, status, headers, config) {
+                                      obj = false;
+                                 return {"status": false};
+                     });
+                     return promise;
+                
+            },
+            
 //            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
             isAuthenticated: function() {
                 

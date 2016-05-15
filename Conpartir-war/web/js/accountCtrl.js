@@ -15,6 +15,8 @@
             $scope.isAuth;
             $scope.selectedCar;
             $scope.closeTravels;
+            $scope.changePass = false;
+            $scope.mod;
             
             $scope.show = [true, false, false];  
             var myDriverIds = [];           
@@ -35,11 +37,9 @@
                 var splitter = data.indexOf('T');
                 return data.slice(splitter+1,splitter+6);                
             };        
-            
-            
+                        
             $scope.go = function (data,int) {
-                shared.setTravelInfo(data);
-                
+                shared.setTravelInfo(data);                
                 //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
                 $location.url($location.path());
@@ -47,7 +47,6 @@
                 $location.search("type",int);
                   $route.reload();
             };
-                        
             
             $scope.check = function() {
                 auth.checkAuth(sessionStorage.getItem("conpCookie")).then(function (promise){
@@ -63,7 +62,6 @@
                      }
                 });
             };
-            
             
            $scope.tab = function(data) {
                 if (data=="self") {$scope.show[0] = true, $scope.show[1] = false; $scope.show[2] = false; };
@@ -81,7 +79,7 @@
                         $scope.selectedCar = item;                         
                     }; 
                 };
-                console.log("selected car " + $scope.selectedCar.carModel);
+               // console.log("selected car " + $scope.selectedCar.carModel);
               //  $window.location.reload();
                 
             };
@@ -144,25 +142,7 @@
                    var today = new Date(); 
                    var obj;
                    if (jQuery.isEmptyObject(item)) return;
-                 //  console.log(item[0]);
-                   
-//                   if (item.length===1) { 
-//                      // console.log('here');
-//                       var data = $scope.getDay(item[0].data) + 'T' + $scope.getTime(item[0].time) + ':00';
-//                       var travelDataCompleta = new Date(data);
-//                       var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;        
-//                       if( timeDiff <= 2) $scope.closeTravels = true; 
-//                   }
-//                   else{
-//                    console.log('here3');
-//                       for (obj in item) {
-//                           var data = $scope.getDay(obj.data) + 'T' + $scope.getTime(obj.time) + ':00';
-//                           var travelDataCompleta = new Date(data);
-//                           var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60/24;
-//                           if( timeDiff <= 2) $scope.closeTravels = true;
-//                       }
-//                   }
-                    console.log('here4');
+                    
                     var i;
                        for (i=0;i<item.length;i++) {
                           var data = $scope.getDay(item[i].data) + 'T' + $scope.getTime(item[i].time) + ':00';
@@ -186,8 +166,17 @@
             };
             
             $scope.alert = function() {
-              alert("Aggiungere una macchina al tuo profilo ti permetterà di offrire viaggi con quella macchina. \n\
-                     Se non l'hai mai fatto, inizia subito per poter offrire un passaggio!");  
+              $scope.modalInfo = "Aggiungere una macchina al tuo profilo ti permetterà di offrire viaggi con quella macchina. \n\
+                     Se non l'hai mai fatto, inizia subito per poter offrire un passaggio!";  
+            };
+            
+            $scope.edit = function(input) {
+                
+                
+                shared.editClient(input).then(function(promise) {
+                    $scope.alert = promise.status;
+                    $scope.ifAlert = true;
+                 });
             };
      
         }]);

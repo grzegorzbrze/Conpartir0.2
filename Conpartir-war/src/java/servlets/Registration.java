@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.conpartir.entity.Client;
 
 import org.conpartir.sessionBean.ClientManagerLocal;
 import org.json.simple.JSONObject;
@@ -197,7 +198,15 @@ public class Registration extends HttpServlet {
          }
          else { 
             if (use.equals("registration")){
-                clientManager.createClient(name, surname, gender.charAt(0), age, email, password, null);                 
+                Client nuovo = new Client();
+                nuovo.setName(name); 
+                nuovo.setSurname(surname);
+                nuovo.setGender(gender.charAt(0));
+                nuovo.setAge(age);
+                nuovo.setEmail(email);
+                nuovo.setPass(password);
+              
+                clientManager.createClient(nuovo);
                 res = "Registrazione effettuata con successo!";
             }
             else {

@@ -22,12 +22,19 @@ public class ClientManager implements ClientManagerLocal {
     
     @Override
     public void createClient(Client client) {
-        String genere = Character.toString(client.getGender());
+        
+      
+        String genere = Character.toString(client.getGender()); 
+        
         if (client.getName() != null && client.getSurname() != null && 
                 genere != null && client.getAge() != 0 && client.getEmail() != null && 
-                client.getPass() != null && client.getUrlPhoto() != null){
-            clientFacade.create(client);
+                client.getPass() != null){ 
+            clientFacade.create(client);   System.out.println("SONO QUI");
+            
+           
         }
+           
+       
     }
 
     @Override
@@ -37,6 +44,7 @@ public class ClientManager implements ClientManagerLocal {
         if (name != null && surname != null && genere != null && age != 0 &&
                 email != null && pass != null && urlPhoto != null ){
             Client nuovo  = new Client();
+            
             nuovo.setAge(age);
             nuovo.setEmail(email);
             nuovo.setGender(gender);
@@ -45,6 +53,7 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setPass(pass);
             nuovo.setUrlPhoto(urlPhoto);
             clientFacade.create(nuovo); 
+            
         } 
     }
     

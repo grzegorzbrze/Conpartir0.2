@@ -111,7 +111,26 @@
                     $scope.ifAlert = true;
                     flag = true; 
                 }                
-                if (flag === false) $scope.servletCall();  
+                if (flag === false) {        
+                    
+                    $scope.ifAlert = false;
+                auth.doRegister($scope.master).then(function (data, status, headers, config) {                    
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    $scope.status=data.data;
+                    var flag = data.data.charAt(1);
+                    if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
+                    else {
+                        
+                            sessionStorage.setItem("email",$scope.master.email);
+                            
+                            $location.path('/');         
+                       
+                   }
+               });
+                    
+                    
+                }
             }; 
             
             $scope.logout = function () {

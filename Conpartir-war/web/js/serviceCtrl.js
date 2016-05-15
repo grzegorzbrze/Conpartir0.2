@@ -143,6 +143,11 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            },
            
+             editClient: function (input) {
+               
+           },
+           
+           
            getClient: function (email) {                
                 var res;
                 var sr;

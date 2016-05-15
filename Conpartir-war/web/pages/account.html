@@ -12,10 +12,9 @@
                 <br />
             </div>
             
-           <!---->
-            <button type="button" class="btn btn-primary btn-lg" onclick="modify()">
-                Modifica il profilo.
-            </button>
+           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalModify">
+               Modifica il profilo.
+           </button>
             <br />
             <button type="button" class="btn btn-primary btn-lg" onclick="pass()">
                 Offri un passaggio.
@@ -62,7 +61,7 @@
                             <dd>{{selectedCar.carYear}}</dd>
                         </dl>
                             <div></div>    
-                        <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()"></i>
+                        <a href=""> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
                     
                     </div>
                     <div role="tabpanel" id="feedback" ng-show="show[2]">
@@ -118,3 +117,102 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div id="modalModify" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modifica i dati personali</h4>
+      </div>
+      <div class="modal-body">
+            <form novalidate class="input-group adjust" >
+                <div class="radio-inline-panel">
+              <label>Vuoi cambiare la password? </label>
+              <label class="radio-inline" ><input type="checkbox" ng-model="changePass"></label>
+              </div>
+                
+           <div class="input-group" ng-show="changePass" >
+              <span class="input-group-addon" id="basic-addon1">Vecchia Password</span>
+              <input class="form-control" type="password" ng-model="mod.oldPass" aria-describedby="basic-addon1">
+          </div>
+          <p></p>
+           <div class="input-group" ng-show="changePass" >
+              <span class="input-group-addon" id="basic-addon2">Nuova Password</span>
+              <input class="form-control" type="password" ng-model="mod.newPass" aria-describedby="basic-addon2">
+          </div>
+          <p></p>
+          <div class="input-group" ng-show="changePass" >
+              <span class="input-group-addon" id="basic-addon3">Ripeti Nuova Password</span>
+              <input class="form-control" type="password" ng-model="mod.newPassRe" aria-describedby="basic-addon3">
+          </div> 
+          <p></p>
+          <div class="input-group">
+              <span class="input-group-addon" id="basic-addon7">Foto Profilo: </span>
+              <input class="form-control" type="text" ng-model="mod.urlPhoto" aria-describedby="basic-addon7">
+         </div>
+          
+          
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon4">Nome</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.name" aria-describedby="basic-addon4">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon5">Cognome</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.surname" aria-describedby="basic-addon5">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon6">Età</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.age" aria-describedby="basic-addon6">
+          </div>   
+          <p></p>
+          <div class="radio-inline-panel">
+              <label>Sesso: </label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gender" ng-value="'M'"/>M</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gender" ng-value="'F'"/>F</label>
+          </div>
+          <p></p>
+          <button class="btn btn-lg btn-primary btn-block" ng-click="edit(mod)">Modifica i dati</button>
+          
+          <p></p>
+          <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
+      </form>
+      </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>-->
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="modalInfo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+<!--      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>-->
+      <div class="modal-body">
+        <p>{{modalInfo}}</p>
+      </div>
+     <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
+
