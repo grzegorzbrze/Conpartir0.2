@@ -143,7 +143,41 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            },
            
-             editClient: function (input) {
+             editClient: function (input) { 
+                 var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "editClient";           
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ input.email +'</email>' +
+                           '<name>' +input.name + '</name>' +
+                           '<surname>' +input.surname +'</surname>' +
+                           '<gender>' + input.gender + '</gender>' +
+                           '<age>' + input.age+'</age>' +
+                           '<urlPhoto>' + input.urlPhoto+'</urlPhoto>' + 
+                           '<oldPass>' + input.oldPass+'</oldPass>' + 
+                           '<newPass>' + input.newPass+'</newPass>' +    
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                         
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;            
+               
                
            },
            

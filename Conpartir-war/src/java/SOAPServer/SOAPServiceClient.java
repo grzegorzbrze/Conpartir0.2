@@ -83,6 +83,28 @@ public class SOAPServiceClient {
      /**
      * Web service operation
      */
+    @WebMethod(operationName = "editClient")
+    public void editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
+            @WebParam(name = "surname") String surname, @WebParam(name = "gender") char gender, 
+            @WebParam(name = "age") int age, @WebParam(name = "urlPhoto") String urlPhoto, 
+            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass ){
+        
+        Client datiClient = clientRef.getClient(email);
+        
+        if(!datiClient.getPass().equals(oldPass)) { 
+            //lanciare un'eccezione
+        }
+    
+        else {
+              clientRef.editClient(email, name, surname, gender, age, newPass, urlPhoto);
+                }
+        
+    }
+    
+    
+     /**
+     * Web service operation
+     */
     @WebMethod(operationName = "getClient")
     public AccountDataTemp getClient(@WebParam(name = "email") String email) {
         AccountDataTemp user = new AccountDataTemp();
@@ -240,33 +262,7 @@ public class SOAPServiceClient {
     public List<Travel> getTravels(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end) {
         List<Travel> viaggi = travelRef.searchByOriginDestination(start, end);
-        /*List<String> stringhe = new ArrayList();
-        for (Travel viaggio : viaggi){
-            String email = clientRef.getEmail(viaggio.getClient_id());
-            Client cliente = clientRef.getClient(email);
-            cliente.setPass(null);
-            Driver driver = driverRef.getDriver(viaggio.getDriver_id());
-            
-            Gson gson = new Gson();
-            String utente = '"' + "client" + '"' +':' + gson.toJson(cliente);
-            String autista = '"' + "driver" + '"' +':' + gson.toJson(driver);
-            String travel = '"' + "travel" + '"' +':' + gson.toJson(viaggio);
-            
-            String jsonString ='{'+ utente+','+ autista+','+ travel +'}';
-            String travelXml = "<email>"+cliente.getEmail()+"</email>";
-            /*
-            '<email>'+ input.email +'</email>' +
-                           '<id>'+ input.id +'</id>' +
-                           '<from>' +input.from + '</from>' +
-                           '<to>' +input.to +'</to>' +
-                           '<when>' + input.when+'</when>' +
-                           '<freeSeats>' + input.freeSeats + '</freeSeats>'
-            
-            String prova = gson.toJson(jsonString);
-            //stringhe.add(prova);
-            
-        }*/
-        
+              
         return viaggi;
     }
     

@@ -45,6 +45,8 @@
     <message name="getSpecificCarTravelResponse"/>
     <message name="getSpecificTaxiTravel"/>
     <message name="getSpecificTaxiTravelResponse"/>
+    <message name="editClient"/>
+    <message name="editClientResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -126,6 +128,10 @@
             <input message="tns:getSpecificTaxiTravel"/>
             <output message="tns:getSpecificTaxiTravelResponse"/>
         </operation>
+        <operation name="editClient">
+            <input message="tns:editClient"/>
+            <output message="tns:editClientResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -206,6 +212,10 @@
             <output/>
         </operation>
         <operation name="getSpecificTaxiTravel">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="editClient">
             <input/>
             <output/>
         </operation>

@@ -30,6 +30,14 @@ public interface ClientManagerLocal {
     public void createClient(String name, String surname, char gender, int age, 
             String email, String pass, String urlPhoto);    
     
+       /**
+     * Permette di modificare alcune informazioni legate a un dato utente
+     */
+    public void editClient(String email, String name, String surname, char gender, int age, 
+             String pass, String urlPhoto);    
+    
+    
+    
     /**
      * Il metodo verifica se la stringa email è presente nel database
      * @return  

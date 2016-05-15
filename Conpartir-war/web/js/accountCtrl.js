@@ -171,8 +171,8 @@
             };
             
             $scope.edit = function(input) {
-                
-                
+                if(self.email === undefined) self.email = sessionStorage.getItem('email'); 
+                input.email = self.email;
                 shared.editClient(input).then(function(promise) {
                     $scope.alert = promise.status;
                     $scope.ifAlert = true;

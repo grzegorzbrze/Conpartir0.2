@@ -58,6 +58,24 @@ public class ClientManager implements ClientManagerLocal {
     }
     
     @Override
+      public void editClient(String email, String name, String surname, char gender, int age, 
+             String pass, String urlPhoto) {
+          Client editable = this.getClient(email);
+          
+          if(!name.equals("undefined")) editable.setName(name);
+          if(!surname.equals("undefined")) editable.setSurname(surname);
+          if(gender!=' ') editable.setGender(gender);
+          if(age!=0) editable.setAge(age);
+          if(!pass.equals("")) editable.setPass(pass);
+          if(!urlPhoto.equals("undefined")) editable.setUrlPhoto(urlPhoto);
+          //System.out.println(editable);
+         // clientFacade.edit(editable);
+          
+         
+      
+      };    
+    
+    @Override
     public boolean isEmail(String email) {
         boolean risultato = false;
         List<Client> list = clientFacade.findAll();

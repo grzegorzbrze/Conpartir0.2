@@ -131,16 +131,20 @@
       </div>
       <div class="modal-body">
             <form novalidate class="input-group adjust" >
-                <div class="radio-inline-panel">
-              <label>Vuoi cambiare la password? </label>
-              <label class="radio-inline" ><input type="checkbox" ng-model="changePass"></label>
-              </div>
                 
-           <div class="input-group" ng-show="changePass" >
+                     
+           <div class="input-group">
+               <h5> Prima di cambiare i dati, inserisci la tua password e aiutaci a verificare che sei proprio tu!</h5>
               <span class="input-group-addon" id="basic-addon1">Vecchia Password</span>
               <input class="form-control" type="password" ng-model="mod.oldPass" aria-describedby="basic-addon1">
           </div>
           <p></p>
+                
+                <div class="radio-inline-panel">
+              <label>Vuoi cambiare la password? </label>
+              <label class="radio-inline" ><input type="checkbox" ng-model="changePass"></label>
+              </div>
+           
            <div class="input-group" ng-show="changePass" >
               <span class="input-group-addon" id="basic-addon2">Nuova Password</span>
               <input class="form-control" type="password" ng-model="mod.newPass" aria-describedby="basic-addon2">
