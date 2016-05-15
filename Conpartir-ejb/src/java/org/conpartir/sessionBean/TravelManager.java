@@ -208,7 +208,7 @@ public class TravelManager implements TravelManagerLocal {
                 }
             }
         }
-        return new Client();
+        return null;
     }
     
     @Override
@@ -223,7 +223,7 @@ public class TravelManager implements TravelManagerLocal {
                 return driver;
             }
         }
-        return new Driver();
+        return null;
     }
 
     @Override

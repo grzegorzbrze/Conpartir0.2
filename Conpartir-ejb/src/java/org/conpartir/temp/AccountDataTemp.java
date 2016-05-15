@@ -9,6 +9,9 @@ package org.conpartir.temp;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.conpartir.entity.Driver;
+import org.conpartir.entity.Taxi;
+import org.conpartir.entity.Travel;
 /**
  *
  * @author Matteo
@@ -30,50 +33,32 @@ public class AccountDataTemp {
     
     private String urlPhoto;
     
-    private List<DriverTemp> drivers; 
+    private List<Driver> drivers; 
     
-    private List<TravelTemp> postedTravels;
+    private List<Travel> postedTravels;
     
-    private List<TravelTemp> bookedTravels;
+    private List<Travel> bookedTravels;
     
-    private List<TaxiTemp> postedTaxis;
+    private List<Taxi> postedTaxis;
     
-    private List<TaxiTemp> bookedTaxis;
+    private List<Taxi> bookedTaxis;
 
-    public List<TaxiTemp> getPostedTaxis() {
-        return postedTaxis;
+    public String getName() {
+        return name;
     }
 
-    public void setPostedTaxis(List<TaxiTemp> postedTaxis) {
-        this.postedTaxis = postedTaxis;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<TaxiTemp> getBookedTaxis() {
-        return bookedTaxis;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setBookedTaxis(List<TaxiTemp> bookedTaxis) {
-        this.bookedTaxis = bookedTaxis;
-    }
-    
-
-
-    public List<TravelTemp> getPostedTravels() {
-        return postedTravels;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public void setPostedTravels(List<TravelTemp> postedTravels) {
-        this.postedTravels = postedTravels;
-    }
-
-    public List<TravelTemp> getBookedTravels() {
-        return bookedTravels;
-    }
-
-    public void setBookedTravels(List<TravelTemp> bookedTravels) {
-        this.bookedTravels = bookedTravels;
-    }
-    
     public Integer getAge() {
         return age;
     }
@@ -106,44 +91,50 @@ public class AccountDataTemp {
         this.urlPhoto = urlPhoto;
     }
 
-
-//            <return>
-//            <carModel>Opel Corsa</carModel>
-//            <carYear>2005</carYear>
-//            <client_id>6</client_id>
-//            <driver_id>5</driver_id>
-//            </return>
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String nomeUtente) {
-        this.name = nomeUtente;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String cognomeUtente) {
-        this.surname = cognomeUtente;
-    }
-    
-     public List<DriverTemp> getDrivers() {
+    public List<Driver> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(List<DriverTemp> driver) {
-        this.drivers = driver;
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
     }
-    
 
-//    @Override
-//    public String toString() {
-//        return "AccountDataTemp{" + "nomeAutore=" + name + ", cognomeAutore=" + surname + '}';
-//    }
-    
+    public List<Travel> getPostedTravels() {
+        return postedTravels;
+    }
+
+    public void setPostedTravels(List<Travel> postedTravels) {
+        this.postedTravels = postedTravels;
+    }
+
+    public List<Travel> getBookedTravels() {
+        return bookedTravels;
+    }
+
+    public void setBookedTravels(List<Travel> bookedTravels) {
+        this.bookedTravels = bookedTravels;
+    }
+
+    public List<Taxi> getPostedTaxis() {
+        return postedTaxis;
+    }
+
+    public void setPostedTaxis(List<Taxi> postedTaxis) {
+        this.postedTaxis = postedTaxis;
+    }
+
+    public List<Taxi> getBookedTaxis() {
+        return bookedTaxis;
+    }
+
+    public void setBookedTaxis(List<Taxi> bookedTaxis) {
+        this.bookedTaxis = bookedTaxis;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDataTemp{" + "name=" + name + ", surname=" + surname + ", age=" + age + ", email=" + email + ", gender=" + gender + ", urlPhoto=" + urlPhoto + ", drivers=" + drivers + ", postedTravels=" + postedTravels + ", bookedTravels=" + bookedTravels + ", postedTaxis=" + postedTaxis + ", bookedTaxis=" + bookedTaxis + '}';
+    }   
     
 }
 

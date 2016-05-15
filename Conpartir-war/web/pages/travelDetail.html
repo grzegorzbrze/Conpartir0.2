@@ -1,6 +1,6 @@
 <div ng-init="getInfo()">  
     <div class="panel box-container col-lg-3 center"> 
-        <img id="foto" src="{{detail.return[0].urlPhoto}}" alt="user image">
+        <img id="foto" src="{{detail.urlPhoto}}" alt="user image">
         <h3>Posti liberi: {{travel.freeSeats}}</h4>
         <button class="btn-lg" ng-click="book()" ng-show="allowBooking">Prenota</button>
         
@@ -25,12 +25,12 @@
                 <dt>Alle ore:</dt>
                 <dd>{{getTime(travel.time)}} circa</dd>
                 <dt>Email</dt>
-                <dd> {{detail.return[0].email}}</dd>
+                <dd> {{detail.email}}</dd>
             </dl>
         </div>
     </div>
 </div>
 <div class="panel-body col-lg-9">
-    <span> La macchina per il viaggio è una {{detail.return[1].carModel}} del {{detail.return[1].carYear}}</span>
+    <span> La macchina per il viaggio è una {{detail.carModel}} del {{detail.carYear}}</span>
     <h3>Feedbacks?</h3>
 </div>

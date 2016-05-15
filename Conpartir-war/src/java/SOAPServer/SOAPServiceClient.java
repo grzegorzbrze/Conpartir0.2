@@ -29,10 +29,11 @@ import org.conpartir.sessionBean.TravelManagerLocal;
 import java.util.Objects;
 import org.conpartir.temp.CommentTemp;
 import org.conpartir.temp.AccountDataTemp;
-import org.conpartir.temp.DriverTemp;
+import org.conpartir.temp.ClientDriverTemp;
+/*import org.conpartir.temp.DriverTemp;
 import org.conpartir.temp.TaxiTemp;
 import org.conpartir.temp.TravelTemp;
-
+*/
 
 /**
  *
@@ -87,7 +88,7 @@ public class SOAPServiceClient {
         AccountDataTemp user = new AccountDataTemp();
         Client userData = clientRef.getClient(email);
         
-        Long ID = userData.getId();
+        Long clientID = userData.getId();
                 
         user.setAge(userData.getAge());
         user.setEmail(email);
@@ -96,90 +97,42 @@ public class SOAPServiceClient {
         user.setSurname(userData.getSurname());
         user.setUrlPhoto(userData.getUrlPhoto());
         
-        List<Driver> driversData = driverRef.getDrivers(ID);
-        List<DriverTemp> driversList = new ArrayList();
-        int i;
-        for(i=0;i<driversData.size();i++) {
-            DriverTemp driverTemp = new DriverTemp ();
-            
-            driverTemp.setCarModel(driversData.get(i).getCarModel());
-            driverTemp.setCarYear(driversData.get(i).getCarYear());
-            
-            driversList.add(driverTemp);
-        }
-        
-        user.setDrivers(driversList);
+        List<Driver> driversData = driverRef.getDrivers(clientID);
+        user.setDrivers(driversData);
         
         Date today = new Date();
                 
         List<Travel> travelsData = travelRef.getClientTravel(userData.getId(), today, today);
-        List<TravelTemp> postedTravelsList = new ArrayList();
-        List<TravelTemp> bookedTravelsList = new ArrayList();
+        List<Travel> postedTravelsList = new ArrayList();
+        List<Travel> bookedTravelsList = new ArrayList();
         
-        for(i=0;i<travelsData.size();i++) {
-            TravelTemp temp = new TravelTemp();
+        for(int i=0;i<travelsData.size();i++) {
+            long travelID = travelsData.get(i).getTravel_id();
+            Travel temp = new Travel();
             temp.setData(travelsData.get(i).getData());
             temp.setDestination(travelsData.get(i).getDestination());
             temp.setOrigin(travelsData.get(i).getOrigin());
             temp.setFreeSeats(travelsData.get(i).getFreeSeats());
             temp.setTime(travelsData.get(i).getTime());
-            temp.setTravel_id(travelsData.get(i).getTravel_id());
-            int j;
-            boolean isPostedTravel = false;
-            
-            for (j=0;j<driversData.size();j++) {
-                if (Objects.equals(travelsData.get(i).getDriver_id(), driversData.get(j).getDriver_id())) {
-                    isPostedTravel = true;
-                }
+            temp.setTravel_id(travelID);
+            Driver driverTemp = travelRef.getInfoDriverEqualClient(travelID);
+            if (driverTemp == null){
+                bookedTravelsList.add(temp);
             }
-            
-            if (isPostedTravel == true) postedTravelsList.add(temp);
-            else bookedTravelsList.add(temp);
-            
+            else{
+                postedTravelsList.add(temp);
+            }
+                        
             user.setBookedTravels(bookedTravelsList);
             user.setPostedTravels(postedTravelsList);
             
-             List<Taxi> createdTaxisData = taxiRef.getTaxiCreated(userData.getId());
-             List<TaxiTemp> postedTaxiList = new ArrayList();
-             List<TaxiTemp> bookedTaxiList = new ArrayList();
              
-             for(i=0;i<createdTaxisData.size();i++) {
-                 if (createdTaxisData.get(i).getData().after(today)) {
-                     TaxiTemp temp2 = new TaxiTemp();
-                     temp2.setData(createdTaxisData.get(i).getData());
-                     temp2.setDestination(createdTaxisData.get(i).getDestination());
-                     temp2.setOrigin(createdTaxisData.get(i).getOrigin());
-                     temp2.setFreeSeats(createdTaxisData.get(i).getFreeSeats());
-                     temp2.setTime(createdTaxisData.get(i).getTime());
-                     temp2.setTaxi_id(createdTaxisData.get(i).getTaxi_id());
-                     
-                     postedTaxiList.add(temp2);                     
-                 }
-             }
-                 
-              List<Taxi> bookedTaxisData = taxiRef.getTaxisReserved(userData.getId());
-             
-            for(i=0;i<bookedTaxisData.size();i++) {
-                 if (bookedTaxisData.get(i).getData().after(today)) {
-                     //mi assicuro che il qui il creatore del taxi non sia lo stesso cliente. I taxi creati appaiono già nel'altra lista
-                     if (bookedTaxisData.get(i).getCreator_id() != userData.getId()) {
-                         TaxiTemp temp2 = new TaxiTemp();
-                         temp2.setData(bookedTaxisData.get(i).getData());
-                         temp2.setDestination(bookedTaxisData.get(i).getDestination());
-                         temp2.setOrigin(bookedTaxisData.get(i).getOrigin());
-                         temp2.setFreeSeats(bookedTaxisData.get(i).getFreeSeats());
-                         temp2.setTime(bookedTaxisData.get(i).getTime());
-                         temp2.setTaxi_id(bookedTaxisData.get(i).getTaxi_id());
-                     
-                     bookedTaxiList.add(temp2);               
-                     }      
-                 }
-             }
+             List<Taxi> postedTaxiList = taxiRef.getTaxiCreated(clientID);
+             List<Taxi> bookedTaxiList = taxiRef.getTaxisReserved(clientID);
                
             user.setBookedTaxis(bookedTaxiList);
             user.setPostedTaxis(postedTaxiList);
         }
-        
         return user;
     }
 
@@ -225,19 +178,20 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "getDriverFromTravel")
-    public List<Object> getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
-        //List<String> values = null;
-        
-        
+    public ClientDriverTemp getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
+        //List<String> values = null;        
         Client clientInfo = clientRef.getClient(travelRef.getInfoClientEqualDriver(travelID).getEmail());
         Driver driverInfo = driverRef.getDriver(travelRef.getInfoDriverEqualClient(travelID).getDriver_id());
-        
-        clientInfo.setPass(null);
-        
-        List<Object> lista = new ArrayList();
-        lista.add(clientInfo);
-        lista.add(driverInfo);
-        return lista;
+        ClientDriverTemp temp = new ClientDriverTemp();
+        temp.setAge(clientInfo.getAge());
+        temp.setEmail(clientInfo.getEmail());
+        temp.setGender(clientInfo.getGender());
+        temp.setName(clientInfo.getName());
+        temp.setSurname(clientInfo.getSurname());
+        temp.setUrlPhoto(clientInfo.getUrlPhoto());
+        temp.setCarModel(driverInfo.getCarModel());
+        temp.setCarYear(driverInfo.getCarYear());
+        return temp;
     }
     
     

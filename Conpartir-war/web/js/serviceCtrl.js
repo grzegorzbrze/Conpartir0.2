@@ -378,13 +378,15 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 })
                         .success(function (data, status, headers, config) {
                             var jsonObj = x2js.xml_str2json( data );
+                    
                     res = jsonObj.Envelope.Body.getDriverFromTravelResponse;
                     
                     delete res["_xmlns:ns2"];
                     delete res["__prefix"];
-                    obj = res;
+                    obj = res.return;
                 })
                         .error(function (data, status, headers, config) {
+                            console.log("errore in serviceCtrl nel metodo getDriverFromTravel");
                             return {"status": false};
                 });
                 
@@ -458,8 +460,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             },
             
             getData: function () {                
-               //  console.log("sto passando un oggetto obj = " );
-                // console.log(obj);
+              console.log("sto passando un oggetto obj = " );
+              console.log(obj);
                 return obj;
             },
             
