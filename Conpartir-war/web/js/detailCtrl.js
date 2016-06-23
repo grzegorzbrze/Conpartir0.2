@@ -7,6 +7,7 @@
            
             $scope.travel;
             $scope.detail;
+            $scope.isAuthorized;
             $scope.allowBooking = true;
             $scope.ifAlert = false;
             $scope.ifTimeAlert = false;
@@ -24,28 +25,28 @@
                 return data.slice(splitter+1,splitter+6);                
             };
             
-             $scope.checkAuth = function () {                
-                auth.checkAuth().then(function (promise) {
-                   if (promise.status == 200 )  $scope.isAuthorized = true;
-                    else $scope.isAuthorized = false;                    
+            $scope.checkAuth = function () {    
+                auth.checkAuth(sessionStorage.getItem("conpCookie")).then(function (promise){
+                    if (promise.status===200)   { 
+                        $scope.isAuthorized = true; 
+                        $scope.allowBooking = true;
+                    }
+                    else  { 
+                        $scope.isAuthorized=false;
+                        $scope.allowBooking = false;    
+                    }     
                 });
-    
             };
+    
                         
             $scope.getInfo = function () {
                 var travelIdParam = $location.search().number;
                 var type = $location.search().type;
                 
-                //controllo che l'utente sia loggato
+                //controllo che l'utente sia loggato 
+                $scope.checkAuth();
                 
-                     console.log(auth.isAuthenticated);
-                if (auth.isAuthenticated()===false) {
-                     $scope.allowBooking = false;    
-                }
-                else { 
-                    $scope.allowBooking = true;
-                };
-                
+              
                 if(type==1) isCarTravel = true;
                 if(type==2) isTaxiTravel = true;
                 
@@ -55,12 +56,12 @@
                 //console.log(jQuery.isEmptyObject($scope.travel));                 console.log(isCarTravel);
                 //gli If seguenti ricaricano i dati del travel dalla SOAP nel caso non fossero presenti in shared.getTravelInfo
                 //Questo può accadere se per esempio si ritorna a questa pagina dopo che la si è abbandonata
-                if (jQuery.isEmptyObject($scope.travel) && isCarTravel == true) {                     
+                if (jQuery.isEmptyObject($scope.travel) && isCarTravel === true) {                     
                     shared.getSpecificCarTravel( travelIdParam).then(function (promise) {
                         $scope.travel = shared.getTravelInfo().return;
                     });
                 };
-                if (jQuery.isEmptyObject($scope.travel) && isTaxiTravel == true) {                     
+                if (jQuery.isEmptyObject($scope.travel) && isTaxiTravel === true) {                     
                     shared.getSpecificTaxiTravel( travelIdParam).then(function (promise) {
                          $scope.travel = shared.getTravelInfo().return;
                      });
@@ -74,7 +75,7 @@
                 var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
                 var travelDataCompleta = new Date(data);
                 
-                var timeDiff = (today.getTime() - travelDataCompleta.getTime())/1000/60;
+                var timeDiff = (travelDataCompleta.getTime() - today.getTime())/1000/60;
                 
                 if (timeDiff <= 30 && isCarTravel===true){
                     $scope.ifTimeAlert = true;
@@ -82,9 +83,9 @@
                     console.log("meno di trenta minuti al viaggio");
                 } 
                  if (timeDiff <= 15 && isTaxiTravel===true){
-                     $scope.ifTimeAlert = true;                     
+                    $scope.ifTimeAlert = true;                     
                     $scope.allowBooking = false;
-                     console.log("meno di trenta minuti al viaggio");
+                     console.log("meno di quindici minuti al viaggio");
                  }
                 
                
@@ -102,7 +103,7 @@
                 input.travelId = $scope.travel.travel_id;
                 input.email = sessionStorage.getItem("email");
                 
-                if (input.email === $scope.detail.return[0].email) {  
+                if (input.email === $scope.detail.email) {  
                     alert('Non puoi prenotare un tuo stesso viaggio');
                     return;
                 };                    

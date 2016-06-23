@@ -12,6 +12,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var clientObj = {};
         var travelObj = {};
         var commentObj = {};
+        var historyTravelsObj = {};
         var bookedTravelsObj = {};
         
         //variabili per le richieste SOAP
@@ -58,6 +59,38 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                            '<to>' +input.to +'</to>' +
                            '<when>' + input.when+'</when>' +
                            '<freeSeats>' + input.freeSeats + '</freeSeats>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                    
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;             
+           
+           },
+           
+            createDriver: function (input) { 
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "createDriver";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<clientEmail>'+ input.email +'</clientEmail>' +
+                           '<carModel>'+ input.carModel +'</carModel>' +
+                           '<carYear>' +input.carYear + '</carYear>' +                        
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
@@ -143,7 +176,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            },
            
-             editClient: function (input) { 
+            editClient: function (input) { 
                  var res;
                 var sr;
                 var action;
@@ -170,6 +203,11 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                     }                  
                 })
                         .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                            res = jsonObj.Envelope.Body.editClientResponse;
+                            delete res["_xmlns:ns2"];
+                            delete res["__prefix"];
+                            obj = res;
                          
                 })
                         .error(function (data, status, headers, config) {
@@ -379,16 +417,15 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 promise = $http.post(SOAPbase, sr, { "headers": {
                         'Content-Type' : "text/xml;charset=utf-8",
                         'SOAPAction': action
-                    }                  
+                    }                   
                 })
                         .success(function (data, status, headers, config) {
                             var jsonObj = x2js.xml_str2json( data );
-                    res = jsonObj.Envelope.Body.getClientTravelResponse;
-                    
-                    delete res["_xmlns:ns2"];
-                    delete res["__prefix"];
-                    bookedTravelsObj = res;
-                })
+                            res = jsonObj.Envelope.Body.getClientTravelResponse;
+                            delete res["_xmlns:ns2"];
+                            delete res["__prefix"];
+                            bookedTravelsObj = res;
+                        })
                         .error(function (data, status, headers, config) {
                             return {"status": false};
                 });
@@ -431,6 +468,40 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 
                 return promise; 
             },
+            
+            getHistoryTravels: function (email) {
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                opName = "getHistoryTravels";
+                sr = SOAPhead +
+                        '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                        '<email>'+ email +'</email>' +
+                        '</ns0:' + opName + '>'+
+                        SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                    
+           
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                         'Content-Type' : "text/xml;charset=utf-8",
+                         'SOAPAction': action
+                     }                  
+                     })
+                             .success(function (data, status, headers, config) {
+                                 var jsonObj = x2js.xml_str2json( data );                         
+                                 res = jsonObj.Envelope.Body.getHistoryTravelsResponse;                            
+                                 delete res["_xmlns:ns2"];
+                                 delete res["__prefix"];   
+                                 historyTravelsObj = res;
+                     })
+                             .error(function (data, status, headers, config) {
+                                 return {"status": false};
+                     });
+                     
+                     return promise;
+            }, 
             
             getLatestReceivedComments: function(email, numMax){
                 var res;
@@ -508,6 +579,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 return driversObj;
             },
             
+            setCars: function (item) {
+                driversObj = item;
+            },
+            
             getClientInfo: function () {
                 return clientObj;
             },
@@ -530,7 +605,13 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
            getBookedTravels: function(){
                 return bookedTravelsObj;
+            },
+            
+            getHistory: function(){
+                return historyTravelsObj;
             }
+             
+           
         };
     }]);
        

@@ -24,13 +24,12 @@
                 <dd>{{getDay(travel.data)}}</dd>
                 <dt>Alle ore:</dt>
                 <dd>{{getTime(travel.time)}} circa</dd>
-                <dt>Email</dt>
-                <dd> {{detail.email}}</dd>
+                <dt ng-show="isCarTravel">Email</dt>
+                <dd ng-show="isCarTravel"> {{detail.email}}</dd>
             </dl>
         </div>
     </div>
 </div>
-<div class="panel-body col-lg-9">
+<div class="panel-body col-lg-9" ng-show="isCarTravel">
     <span> La macchina per il viaggio è una {{detail.carModel}} del {{detail.carYear}}</span>
-    <h3>Feedbacks?</h3>
-</div>
+ </div>

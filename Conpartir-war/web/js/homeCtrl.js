@@ -6,7 +6,7 @@
 
 var myapp = angular.module('myApp', 
 ['ngRoute', 'ngTouch' , 'ngAnimate', 'ngCookies',
-    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'postModule' ,'accountModule' , 'serviceModule', 'authModule']);
+    'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'postModule' ,'accountModule' ,'historyModule', 'serviceModule', 'authModule']);
   
   myapp.config(function($routeProvider){
   $routeProvider
@@ -29,7 +29,9 @@ var myapp = angular.module('myApp',
           .when("/detail",
   {   templateUrl: "pages/travelDetail.html",  controller: "DetailController"  })
           .when("/post",
-  {   templateUrl: "pages/post.html",  controller: "PostController"  });  
+  {   templateUrl: "pages/post.html",  controller: "PostController"  })
+          .when( "/history",
+  {   templateUrl: "pages/history.html", controller: "HistoryController" });  
   
   
 });
@@ -46,29 +48,6 @@ var myapp = angular.module('myApp',
       
       $scope.isAuthorized;
       
-      //Non funziona, il problema sembra essere auth.Autenticated
-      //TODO: CHECK
-    /*  $scope.checkAuth = function () {
-          var res = auth.isAuthenticated();
-          if (res){ 
-              $scope.isAuthorized = true; 
-              $scope.loginShow = false;
-          }
-          else {
-              $scope.loginShow = true;
-              $scope.isAuthorized = false;
-          }
-      };
-      
-      $scope.logout = function () {
-          shared.logout();
-          $timeout(function() {
-          $route.reload();
-              
-          }  ,20);
-      };
-      
-      */
       //Inizio carousel della home
      
        $scope.myInterval = 5000;

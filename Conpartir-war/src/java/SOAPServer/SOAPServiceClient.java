@@ -84,21 +84,25 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "editClient")
-    public void editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
-            @WebParam(name = "surname") String surname, @WebParam(name = "gender") char gender, 
+    public String editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
+            @WebParam(name = "surname") String surname, @WebParam(name = "gender") String gender, 
             @WebParam(name = "age") int age, @WebParam(name = "urlPhoto") String urlPhoto, 
             @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass ){
         
         Client datiClient = clientRef.getClient(email);
-        
+        String status;
         if(!datiClient.getPass().equals(oldPass)) { 
-            //lanciare un'eccezione
+           //lanciare un'eccezione
+            status = "Le password inserite non coincidono";
         }
     
         else {
-              clientRef.editClient(email, name, surname, gender, age, newPass, urlPhoto);
+               char cGender = gender.charAt(0);
+               clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto);
+              status = "modifica dell'account eseguita con successo";
                 }
         
+    return status;
     }
     
     
@@ -162,9 +166,10 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "createDriver")
-    public void createDriver(@WebParam(name = "client_id") long client_id, 
+    public void createDriver(@WebParam(name = "clientEmail") String clientEmail, 
             @WebParam(name = "carModel") String carModel, 
             @WebParam(name = "carYear") int carYear) {
+        Long client_id = clientRef.getClient(clientEmail).getId();
         driverRef.createDriver(carModel, carYear, client_id);
     }
      
@@ -262,6 +267,20 @@ public class SOAPServiceClient {
     public List<Travel> getTravels(@WebParam(name = "start") String start, 
             @WebParam(name = "end") String end) {
         List<Travel> viaggi = travelRef.searchByOriginDestination(start, end);
+              
+        return viaggi;
+    }
+    
+         /**
+     * Web service operation  
+     */
+    @WebMethod(operationName = "getHistoryTravels")
+    public List<Travel> getHistoryTravels(@WebParam(name = "email") String email) {
+        Client reqClient = clientRef.getClient(email);
+        Date flagDate = new Date(99,2,12);
+        
+        List<Travel> viaggi = travelRef.getClientTravel(reqClient.getId(), flagDate, flagDate);       
+        
               
         return viaggi;
     }

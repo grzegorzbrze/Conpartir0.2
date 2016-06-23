@@ -107,15 +107,29 @@ public class TravelManager implements TravelManagerLocal {
     public List<Travel> getClientTravel(Long client_id, Date data, Date time) {
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
-        for (Travel temp : viaggi){
-            if (temp.getClient_id().equals(client_id)){
-                if (temp.getData().after(data) ){
-                    lista.add(temp);
+        
+        
+        if(!data.equals(time) && !data.before(new Date(99,12,12))) {
+                for (Travel temp : viaggi){
+                    if (temp.getClient_id().equals(client_id)){
+                        if (temp.getData().after(data) ){
+                           lista.add(temp);
+                        }
+                        if (equalsDate(temp.getData(),data) && afterTime(temp.getTime(), time)){
+                            lista.add(temp);
+                        }
+                    }
                 }
-                if (equalsDate(temp.getData(),data) && afterTime(temp.getTime(), time)){
-                    lista.add(temp);
+        }
+        else {
+            Date today = new Date ();
+             for (Travel temp : viaggi){
+                    if (temp.getClient_id().equals(client_id)){
+                        if (temp.getData().before(today) ){
+                           lista.add(temp);
+                        }
+                    }
                 }
-            }
         }
         return sortListByDate(lista);
     }

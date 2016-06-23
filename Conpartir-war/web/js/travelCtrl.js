@@ -151,32 +151,16 @@
                         if(isArray(prova.return)) {  
                             $scope.travelList = prova.return;  
                             //console.log($scope.travelList);
-                            console.log("is Array");
-                            var item; 
-                            var k = prova.return.length;
-                            var i;                             
-    //                             for (i=0;i<k;i++) {
-    //                                 
-    //                                 $scope.travelList[i].driver = {};
-    //                                 shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {                                                                           
-    //                                    $scope.relatedDriver = shared.getData();     
-    //                                    });  
-    //                            }
-    
+                            //console.log("is Array");
                             showList();
                         }
                         else {
-                            console.log("is Single Element");  
+                            //console.log("is Single Element");  
                             $scope.travelList=  prova; 
-    //                                shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
-    //                                    $scope.relatedDriver = shared.getData();   
-    //                                    //$scope.travelList.driver = $scope.relatedDriver.return;
-    //                                });
-                                
                             showList();
                         }  
                     }  
-                })
+                });
             };   
             
             var searchTaxi = function (data) {
@@ -227,24 +211,12 @@
                             console.log("is Array");
                             var item; 
                             var k = prova.return.length;
-                            var i;                             
-    //                             for (i=0;i<k;i++) {
-    //                                 
-    //                                 $scope.travelList[i].driver = {};
-    //                                 shared.getDriverFromTravel($scope.travelList[i].travel_id).then(function(promise) {                                                                           
-    //                                    $scope.relatedDriver = shared.getData();     
-    //                                    });  
-    //                            }
-    
+                            var i;         
                             showList();
                         }
                         else {
                             console.log("is Single Element");  
                             $scope.travelList=prova; 
-    //                                shared.getDriverFromTravel($scope.travelList.return.travel_id).then(function(promise) {
-    //                                    $scope.relatedDriver = shared.getData();   
-    //                                    //$scope.travelList.driver = $scope.relatedDriver.return;
-    //                                });
                                 
                             showList();
                         }  

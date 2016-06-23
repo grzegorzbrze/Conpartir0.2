@@ -14,14 +14,16 @@
             $scope.ready = false;
             $scope.isAuth;
             $scope.selectedCar;
+            $scope.isArray = false;
             $scope.closeTravels;
             $scope.changePass = false;
+            $scope.showModal;
             $scope.mod;
+            $scope.history;
             
             $scope.show = [true, false, false];  
             var myDriverIds = [];           
-            var self= $location.search(); 
-            
+            var self= $location.search();           
             
             
             var isArray = function(what) {              
@@ -76,7 +78,8 @@
                 for (item in $scope.driversInfo) {
                   //console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
                     if (item.driver_id === data) { 
-                        $scope.selectedCar = item;                         
+                        $scope.selectedCar = item;
+                        console.log("data is " + $scope.selectedCar);
                     }; 
                 };
                // console.log("selected car " + $scope.selectedCar.carModel);
@@ -95,18 +98,30 @@
                  console.log($scope.clientInfo);
                  
                    $scope.driversInfo = $scope.clientInfo.drivers;
+                   shared.setCars($scope.driversInfo);
                    
                    if(!isArray($scope.driversInfo)) {
                        $scope.selectedCar = $scope.driversInfo;
-                       myDriverIds[0] = $scope.driversInfo.driver_id;   
+                       myDriverIds[0] = $scope.driversInfo.driver_id;  
+                      // console.log('isSingleEl');
                    }
                    else{
                        $scope.selectedCar = $scope.driversInfo[0]; 
+                       $scope.isArray = true;
                        var k;
                        for (k=0;k<$scope.driversInfo.length;k++) { 
                            myDriverIds[k] = $scope.driversInfo[k].driver_id;
-                       };  
+                           
+                       };                         
+                      // console.log('isArray');                       
                    };
+                   
+             /*      if ($location.search().mode==="offer") {
+                       $('#modalPost').modal('show');
+                   }
+               */    
+                   
+                   
                    $scope.showPosted=false;
                    if (jQuery.isEmptyObject( $scope.clientInfo.postedTravels ) == false)  {
                        if (!isArray($scope.clientInfo.postedTravels))  $scope.postedTravelsInfo = [ $scope.clientInfo.postedTravels]; 
@@ -165,6 +180,10 @@
                  });
             };
             
+            $scope.goHistory = function () {
+                 $location.path("/history");                 
+            };
+            
             $scope.alert = function() {
               $scope.modalInfo = "Aggiungere una macchina al tuo profilo ti permetterà di offrire viaggi con quella macchina. \n\
                      Se non l'hai mai fatto, inizia subito per poter offrire un passaggio!";  
@@ -174,11 +193,32 @@
                 if(self.email === undefined) self.email = sessionStorage.getItem('email'); 
                 input.email = self.email;
                 shared.editClient(input).then(function(promise) {
-                    $scope.alert = promise.status;
-                    $scope.ifAlert = true;
+                    
+                    $scope.modalInfo = shared.getData();                    
+                 });
+            };
+            
+              $scope.addCar = function(input) {
+                if(self.email === undefined) self.email = sessionStorage.getItem('email'); 
+                input.email = self.email;
+                shared.createDriver(input).then(function(promise) {      
                  });
             };
      
         }]);
+
+
+modAccount.directive('modalDirective', function(){
+    return{
+        restrict : 'A',
+        link: function(scope, element,attrs) {
+            scope.$watch(attrs.modalDirective, function(value) {
+                if(value) element.modal('show');
+                      else element.modal('hide');
+            });
+        }
+        
+    };
+});
 
 })();

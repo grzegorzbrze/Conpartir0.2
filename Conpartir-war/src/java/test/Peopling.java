@@ -159,7 +159,7 @@ public class Peopling extends HttpServlet {
     public void creaTravels(){
         // parametri: citta; partenza = Torino; numeroPosto; id_client; id_driver; data; ora;
         String[] citta = {"Roma", "Milano", "Roma", "Milano", "Novara", 
-            "Novara", "Milano", "Roma", "Cuneo", "Cuneo"};
+            "Novara", "Milano", "Roma", "Cuneo", "Cuneo","Alessandria","Genova","Arezzo","Firenze"};
         String partenza = "Torino";
         
         int []posti = new int[10];
@@ -180,7 +180,7 @@ public class Peopling extends HttpServlet {
         Date[] leDate = new Date[10];
         for (int i=0; i<leDate.length; i++){
             Calendar cal = Calendar.getInstance();
-            int mese = 5 + (int)(Math.random() * 2);
+            int mese = 7 + (int)(Math.random() * 2);
             int giorno = 2 + (int)(Math.random() * 27);
             int ora = 5 + (int)(Math.random() * 18);
             int minuti = 1 + (int)(Math.random() * 59);
