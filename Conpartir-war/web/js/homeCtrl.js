@@ -15,7 +15,7 @@ var myapp = angular.module('myApp',
           .when( "/home",
   {   templateUrl: "pages/home.html", controller: "MainController" })    
           .when("/about",
-  {   templateUrl: "pages/about.html", controller: "MainController" })
+  {   templateUrl: "pages/old/about.html", controller: "MainController" })
           .when("/account",
   {   templateUrl: "pages/account.html", controller: "AccountController" })
           .when("/signup",
@@ -31,7 +31,7 @@ var myapp = angular.module('myApp',
           .when("/post",
   {   templateUrl: "pages/post.html",  controller: "PostController"  })
           .when( "/history",
-  {   templateUrl: "pages/history.html", controller: "HistoryController" });  
+  {   templateUrl: "pages/history.html", controller: "HistoryController" });
   
   
 });
@@ -39,8 +39,8 @@ var myapp = angular.module('myApp',
 
 
 
-  myapp.controller("MainController", ['$scope', '$http','$route', '$timeout', 'shared', 'auth',
-      function($scope, $http, $route,$timeout,shared ,auth) {
+  myapp.controller("MainController", ['$scope', '$http','$route','$location' , 'shared', 'auth',
+      function($scope, $http, $route,$location,shared ,auth) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
@@ -48,32 +48,22 @@ var myapp = angular.module('myApp',
       
       $scope.isAuthorized;
       
-      //Inizio carousel della home
-     
-       $scope.myInterval = 5000;
-       $scope.noWrapSlides = false;
-       var slides = $scope.slides = [];
-       var currIndex = 0;
-
-        $scope.addSlide = function(i) {
-         slides.push({
-             image: 'prova' + i + ".png",
-             text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
-             id: currIndex++
-           });
-        }; 
-
-        for (var i = 0; i < 4; i++) {
-            $scope.addSlide(i+1);
-        }
+      $scope.about = false;
+      $scope.show = function () {
+          $scope.about = true;
+      };
+      
+      $scope.go = function (where) {
+          $location.path(where);
+      };
         
-        // Fine Carousel    
+        /*    
        
           $(function() {
               $( "#datepicker" ).datepicker();
           });
         
-  
+  */
       
    }]);
    

@@ -194,7 +194,10 @@
                 input.email = self.email;
                 shared.editClient(input).then(function(promise) {
                     
-                    $scope.modalInfo = shared.getData();                    
+                    $scope.modalInfo = shared.getData();   
+                    
+                    //manca un avviso all'utente
+                    $location.path('/account');
                  });
             };
             

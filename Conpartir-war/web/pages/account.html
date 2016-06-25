@@ -1,325 +1,130 @@
-<div class="panel panel-primary" ng-init="onLoad()">
-  <div class="panel-heading">
-    <h3 class="panel-title">Area Personale</h3>
-  </div>
-  <div class="panel-body">
-      
-        <div> 
-            <div id="foto" class="box-container "> <img src="defaultpic_sm.png" alt="user image"></div>           
-            <div class="center">
-                <h3 id="name">Ciao {{clientInfo.name}}</h3>
-                <small> Qui puoi rivedere le informazioni relative al tuo account.</small>
-                <br />
+
+<section id="account" class="home-section color-dark text-center bg-white" ng-init="onLoad()">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                <div class="section-heading text-center">
+                    <h2 class="h-bold">Area Personale</h2>
+                    <div class="divider-header"></div>
+                    <p>Ciao {{clientInfo.name}}. Qui puoi rivedere le informazioni relative al tuo account. </p>
+                </div>
             </div>
-            
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalModify">
-               Modifica il profilo.
-           </button>
-          
-             <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalPost">
-               Offri un passaggio.
-           </button>
-            
-            
-             
-            <br />
-            <a ng-click="goHistory()">
-                Visualizza lo storico dei passaggi.
+        </div>
+    </div>
+    </div>
+    <div class="container margintop-20">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="row">
+                    <!--    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalModify">
+                            Modifica il profilo.      </button>     
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalPost">
+                            Offri un passaggio.           </button> -->
+                    <a href="#intro" data-toggle="modal" data-target="#modalModify"> Modifica il profilo. </a> 
+                    
+                    <a href="#intro" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </a>
+                        <p></p>
+                        <a ng-click="goHistory()">Visualizza lo storico dei passaggi.</a>
+                    </div> 
+                </div> 
+            </div> 
+        </div>
+        <div class="container">
+            <div class="row"> 
+                <div class="proj-account">
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a aria-controls="home" role="tab" data-toggle="tab"  ng-click="tab('self')">Info Personali</a></li>
+                            <li role="presentation"><a aria-controls="profile" role="tab" data-toggle="tab"  ng-click="tab('cars')">Info Veicolo</a></li>
+                            <li role="presentation"><a aria-controls="messages" role="tab" data-toggle="tab"  ng-click="tab('feed')">Storico Feedback</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" id="profile" ng-show="show[0]">
+                                <dl class="dl-horizontal margintop-10" ng-model="clientInfo">
+                                <dt>Nome e Cognome</dt>
+                                <dd>{{clientInfo.name}} {{clientInfo.surname}}</dd>
+                                <dt>Sesso</dt>
+                                <dd>{{clientInfo.gender}}</dd>
+                                <dt>Età:</dt>
+                                <dd>{{clientInfo.age}} anni</dd>
+                                <dt>Email</dt>
+                                <dd>{{clientInfo.email}}</dd>
+                                </dl>
+                            </div>
+                            <div role="tabpanel"  id="carProfile" ng-show="show[1]">
+                                                       
+                                <div class="btn-group margintop-10"  ng-show="isArray" role="group" aria-label="...">
+                                    <button type="button" ng-repeat="item in driversInfo" class="btn btn-default" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
+                                </div>                        
+                                <p></p>   
+                                <dl class="dl-horizontal" ng-model="selectedCar">
+                                <dt>Modello:</dt>
+                                <dd>{{selectedCar.carModel}}</dd>
+                                <dt>Anno:</dt>
+                                <dd>{{selectedCar.carYear}}</dd>
+                                </dl>  
+                                <a href="#intro" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#intro" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
+                    
+                            </div>
+                            <div role="tabpanel" id="feedback" ng-show="show[2]">
+                                <dl class="dl-horizontal" ng-repeat="commenti in commentInfo">                           
+                                <dt>Autore:</dt>
+                                <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
+                                <dt>Testo:</dt>
+                                <dd>{{commenti.testoCommento}}</dd>
+                                <dt> Feedback </dt>
+                                <dd> {{commenti.feedBackCommento}}</dd>                        
+                                </dl>             
+                            </div>                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="container margintop-50">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                <div class="section-heading text-center">
+                    <h3 class="h-bold">Viaggi e Prenotazioni</h3>
+                    <div class="divider-header"></div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container margintop-20">
+    <div ng-show="ready" class="row">
+        <div class="col-lg-8 col-lg-offset-2" ng-show="showBooked"> 
+            <h4>Viaggi Prenotati:</h4>
+            <a ng-repeat=" item in bookedTravelsInfo" class="col-md-10 center">
+                <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+            </a>
+            <a ng-repeat=" item in bookedTaxisInfo" class="col-md-10 center">
+                <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
+                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
             </a>
         </div>
-        <br />       
-
-        <div class="proj-account">
-            <div role="tabpanel">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a aria-controls="home" role="tab" data-toggle="tab"  ng-click="tab('self')">Info Personali</a></li>
-                    <li role="presentation"><a aria-controls="profile" role="tab" data-toggle="tab"  ng-click="tab('cars')">Info Veicolo</a></li>
-                    <li role="presentation"><a aria-controls="messages" role="tab" data-toggle="tab"  ng-click="tab('feed')">Storico Feedback</a></li>
-                    </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" id="profile" ng-show="show[0]">
-                        <dl class="dl-horizontal" ng-model="clientInfo">
-                            <dt>Nome e Cognome</dt>
-                            <dd>{{clientInfo.name}} {{clientInfo.surname}}</dd>
-                            <dt>Sesso</dt>
-                            <dd>{{clientInfo.gender}}</dd>
-                            <dt>Età:</dt>
-                            <dd>{{clientInfo.age}} anni</dd>
-                            <dt>Email</dt>
-                            <dd>{{clientInfo.email}}</dd>
-                       
-
-                        </dl>
-                    </div>
-                    <div role="tabpanel"  id="carProfile" ng-show="show[1]">
-                        <div></div> 
-                         
-                        <div class="btn-group"  ng-show="isArray" role="group" aria-label="...">
-                            <button type="button" ng-repeat="item in driversInfo" class="btn btn-default" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
-                        </div>                        
-                        <p></p>   
-                        <dl class="dl-horizontal" ng-model="selectedCar">
-                            <dt>Modello:</dt>
-                            <dd>{{selectedCar.carModel}}</dd>
-                            <dt>Anno:</dt>
-                            <dd>{{selectedCar.carYear}}</dd>
-                        </dl>
-                            <div></div>    
-                        <a data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
-                    
-                    </div>
-                    <div role="tabpanel" id="feedback" ng-show="show[2]">
-                        <dl class="dl-horizontal" ng-repeat="commenti in commentInfo">
-                           
-                            <dt>Autore:</dt>
-                            <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
-                            <dt>Testo:</dt>
-                            <dd>{{commenti.testoCommento}}</dd>
-                            <dt> Feedback </dt>
-                            <dd> {{commenti.feedBackCommento}}</dd>
-                        
-                        </dl>             
-                    </div>
-                    
-                </div>
-
-            </div>
-
+        <div  class="col-lg-8 col-lg-offset-2" ng-show="showPosted" style="margin-top: 40px">
+            <h4>Viaggi Postati:</h4>
+            <a ng-repeat=" item in postedTravelsInfo" class="col-md-10 center">
+                <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
+            </a>
+            <a ng-repeat=" item in postedTaxisInfo" class="col-md-10 center">
+                <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
+                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
+            </a>
         </div>
-
-
-  </div>
-</div>
-
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"> Viaggi e Prenotazioni</h3>
-  </div>
-    <div class="panel-body"> 
-        <div ng-show="ready">
-            <div class="col-md-12" ng-show="showBooked"> <h4>Viaggi Prenotati:</h4>
-                <a ng-repeat=" item in bookedTravelsInfo" class="col-md-10 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
-                    <div class="col-md-9 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
-                </a>
-                <a ng-repeat=" item in bookedTaxisInfo" class="col-md-10 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
-                    <div class="col-md-9 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
-                </a>
-            </div>
-            <div  class="col-md-12" ng-show="showPosted" style="margin-top: 40px">
-                <h4>Viaggi Postati:</h4>
-                 <a ng-repeat=" item in postedTravelsInfo" class="col-md-10 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
-                    <div class="col-md-9 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
-                </a>
-                <a ng-repeat=" item in postedTaxisInfo" class="col-md-10 center">
-                    <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
-                    <div class="col-md-9 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
-                </a>
-            </div>
-        </div>
+    </div>    
     </div>
-</div>
+    
 
-
-<!-- Modal per modificare le informazioni dell'account-->
-<div id="modalModify" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modifica i dati personali</h4>
-      </div>
-      <div class="modal-body"><h5> Prima di cambiare i dati, inserisci la tua password e aiutaci a verificare che sei proprio tu!</h5>
-               <p></p>
-            <form novalidate class="input-group adjust" >
-                <div class="input-group">
-                    
-              <span class="input-group-addon" id="basic-addon1">Vecchia Password</span>
-              <input class="form-control" type="password" ng-model="mod.oldPass" aria-describedby="basic-addon1">
-          </div>
-          <p></p>
-                
-                <div class="radio-inline-panel">
-              <label>Vuoi cambiare la password? </label>
-              <label class="radio-inline" ><input type="checkbox" ng-model="changePass"></label>
-              </div>
-           
-           <div class="input-group" ng-show="changePass" >
-              <span class="input-group-addon" id="basic-addon2">Nuova Password</span>
-              <input class="form-control" type="password" ng-model="mod.newPass" aria-describedby="basic-addon2">
-          </div>
-          <p></p>
-          <div class="input-group" ng-show="changePass" >
-              <span class="input-group-addon" id="basic-addon3">Ripeti Nuova Password</span>
-              <input class="form-control" type="password" ng-model="mod.newPassRe" aria-describedby="basic-addon3">
-          </div> 
-          <p></p>
-          <div class="input-group">
-              <span class="input-group-addon" id="basic-addon7">Foto Profilo: </span>
-              <input class="form-control" type="text" ng-model="mod.urlPhoto" aria-describedby="basic-addon7">
-         </div>
-          
-          
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon4">Nome</span>
-              <input name="name" class="form-control" type="text" ng-model="mod.name" aria-describedby="basic-addon4">
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon5">Cognome</span>
-              <input name="name" class="form-control" type="text" ng-model="mod.surname" aria-describedby="basic-addon5">
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon6">Età</span>
-              <input name="name" class="form-control" type="text" ng-model="mod.age" aria-describedby="basic-addon6">
-          </div>   
-          <p></p>
-          <div class="radio-inline-panel">
-              <label>Sesso: </label>
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gender" ng-value="'M'"/>M</label>
-            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gender" ng-value="'F'"/>F</label>
-          </div>
-          <p></p>
-          <button class="btn btn-lg btn-primary btn-block" ng-click="edit(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
-          
-      </form>
-      </div>
-<!--      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>-->
-    </div>
-
-  </div>
-</div>
-
-
-<!-- Modal per aggiungere una macchina -->
-<div id="modalAddCar" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Aggiungi una macchina</h4>
-      </div>
-      <div class="modal-body">
-          <p></p>
-          <form novalidate class="input-group adjust" >
-              <div class="input-group" >
-                  <span class="input-group-addon" id="basic-addon4">Modello</span>
-                  <input name="name" class="form-control" type="text" ng-model="mod.carModel" aria-describedby="basic-addon4">
-              </div> 
-              <p></p>
-              <div class="input-group" >
-                  <span class="input-group-addon" id="basic-addon5">Anno</span>
-                  <input name="name" class="form-control" type="text" ng-model="mod.carYear" aria-describedby="basic-addon5">
-              </div> 
-             <p></p>
-             <button class="btn btn-lg btn-primary btn-block" ng-click="addCar(mod); showModal=true" data-dismiss="modal">Aggiungi</button>     
-            </form>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Modal per offrire un passaggio -->
-<div id="modalPost" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content" >
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Offri un passaggio</h4>
-      </div>
-      <div class="modal-body" ng-controller="PostController">
-          <p></p>
-          <form novalidate class="input-group adjust" >
-             <h2></h2>
-          <div class="input-group ">
-              <span class="input-group-addon" id="basic-addon1">Partenza</span>
-              <input class="form-control" type="text" ng-model="travel.from" aria-describedby="basic-addon1" name="email">
-          </div>  
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon2">Destinazione</span>
-              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="destination">
-          </div>
-          <p></p>
-          <div class="radio-inline-panel">
-              <label>Tipo di viaggio: </label>
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="isCarTravel" ng-value="true" ng-click="mode()"/>Macchina</label>
-            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="isCarTravel" ng-value="false" ng-click="mode()"/>Taxi</label>
-          </div>
-          <p></p>
-         
-         <div class="input-group dropdown" ng-if="isCarTravel">
-              <span class="input-group-addon" id="basic-addon7">Macchina</span> 
-               <input class="form-control" type="text" ng-model="travel.carModel" aria-describedby="basic-addon7" name="car">
-         </div>
-           <div class="input-group center" ng-if="isCarTravel">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
-                 Scegli il modello
-                 <span class="caret"></span>
-             </button>
-             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">                 
-                 <li ng-repeat="item in cars"><a ng-click="select(item.driver_id,item.carModel)">{{item.carModel}}</a></li>
-             </ul>
-           </div>
-          
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon4">Data</span>
-              <input class="form-control" type="text" name="giorno"  id="datepicker"/>
-          </div> 
-          <p></p>
-          <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon5">Ora</span>
-              <input  id="timepicker" placeholder="Ora" type="text" class="form-control">         </div> 
-          <p></p>
-           <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon6">Posti Liberi</span>
-              <input class="form-control" type="text" ng-model="travel.freeSeats" aria-describedby="basic-addon7" name="car">
-                 </div> 
-          <p></p>
-          
-          
-          <button class="btn btn-lg btn-primary btn-block" ng-click="post(travel)">Post</button>
-          
-          <p></p>
-          <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
-          
-          </form>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- Modal per informazioni varie -->
-<div id="modalInfo" modalDirective="showModal"  data-backdrop="static" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>{{modalInfo}}</p>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 

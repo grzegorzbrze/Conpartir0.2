@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Conpartir - Home</title>
-    
-    <!-- Google Maps
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="js/GoogleMap.js"></script>-->
-    
-    <!-- Bootstrap -->
-      
-    <link href="frameworks/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="frameworks/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Conpartir 0.3</title>
+	
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/nivo-lightbox.css" rel="stylesheet" />
+    <link href="css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+    <link href="css/owl.carousel.css" rel="stylesheet" media="screen" />
+    <link href="css/owl.theme.css" rel="stylesheet" media="screen" />
+    <link href="css/flexslider.css" rel="stylesheet" />
+    <link href="css/animate.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
+    <link href="color/default.css" rel="stylesheet">
+        
+        
     <link href="frameworks/bootstrap/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
     <link href="frameworks/bootstrap/css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="css/override.css" rel="stylesheet">
@@ -49,75 +56,421 @@
     <script src="js/homeCtrl.js"></script>
     <script src="js/historyCtrl.js"></script>
     
-     
-     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.min.css">
-     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.structure.min.css">     
-     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.theme.min.css">
-     <script src="frameworks/jqueryUI/jquery-ui.min.js"></script>
-
-  
-  <body ng-app = "myApp" ng-controller = "MainController" class="body">
-
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-      	<div class="navbar-header">
-			<ul class="nav navbar-nav">
-                          <li><a href="#/home"><i class="glyphicon glyphicon-home"></i></a></li>
-                          <li><a href="#/list">Ricerca Viaggi</a></li> 
-                          <li><a href="#/post">Offri un passaggio</a></li>          
-			  <li><a href="#/about">About</a></li>
-			</ul>
-		</div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <div class="navbar-form navbar-right" ng-controller ="LoginController" ng-init="checkAuth()">
-                <div class="form-group" ng-hide="isAuthorized">
-                    <a href="#/login" ><button class="btn btn-success" id="loginbutton">Login</button></a>
-                </div>
-                <div class="form-group" ng-if="isAuthorized">
-                    <a href="#/account" ng-controller="AccountController"> <i  ng-show="closeTravels" class="glyphicon glyphicon-exclamation-sign"></i></a>
-                    <a href="#/account"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
-                    <button class="btn btn-danger" id="accountbutton" ng-click="logout()">Logout</button>
-                </div>
-            </div>           
-        </div>       
-        </div>
-    </nav>
-      
-   <div class="main-container adjust">
-           <ng-view></ng-view> 
-    </div>       
-   
-      <footer class="footer"> 
-          <p>Prova di footer</p>
-      </footer>
         
-     
-  
-       <!--  
-    <script src="js/ie10-viewport-bug-workaround.js"></script>    
-    <script src="js/ie-emulation-modes-warning.js"></script> -->
+
+</head>
+
+<body  ng-app = "myApp" ng-controller = "MainController" id="page-top" data-spy="scroll" data-target=".navbar-custom">
+	
+	<section id="intro" class="home-slide text-light">
+
+		<!-- Carousel -->
+    	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+			  	<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner">
+			    <div class="item active">
+			    	<img src="img/1.jpg" alt="First slide">
+                    <!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                            	<span>Welcome to Conpartir</span>
+                            </h2>
+                            <br>
+                            <h3>
+                            	<span>Viaggia con chi vuoi, quando vuoi</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                 <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
+                        </div>
+                    </div><!-- /header-text -->
+			    </div>
+			    <div class="item">
+			    	<img src="img/2.jpg" alt="Second slide">
+			    	<!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                                <span>Awesome Bootstrap template</span>
+                            </h2>
+                            <br>
+                            <h3>
+                            	<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                 <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
+                        </div>
+                    </div><!-- /header-text -->
+			    </div>
+			    <div class="item">
+			    	<img src="img/3.jpg" alt="Third slide">
+			    	<!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                                <span>Iscriviti gratuitamente</span>
+                            </h2>
+                            <br>
+                            <h3>
+                            	<span>L'account è gratuito (e sempre lo sarà).</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
+                        </div>
+                    </div><!-- /header-text -->
+			    </div>
+			</div>
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+		    	<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+			<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+		    	<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</div><!-- /carousel -->
+
+	</section>
+	<!-- /Section: intro -->
+	
+
+    <!-- Navigation -->
+    <div id="navigation">
+        <nav class="navbar navbar-custom" role="navigation">
+                              <div class="container">
+                                    <div class="row">
+                                          <div class="col-md-2">
+                                                   <div class="site-logo">
+                                                            <a href="index.html" class="brand">Conpartir</a>
+                                                    </div>
+                                          </div>
+                                          
+
+                                          <div class="col-md-10">
+                         
+                                                      <!-- Brand and toggle get grouped for better mobile display -->
+                                          <div class="navbar-header">
+                                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                                                <i class="fa fa-bars"></i>
+                                                </button>
+                                          </div>
+                                                      <!-- Collect the nav links, forms, and other content for toggling -->
+                                                      <div class="collapse navbar-collapse" id="menu">
+                                                            <ul class="nav navbar-nav navbar-right">
+                                                                  <li class="active"><a href="#intro" ng-click="go('/home')">Home</a></li>
+                                                                  <li><a href="#service">Cerca Viaggi</a></li>
+                                                                  <li><a href="#works">Post</a></li>                                                                  
+                                                                  <li><a href="#about">About</a></li>                                                                  
+                                                                  <li><a href="#contact">Contact</a></li>
+                                                                  <li data-toggle="modal" data-target="#modalLogin"><a href="#intro">Account/Login</a></li>
+                                                            </ul>
+                                                      </div>
+                                                      <!-- /.Navbar-collapse -->
+                             
+                                          </div>
+                                    </div>
+                              </div>
+                              <!-- /.container -->
+                        </nav>
+    </div> 
+    <!-- /Navigation -->  
+    <ng-view></ng-view>
+
     
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="frameworks/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Modal per login -->
+<div id="modalLogin" class="modal fade" role="dialog">
+  <div class="modal-dialog" >
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-body" ng-controller="LoginController">
+          <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+					<div class="section-heading text-center">
+					<h2 class="h-bold">Login</h2>
+					<div class="divider-header"></div>
+					<p>Non hai un account? <a href="#/signup">Registrati qui.</a></p>
+					</div>
+					</div>
+				</div>
+          
+          </div>
+          <div class="row">
+          <div class="col-lg-8 col-lg-offset-2"> 
+              <form class="input-group adjust" novalidate="">    
+                  <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">Email</span>
+                      <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
+                  </div>
+                  <p></p>
+                  <div class="input-group" >
+                      <span class="input-group-addon" id="basic-addon2">Password</span>
+                      <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
+                  </div>
+                  <p></p>
+                  <button class="btn btn-lg btn-primary btn-block" ng-click="login(user)">Login</button>                
+                  <p></p>
+                  <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
+                  <p>
+                      
+                  </p>
+              </form>          
+          </div>
+
+      </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+    <!-- Modal Login End -->
     
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
+<!-- Modal per modificare le informazioni dell'account-->
+<div id="modalModify" class="modal fade" role="dialog" ng-controller="AccountController">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modifica i dati personali</h4>
+      </div>
+      <div class="modal-body"><h5> Prima di cambiare i dati, inserisci la tua password e aiutaci a verificare che sei proprio tu!</h5>
+               <p></p>
+            <form novalidate class="input-group adjust" >
+                <div class="input-group">
+                    
+              <span class="input-group-addon" id="basic-addon1">Vecchia Password</span>
+              <input class="form-control" type="password" ng-model="mod.oldPass" aria-describedby="basic-addon1">
+          </div>
+          <p></p>
+                
+                <div class="radio-inline-panel">
+              <label>Vuoi cambiare la password? </label>
+              <label class="radio-inline" ><input type="checkbox" ng-model="changePass"></label>
+              </div>
+           
+           <div class="input-group" ng-show="changePass" >
+              <span class="input-group-addon" id="basic-addon2">Nuova Password</span>
+              <input class="form-control" type="password" ng-model="mod.newPass" aria-describedby="basic-addon2">
+          </div>
+          <p></p>
+          <div class="input-group" ng-show="changePass" >
+              <span class="input-group-addon" id="basic-addon3">Ripeti Nuova Password</span>
+              <input class="form-control" type="password" ng-model="mod.newPassRe" aria-describedby="basic-addon3">
+          </div> 
+          <p></p>
+          <div class="input-group">
+              <span class="input-group-addon" id="basic-addon7">Foto Profilo: </span>
+              <input class="form-control" type="text" ng-model="mod.urlPhoto" aria-describedby="basic-addon7">
+         </div>
+          
+          
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon4">Nome</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.name" aria-describedby="basic-addon4">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon5">Cognome</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.surname" aria-describedby="basic-addon5">
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon6">Età</span>
+              <input name="name" class="form-control" type="text" ng-model="mod.age" aria-describedby="basic-addon6">
+          </div>   
+          <p></p>
+          <div class="radio-inline-panel">
+              <label>Sesso: </label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gender" ng-value="'M'"/>M</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gender" ng-value="'F'"/>F</label>
+          </div>
+          <p></p>
+          <button class="btn btn-lg btn-primary btn-block" ng-click="edit(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
+          
+      </form>
+      </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>-->
+    </div>
+
+  </div>
+</div>
+<!-- Modal per modificare le informazioni dell'account end-->
+
+<!-- Modal per aggiungere una macchina -->
+<div id="modalAddCar" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Aggiungi una macchina</h4>
+      </div>
+      <div class="modal-body">
+          <p></p>
+          <form novalidate class="input-group adjust" >
+              <div class="input-group" >
+                  <span class="input-group-addon" id="basic-addon4">Modello</span>
+                  <input name="name" class="form-control" type="text" ng-model="mod.carModel" aria-describedby="basic-addon4">
+              </div> 
+              <p></p>
+              <div class="input-group" >
+                  <span class="input-group-addon" id="basic-addon5">Anno</span>
+                  <input name="name" class="form-control" type="text" ng-model="mod.carYear" aria-describedby="basic-addon5">
+              </div> 
+             <p></p>
+             <button class="btn btn-lg btn-primary btn-block" ng-click="addCar(mod); showModal=true" data-dismiss="modal">Aggiungi</button>     
+            </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal per offrire un passaggio -->
+<div id="modalPost" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Offri un passaggio</h4>
+      </div>
+      <div class="modal-body" ng-controller="PostController">
+          <p></p>
+          <form novalidate class="input-group adjust" >
+             <h2></h2>
+          <div class="input-group ">
+              <span class="input-group-addon" id="basic-addon1">Partenza</span>
+              <input class="form-control" type="text" ng-model="travel.from" aria-describedby="basic-addon1" name="email">
+          </div>  
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon2">Destinazione</span>
+              <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="destination">
+          </div>
+          <p></p>
+          <div class="radio-inline-panel">
+              <label>Tipo di viaggio: </label>
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="isCarTravel" ng-value="true" ng-click="mode()"/>Macchina</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="isCarTravel" ng-value="false" ng-click="mode()"/>Taxi</label>
+          </div>
+          <p></p>
+         
+         <div class="input-group dropdown" ng-if="isCarTravel">
+              <span class="input-group-addon" id="basic-addon7">Macchina</span> 
+               <input class="form-control" type="text" ng-model="travel.carModel" aria-describedby="basic-addon7" name="car">
+         </div>
+           <div class="input-group center" ng-if="isCarTravel">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+                 Scegli il modello
+                 <span class="caret"></span>
+             </button>
+             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">                 
+                 <li ng-repeat="item in cars"><a ng-click="select(item.driver_id,item.carModel)">{{item.carModel}}</a></li>
+             </ul>
+           </div>
+          
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon4">Data</span>
+              <input class="form-control" type="text" name="giorno"  id="datepicker"/>
+          </div> 
+          <p></p>
+          <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon5">Ora</span>
+              <input  id="timepicker" placeholder="Ora" type="text" class="form-control">         </div> 
+          <p></p>
+           <div class="input-group" >
+              <span class="input-group-addon" id="basic-addon6">Posti Liberi</span>
+              <input class="form-control" type="text" ng-model="travel.freeSeats" aria-describedby="basic-addon7" name="car">
+                 </div> 
+          <p></p>
+          
+          
+          <button class="btn btn-lg btn-primary btn-block" ng-click="post(travel)">Post</button>
+          
+          <p></p>
+          <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
+          
+          </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal per informazioni varie -->
+<div id="modalInfo"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>{{modalInfo}}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					
+					<div class="text-center">
+						<a href="#intro" class="totop"><i class="fa fa-angle-up fa-3x"></i></a>
+
+						<p>Valera, Inc. 795 Folsom Ave, Suite 600 San Francisco, CA 94107<br />
+						&copy;Copyright 2014 - Shuffle. Designed by <a href="http://bootstraptaste.com">Bootstraptaste</a></p>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</footer>
+
+    <!-- Core JavaScript Files -->
+    <script src="js/jquery.min.js"></script>	 
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.sticky.js"></script>
+	<script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>	
+	<script src="js/jquery.scrollTo.js"></script>
+	<script src="js/jquery.appear.js"></script>
+	<script src="js/stellar.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/nivo-lightbox.min.js"></script>
+
+    <script src="js/custom.js"></script>
+    
+    
     <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>
-    <script src="frameworks/bootstrap/js/carousel.js"></script>
+
     
     <script src="frameworks/xml2json.min.js"></script>
    
-    
 
-    
-   
-    
-    <!-- Button JS scripts 
-    <script type="text/javascript">
-        document.getElementById("loginbutton").onclick = function () {
-            location.href = "http://localhost:8080/Conpartir-war/#/login";
-        };
-    </script>-->
-  </body>
+</body>
+
 </html>

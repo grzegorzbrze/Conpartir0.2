@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Conpartir - Home</title>
+    
+    <!-- Google Maps
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="js/GoogleMap.js"></script>-->
+    
+    <!-- Bootstrap -->
+      
+    <link href="frameworks/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="frameworks/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="frameworks/bootstrap/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+    <link href="frameworks/bootstrap/css/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="css/override.css" rel="stylesheet">
+    
+    
+    
+    
+     <!-- Angular Js Main and Services -->
+    <script src="frameworks/angularJs/angular.min.js"></script>
+    <script src="frameworks/angularJs/angular-route.min.js"></script>    
+    <script src="frameworks/angularJs/angular-touch.min.js"></script>
+    <script src="frameworks/angularJs/angular-animate.min.js"></script>
+    <script src="frameworks/angularJs/angular-cookies.js"></script>
+        
+    <!-- Mobile Angular UI 
+    <script src="frameworks/mobileAngularUI/js/mobile-angular-ui.min.js"></script>   
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-base.min.css" />
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-hover.min.css" />
+    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-desktop.min.css" />-->
+
+    
+        <!-- Angular Js Controllers -->
+    <script src="js/loginCtrl.js"></script>
+    <script src="js/travelCtrl.js"></script>
+    <script src="js/detailCtrl.js"></script>
+    <script src="js/postCtrl.js"></script>
+    <script src="js/accountCtrl.js"></script>
+    <script src="js/serviceCtrl.js"></script>
+    <script src="js/authCtrl.js"></script> 
+    <script src="js/sliderCtrl.js"></script> 
+    <script src="js/datepickerCtrl.js"></script> 
+    <script src="js/homeCtrl.js"></script>
+    <script src="js/historyCtrl.js"></script>
+    
+     
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.min.css">
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.structure.min.css">     
+     <link rel="stylesheet" href="frameworks/jqueryUI/jquery-ui.theme.min.css">
+     <script src="frameworks/jqueryUI/jquery-ui.min.js"></script>
+
+  
+  <body ng-app = "myApp" ng-controller = "MainController" class="body">
+
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+      	<div class="navbar-header">
+			<ul class="nav navbar-nav">
+                          <li><a href="#/home"><i class="glyphicon glyphicon-home"></i></a></li>
+                          <li><a href="#/list">Ricerca Viaggi</a></li> 
+                          <li><a href="#/post">Offri un passaggio</a></li>          
+			  <li><a href="#/about">About</a></li>
+			</ul>
+		</div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-form navbar-right" ng-controller ="LoginController" ng-init="checkAuth()">
+                <div class="form-group" ng-hide="isAuthorized">
+                    <a href="#/login" ><button class="btn btn-success" id="loginbutton">Login</button></a>
+                </div>
+                <div class="form-group" ng-if="isAuthorized">
+                    <a href="#/account" ng-controller="AccountController"> <i  ng-show="closeTravels" class="glyphicon glyphicon-exclamation-sign"></i></a>
+                    <a href="#/account"> <button class="btn btn-link" id="accountbutton">Area Personale</button></a>
+                    <button class="btn btn-danger" id="accountbutton" ng-click="logout()">Logout</button>
+                </div>
+            </div>           
+        </div>       
+        </div>
+    </nav>
+      
+   <div class="main-container adjust">
+           <ng-view></ng-view> 
+    </div>       
+   
+      <footer class="footer"> 
+          <p>Prova di footer</p>
+      </footer>
+        
+     
+  
+       <!--  
+    <script src="js/ie10-viewport-bug-workaround.js"></script>    
+    <script src="js/ie-emulation-modes-warning.js"></script> -->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="frameworks/jquery/1.11.3/jquery.min.js"></script>
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
+    <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>
+    <script src="frameworks/bootstrap/js/carousel.js"></script>
+    
+    <script src="frameworks/xml2json.min.js"></script>
+   
+    
+
+    
+   
+    
+    <!-- Button JS scripts 
+    <script type="text/javascript">
+        document.getElementById("loginbutton").onclick = function () {
+            location.href = "http://localhost:8080/Conpartir-war/#/login";
+        };
+    </script>-->
+  </body>
+</html>
