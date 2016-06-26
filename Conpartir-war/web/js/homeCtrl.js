@@ -14,8 +14,8 @@ var myapp = angular.module('myApp',
   {   templateUrl: "pages/home.html", controller: "MainController" })
           .when( "/home",
   {   templateUrl: "pages/home.html", controller: "MainController" })    
-          .when("/about",
-  {   templateUrl: "pages/old/about.html", controller: "MainController" })
+ //         .when("/about",
+ // {   templateUrl: "pages/old/about.html", controller: "MainController" })
           .when("/account",
   {   templateUrl: "pages/account.html", controller: "AccountController" })
           .when("/signup",
@@ -24,7 +24,7 @@ var myapp = angular.module('myApp',
   {   templateUrl: "pages/login.html", controller: "LoginController" })
      .when("/FBLogin",
   {   templateUrl: "pages/FBLogin.html", controller: "LoginController" })
-          .when("/list",
+          .when("/search",
   {   templateUrl: "pages/list.html",  controller: "TravelController"  })
           .when("/detail",
   {   templateUrl: "pages/travelDetail.html",  controller: "DetailController"  })

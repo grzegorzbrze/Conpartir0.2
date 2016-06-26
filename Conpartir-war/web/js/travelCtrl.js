@@ -34,8 +34,8 @@
             $scope.travelList;
             $scope.showHead = false;
             $scope.relatedDriver;
-            $scope.showCar = true;
-            $scope.showTaxi = false;
+            $scope.showCar;
+            $scope.showTaxi;
             $scope.empty = false;
             $scope.ifAlert = false;
             $scope.alert;
@@ -49,7 +49,7 @@
             $scope.go = function (data) {
                 shared.setTravelInfo(data);
                 var type;
-                if($scope.showCar = true)  type = 1;
+                if($scope.showCar === true)  type = 1;
                 else type = 2;
                 //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
@@ -58,14 +58,13 @@
                 $route.reload();
             };
             
-            $scope.tab = function(data) {
-                if (data=="car") { 
+            $scope.switch = function(data) {
+                if (data === 'car') {
                     $scope.showCar = true;
                     $scope.showTaxi = false;  };
-                if (data=="taxi") {
+                if (data === 'taxi') {
                     $scope.showTaxi = true;
-                    $scope.showCar = false;  
-                }
+                    $scope.showCar = false;   };
                 $scope.showHead = false;
                 $scope.ifAlert = false;
             };
@@ -152,12 +151,12 @@
                             $scope.travelList = prova.return;  
                             //console.log($scope.travelList);
                             //console.log("is Array");
-                            showList();
+                            $scope.showHead = true;   
                         }
                         else {
                             //console.log("is Single Element");  
                             $scope.travelList=  prova; 
-                            showList();
+                            $scope.showHead = true;   
                         }  
                     }  
                 });
@@ -212,13 +211,12 @@
                             var item; 
                             var k = prova.return.length;
                             var i;         
-                            showList();
+                            $scope.showHead = true;   
                         }
                         else {
                             console.log("is Single Element");  
-                            $scope.travelList=prova; 
-                                
-                            showList();
+                            $scope.travelList=prova;                                
+                            $scope.showHead = true;   
                         }  
                     }  
                 });
@@ -227,10 +225,6 @@
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
 
-            };
-            
-            var showList = function() { 
-                    $scope.showHead = true;   
             };
             
             var emptyResult = function () {

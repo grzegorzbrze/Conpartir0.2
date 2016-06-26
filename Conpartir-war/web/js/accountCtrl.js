@@ -73,13 +73,13 @@
             };
             
             $scope.carInfo = function(data) {
-                var item; 
-                  //console.log("data is " + data);
+                var item;                  
                 for (item in $scope.driversInfo) {
                   //console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
                     if (item.driver_id === data) { 
                         $scope.selectedCar = item;
-                        console.log("data is " + $scope.selectedCar);
+                        console.log("data is ");
+                        console.log($scope.selectedCar);
                     }; 
                 };
                // console.log("selected car " + $scope.selectedCar.carModel);

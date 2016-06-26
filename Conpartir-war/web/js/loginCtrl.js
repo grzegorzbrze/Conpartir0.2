@@ -14,6 +14,7 @@
             $scope.master = {};
             $scope.status = {};
             $scope.ifAlert = false;
+            $scope.ifSuccess = false;
             $scope.isAuthorized = false;
             
             //Da rivedere ...
@@ -120,12 +121,10 @@
                     $scope.status=data.data;
                     var flag = data.data.charAt(1);
                     if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
-                    else {
-                        
-                            sessionStorage.setItem("email",$scope.master.email);
-                            
-                            $location.path('/');         
-                       
+                    else { 
+                        sessionStorage.setItem("email",$scope.master.email);
+                        $scope.ifSuccess = true;
+                        $location.path('/');  
                    }
                });
                     

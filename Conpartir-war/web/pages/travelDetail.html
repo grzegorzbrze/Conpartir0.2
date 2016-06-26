@@ -1,0 +1,47 @@
+<section id="detail" class="home-section color-dark text-center bg-grey" ng-init="getInfo()">  
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                <div class="section-heading text-center">
+                    <h2 class="h-bold">Riepilogo Viaggio</h2>
+                    <div class="divider-header"></div>
+                   
+                </div>
+            </div>
+            
+            <div class="" >
+                <dl class="dl-horizontal">
+                    <dt>Partenza</dt>
+                    <dd>{{travel.origin}}</dd>
+                    <dt>Destinazione</dt>
+                    <dd>{{travel.destination}}</dd>
+                    <dt>Il giorno:</dt>
+                    <dd>{{getDay(travel.data)}}</dd>
+                    <dt>Alle ore:</dt>
+                    <dd>{{getTime(travel.time)}} circa</dd>
+                    <dt ng-show="isCarTravel">Email</dt>
+                    <dd ng-show="isCarTravel"> {{detail.email}}</dd>
+                </dl>
+            </div>
+            
+        </div>
+        <div class="col-lg-4">
+            <img id="foto" src="{{detail.urlPhoto}}" alt="user image">
+            <h3>Posti liberi: {{travel.freeSeats}}</h4>
+                <button class="btn-lg" ng-click="book()" ng-show="allowBooking">Prenota</button>
+            <div class="bg-danger center" ng-hide="allowBooking" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a ng-click="login()">Vuoi farlo ora?</a></div>
+            <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>  
+            <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
+        </div> 
+    </div>
+    </div>
+    
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2" ng-show="isCarTravel">
+                    <span> La macchina per il viaggio è una {{detail.carModel}} del {{detail.carYear}}</span>
+                </div>
+            </div>
+        </div>
+</section>
