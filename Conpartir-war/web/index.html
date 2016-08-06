@@ -87,9 +87,10 @@
                             	<span>Viaggia con chi vuoi, quando vuoi</span>
                             </h3>
                             <br>
-                            <div class="">
-                                 <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
-                        </div>
+                            <div class=""><!--
+                                 <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a> -->
+                            </div>
+                        </div> 
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
@@ -106,8 +107,9 @@
                             </h3>
                             <br>
                             <div class="">
-                                 <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
-                        </div>
+                              <!--   <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a> -->
+                              </div>
+                        </div> 
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
@@ -123,19 +125,22 @@
                             	<span>L'account è gratuito (e sempre lo sarà).</span>
                             </h3>
                             <br>
-                            <div class="">
-                                <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a></div>
-                        </div>
+                           <div class="">
+                               <!-- <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a>-->
+                           </div> 
+                        </div> 
                     </div><!-- /header-text -->
 			    </div>
 			</div>
 			<!-- Controls -->
-			<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+			<!--
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
 		    	<span class="glyphicon glyphicon-chevron-left"></span>
 			</a>
 			<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-		    	<span class="glyphicon glyphicon-chevron-right"></span>
-			</a>
+		    	<span class="glyphicon glyphicon-chevron-right"></span> 
+			</a> 
+                        -->
 		</div><!-- /carousel -->
 
 	</section>
@@ -164,13 +169,15 @@
                                           </div>
                                                       <!-- Collect the nav links, forms, and other content for toggling -->
                                                       <div class="collapse navbar-collapse" id="menu">
-                                                            <ul class="nav navbar-nav navbar-right">
+                                                            <ul class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
                                                                   <li class="active"><a href="#intro" ng-click="go('/home')">Home</a></li>
                                                                   <li><a href="#service">Servizi</a></li>
                                                                   <li><a href="#about">About</a></li>  
                                                                   <li><a href="#contact">Contact</a></li>
                                                                   <li class="bg-darkgray"><a href="#/search">Cerca</a></li>
-                                                                  <li data-toggle="modal" data-target="#modalLogin" class="bg-darkgray"><a href="#intro">Account/Login</a></li>
+                                                                  <li data-toggle="modal" data-target="#modalLogin" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
+                                                                  <li class="bg-darkgray" ng-show="isAuthorized" ><a href="#/account">Account</a></li>
+                                                                   <li class="bg-darkgray" ng-show="isAuthorized" ng-click="logout()"><a href="#/home">Logout</a></li>
                                                             </ul>
                                                       </div>
                                                       <!-- /.Navbar-collapse -->

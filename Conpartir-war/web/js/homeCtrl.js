@@ -10,9 +10,11 @@ var myapp = angular.module('myApp',
   
   myapp.config(function($routeProvider){
   $routeProvider
-          .when( "/",
-  {   templateUrl: "pages/home.html", controller: "MainController" })
-          .when( "/home",
+          .when( "/", 
+  {   templateUrl: "pages/home.html", controller: "MainController" })   
+          .when ( "/home",  
+  {   templateUrl: "pages/home.html", controller: "MainController" })  
+          .when ("#/carousel-example-generic",
   {   templateUrl: "pages/home.html", controller: "MainController" })    
  //         .when("/about",
  // {   templateUrl: "pages/old/about.html", controller: "MainController" })
@@ -37,16 +39,13 @@ var myapp = angular.module('myApp',
 });
 
 
-
-
   myapp.controller("MainController", ['$scope', '$http','$route','$location' , 'shared', 'auth',
       function($scope, $http, $route,$location,shared ,auth) {
          
       $scope.hello = "Powered by AngularJs";
       $scope.hasFooter = true;
-      $scope.loginShow;
-      
-      $scope.isAuthorized;
+      $scope.loginShow;      
+      $scope.isAuthorized =false;
       
       $scope.about = false;
       $scope.show = function () {
@@ -56,6 +55,32 @@ var myapp = angular.module('myApp',
       $scope.go = function (where) {
           $location.path(where);
       };
+      
+             $scope.checkAuth = function () {
+                
+                auth.checkAuth().then(function (promise) {
+//                    if (promise.status==200) {
+////                        var cookie = sessionStorage.getItem('conpCookie');
+////                        if(cookie) {   $scope.isAuthorized = true;
+////                        };   
+//                    }
+                   if (promise.status === 200 )  $scope.isAuthorized = true;
+                    else $scope.isAuthorized = false;                    
+                });
+    
+            };
+            
+               $scope.logout = function () {
+                auth.doLogout();
+                $scope.isAuthorized= false;
+                $location.path("/");
+                $location.url($location.path());
+//                $scope.$on('$locationChangeSuccess', function() {
+//                                console.log("here");
+//                                window.location.reload();
+//                       });             
+                };
+            
         
         /*    
        
