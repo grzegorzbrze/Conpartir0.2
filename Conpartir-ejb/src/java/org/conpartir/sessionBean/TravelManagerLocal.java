@@ -43,6 +43,19 @@ public interface TravelManagerLocal {
      */
     public List<Travel> getClientTravel(Long client_id, Date data, Date time);
     
+        /**
+     * Il metodo ricerca tutti i viaggi di un certo utente prima di una certa data e tempo
+     * Restituisce una lista di viaggi
+     */
+    public List<Travel> getClientTravelBefore(Long client_id, Date data, Date time);
+    
+        /**
+     * Il metodo ricerca tutti i viaggi di un certo utente dopo una certa data e tempo
+     * Restituisce una lista di viaggi
+     */
+    public List<Travel> getClientTravelAfter(Long client_id, Date data, Date time);
+    
+    
     /**
      * Il metodo risponde alla ricerca più generale per destinazione e punto di partenza
      * Restituisce una lista di viaggi possibili
@@ -67,7 +80,17 @@ public interface TravelManagerLocal {
      */
     //public boolean subFreeSeat (Long travel_id);
     
+    /**
+     * Il metodo restituisce il viaggio con dato ID
+     * 
+     */
     public Travel getTravel(Long travelID);
+    
+     /**
+     * Il metodo restituisce i travels relazionati con quello inserito
+     * cercando quelli con gli stessi dati, ma clients diversi
+     */
+    public List<Travel> getRelatedTravels(Long travelID);
     
     /**
      * 

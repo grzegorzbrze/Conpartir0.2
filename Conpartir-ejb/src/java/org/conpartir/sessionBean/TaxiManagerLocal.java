@@ -57,4 +57,10 @@ public interface TaxiManagerLocal {
      */
     public Taxi getTaxi(Long taxi_id);
     
+    /**
+     * Il metodo restituisce i taxi relazionati con quello inserito
+     * cercando quelli con gli stessi dati, ma clients diversi
+     */
+    public List<Taxi> getRelatedTaxis(Long taxiID);
+    
 }

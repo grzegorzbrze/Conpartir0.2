@@ -102,6 +102,28 @@ public class TaxiManager implements TaxiManagerLocal {
         return taxis;
     }
 
+      @Override    
+    public List<Taxi> getRelatedTaxis(Long taxiID) {
+        Taxi viaggio = new Taxi();
+        List<Taxi> viaggiRelazionati = new ArrayList();
+        for (Taxi temp : taxiFacade.findAll()){
+            if (temp.getTaxi_id().equals(taxiID))
+                viaggio = temp;
+        }
+        
+        for (Taxi temp : taxiFacade.findAll()){
+            if( temp.getDestination().equals(viaggio.getDestination()) &&
+                temp.getCreator_id().equals(viaggio.getCreator_id()) &&
+                temp.getData().equals(viaggio.getData()) &&
+                temp.getOrigin().equals(viaggio.getOrigin())) 
+            {
+                viaggiRelazionati.add(temp); 
+            }
+        }
+        
+        return viaggiRelazionati;
+    }
+    
     @Override
     public List<Taxi> getTaxiCreated(Long id_client) {
         List<Taxi> taxis = new ArrayList();

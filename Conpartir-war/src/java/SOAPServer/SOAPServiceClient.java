@@ -30,6 +30,7 @@ import java.util.Objects;
 import org.conpartir.temp.CommentTemp;
 import org.conpartir.temp.AccountDataTemp;
 import org.conpartir.temp.ClientDriverTemp;
+import org.conpartir.temp.TravelDataTemp;
 /*import org.conpartir.temp.DriverTemp;
 import org.conpartir.temp.TaxiTemp;
 import org.conpartir.temp.TravelTemp;
@@ -128,7 +129,8 @@ public class SOAPServiceClient {
         
         Date today = new Date();
                 
-        List<Travel> travelsData = travelRef.getClientTravel(userData.getId(), today, today);
+        List<Travel> travelsData = travelRef.getClientTravelBefore(userData.getId(), today, today);
+        travelsData.addAll(travelRef.getClientTravelAfter(userData.getId(), today, today));
         List<Travel> postedTravelsList = new ArrayList();
         List<Travel> bookedTravelsList = new ArrayList();
         
@@ -141,14 +143,17 @@ public class SOAPServiceClient {
             temp.setFreeSeats(travelsData.get(i).getFreeSeats());
             temp.setTime(travelsData.get(i).getTime());
             temp.setTravel_id(travelID);
-            Driver driverTemp = travelRef.getInfoDriverEqualClient(travelID);
-            if (driverTemp == null){
+            temp.setDriver_id(travelsData.get(i).getDriver_id());
+           // Driver driverTemp = travelRef.getInfoDriverEqualClient(travelID);
+            
+                      
+            if (driversData.contains(driverRef.getDriver(temp.getDriver_id())) == false){
                 bookedTravelsList.add(temp);
             }
             else{
                 postedTravelsList.add(temp);
             }
-                        
+        }            
             user.setBookedTravels(bookedTravelsList);
             user.setPostedTravels(postedTravelsList);
             
@@ -158,7 +163,7 @@ public class SOAPServiceClient {
                
             user.setBookedTaxis(bookedTaxiList);
             user.setPostedTaxis(postedTaxiList);
-        }
+       
         return user;
     }
 
@@ -203,6 +208,8 @@ public class SOAPServiceClient {
         
      /**
      * Web service operation
+     * vecchio metodo per avere le informazioni del client/driver di un viaggio
+     * vedere getClientsRelatedToTravel
      */
     @WebMethod(operationName = "getDriverFromTravel")
     public ClientDriverTemp getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
@@ -221,6 +228,63 @@ public class SOAPServiceClient {
         return temp;
     }
     
+     /**
+     * Web service operation
+     * Raccoglie tutti i passeggeri relazionati a un viaggio
+     * e le informazioni sul guidatore
+     * e sulla macchina
+     */
+    @WebMethod(operationName = "getClientsRelatedToTravel")
+    public TravelDataTemp getClientsRelatedToTravel (@WebParam(name = "travelID") long travelID) {
+        //List<String> values = null;        
+        Travel travelObj = travelRef.getTravel(travelID);
+        Driver driverInfo = driverRef.getDriver(travelObj.getDriver_id());
+        Client clientInfo =  clientRef.getClient(clientRef.getEmail(driverInfo.getClient_id()));
+        
+        TravelDataTemp temp = new TravelDataTemp();
+        temp.setDriverCar(driverInfo);
+        temp.setDriverInfo(clientInfo);
+        
+        List<Travel> relatedTravels = travelRef.getRelatedTravels(travelID);
+        List<Client> passengerList = new ArrayList();
+        long tempId;
+        for (Travel item : relatedTravels) {
+            tempId = item.getClient_id();
+            passengerList.add(clientRef.getClient(clientRef.getEmail(tempId)));        
+        }
+        temp.setPassengers(passengerList);
+        
+        return temp;
+    }
+    
+    
+     /**
+     * Web service operation
+     * Raccoglie tutti i passeggeri relazionati a un taxi
+     * e le informazioni sul creatore
+     * 
+     */
+    @WebMethod(operationName = "getClientsRelatedToTaxi")
+    public TravelDataTemp getClientsRelatedToTaxi (@WebParam(name = "taxiID") long taxiID) {
+        
+        TravelDataTemp temp = new TravelDataTemp();
+        temp.setDriverCar(null);
+        
+        Long creatorID = taxiRef.getTaxi(taxiID).getCreator_id();
+        Client creator = clientRef.getClient(clientRef.getEmail(creatorID));
+        temp.setDriverInfo(creator);
+        
+        
+        List<Taxi> relatedTaxis = taxiRef.getRelatedTaxis(taxiID);
+        List<Client> passengerList = new ArrayList();
+        long tempId;
+        for (Taxi item : relatedTaxis) {
+            tempId = item.getClient_id();
+            passengerList.add(clientRef.getClient(clientRef.getEmail(tempId)));        
+        }        
+        temp.setPassengers(passengerList);
+        return temp;
+    }
     
      /**
      * Web service operation
@@ -277,7 +341,7 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "getHistoryTravels")
     public List<Travel> getHistoryTravels(@WebParam(name = "email") String email) {
         Client reqClient = clientRef.getClient(email);
-        Date flagDate = new Date(99,2,12);
+        Date flagDate = new Date();
         
         List<Travel> viaggi = travelRef.getClientTravel(reqClient.getId(), flagDate, flagDate);       
         
@@ -316,14 +380,16 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "createComment")
-    public void createComment(@WebParam(name = "author_id") long author_id, 
-            @WebParam(name = "clientJudged_id") long clientJudged_id, 
+    public void createComment(@WebParam(name = "author_email") String author_email, 
+            @WebParam(name = "clientJudged_email") String clientJudged_email, 
             @WebParam(name = "travel_id") long travel_id, 
             @WebParam(name = "comment") String comment, 
             @WebParam(name = "feedback") int feedback, 
             @WebParam(name = "when") String when) {
         
         Date data = convertiStringa(when);
+        long author_id = clientRef.getClient(author_email).getId();
+        long clientJudged_id = clientRef.getClient(clientJudged_email).getId();
         commentRef.createComment(author_id, clientJudged_id, travel_id, comment, 
                 feedback, data, data);
     }

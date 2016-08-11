@@ -7,10 +7,19 @@
 
             $scope.clientInfo;
             $scope.driversInfo;
+            
             $scope.bookedTravelsInfo;
             $scope.postedTravelsInfo;
             $scope.bookedTaxisInfo;
             $scope.postedTaxisInfo;
+            $scope.postedTravels;
+            $scope.bookedTravels;
+            $scope.bookedTaxis;
+            $scope.postedTaxis;
+            
+            $scope.showNextTravels;
+            $scope.showPastTravels;
+            
             $scope.ready = false;
             $scope.isAuth;
             $scope.selectedCar;
@@ -20,12 +29,12 @@
             $scope.showModal;
             $scope.mod;
             $scope.history;
-
             $scope.show = [true, false, false];
+            
             var myDriverIds = [];
             var self = $location.search();
-
-
+            var today = new Date();
+            
             var isArray = function (what) {
                 return Object.prototype.toString.call(what) === '[object Array]';
             };
@@ -45,7 +54,8 @@
                 //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
                 $location.url($location.path());
-                $location.search("number", data.travel_id);
+                if(int === 1) { $location.search("number", data.travel_id); }
+                else $location.search("number", data.taxi_id);
                 $location.search("type", int);
                 $route.reload();
             };
@@ -91,20 +101,17 @@
                 var i;
                 for (i = 0; i < $scope.driversInfo.length; i++) {
                     item = $scope.driversInfo[i];
-                    //  console.log(item);
-                    // console.log("driver_id "+item.driver_id +" is equal to "+ data +  " ?");
                     if (item.driver_id == data) {
                         $scope.selectedCar = item;
-                        // console.log("data is ");
-                        // console.log($scope.selectedCar);
-                    }
-                    ;
-
-                }
+                       };
+                   }
                 // console.log("selected car " + $scope.selectedCar.carModel);
                 //  $window.location.reload();
-
             };
+             
+            // Carica i primi contenuti necessari alla pagina, tra cui info sull'utente
+            // sulle macchine, i feedback, i viaggi
+            // *___________LOADING&TRAVELS
 
             $scope.onLoad = function () {
                 $scope.check();
@@ -132,18 +139,10 @@
                         for (k = 0; k < $scope.driversInfo.length; k++) {
                             myDriverIds[k] = $scope.driversInfo[k].driver_id;
 
-                        }
-                        ;
+                        };
                         // console.log('isArray');                       
-                    }
-                    ;
-
-                    /*      if ($location.search().mode==="offer") {
-                     $('#modalPost').modal('show');
-                     }
-                     */
-
-
+                    };
+                
                     $scope.showPosted = false;
                     if (jQuery.isEmptyObject($scope.clientInfo.postedTravels) == false) {
                         if (!isArray($scope.clientInfo.postedTravels))
@@ -176,15 +175,21 @@
                             $scope.bookedTaxisInfo = [$scope.clientInfo.bookedTaxis];
                         else
                             $scope.bookedTaxisInfo = $scope.clientInfo.bookedTaxis;
-                        checkCloseTravels($scope.bookedTaxisInfo);
+                        //checkCloseTravels($scope.bookedTaxisInfo);
                         $scope.showBooked = true;
                     }
-
+                    
+                    $scope.postedTravels = $scope.postedTravelsInfo;
+                    $scope.bookedTravels = $scope.bookedTravelsInfo;
+                    $scope.bookedTaxis = $scope.bookedTaxisInfo;
+                    $scope.postedTaxis = $scope.postedTaxisInfo;
+                    
                     $scope.ready = true;
                 });
+                              
 
                 var checkCloseTravels = function (item) {
-                    var today = new Date();
+                /*    var today = new Date();
                     var obj;
                     if (jQuery.isEmptyObject(item))
                         return;
@@ -197,13 +202,62 @@
                         if (timeDiff <= 2)
                             $scope.closeTravels = true;
                     }
-
-
-                    console.log("close travels = " + $scope.closeTravels);
-                };
+                    
+                    console.log("close travels = " + $scope.closeTravels); */
+                }; 
                 $scope.getLatestComment();
             };
-
+            
+             // Cambia i viaggi mostrati, mostrando passati e/o prossimi a seconda della scelta dell'utente
+             // data dai valori showNextTravels e showPastTravels
+            $scope.changeTravelsView= function () {
+                                
+                $scope.postedTravels = [];
+                $scope.bookedTravels = [];
+                $scope.bookedTaxis = [];
+                $scope.postedTaxis = [];            
+                
+                $scope.postedTravels = checkDate($scope.postedTravelsInfo,"all");
+                $scope.bookedTravels = checkDate($scope.bookedTravelsInfo,"all");
+                $scope.bookedTaxis = checkDate($scope.bookedTaxisInfo,"all");
+                $scope.postedTaxis = checkDate($scope.postedTaxisInfo,"all");
+            }; 
+            var checkDate = function (array,mode) {
+                var i;
+                var retArray = [];
+                
+                if(jQuery.isEmptyObject(array) === false){
+                    if (mode == "all"){
+                        for (i=0;i<array.length;i++) {
+                            
+                            var date = new Date(array[i].data);
+                            if ($scope.showPastTravels === true && $scope.showNextTravels === true) {
+                                retArray.push(array[i]);
+                            }
+                            else
+                            {                        
+                                if ($scope.showNextTravels === true && date > today) {
+                                    retArray.push(array[i]);                         
+                                }
+                                if ($scope.showPastTravels === true && date < today) {
+                                    retArray.push(array[i]);
+                                }
+                            }                    
+                        }  
+                    }
+                    if (mode=="past") {
+                        for (i=0;i<array.length;i++) {
+                            var date = new Date(array[i].data);
+                            if (date < today) {
+                                    retArray.push(array[i]);
+                                }
+                            }
+                        }
+                }
+                return retArray;   
+            };
+            
+            
             $scope.getLatestComment = function () {
                 if (self.email === undefined)
                     self.email = sessionStorage.getItem('email');
@@ -211,10 +265,6 @@
                     var prova = shared.getComments();
                     $scope.commentInfo = prova;
                 });
-            };
-
-            $scope.goHistory = function () {
-                $location.path("/history");
             };
 
             $scope.alert = function () {

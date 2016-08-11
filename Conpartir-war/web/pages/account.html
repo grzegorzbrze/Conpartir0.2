@@ -26,14 +26,16 @@
                             Modifica il profilo.      </button>     
                         <button type="button" class="btn btn-skin btn-lg" data-toggle="modal" data-target="#modalPost">
                             Offri un passaggio.           </button> -->
-                    <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalModify"> Modifica il profilo. </button> 
+                        <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalModify"> Modifica il profilo. </button> 
                     
-                    <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button>
-                        <p></p>
+                        <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button> <p></p>
                     </div> 
+                   
                 </div> 
             </div> 
         </div>
+    </div>
+     <div class="container margintop-20">
         <div class="container">
             <div class="proj-account row  margintop-20">
                 <div role="tabpanel">
@@ -69,7 +71,7 @@
                                 <dt>Anno:</dt>
                                 <dd>{{selectedCar.carYear}}</dd>
                                 </dl>  
-                                <a href="#intro" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#intro" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
+                                <a href="#account" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#account" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
                     
                             </div>
                             <div role="tabpanel" id="feedback" ng-show="show[2]">
@@ -87,12 +89,17 @@
             </div>
         </div>
     </div>   
-    <div class="container margintop-50">
+</section>
+<!-- /account -->
+<!-- Travels -->
+<section id="travels" class="home-section color-dark text-center bg-white">
+   
+    <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
             <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                 <div class="section-heading text-center">
-                    <h3 class="h-bold">Viaggi e Prenotazioni Prossimi</h3>
+                    <h3 class="h-bold">Viaggi e Prenotazioni</h3> 
                     <div class="divider-header"></div>                    
                 </div>
             </div>
@@ -100,57 +107,39 @@
     </div>
     </div>
     <div class="container margintop-20">
+        <div class="row">
+            <div class="radio-inline-panel">
+                <label class="radio-inline" ><input type="checkbox"  ng-value="true" ng-model="showPastTravels" ng-change="changeTravelsView()"/>Mostra viaggi passati</label>
+                <label class="radio-inline" ><input type="checkbox"  ng-value="true" ng-model="showNextTravels" ng-change="changeTravelsView()"/>Mostra viaggi futuri</label>
+            </div>
+        </div>
     <div ng-show="ready" class="row">
         <div class="col-lg-8 col-lg-offset-2" ng-show="showBooked"> 
             <h4>Viaggi Prenotati:</h4>
-            <a ng-repeat=" item in bookedTravelsInfo" class="col-md-10 center">
+            <a ng-repeat=" item in bookedTravels" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
-                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}} </div>  
             </a>
-            <a ng-repeat=" item in bookedTaxisInfo" class="col-md-10 center">
+            <a ng-repeat=" item in bookedTaxis" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
-                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}}</div>
+                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}} </div>  
             </a>
         </div>
         <div  class="col-lg-8 col-lg-offset-2" ng-show="showPosted" style="margin-top: 40px">
             <h4>Viaggi Postati:</h4>
-            <a ng-repeat=" item in postedTravelsInfo" class="col-md-10 center">
+            <a ng-repeat=" item in postedTravels" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
-                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
+                <div class="col-md-11 list-group-item" ng-click="go(item,1)"> Viaggio a {{item.destination}} del {{getDay(item.data)}} </div>  
             </a>
-            <a ng-repeat=" item in postedTaxisInfo" class="col-md-10 center">
+            <a ng-repeat=" item in postedTaxis" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-time"></i></div> 
-                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}}</div>
+                <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}} </div>  
             </a>
         </div>
     </div>    
     </div>
-    	<!-- Section: history -->
-    <section id="history" class="home-section nopadd-bot color-dark bg-gray text-center" ng-controller="HistoryController" ng-init="loadHistory()"> 
-		<div class="container marginbot-50">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
-					<div class="section-heading text-center">
-					<h2 class="h-bold">Storico passaggi</h2>
-					<div class="divider-header"></div>
-					{{history.destination}}      
-                                        <a ng-repeat=" item in history" class="col-md-10 center">
-                                            <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
-                                            <div class="col-md-9 list-group-item" ng-click="go(item,1)"> 
-                                                Viaggio a {{item.destination}} del {{getDay(item.data)}}
-                                            </div>
-                                        </a>
-					</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-		
-	</section>
-	<!-- /Section: history -->
+</section>
+    <!-- /Travels -->
     
-
 
 

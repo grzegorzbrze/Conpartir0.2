@@ -125,12 +125,51 @@ public class TravelManager implements TravelManagerLocal {
             Date today = new Date ();
              for (Travel temp : viaggi){
                     if (temp.getClient_id().equals(client_id)){
-                        if (temp.getData().before(today) ){
+                        if (temp.getData().before(data) ){
                            lista.add(temp);
                         }
                     }
                 }
         }
+        return sortListByDate(lista);
+    }
+    
+    @Override
+    public List<Travel> getClientTravelBefore(Long client_id, Date data, Date time) {
+        List <Travel> lista = new ArrayList();
+        List <Travel> viaggi = travelFacade.findAll();
+        
+        Date today = new Date ();
+        for (Travel temp : viaggi){
+            if (temp.getClient_id().equals(client_id)){
+                if (temp.getData().before(data) ){
+                    lista.add(temp);
+                }
+                if (equalsDate(temp.getData(),data) && afterTime(temp.getTime(), time)){
+                    lista.add(temp);
+                }
+            }                
+        }             
+        return sortListByDate(lista);
+    }
+    
+    
+    @Override
+    public List<Travel> getClientTravelAfter(Long client_id, Date data, Date time) {
+        List <Travel> lista = new ArrayList();
+        List <Travel> viaggi = travelFacade.findAll();
+        
+        Date today = new Date ();
+        for (Travel temp : viaggi){
+            if (temp.getClient_id().equals(client_id)){
+                if (temp.getData().after(data) ){
+                    lista.add(temp);
+                }
+                if (equalsDate(temp.getData(),data) && beforeTime(temp.getTime(), time)){
+                    lista.add(temp);
+                }
+            }                
+        }             
         return sortListByDate(lista);
     }
     
@@ -201,6 +240,30 @@ public class TravelManager implements TravelManagerLocal {
         return viaggio;
     }
     
+    @Override    
+    public List<Travel> getRelatedTravels(Long travelID) {
+        Travel viaggio = new Travel();
+        List<Travel> viaggiRelazionati = new ArrayList();
+        for (Travel temp : travelFacade.findAll()){
+            if (temp.getTravel_id().equals(travelID))
+                viaggio = temp;
+        }
+        
+        
+        for (Travel temp : travelFacade.findAll()){
+            if (    temp.getDriver_id().equals(viaggio.getDriver_id()) && 
+                    temp.getDestination().equals(viaggio.getDestination()) &&
+                    temp.getCalendarTime().equals(viaggio.getCalendarTime()) &&
+                    temp.getCalendarData().equals(viaggio.getCalendarData()) &&
+                    temp.getOrigin().equals(viaggio.getOrigin())) 
+            {
+                viaggiRelazionati.add(temp); 
+            }
+        }
+        
+        return viaggiRelazionati;
+    }
+       
     @Override
     public Client getInfoClientEqualDriver(Long travel_id) {
         Travel travel = getTravel(travel_id); 
@@ -331,6 +394,18 @@ public class TravelManager implements TravelManagerLocal {
         return risultato;
     }
      
+        /**
+     * Restituisce true se l'ora temp2 è prima dell'ora temp1  
+     * @param tempo1
+     * @param tempo2
+     * @return 
+     */
+    protected boolean beforeTime(Date tempo1, Date tempo2){
+        boolean risultato = false;
+        risultato = afterTime(tempo2,tempo1);        
+        return risultato;
+    }
+    
     protected boolean subFreeSeat(Long travel_id) {
         boolean diminuito = false;
         Travel viaggio = getTravel(travel_id);

@@ -149,8 +149,6 @@
                     else {  
                         if(isArray(prova.return)) {  
                             $scope.travelList = prova.return;  
-                            //console.log($scope.travelList);
-                            //console.log("is Array");
                             $scope.showHead = true;   
                         }
                         else {
@@ -224,7 +222,6 @@
                 
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
-
             };
             
             var emptyResult = function () {

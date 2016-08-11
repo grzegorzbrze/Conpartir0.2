@@ -1,0 +1,34 @@
+
+
+
+
+
+
+	<!-- Section: history -->
+    <section id="history" class="home-section nopadd-bot color-dark bg-gray text-center"  ng-init="loadHistory()"> 
+		<div class="container marginbot-50">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+					<div class="section-heading text-center">
+					<h2 class="h-bold">Storia dei passaggi</h2>
+					<div class="divider-header"></div>
+					{{history.destination}}      
+                                        <a ng-repeat=" item in history" class="col-md-10 center">
+                                            <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                                            <div class="col-md-9 list-group-item" ng-click="go(item,1)"> 
+                                                Viaggio a {{item.destination}} del {{getDay(item.data)}}
+                                            </div>
+                                        </a>
+					</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</section>
+	<!-- /Section: history -->
+        
+ 
+      

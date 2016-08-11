@@ -12,8 +12,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
         var clientObj = {};
         var travelObj = {};
         var commentObj = {};
+        var passengersObj = {};
         var historyTravelsObj = {};
         var bookedTravelsObj = {};
+        
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -176,6 +178,41 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            },
            
+            createComment: function (input) { 
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "createComment";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<author_email>'+ input.author_email +'</author_email>' +
+                           '<clientJudged_email>'+ input.clientJudged_email +'</clientJudged_email>' +
+                           '<travel_id>' +input.travel_id + '</travel_id>' + 
+                           '<comment>' + input.comment + '</comment>' + 
+                           '<feedback>' + input.feedback + '</feedback>' +
+                           '<when>' + input.when + '</when>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                    
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;             
+           
+           },
+           
             editClient: function (input) { 
                  var res;
                 var sr;
@@ -255,7 +292,81 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 });
                 
                 return promise;                     
-            },
+            },   
+            
+           getPassengersTravel: function (input){
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "getClientsRelatedToTravel";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<travelID>'+ input +'</travelID>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getClientsRelatedToTravelResponse;
+                    //console.log("oggetto ottenuto = " );
+                    //console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    //obj = res;
+                    passengersObj = res;
+                    //return res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                   
+           },
+           
+            getPassengersTaxi: function (input){
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "getClientsRelatedToTaxi";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<taxiID>'+ input +'</taxiID>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.getClientsRelatedToTaxiResponse;
+                    //console.log("oggetto ottenuto = " );
+                    //console.log(res);
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    //obj = res;
+                    passengersObj = res;
+                    //return res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                   
+           },
             
            getTravels: function (input) {
                 var res;
@@ -601,6 +712,10 @@ var modService = angular.module('serviceModule', ['ngRoute']);
             
             getComments: function(){
                 return commentObj;
+            },
+            
+           getPassengersObject: function() {
+              return passengersObj;  
             },
             
            getBookedTravels: function(){
