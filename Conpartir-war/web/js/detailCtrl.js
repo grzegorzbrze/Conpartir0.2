@@ -168,11 +168,11 @@
                 feedRate = number;
             };
             
-            $scope.selectClients = function (email) {
-                clientToFeed = email;
+            $scope.selectClient = function (client) {
+                clientToFeed = client.email;
             };
                        
-            
+            // Manca il controllo per evitare che estranei al viaggio lascino un feed
             $scope.sendFeed = function () {
         
                 var input = {};
@@ -181,13 +181,14 @@
                 input.clientJudged_email = clientToFeed ;
                 input.comment = $scope.comment;
                 input.feedback = feedRate;
-                input.travel_id = $scope.travel.travel_id;
+                if ($scope.isCarTravel === true){  input.travel_id = $scope.travel.travel_id; }
+                else input.travel_id = $scope.travel.taxi_id; 
                 input.when = today;
                 
                 
                 console.log (input);
-                 if (sessionStorage.getItem("email") !== input.clientJudged_email) { alert( "Non puoi lasciare un feedback a te stesso!"); };       
-                
+                 if (sessionStorage.getItem("email") === input.clientJudged_email) { alert( "Non puoi lasciare un feedback a te stesso!"); }
+                 else{                shared.createComment(input);};
             };
             
             

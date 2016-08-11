@@ -392,6 +392,7 @@ public class SOAPServiceClient {
         long clientJudged_id = clientRef.getClient(clientJudged_email).getId();
         commentRef.createComment(author_id, clientJudged_id, travel_id, comment, 
                 feedback, data, data);
+     
     }
 
     /**
