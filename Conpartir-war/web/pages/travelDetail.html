@@ -35,8 +35,8 @@
             <div class="col-lg-4">
                 <img id="foto" src="{{detail.driverInfo.urlPhoto}}" alt="user image">
                 <h3>Posti liberi: {{travel.freeSeats}}</h4>
-                    <button class="btn-lg" ng-click="book()" ng-show="allowBooking" ng-hide="ifAlert">Prenota</button>
-                <div class="bg-danger center" ng-hide="allowBooking" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a href="#login">Vuoi farlo ora?</a></div>
+                    <button class="btn-lg btn-skin btn" ng-click="book()" ng-hide="ifAlert">Prenota</button>
+                <div class="bg-danger center" ng-hide="isAuthorized" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a href="#login">Vuoi farlo ora?</a></div>
                 <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>  
                 <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
             </div> 
@@ -45,18 +45,23 @@
     <div class="row">
         <div  class="col-lg-8 col-lg-offset-2 margintop-10">
             <h4>Passeggeri del viaggio:</h4>
-            <a ng-repeat=" item in passengerList" class="col-md-12 center">
+            <a ng-show="{{passengerList.length > 0}}" ng-repeat=" item in passengerList" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-eye-open"></i></div> 
                 <div class="col-md-6 list-group-item"> {{item.name}} </div>  <div class="col-md-5 list-group-item"> {{item.role}} </div> 
             </a>
+            <span class="bg-info" ng-show="{{passengerList.length > 0}}"> Sembra che nessuno abbia ancora prenotato questo viaggio. </span>
         </div>
+    </div>
+      <div class="row margintop-10" >
+        <span ng-hide="leaveFeedback" class="bg-danger"> {{feedAlert}} </span>
     </div>
 </section>
 
     
     <!-- FeedBack -->
-<section ng-show="allowBooking" id="feedback" class="home-section color-dark text-center bg-gray">   
-    <div class="container">
+    
+<section ng-show="leaveFeedback" id="feedback" class="home-section color-dark text-center bg-gray">      
+    <div  class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">

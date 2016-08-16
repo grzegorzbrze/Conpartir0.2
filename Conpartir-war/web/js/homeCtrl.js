@@ -74,22 +74,10 @@ var myapp = angular.module('myApp',
                 auth.doLogout();
                 $scope.isAuthorized= false;
                 $location.path("/");
-                $location.url($location.path());
-//                $scope.$on('$locationChangeSuccess', function() {
-//                                console.log("here");
-//                                window.location.reload();
-//                       });             
+                $location.url($location.path());           
                 };
             
-        
-        /*    
-       
-          $(function() {
-              $( "#datepicker" ).datepicker();
-          });
-        
-  */
-      
+              
    }]);
    
   

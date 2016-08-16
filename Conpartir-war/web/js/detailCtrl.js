@@ -8,15 +8,19 @@
             $scope.travel;
             $scope.detail;
             $scope.isAuthorized;
-            $scope.allowBooking = true;
+            $scope.allowBooking;
             $scope.ifAlert = false;
             $scope.ifTimeAlert = false;
             $scope.alertMsg = "";
             $scope.isCarTravel;
             $scope.isTaxiTravel;
             
+            
+            
             $scope.passengerList = [];
             $scope.comment;
+            $scope.leaveFeedback = false;
+            $scope.feedAlert = null;
             var feedRate;
             var clientToFeed;
             var today= new Date ();
@@ -36,10 +40,13 @@
                     if (promise.status===200)   { 
                         $scope.isAuthorized = true; 
                         $scope.allowBooking = true;
+                        $scope.ifAlert = false;                       
                     }
                     else  { 
                         $scope.isAuthorized=false;
-                        $scope.allowBooking = false;    
+                        $scope.ifAlert = true;
+                        $scope.allowBooking = false;
+                        $scope.leaveFeedback = false;
                     }     
                 });
             };
@@ -72,6 +79,7 @@
                         else  $scope.passengerList[0] = $scope.detail.passengers;
                     
                         var i;
+                        var isPassenger = false;
                         for (i=0;i<$scope.passengerList.length;i++) {
                             if ($scope.passengerList[i].email === $scope.detail.driverInfo.email ) {
                                 $scope.passengerList[i].role = "Guidatore";
@@ -79,15 +87,25 @@
                             if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email ) {
                                 $scope.passengerList[i].role = "Passeggero";
                             }
-                        if ($scope.isTaxiTravel === true && $scope.passengerList[i].email === $scope.detail.driverInfo.email ) {
-                            $scope.passengerList[i].role = "Creatore Taxi";
-                            console.log("taxi da aggiungere!");
+                            if ($scope.isTaxiTravel === true) {
+                                if($scope.passengerList[i].email === $scope.detail.driverInfo.email ) {
+                                    $scope.passengerList[i].role = "Creatore Taxi";
+                                }
+                                if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email ) {
+                                    $scope.passengerList[i].role = "Passeggero Taxi";
+                                }
+                            }
+                            if ($scope.passengerList[i].email === sessionStorage.getItem('email')) {
+                                $scope.allowBooking = false;
+                                $scope.alertMsg = "Sei già prenotato per questo viaggio.";
+                                $scope.ifAlert= true;
+                                isPassenger = true;
+                            };
+                        };
+                        if (isPassenger === false) {
+                            $scope.leaveFeedback = false;
+                            $scope.feedAlert = "Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.";
                         }
-                        if ($scope.isTaxiTravel === true && $scope.passengerList[i].email !== $scope.detail.driverInfo.email ) {
-                            $scope.passengerList[i].role = "Passeggero Taxi";
-                            console.log("taxi da aggiungere!");
-                        }
-                    };
                 });
                     
                 }   
@@ -110,18 +128,18 @@
                             
                             if ($scope.passengerList[i].email === $scope.detail.driverInfo.email ) {
                                 $scope.passengerList[i].role = "Creatore Taxi";
-                                console.log("taxi da aggiungere!");
+                               
                             }
                             if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email ) {
                                 $scope.passengerList[i].role = "Passeggero Taxi";
-                                console.log("taxi da aggiungere!");
+                               
                             }
                         };
                     });                    
                 }
                                  
                 // A questo punto sono sicuro di avere tutti i dati
-                            
+                $scope.checkFeedback();            
                 var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
                 var travelDataCompleta = new Date(data);
                 
@@ -142,7 +160,8 @@
                         $scope.allowBooking = false;
                         console.log("meno di quindici minuti al viaggio");
                     }                
-                };                
+                };
+                
             };
            
             $scope.book = function () {
@@ -156,12 +175,26 @@
                 };                    
                 shared.bookTravel(input).then(function (promise) {
                     if (promise.status === 200) {
-                        $scope.alert = "Prenotazione effettuata con successo!";
+                        alert("Prenotazione effettuata con successo!");
                     }
                     else {
-                        $scope.alert = "Qualcosa è andato storto con la prenotazione.";
+                        alert("Qualcosa è andato storto con la prenotazione.");
                     }
                 });                  
+            };
+            
+            $scope.checkFeedback = function () {
+                
+                var dataViaggio = new Date( $scope.travel.data);
+                if (today > dataViaggio && $scope.isAuthorized) {
+                    $scope.leaveFeedback = true;
+                }
+                else {
+                    $scope.leaveFeedback = false;
+                    if ((today > dataViaggio) === false) $scope.alert('Non puoi lasciare un feedback per un viaggio non ancora avvenuto.');
+                    if($scope.isAuthorized === false) $scope.alert('Non puoi lasciare un feedback senza aver fatto il login!');
+                };
+             
             };
             
              $scope.rate = function (number){
@@ -175,22 +208,40 @@
             // Manca il controllo per evitare che estranei al viaggio lascino un feed
             $scope.sendFeed = function () {
         
-                var input = {};
-               
+                var input = {};               
                 input.author_email = sessionStorage.getItem("email");;
                 input.clientJudged_email = clientToFeed ;
                 input.comment = $scope.comment;
                 input.feedback = feedRate;
+                
                 if ($scope.isCarTravel === true){  input.travel_id = $scope.travel.travel_id; }
                 else input.travel_id = $scope.travel.taxi_id; 
                 input.when = today;
                 
+                var i;
+                var isPassenger = false;
+                for (i=0;i<$scope.passengerList.length;i++) {
+                    if ($scope.passengerList[i].email === sessionStorage.getItem('email')) {
+                        isPassenger = true;
+                    };
+                };
+                if (isPassenger === false) {
+                    $scope.leaveFeedback = false;
+                    alert("Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.");
+                }
                 
-                console.log (input);
-                 if (sessionStorage.getItem("email") === input.clientJudged_email) { alert( "Non puoi lasciare un feedback a te stesso!"); }
-                 else{                shared.createComment(input);};
+                
+                 if (sessionStorage.getItem("email") === input.clientJudged_email) { 
+                     alert("Non puoi lasciare un feedback a te stesso!"); 
+                 }
+                 else{    
+                    shared.createComment(input);
+                };
             };
-            
+                        
+            $scope.alert = function (message) {
+                $scope.feedAlert = message;       
+            };
             
             $scope.reload = function () {
                 $route.reload();

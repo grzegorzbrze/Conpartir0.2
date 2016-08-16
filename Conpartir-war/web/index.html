@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="google-signin-client_id" content="71704288153-r4d69pfu4huc56k2bis2v7e7odl522bj.apps.googleusercontent.com">
 
     <title>Conpartir 0.3</title>
 	
@@ -35,6 +36,7 @@
     <script src="frameworks/angularJs/angular-touch.min.js"></script>
     <script src="frameworks/angularJs/angular-animate.min.js"></script>
     <script src="frameworks/angularJs/angular-cookies.js"></script>
+    
         
     <!-- Mobile Angular UI 
     <script src="frameworks/mobileAngularUI/js/mobile-angular-ui.min.js"></script>   
@@ -224,8 +226,15 @@
                       <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
                   </div>
                   <p></p>
-                  <button class="btn btn-lg btn-primary btn-block" ng-click="login(user)">Login</button>                
+                  <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
                   <p></p>
+                  <div class="g-signin2 btn" data-onsuccess="onSignIn"></div>
+          
+                  
+                  <p></p>
+                  <a href="#" onclick="signOut();">Sign out</a>
+
+
                   <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
                   <p>
                       
@@ -532,21 +541,24 @@
 		</div>
 	</footer>
 
+    <!-- Google Api -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
     <!-- Core JavaScript Files -->
     <script src="js/jquery.min.js"></script>	 
     <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.sticky.js"></script>
-	<script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
     <script src="js/jquery.easing.min.js"></script>	
-	<script src="js/jquery.scrollTo.js"></script>
-	<script src="js/jquery.appear.js"></script>
-	<script src="js/stellar.js"></script>
-	<script src="js/wow.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/nivo-lightbox.min.js"></script>
+    <script src="js/jquery.scrollTo.js"></script>
+    <script src="js/jquery.appear.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/nivo-lightbox.min.js"></script>
 
     <script src="js/custom.js"></script>
-    
     
     <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>

@@ -43,12 +43,23 @@
                 else $scope.servletCall();
                  
                //window.location.reload();
-            };      
+            };   
             
-            $scope.FBLogin = function () {
-                 $location.path("/FBLogin");
+             
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId());
+                console.log('Name: ' + profile.getGivenName());
+                console.log('Surname: ' + profile.getFamilyName());
+                console.log('Email: ' + profile.getEmail());
+                
+                console.log(profile);
+                
+                $scope.master = profile;
+                //$scope.servletCall();
             };
             
+                        
             $scope.servletCall = function (){                
                 $scope.ifAlert = false;
                 auth.doLogin($scope.master).then(function (data, status, headers, config) {                    
@@ -61,9 +72,7 @@
                         auth.checkAuth().then(function (promise) {  
                            
                             if (promise.status == 200 )  $scope.isAuthorized = true;
-                            else $scope.isAuthorized = false;                              
-                            //console.log("2" + $scope.isAuthorized);
-                            
+                            else $scope.isAuthorized = false;                                   
                             sessionStorage.setItem("email",$scope.master.email);
                             
                             if ($location.search().from == "detail") {
@@ -80,6 +89,7 @@
                    }
                });
            };
+           
        
             $scope.register = function (user) {
                 $scope.master = user;
@@ -135,14 +145,23 @@
             $scope.logout = function () {
                 auth.doLogout();
                 $scope.isAuthorized= false;
+                signOut();
                 $location.path("/");
                 $location.url($location.path());
-//                $scope.$on('$locationChangeSuccess', function() {
-//                                console.log("here");
-//                                window.location.reload();
-//                       });             
-                };
+            };
+           
             
+              function signOut() {
+                  var auth2 = gapi.auth2.getAuthInstance();
+                  auth2.signOut().then(function () {
+                      console.log('User signed out.');
+                  });
+              };
+            
+            window.onSignIn = onSignIn;        
+            window.signOut = signOut;    
+                
+                
      
         }]);
    
