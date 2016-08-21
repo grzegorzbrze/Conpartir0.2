@@ -64,6 +64,7 @@ public class Registration extends HttpServlet {
             out.println("</html>");
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,6 +76,7 @@ public class Registration extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     
+        
     //check dei cookie
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -84,6 +86,13 @@ public class Registration extends HttpServlet {
     { 
         Boolean flag = false;
         Cookie[] toCheck = request.getCookies();
+        String conpCookieValue = null;
+        
+        int i;
+        for (i=0;i<toCheck.length;i++) {
+            if(toCheck[i].getName().equals("conpCookie")) conpCookieValue = toCheck[i].getValue();
+        }
+        
         if(toCheck[0] != null && toCheck[0].getMaxAge()==0) {  
             try {
                 response.sendError(403, "expired Cookie");
@@ -92,9 +101,22 @@ public class Registration extends HttpServlet {
             }
         } 
         
-        for(int i=0;i<issuedCookies.size();i++) {
-            if (issuedCookies.get(i).getValue().equals(toCheck[0].getValue())) flag = true;
+       
+        for(i=0;i<issuedCookies.size();i++) {
+            
+            String conpCookie = issuedCookies.get(i).getValue();
+           /* String[] array = ck.split(";");
+            String conpCookie = null;
+            for (i=0;i<array.length;i++) {
+                if (array[i].startsWith("conpCookie")) {
+                    String[] parts = array[i].split("=");
+                    conpCookie = parts[1];
+                    out.print(conpCookie);
+                } */
+                
+                if (conpCookie != null && conpCookie.equals(conpCookieValue)) flag = true;
             //out.println("cookie now " + issuedCookies.get(i).getValue() + " compared with " + toCheck[0].getValue());
+           //}
         }
         if(flag==false) {
              try {
@@ -174,8 +196,22 @@ public class Registration extends HttpServlet {
                  //alert: si sta cercando di registrare un utente con una mail già utilizzata
                  res = "1 Errore: questa mail è già stata usata per la registrazione di un altro account!";
                   }
-            else {
-                 //Da inserire il login
+            if (use.equals("gmail")) {
+                    //login corretto                     
+                     res = "Login effettuato con successo!";
+                     
+                     String ckValue;
+                     double val =  Math.random() * 5000;
+                     ckValue = "random" + val;
+                     
+                     Cookie userCookie = new Cookie("conpCookie",ckValue);
+                     //imposta la validità dei cookie a 10 minuti
+                     userCookie.setMaxAge(60*10);                     
+                     issuedCookies.add(userCookie);
+                     response.addCookie(userCookie);
+            
+            }
+            if (use.equals("login")) {
                  if (password.equals(clientManager.getClient(email).getPass())) {
                      //login corretto                     
                      res = "Login effettuato con successo!";
@@ -183,11 +219,10 @@ public class Registration extends HttpServlet {
                      String ckValue;
                      double val =  Math.random() * 5000;
                      ckValue = "random" + val;
-
                      
                      Cookie userCookie = new Cookie("conpCookie",ckValue);
-                     //imposta la validità dei cookie a 5 minuti
-                     userCookie.setMaxAge(60*5);                     
+                     //imposta la validità dei cookie a 10 minuti
+                     userCookie.setMaxAge(60*10);                     
                      issuedCookies.add(userCookie);
                      response.addCookie(userCookie);
                  }

@@ -229,7 +229,8 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                            '<age>' + input.age+'</age>' +
                            '<urlPhoto>' + input.urlPhoto+'</urlPhoto>' + 
                            '<oldPass>' + input.oldPass+'</oldPass>' + 
-                           '<newPass>' + input.newPass+'</newPass>' +    
+                           '<newPass>' + input.newPass+'</newPass>' + 
+                           '<gmail>' + input.gmail + '</gmail>' +
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
@@ -251,10 +252,45 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                             return {"status": false};
                 });
                 
-                return promise;            
-               
+                return promise;   
                
            },
+           
+           
+           
+           setClientGmail: function(input) {                
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "setGmail";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ input.email +'</email>' +
+                           '<gmail>'+ input.gmail +'</gmail>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.setGmailResponse;
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                     
+            },   
            
            
            getClient: function (email) {                

@@ -88,7 +88,7 @@ public class SOAPServiceClient {
     public String editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
             @WebParam(name = "surname") String surname, @WebParam(name = "gender") String gender, 
             @WebParam(name = "age") int age, @WebParam(name = "urlPhoto") String urlPhoto, 
-            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass ){
+            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass, @WebParam(name = "gmail") String gmail ){
         
         Client datiClient = clientRef.getClient(email);
         String status;
@@ -99,13 +99,24 @@ public class SOAPServiceClient {
     
         else {
                char cGender = gender.charAt(0);
-               clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto);
+               clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto,gmail);
               status = "modifica dell'account eseguita con successo";
                 }
         
     return status;
     }
     
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "setGmail")
+    public void setGmail(@WebParam(name = "email") String email, @WebParam(name = "gmail") String gmail ){        
+        Client datiClient = clientRef.getClient(email);
+        if (gmail.equals("false")) clientRef.setClientGmail(email, false);         
+        if (gmail.equals("true")) clientRef.setClientGmail(email, true);    
+        
+        
+    }
     
      /**
      * Web service operation
@@ -123,6 +134,7 @@ public class SOAPServiceClient {
         user.setName(userData.getName());
         user.setSurname(userData.getSurname());
         user.setUrlPhoto(userData.getUrlPhoto());
+        user.setGmail(userData.getGmail());
         
         List<Driver> driversData = driverRef.getDrivers(clientID);
         user.setDrivers(driversData);
@@ -552,6 +564,16 @@ public class SOAPServiceClient {
     @WebMethod(operationName = "getSpecificTaxiTravel")
     public Taxi getSpecificTaxiTravel(@WebParam(name = "travel_id") long taxi_id) {
         Taxi result = taxiRef.getTaxi(taxi_id);
+        return result;
+    }
+    
+     /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "isGmailOn")
+    public Boolean isGmailOn(@WebParam(name = "email") String email) {
+        boolean result = false;
+        result = clientRef.getClient(email).getGmail();
         return result;
     }
 

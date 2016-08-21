@@ -47,6 +47,9 @@ public class Client implements Serializable {
     
     @Column (name = "URLPHOTO")
     private String urlPhoto;
+
+    @Column (name = "GMAIL")
+    private boolean gmail;
         
     public String getName() {
         return name;
@@ -107,6 +110,17 @@ public class Client implements Serializable {
     public Long getId() {
         return clientID;
     }
+    
+    public void setGmail(boolean gmail) {
+        this.gmail = gmail;
+    }
+    
+    public boolean getGmail() {
+        return gmail;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {

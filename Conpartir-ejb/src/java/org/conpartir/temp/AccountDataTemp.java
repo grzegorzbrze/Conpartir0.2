@@ -18,7 +18,7 @@ import org.conpartir.entity.Travel;
  */
 
 @XmlRootElement(name = "AccountDataTemp")
-@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto", "drivers","postedTravels","bookedTravels","postedTaxis","bookedTaxis"})
+@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto","gmail","drivers","postedTravels","bookedTravels","postedTaxis","bookedTaxis"})
 public class AccountDataTemp {
     
     private String name;
@@ -32,6 +32,8 @@ public class AccountDataTemp {
     private char gender;
     
     private String urlPhoto;
+
+    private boolean gmail;
     
     private List<Driver> drivers; 
     
@@ -90,6 +92,16 @@ public class AccountDataTemp {
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
     }
+    
+    
+    public boolean isGmail() {
+        return gmail;
+    }
+
+    public void setGmail(boolean gmail) {
+        this.gmail = gmail;
+    }
+    
 
     public List<Driver> getDrivers() {
         return drivers;

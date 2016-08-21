@@ -29,12 +29,8 @@ public class ClientManager implements ClientManagerLocal {
         if (client.getName() != null && client.getSurname() != null && 
                 genere != null && client.getAge() != 0 && client.getEmail() != null && 
                 client.getPass() != null){ 
-            clientFacade.create(client);   System.out.println("SONO QUI");
-            
-           
+            clientFacade.create(client);             
         }
-           
-       
     }
 
     @Override
@@ -52,6 +48,7 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setSurname(surname);
             nuovo.setPass(pass);
             nuovo.setUrlPhoto(urlPhoto);
+            nuovo.setGmail(true);
             clientFacade.create(nuovo); 
             
         } 
@@ -59,7 +56,7 @@ public class ClientManager implements ClientManagerLocal {
     
     @Override
       public void editClient(String email, String name, String surname, char gender, int age, 
-             String pass, String urlPhoto) {
+             String pass, String urlPhoto, String gmail) {
           Client editable = this.getClient(email);
           
           if(!name.equals("undefined") && !name.equals(" ")) editable.setName(name);
@@ -68,6 +65,9 @@ public class ClientManager implements ClientManagerLocal {
           if(age!=0) editable.setAge(age);
           if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
           if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);
+          if(gmail.equals("true")) editable.setGmail(true);
+          if(gmail.equals("false")) editable.setGmail(false);
+          
           //System.out.println(editable);
          // clientFacade.edit(editable);
           
@@ -113,5 +113,40 @@ public class ClientManager implements ClientManagerLocal {
         }
         return client;
     }
-
+    @Override
+    public Boolean isGmail(String email) {
+        boolean result = false;
+        Client client = new Client();
+       
+        if (isEmail(email)==true) {
+             List<Client> list = clientFacade.findAll();
+             for (Client temp : list){
+                 String tempEmail = temp.getEmail();
+                 if (tempEmail.equals(email)){
+                     client = temp;            
+                 }
+             }
+        }
+        
+        if (client.getGmail()==true) result = true;
+    
+    return result;
+    }
+    
+    @Override
+    public void setClientGmail(String email, boolean value) {        
+        Client client = new Client();
+       
+        if (isEmail(email)==true) {
+             List<Client> list = clientFacade.findAll();
+             for (Client temp : list){
+                 String tempEmail = temp.getEmail();
+                 if (tempEmail.equals(email)){
+                     client = temp;            
+                 }
+             }
+        }
+        client.setGmail(value);   
+     
+    };
 }

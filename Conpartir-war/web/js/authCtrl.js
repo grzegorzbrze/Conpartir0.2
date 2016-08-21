@@ -8,7 +8,8 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
    function ($http,$cookies) {
         var data;
         var obj = {};
-        var self = this;
+        var isGmail;
+        var gmailData;
         
         //variabili per le richieste SOAP
         var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -18,6 +19,14 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
         var SOAPtail =  '</soap:Body>' +
                 '</soap:Envelope>';
         var x2js = new X2JS();
+        
+        function getCookie(name) {            
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            var ret;
+            if (parts.length === 2) ret="conpCookie=" + parts.pop().split(";").shift();
+            return ret;
+        }
          
         return {
             
@@ -31,8 +40,11 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 })
                         .success( function (data, status, header) {
                             //checkCookieEnabled();                            
-                            console.log("doc method for reading cookie " + document.cookie);                           
-                            var ckValue = $cookies.get('conpCookie');    
+                            console.log("doc method for reading cookie " + document.cookie);
+                            
+                           // var ckValue = getCookie('conpCookie');
+                           var ckValue = $cookies.get('conpCookie');    
+                             console.log("doc method for reading cookie " + ckValue);
                             sessionStorage.setItem("conpCookie",ckValue);
                             //sessionStorage.setItem('conpCookie', ckValue);
                             //console.log("session storage saved " + sessionStorage.getItem('conpCookie'));
@@ -99,7 +111,8 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             },
             
             //controlla se l'utente è loggato, interrogando la servlet
-            checkAuth: function (cookie) {                
+            checkAuth: function (cookie) {   
+                //console.log('checkAuth ' + cookie);
                 var promise; 
                 promise =
                 $http({
@@ -122,13 +135,57 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 return promise;
             },
             
+            isGmailOn: function (email){
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "isGmailOn";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ email +'</email>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.isGmailOnResponse;
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    isGmail = res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                   
+           },
+            
             getData: function () {
                 return obj;
             },
             
+            getGmailValue: function () {
+                return isGmail;
+            },
+            
+            getGmailData: function () {
+                return gmailData;
+            },
             
             setData: function (data) {
                 obj = data;
+            },
+            
+            setGmailData: function (data) {
+                gmailData = data;
             }
 
 

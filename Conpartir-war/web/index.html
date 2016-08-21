@@ -101,11 +101,11 @@
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
                             <h2>
-                                <span>Awesome Bootstrap template</span>
+                                <span>Scopri chi sono i guidatori più affidabili</span>
                             </h2>
                             <br>
                             <h3>
-                            	<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                            	<span>Viaggia solo con chi vuoi.</span>
                             </h3>
                             <br>
                             <div class="">
@@ -179,7 +179,7 @@
                                                                   <li class="bg-darkgray"><a href="#/search">Cerca</a></li>
                                                                   <li data-toggle="modal" data-target="#modalLogin" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
                                                                   <li class="bg-darkgray" ng-show="isAuthorized" ><a href="#/account">Account</a></li>
-                                                                   <li class="bg-darkgray" ng-show="isAuthorized" ng-click="logout()"><a href="#/home">Logout</a></li>
+                                                                   <li class="bg-darkgray" ng-show="isAuthorized"  onclick="signOut();" ng-click="logout()"><a href="#/home">Logout</a></li>
                                                             </ul>
                                                       </div>
                                                       <!-- /.Navbar-collapse -->
@@ -228,11 +228,18 @@
                   <p></p>
                   <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
                   <p></p>
-                  <div class="g-signin2 btn" data-onsuccess="onSignIn"></div>
-          
+                  <span> Oppure fai il login tramite google: </span>
+                  <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   <button class="btn btn-skin center" onclick="signOut()">Google Sign Out</button>
+                   
+                  
+                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                      
+                  </fb:login-button>
+                  <div id="status">
+                      
+                  </div>
                   
                   <p></p>
-                  <a href="#" onclick="signOut();">Sign out</a>
 
 
                   <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
@@ -388,8 +395,13 @@
             <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gender" ng-value="'M'"/>M</label>
             <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gender" ng-value="'F'"/>F</label>
           </div>
-          <p></p>
-          <button class="btn btn-lg btn-primary btn-block" ng-click="edit(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
+          <p></p> <label>Collegamento con Gmail: </label>
+          <div class="radio-inline-panel">             
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gmail" ng-value="'true'"/>Attiva</label>
+            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gmail" ng-value="'false'"/>Disattiva</label>
+          </div>
+          
+          <button class="btn btn-lg btn-skin btn-block margintop-10" ng-click="edit(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
           
       </form>
       </div>

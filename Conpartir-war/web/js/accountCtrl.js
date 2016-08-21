@@ -22,6 +22,7 @@
             
             $scope.ready = false;
             $scope.isAuth;
+            $scope.isGmail;
             $scope.selectedCar;
             $scope.isArray = false;
             $scope.closeTravels;
@@ -74,7 +75,7 @@
 
                         return;
                     }
-                });
+                });                
             };
 
             $scope.tab = function (data) {
@@ -123,6 +124,9 @@
                     var prova = shared.getClientInfo();
                     $scope.clientInfo = prova.return;
                     console.log($scope.clientInfo);
+                    
+                    if($scope.clientInfo.gmail==="false") $scope.isGmail = false;
+                    if($scope.clientInfo.gmail==="true") $scope.isGmail = true;
 
                     $scope.driversInfo = $scope.clientInfo.drivers;
                     shared.setCars($scope.driversInfo);
@@ -184,6 +188,7 @@
                     $scope.bookedTaxis = $scope.bookedTaxisInfo;
                     $scope.postedTaxis = $scope.postedTaxisInfo;
                     
+                    
                     $scope.ready = true;
                 });
                               
@@ -222,6 +227,7 @@
                 $scope.bookedTaxis = checkDate($scope.bookedTaxisInfo,"all");
                 $scope.postedTaxis = checkDate($scope.postedTaxisInfo,"all");
             }; 
+            
             var checkDate = function (array,mode) {
                 var i;
                 var retArray = [];
@@ -266,10 +272,25 @@
                     $scope.commentInfo = prova;
                 });
             };
+            
+     /*       $scope.setGmail = function(value) {
+                if (self.email === undefined) self.email = sessionStorage.getItem('email'); 
+                var input = {};
+                input.email = self.email;
+                if (value==="true") {
+                    input.gmail=true;
+                    shared.setClientGmail(input);                    
+                };
+                if (value==="false") {
+                    input.gmail=false;                    
+                    shared.setClientGmail(input);
+                };
+            }; */
 
             $scope.alert = function () {
                 $scope.modalInfo = "Aggiungere una macchina al tuo profilo ti permetterà di offrire viaggi con quella macchina. \n\
                      Se non l'hai mai fatto, inizia subito per poter offrire un passaggio!";
+                
             };
 
             $scope.edit = function (input) {
