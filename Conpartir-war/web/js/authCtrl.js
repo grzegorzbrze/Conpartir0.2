@@ -97,6 +97,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 sessionStorage.removeItem('conpCookie');
                 sessionStorage.clear();                              
                 console.log(sessionStorage.getItem("conpCookie"));
+                gmailData = {};
                 obj = false;
             },
             

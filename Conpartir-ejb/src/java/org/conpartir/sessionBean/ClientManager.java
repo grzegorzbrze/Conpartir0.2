@@ -64,9 +64,9 @@ public class ClientManager implements ClientManagerLocal {
           if(gender!='u') editable.setGender(gender);
           if(age!=0) editable.setAge(age);
           if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
-          if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);
+          if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);          
           if(gmail.equals("true")) editable.setGmail(true);
-          if(gmail.equals("false")) editable.setGmail(false);
+          if(gmail.equals("false")) editable.setGmail(false);         
           
           //System.out.println(editable);
          // clientFacade.edit(editable);
@@ -134,7 +134,7 @@ public class ClientManager implements ClientManagerLocal {
     }
     
     @Override
-    public void setClientGmail(String email, boolean value) {        
+    public void setClientGmail(String email,String gmailValue ,boolean value) {        
         Client client = new Client();
        
         if (isEmail(email)==true) {
@@ -146,7 +146,30 @@ public class ClientManager implements ClientManagerLocal {
                  }
              }
         }
-        client.setGmail(value);   
+        client.setGmail(value);
+        client.setGmailValue(gmailValue);
      
     };
+    
+    @Override
+    public boolean isGmailUsed (String gmailValue) {
+    boolean answer = false;
+    
+    List<Client> list = clientFacade.findAll();
+    String tempEmail;
+    String tempGmailEmail;
+    for (Client temp : list){
+        tempEmail = temp.getEmail();
+        tempGmailEmail = temp.getGmailValue(); 
+        
+        if (tempEmail.equals(gmailValue)){
+            answer = true;            
+        }
+        if (tempGmailEmail != null && tempGmailEmail.equals(gmailValue)) {
+            answer = true;
+        }
+    }
+    
+    return answer;
+    }
 }

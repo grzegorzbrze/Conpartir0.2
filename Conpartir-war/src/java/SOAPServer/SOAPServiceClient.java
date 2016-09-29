@@ -88,7 +88,7 @@ public class SOAPServiceClient {
     public String editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
             @WebParam(name = "surname") String surname, @WebParam(name = "gender") String gender, 
             @WebParam(name = "age") int age, @WebParam(name = "urlPhoto") String urlPhoto, 
-            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass, @WebParam(name = "gmail") String gmail ){
+            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass, @WebParam(name = "gmail") String gmail, @WebParam(name = "gmailValue") String gmailValue ){
         
         Client datiClient = clientRef.getClient(email);
         String status;
@@ -110,12 +110,31 @@ public class SOAPServiceClient {
      * Web service operation
      */
     @WebMethod(operationName = "setGmail")
-    public void setGmail(@WebParam(name = "email") String email, @WebParam(name = "gmail") String gmail ){        
+    public String setGmail(@WebParam(name = "email") String email,@WebParam(name = "gmailValue") String gmailValue, @WebParam(name = "gmail") String gmail ){        
         Client datiClient = clientRef.getClient(email);
-        if (gmail.equals("false")) clientRef.setClientGmail(email, false);         
-        if (gmail.equals("true")) clientRef.setClientGmail(email, true);    
+        String status = "";
+        if (gmail.equals("false")) {
+            clientRef.setClientGmail(email,"", false);
+            status = "Account disaccoppiato da gmail";
+        }         
+        if (gmail.equals("true")) {
+            if (datiClient.getEmail().equals(gmailValue)){ 
+                clientRef.setClientGmail(email,gmailValue,true);
+                status = "Aggiunta della gmail con successo";
+            }
+            else { 
+                if(clientRef.isGmailUsed(gmailValue)==false) { 
+                    clientRef.setClientGmail(email, gmailValue, true);
+                    status = "Aggiunta della gmail con successo";
+                }
+                else {
+                    status = "Questa Gmail viene già utilizzata in un altro account.";
+                }
+            }
+             
+        }    
         
-        
+        return status;
     }
     
      /**

@@ -70,6 +70,8 @@ public interface ClientManagerLocal {
      * @param email
      * @param value
      */
-    public void setClientGmail(String email, boolean value);
+    public void setClientGmail(String email, String gmailValue ,boolean value);
+    
+    public boolean isGmailUsed (String gmailValue);
     
 }

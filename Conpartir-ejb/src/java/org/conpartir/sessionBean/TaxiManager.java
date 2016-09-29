@@ -31,6 +31,9 @@ public class TaxiManager implements TaxiManagerLocal {
                 taxi.getData().toString() != null && taxi.getTime() != null && 
                 taxi.getOrigin() != null && taxi.getDestination() != null && 
                 taxi.getFreeSeats() != 0){
+            
+            taxi.setDestination(taxi.getDestination().toLowerCase());
+            taxi.setOrigin(taxi.getOrigin().toLowerCase());
             taxiFacade.create(taxi);
         }
     }
@@ -46,8 +49,8 @@ public class TaxiManager implements TaxiManagerLocal {
             taxi.setClient_id(id_client);
             taxi.setData(data);
             taxi.setTime(time);
-            taxi.setOrigin(origin);
-            taxi.setDestination(destination);
+            taxi.setOrigin(origin.toLowerCase());
+            taxi.setDestination(destination.toLowerCase());
             taxi.setFreeSeats(freeSeat);
             taxiFacade.create(taxi);
         }
@@ -140,6 +143,8 @@ public class TaxiManager implements TaxiManagerLocal {
     public List<Taxi> searchByOriginDestination(String origin, String destination) {
         List<Taxi> taxies = new ArrayList();
         List<Taxi> viaggi = taxiFacade.findAll();
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Taxi temp : viaggi){
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){
                 taxies.add(temp);
@@ -152,6 +157,8 @@ public class TaxiManager implements TaxiManagerLocal {
     public List<Taxi> searchByOriginDestinationDate(Date data, String origin, String destination) {
         List <Taxi> lista = new ArrayList();
         List <Taxi> viaggi = taxiFacade.findAll();
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Taxi temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination)){
@@ -171,7 +178,8 @@ public class TaxiManager implements TaxiManagerLocal {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
         List <Taxi> lista = new ArrayList();
         List <Taxi> viaggi = taxiFacade.findAll();
-        
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Taxi temp : viaggi){            
               if ("undefined".equals(destination)){ 
                 if(temp.getOrigin().equals(origin) && temp.getFreeSeats() > 0) {

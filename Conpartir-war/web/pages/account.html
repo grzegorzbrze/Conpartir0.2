@@ -30,8 +30,8 @@
                         <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button> <p></p>
                     </div> 
                     <div class="row margintop-10"> 
-                        <span ng-show="isGmail"> Account collegato con Gmail </span>
-                        <span ng-hide="isGmail" class="bg-danger"> Account non collegato con Gmail </span>
+                        <span ng-show="isGmail"> Account collegato con Gmail. <a ng-click="gmailUnlink()" class="bg-danger">Vuoi scollegarlo?</a> </span>
+                        <span ng-hide="isGmail" class="bg-danger"> Account non collegato con Gmail. <a data-toggle="modal" data-target="#modalGmail">Vuoi collegarlo?</a> </span>
                    
                 </div> 
             </div> 

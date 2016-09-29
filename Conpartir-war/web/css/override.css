@@ -330,3 +330,12 @@ tr.spaceUnder > td
 .selected {
     color:black;
 }
+
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 200px;
+      }

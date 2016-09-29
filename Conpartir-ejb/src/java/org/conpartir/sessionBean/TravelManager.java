@@ -43,6 +43,7 @@ public class TravelManager implements TravelManagerLocal {
                 && travel.getFreeSeats() != 0){
             if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
                     travel.getTime(), travel.getOrigin(), travel.getDestination())){
+              
                 travelFacade.create(travel);
             }
         }

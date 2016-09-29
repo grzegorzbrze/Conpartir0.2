@@ -19,6 +19,8 @@
             
             $scope.showNextTravels;
             $scope.showPastTravels;
+            $scope.gmailValue;
+            
             
             $scope.ready = false;
             $scope.isAuth;
@@ -119,7 +121,8 @@
 
                 if (self.email === undefined)
                     self.email = sessionStorage.getItem('email');
-
+             
+                
                 shared.getClient(self.email).then(function (promise) {
                     var prova = shared.getClientInfo();
                     $scope.clientInfo = prova.return;
@@ -305,6 +308,39 @@
                     $location.path('/account');
                 });
             };
+            
+            $scope.editGmail = function (input) {
+                if (self.email === undefined)self.email = sessionStorage.getItem('email');  
+                input.email = self.email;
+                
+                var res = $scope.checkGmail();
+                if (res==="ok"){ 
+                    if(input.gmailValue !== input.email && input.gmailValue !== "") {
+                        alert("La mail usata per il tuo account principale è già una gmail valida. \n\
+                               Non c'é bisogno di inserirne un'altra");
+                    }
+                    input.gmailValue = input.email; 
+                }
+                
+                shared.setClientGmail(input).then(function (promise) {
+
+                    $scope.modalInfo = shared.getData();
+
+                    //manca un avviso all'utente
+                    $location.path('/account');
+                });
+            };
+            
+            $scope.gmailUnlink = function () {
+                var input = {
+                    email : sessionStorage.getItem('email'),
+                    gmailValue : "",
+                    gmail : false
+                };
+                $scope.editGmail(input);
+                
+            };
+
 
             $scope.addCar = function (input) {
                 if (self.email === undefined)
@@ -312,6 +348,17 @@
                 input.email = self.email;
                 shared.createDriver(input).then(function (promise) {
                 });
+                
+            };
+            
+            $scope.checkGmail = function () {
+                var emailProvider = self.email.slice(self.email.indexOf('@')+1);
+                if (emailProvider==="gmail.com") {  
+                   // console.log(emailProvider);
+                    $scope.gmailValue = self.email;
+                    return "ok"; };
+                //console.log(emailProvider);
+                return "notOk";
             };
 
         }]);

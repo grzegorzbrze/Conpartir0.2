@@ -50,6 +50,18 @@ public class Client implements Serializable {
 
     @Column (name = "GMAIL")
     private boolean gmail;
+    
+    @Column (name = "GMAILVALUE")
+    private String gmailValue;
+
+    public String getGmailValue() {
+        return gmailValue;
+    }
+
+    public void setGmailValue(String gmailValue) {
+        this.gmailValue = gmailValue;
+    }    
+    
         
     public String getName() {
         return name;

@@ -40,42 +40,50 @@ var myapp = angular.module('myApp',
 
 
   myapp.controller("MainController", ['$scope', '$http','$route','$location' , 'shared', 'auth',
-      function($scope, $http, $route,$location,shared ,auth) {
-         
-      $scope.hello = "Powered by AngularJs";
-      $scope.hasFooter = true;
-      $scope.loginShow;      
-      $scope.isAuthorized =false;
+    function($scope, $http, $route,$location,shared ,auth) {
+    
+        $scope.hello = "Powered by AngularJs";
+        $scope.hasFooter = true;
+        $scope.loginShow;      
+        $scope.isAuthorized =false;
+        
+        $scope.about = false;
+        $scope.show = function () {
+            $scope.about = true;
+        };
       
-      $scope.about = false;
-      $scope.show = function () {
-          $scope.about = true;
-      };
-      
-      $scope.go = function (where) {
-          $location.path(where);
-      };
-      
-             $scope.checkAuth = function () {
-                
-                auth.checkAuth().then(function (promise) {
+        $scope.go = function (where) {
+            $location.path(where);
+        };
+        $scope.checkAuth = function () {   
+            auth.checkAuth().then(function (promise) {
 //                    if (promise.status==200) {
 ////                        var cookie = sessionStorage.getItem('conpCookie');
 ////                        if(cookie) {   $scope.isAuthorized = true;
 ////                        };   
 //                    }
-                   if (promise.status === 200 )  $scope.isAuthorized = true;
-                    else $scope.isAuthorized = false;                    
-                });
+            if (promise.status === 200 )  $scope.isAuthorized = true;
+            else $scope.isAuthorized = false;
+        });
+    };      
     
-            };
-            
-               $scope.logout = function () {
-                auth.doLogout();
-                $scope.isAuthorized= false;
-                $location.path("/");
-                $location.url($location.path());           
-                };
+        $scope.logout = function () {
+            auth.doLogout();
+            $scope.isAuthorized= false;
+            $location.path("/");
+            $location.url($location.path());
+        }; 
+        
+        var map;
+        $scope.initMap = function ()  {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 0, lng: 0},
+                zoom: 4
+            });
+        };  
+               
+                
+                
             
               
    }]);

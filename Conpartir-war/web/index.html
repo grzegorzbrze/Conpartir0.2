@@ -37,14 +37,6 @@
     <script src="frameworks/angularJs/angular-animate.min.js"></script>
     <script src="frameworks/angularJs/angular-cookies.js"></script>
     
-        
-    <!-- Mobile Angular UI 
-    <script src="frameworks/mobileAngularUI/js/mobile-angular-ui.min.js"></script>   
-    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-base.min.css" />
-    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-hover.min.css" />
-    <link rel="stylesheet" href="frameworks/mobileAngularUI/css/mobile-angular-ui-desktop.min.css" />-->
-
-    
         <!-- Angular Js Controllers -->
     <script src="js/loginCtrl.js"></script>
     <script src="js/travelCtrl.js"></script>
@@ -57,6 +49,8 @@
     <script src="js/datepickerCtrl.js"></script> 
     <script src="js/homeCtrl.js"></script>
     <script src="js/historyCtrl.js"></script>
+    
+     <script src="js/gMaps.js"></script>
     
         
 
@@ -77,7 +71,7 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner">
 			    <div class="item active">
-			    	<img src="img/1.jpg" alt="First slide">
+			    	<img src="img/bg1.jpg" alt="First slide">
                     <!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -96,7 +90,7 @@
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
-			    	<img src="img/2.jpg" alt="Second slide">
+			    	<img src="img/bg2.jpg" alt="Second slide">
 			    	<!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -115,7 +109,7 @@
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
-			    	<img src="img/3.jpg" alt="Third slide">
+			    	<img src="img/bg3.jpg" alt="Third slide">
 			    	<!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -173,13 +167,13 @@
                                                       <div class="collapse navbar-collapse" id="menu">
                                                             <ul class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
                                                                   <li class="active"><a href="#intro" ng-click="go('/home')">Home</a></li>
-                                                                  <li><a href="#service">Servizi</a></li>
+                                                                  <!--<li><a href="#service">Servizi</a></li>
                                                                   <li><a href="#about">About</a></li>  
-                                                                  <li><a href="#contact">Contact</a></li>
+                                                                  <li><a href="#contact">Contact</a></li> -->
                                                                   <li class="bg-darkgray"><a href="#/search">Cerca</a></li>
-                                                                  <li data-toggle="modal" data-target="#modalLogin" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
+                                                                  <li data-toggle="modal" data-target="#modalLogin" onclick="signOut()" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
                                                                   <li class="bg-darkgray" ng-show="isAuthorized" ><a href="#/account">Account</a></li>
-                                                                   <li class="bg-darkgray" ng-show="isAuthorized"  onclick="signOut();" ng-click="logout()"><a href="#/home">Logout</a></li>
+                                                                   <li class="bg-darkgray" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></li>
                                                             </ul>
                                                       </div>
                                                       <!-- /.Navbar-collapse -->
@@ -395,11 +389,7 @@
             <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gender" ng-value="'M'"/>M</label>
             <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gender" ng-value="'F'"/>F</label>
           </div>
-          <p></p> <label>Collegamento con Gmail: </label>
-          <div class="radio-inline-panel">             
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gmail" ng-value="'true'"/>Attiva</label>
-            <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gmail" ng-value="'false'"/>Disattiva</label>
-          </div>
+          <p></p>          
           
           <button class="btn btn-lg btn-skin btn-block margintop-10" ng-click="edit(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
           
@@ -414,8 +404,45 @@
 </div>
 <!-- /Modal per modificare le informazioni dell'account -->
 
+<!-- Modal per collegare con Gmail-->
+<div id="modalGmail" class="modal fade" role="dialog" ng-controller="AccountController">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Collega l'account con Gmail</h4>
+      </div>
+      <div class="modal-body">
+        <form novalidate class="input-group adjust" >
+          <p></p> <label>Collegamento con Gmail: </label>
+          <div class="radio-inline-panel">             
+            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gmail" ng-value="'true'"/>Attiva</label>
+           <!-- <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gmail" ng-value="'false'"/>Disattiva</label> -->
+            <span class="input-group-addon" id="basic-addon10">Gmail a cui associare:</span>
+            <input name="gmail" class="form-control" type="text" ng-model="mod.gmailValue" aria-describedby="basic-addon10">
+          
+          
+          </div>
+          
+          
+          <button class="btn btn-lg btn-skin btn-block margintop-10" ng-click="editGmail(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
+          
+      </form>
+      </div>
+<!--      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>-->
+    </div>
+
+  </div>
+</div>
+<!-- /Modal per modificare le informazioni di gmail -->
+
+
 <!-- Modal AddCar -->
-<div id="modalAddCar" class="modal fade" role="dialog">
+<div id="modalAddCar" class="modal fade" role="dialog" ng-controller="AccountController">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -437,7 +464,7 @@
                   <input name="name" class="form-control" type="text" ng-model="mod.carYear" aria-describedby="basic-addon5">
               </div> 
              <p></p>
-             <button class="btn btn-lg btn-primary btn-block" ng-click="addCar(mod); showModal=true" data-dismiss="modal">Aggiungi</button>     
+             <button class="btn btn-lg btn-skin btn-block" ng-click="addCar(mod); showModal=true" data-dismiss="modal">Aggiungi</button>     
             </form>
       </div>
     </div>
@@ -482,7 +509,7 @@
                <input class="form-control" type="text" ng-model="travel.carModel" aria-describedby="basic-addon7" name="car">
          </div>
            <div class="input-group center" ng-if="isCarTravel">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+              <button class="btn btn-skin dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
                  Scegli il modello
                  <span class="caret"></span>
              </button>
@@ -508,7 +535,7 @@
           <p></p>
           
           
-          <button class="btn btn-lg btn-primary btn-block" ng-click="post(travel)">Post</button>
+          <button class="btn btn-lg btn-skin btn-block" ng-click="post(travel)">Post</button>
           
           <p></p>
           <p class="bg-danger" ng-show="ifAlert">{{status}}</p>
@@ -520,6 +547,22 @@
   </div>
 </div>
 <!-- /Modal per offrire un passaggio -->
+
+<!-- Modal per le mappe -->
+<div id="modalMap"  class="modal fade" role="dialog" onload="initMap()" ng-controller="MainController" >
+  <div class="modal-dialog">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-body"  id="map">
+        
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- /Modal per  mappe  -->
 
 <!-- Modal per informazioni varie -->
 <div id="modalInfo"  class="modal fade" role="dialog">
@@ -573,11 +616,13 @@
     <script src="js/custom.js"></script>
     
     <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
-    <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>
-
-    
+    <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>    
     <script src="frameworks/xml2json.min.js"></script>
-   
+    <!-- google maps 
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig&callback=initMap"
+    async defer></script>-->
+
+
 
 </body>
 

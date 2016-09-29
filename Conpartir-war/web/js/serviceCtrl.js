@@ -268,6 +268,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 sr = SOAPhead +
                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
                            '<email>'+ input.email +'</email>' +
+                           '<gmailValue>'+ input.gmailValue +'</gmailValue>' +
                            '<gmail>'+ input.gmail +'</gmail>' +
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
