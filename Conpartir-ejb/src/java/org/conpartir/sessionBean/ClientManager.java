@@ -48,7 +48,7 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setSurname(surname);
             nuovo.setPass(pass);
             nuovo.setUrlPhoto(urlPhoto);
-            nuovo.setGmail(true);
+            nuovo.setGmail(false);
             clientFacade.create(nuovo); 
             
         } 

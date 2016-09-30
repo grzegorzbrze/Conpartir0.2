@@ -14,9 +14,9 @@
             $scope.alertMsg = "";
             $scope.isCarTravel;
             $scope.isTaxiTravel;
-            
-            
-            
+            $scope.commentAlert;
+            $scope.feedbackAvgRate;
+                                  
             $scope.passengerList = [];
             $scope.comment;
             $scope.leaveFeedback = false;
@@ -77,6 +77,7 @@
                             $scope.passengerList = $scope.detail.passengers;
                         }
                         else  $scope.passengerList[0] = $scope.detail.passengers;
+                        
                     
                         var i;
                         var isPassenger = false;
@@ -106,6 +107,9 @@
                             $scope.leaveFeedback = false;
                             $scope.feedAlert = "Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.";
                         }
+                        
+                        
+                    $scope.getLatestComment();
                 });
                     
                 }   
@@ -137,8 +141,9 @@
                         };
                     });                    
                 }
-                                 
-                // A questo punto sono sicuro di avere tutti i dati
+                        
+                // A questo punto sono sicuro di avere tutti i dati;               
+              
                 $scope.checkFeedback();            
                 var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
                 var travelDataCompleta = new Date(data);
@@ -237,6 +242,35 @@
                  else{    
                     shared.createComment(input);
                 };
+            };
+            
+            $scope.getLatestComment = function () {
+                shared.getLatestReceivedComments($scope.detail.driverInfo.email, 10).then(function (promise) {
+                    var prova = shared.getComments();
+                    
+                    
+                        console.log(prova);
+                    if (jQuery.isEmptyObject(prova)) $scope.commentAlert = true;
+                    else {
+                        var it;
+                        var avg = 0;
+                        if (isArray(prova)) {
+                            $scope.feedbacks = prova;                            
+                            for (it=0;it<prova.lenght;it++) {
+                                
+                                avg = avg + parseInt(prova[it].feedBackCommento);
+                            }                            
+                            if (avg===0)  $scope.feedbackAvgRate =0;
+                            else $scope.feedbackAvgRate = avg /(it+1);
+                        }
+                        else{
+                            $scope.feedbacks = [];
+                            $scope.feedbacks[0] = prova;
+                            $scope.feedbackAvgRate = prova.feedBackCommento; 
+                        };
+                    }
+                    
+                });
             };
                         
             $scope.alert = function (message) {

@@ -272,6 +272,7 @@ public class SOAPServiceClient {
         Driver driverInfo = driverRef.getDriver(travelObj.getDriver_id());
         Client clientInfo =  clientRef.getClient(clientRef.getEmail(driverInfo.getClient_id()));
         
+        
         TravelDataTemp temp = new TravelDataTemp();
         temp.setDriverCar(driverInfo);
         temp.setDriverInfo(clientInfo);
@@ -284,6 +285,7 @@ public class SOAPServiceClient {
             passengerList.add(clientRef.getClient(clientRef.getEmail(tempId)));        
         }
         temp.setPassengers(passengerList);
+        
         
         return temp;
     }

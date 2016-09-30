@@ -20,6 +20,13 @@ import org.conpartir.entity.Driver;
 @XmlType(propOrder = {"driverInfo","driverCar","passengers"})
 public class TravelDataTemp {
 
+       
+    private Client driverInfo;
+    
+    private Driver driverCar;
+    
+    private List<Client> passengers; 
+        
     public Client getDriverInfo() {
         return driverInfo;
     }
@@ -43,12 +50,7 @@ public class TravelDataTemp {
     public void setPassengers(List<Client> passengers) {
         this.passengers = passengers;
     }
-      
-    private Client driverInfo;
-    
-    private Driver driverCar;
-    
-    private List<Client> passengers; 
+        
     
 }
 

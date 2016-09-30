@@ -33,6 +33,7 @@
             $scope.mod;
             $scope.history;
             $scope.show = [true, false, false];
+            $scope.commentAlert;
             
             var myDriverIds = [];
             var self = $location.search();
@@ -273,6 +274,7 @@
                 shared.getLatestReceivedComments(self.email, 10).then(function (promise) {
                     var prova = shared.getComments();
                     $scope.commentInfo = prova;
+                    if (jQuery.isEmptyObject($scope.commentInfo)) $scope.commentAlert = true; 
                 });
             };
             

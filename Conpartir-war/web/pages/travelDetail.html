@@ -10,7 +10,10 @@
                     </div>
                 </div>
             
-                <div class="" >
+                <div class="">
+                    <h5>Un viaggio proposto da {{detail.driverInfo.name}} {{detail.driverInfo.surname}}</h5>
+                    <p>Punteggio medio: {{feedbackAvgRate}}</p>
+                    <p data-toggle="modal" data-target="#modalDriverFeed" >Vedi i commenti degli altri utenti</p>
                 <dl class="dl-horizontal">
                     <dt>Partenza</dt>
                     <dd>{{travel.origin}}</dd>
@@ -36,7 +39,7 @@
                 <img id="foto" src="{{detail.driverInfo.urlPhoto}}" alt="user image">
                 <h3>Posti liberi: {{travel.freeSeats}}</h4>
                     <button class="btn-lg btn-skin btn" ng-click="book()" ng-hide="ifAlert">Prenota</button>
-                <div class="bg-danger center" ng-hide="isAuthorized" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a href="#login">Vuoi farlo ora?</a></div>
+                <div class="bg-danger center" ng-hide="isAuthorized" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a data-toggle="modal" data-target="#modalLogin" onclick="signOut()">Vuoi farlo ora?</a></div>
                 <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>  
                 <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
             </div> 
@@ -109,3 +112,28 @@
     <!-- /FeedBack -->
     
     
+<!-- Modal per vedere i feedback di un guidatore -->
+<div id="modalDriverFeed"  class="modal fade" role="dialog" ng-controller="DetailController">
+  <div class="modal-dialog">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-body">
+          <h4 class="h-bold"> Commenti ricevuti dal driver: </h4>
+          <dl class="dl-horizontal" ng-repeat="commenti in feedbacks">  
+              <dt>Autore:</dt>
+              <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
+              <dt>Testo:</dt>
+              <dd>{{commenti.testoCommento}}</dd>
+              <dt> Feedback </dt>
+              <dd> {{commenti.feedBackCommento}}</dd>
+          </dl> 
+          <br>
+           <span class="bg-info" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su questo guidatore.</span>
+                           
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- /Modal per vedere i feedback di un guidatore -->

@@ -43,7 +43,8 @@ public class TravelManager implements TravelManagerLocal {
                 && travel.getFreeSeats() != 0){
             if (!isExist(travel.getDriver_id(), travel.getClient_id(), travel.getData(),
                     travel.getTime(), travel.getOrigin(), travel.getDestination())){
-              
+                travel.setDestination(travel.getDestination().toLowerCase());
+                travel.setOrigin(travel.getOrigin().toLowerCase().toLowerCase());
                 travelFacade.create(travel);
             }
         }
@@ -59,8 +60,8 @@ public class TravelManager implements TravelManagerLocal {
                 travel.setClient_id(client_id);
                 travel.setDriver_id(driver_id);
                 travel.setData(data);
-                travel.setDestination(destination);
-                travel.setOrigin(origin);
+                travel.setDestination(destination.toLowerCase());
+                travel.setOrigin(origin.toLowerCase());
                 travel.setTime(time);
                 travel.setFreeSeats(freeSeats);
                 travelFacade.create(travel);
@@ -178,6 +179,8 @@ public class TravelManager implements TravelManagerLocal {
     public List<Travel> searchByOriginDestination(String origin, String destination) {
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Travel temp : viaggi){
             if (temp.getDestination().equals(destination) && temp.getOrigin().equals(origin) 
                     && temp.getFreeSeats() > 0){
@@ -195,6 +198,8 @@ public class TravelManager implements TravelManagerLocal {
         //System.out.println("data impostata: " + data);
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date successive a quelle dell'utente
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
@@ -214,6 +219,8 @@ public class TravelManager implements TravelManagerLocal {
         //in questo modo vengono controllate tutte le date successive a quelle dell'utente
         List <Travel> lista = new ArrayList();
         List <Travel> viaggi = travelFacade.findAll();
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
         for (Travel temp : viaggi){
             //in questo modo vengono controllate tutte le date uguali a quelle dell'utente
             if (temp.getOrigin().equals(origin) && temp.getDestination().equals(destination) 
@@ -425,9 +432,11 @@ public class TravelManager implements TravelManagerLocal {
     }
     
     protected boolean isExist(Long driver_id, Long client_id, Date data, 
-            Date time, String origine, String destination){
+            Date time, String origin, String destination){
         boolean risultato = true;
-        Long risID = getTravel_ID(driver_id, client_id, data, time, origine, destination);
+        origin = origin.toLowerCase();
+        destination = destination.toLowerCase();
+        Long risID = getTravel_ID(driver_id, client_id, data, time, origin, destination);
         if (risID == null){
             risultato = false;
         }
