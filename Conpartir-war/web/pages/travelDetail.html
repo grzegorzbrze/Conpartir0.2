@@ -12,8 +12,10 @@
             
                 <div class="">
                     <h5>Un viaggio proposto da {{detail.driverInfo.name}} {{detail.driverInfo.surname}}</h5>
-                    <p>Punteggio medio: {{feedbackAvgRate}}</p>
-                    <p data-toggle="modal" data-target="#modalDriverFeed" >Vedi i commenti degli altri utenti</p>
+                    <p ng-hide="commentAlert">Punteggio medio: {{feedbackAvgRate}}</p>
+                    <p  ng-hide="commentAlert" data-toggle="modal" data-target="#modalDriverFeed" >Vedi i commenti degli altri utenti</p>
+                    <span  class="bg-info" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su questo guidatore.</span>
+           
                 <dl class="dl-horizontal">
                     <dt>Partenza</dt>
                     <dd>{{travel.origin}}</dd>

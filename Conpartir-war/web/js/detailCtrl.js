@@ -14,7 +14,7 @@
             $scope.alertMsg = "";
             $scope.isCarTravel;
             $scope.isTaxiTravel;
-            $scope.commentAlert;
+            $scope.commentAlert = false;
             $scope.feedbackAvgRate;
                                   
             $scope.passengerList = [];
@@ -256,12 +256,12 @@
                         var avg = 0;
                         if (isArray(prova)) {
                             $scope.feedbacks = prova;                            
-                            for (it=0;it<prova.lenght;it++) {
+                            for (it=0;it<prova.length;it++) {
                                 
                                 avg = avg + parseInt(prova[it].feedBackCommento);
                             }                            
                             if (avg===0)  $scope.feedbackAvgRate =0;
-                            else $scope.feedbackAvgRate = avg /(it+1);
+                            else $scope.feedbackAvgRate = avg /(it);
                         }
                         else{
                             $scope.feedbacks = [];

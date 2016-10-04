@@ -77,8 +77,8 @@ public class SOAPServiceClient {
     public void createClient(@WebParam(name = "name") String name, 
             @WebParam(name = "surname") String surname, @WebParam(name = "gender") char gender, 
             @WebParam(name = "age") int age, @WebParam(name = "email") String email, 
-            @WebParam(name = "pass") String pass, @WebParam(name = "urlPhoto") String urlPhoto) {
-        clientRef.createClient(name, surname, gender, age, email, pass, urlPhoto);
+            @WebParam(name = "pass") String pass) {
+        clientRef.createClient(name, surname, gender, age, email, pass);
     } 
     
      /**

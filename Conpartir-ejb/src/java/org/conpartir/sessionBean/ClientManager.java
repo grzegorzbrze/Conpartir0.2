@@ -35,10 +35,10 @@ public class ClientManager implements ClientManagerLocal {
 
     @Override
     public void createClient(String name, String surname, char gender, int age,
-            String email, String pass, String urlPhoto) {
+            String email, String pass) {
         String genere = Character.toString(gender);
         if (name != null && surname != null && genere != null && age != 0 &&
-                email != null && pass != null && urlPhoto != null ){
+                email != null && pass != null){
             Client nuovo  = new Client();
             
             nuovo.setAge(age);
@@ -47,7 +47,8 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setName(name);
             nuovo.setSurname(surname);
             nuovo.setPass(pass);
-            nuovo.setUrlPhoto(urlPhoto);
+            nuovo.setUrlPhoto("http://oi65.tinypic.com/2dlufo.jpg");
+         
             nuovo.setGmail(false);
             clientFacade.create(nuovo); 
             

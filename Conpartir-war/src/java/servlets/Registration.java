@@ -275,8 +275,8 @@ public class Registration extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public void createClient(String name, String surname, char sex, int age, String email, String pass, String photo) {
-        clientManager.createClient(name, surname, sex, age, email, pass, photo);    
+    public void createClient(String name, String surname, char sex, int age, String email, String pass) {
+        clientManager.createClient(name, surname, sex, age, email, pass);    
     };
     
 }

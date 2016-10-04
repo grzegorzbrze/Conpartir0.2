@@ -81,7 +81,7 @@ public class Peopling extends HttpServlet {
             "Bianchi", "Romano", "Colombo", "Ricci", "Greco", "Conti", "Lombardi"};
         char[] genders = {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'F', 'F', 'F', 'F'};
         int[] eta = new int[dimensione];
-        String[] paths = new String[dimensione];
+        // String[] paths = new String[dimensione];
         
         int minimum = 18;
         int maximum = 45;
@@ -98,11 +98,12 @@ public class Peopling extends HttpServlet {
             }
         }
         
+  /*      foto rimossa dal metodo create client
         if (paths.length == cognomi.length){
-            for (int i=0; i<paths.length; i++){
-                    paths[i] = /*"root/"+cognomi[i]*/ "http://oi65.tinypic.com/2dlufo.jpg";   
-            }
-        }
+            for (int i=0; i<paths.length; i++){*/
+              //      paths[i] = /*"root/"+cognomi[i]*/ "http://oi65.tinypic.com/2dlufo.jpg";   
+     /*       }
+        } */
         
         /*System.out.println("Ecco tutti i dati:");
         for(int i=0; i<nomi.length; i++){
@@ -113,8 +114,7 @@ public class Peopling extends HttpServlet {
         
         for(int i=0; i<nomi.length; i++){
            
-            clientManager.createClient(nomi[i], cognomi[i], genders[i], 
-                    eta[i], email[i], cognomi[i], paths[i]);
+            clientManager.createClient(nomi[i], cognomi[i], genders[i], eta[i], email[i], cognomi[i]);
         }
         
         creaDriver();

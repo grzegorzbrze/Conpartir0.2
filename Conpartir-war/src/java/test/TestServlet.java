@@ -123,7 +123,7 @@ public class TestServlet extends HttpServlet {
             client2.setUrlPhoto("root/verdi");
             
             clientManager.createClient(client2);
-            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck", "http");
+            clientManager.createClient("Lorenzo", "violi", 'M', 23, "lorenzo@gggg.it", "derck");
             travelManager.addPassenger(travel1.getTravel_id(), client2.getId());
             
             Client client3 = new Client();

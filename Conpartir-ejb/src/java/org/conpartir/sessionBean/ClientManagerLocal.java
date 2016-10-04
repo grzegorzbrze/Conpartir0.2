@@ -28,7 +28,7 @@ public interface ClientManagerLocal {
      * Permette di creare una tupla nel database tramite i valori esplici
      */
     public void createClient(String name, String surname, char gender, int age, 
-            String email, String pass, String urlPhoto);    
+            String email, String pass);    
     
        /**
      * Permette di modificare alcune informazioni legate a un dato utente
