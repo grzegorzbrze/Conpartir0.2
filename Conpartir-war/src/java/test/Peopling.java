@@ -158,9 +158,9 @@ public class Peopling extends HttpServlet {
     
     public void creaTravels(){
         // parametri: citta; partenza = Torino; numeroPosto; id_client; id_driver; data; ora;
-        String[] citta = {"Roma", "Milano", "Roma", "Milano", "Novara", 
-            "Novara", "Milano", "Roma", "Cuneo", "Cuneo","Alessandria","Genova","Arezzo","Firenze"};
-        String partenza = "Torino";
+        String[] citta = {"roma", "milano", "roma", "milano", "novara", 
+            "novara", "milano", "roma", "cuneo", "cuneo", "alessandria", "genova", "arezzo", "firenze"};
+        String partenza = "torino";
         
         int []posti = new int[10];
         for (int i=0; i<posti.length; i++){
@@ -233,6 +233,7 @@ public class Peopling extends HttpServlet {
             boolean aggiunto = travelManager.addPassenger(trav_scelto, client_scelto);
             if (aggiunto){
                 creaComment(trav_scelto, client_scelto);
+                System.out.println("Commento sul viaggio " + trav_scelto + " fatto sul client "+client_scelto);
             }
         }
         

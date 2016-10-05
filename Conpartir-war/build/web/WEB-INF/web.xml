@@ -4,9 +4,26 @@
         <servlet-name>TestServlet</servlet-name>
         <servlet-class>test.TestServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>Registration</servlet-name>
+        <servlet-class>servlets.Registration</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>Peopling</servlet-name>
+        <servlet-class>test.Peopling</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Peopling</servlet-name>
+        <url-pattern>/Peopling</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Registration</servlet-name>
+        <url-pattern>/Registration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
