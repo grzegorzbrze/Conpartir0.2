@@ -1,5 +1,5 @@
 <section id="detail" class="home-section color-dark text-center bg-grey" ng-init="getInfo()">  
-    <div class="container">
+    <div class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
         <div class="row">
             <div class="col-lg-8">
                 <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="row">
-        <div  class="col-lg-8 col-lg-offset-2 margintop-10">
+        <div  class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 margintop-10">
             <h4>Passeggeri del viaggio:</h4>
             <a ng-show="{{passengerList.length > 0}}" ng-repeat=" item in passengerList" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-eye-open"></i></div> 
@@ -68,7 +68,7 @@
 <section ng-show="leaveFeedback" id="feedback" class="home-section color-dark text-center bg-gray">      
     <div  class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                     <div class="section-heading text-center">
                         <h3 class="h-bold">Lascia un Feedback</h3> 
@@ -78,8 +78,8 @@
             </div>
         </div>
   
-        <div class="row col-md-8 col-md-offset-2">
-            <div class="col-md-5">
+        <div class="row">
+            <div class="col-sm-5 col-md-5 col-lg-5">
                 <div class="input-group"> 
                 <button class="btn btn-skin dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
                      Su chi vuoi lasciare il feedback?
@@ -90,15 +90,15 @@
                 </ul>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-sm-7 col-md-7 col-lg-7">
                 <div class="radio-inline rating margintop-20"> 
                     <h6> Rating  </h6>
                     <span ng-click="rate(5)">☆</span><span ng-click="rate(4)">☆</span><span ng-click="rate(3)">☆</span><span ng-click="rate(2)">☆</span><span ng-click="rate(1)">☆</span>
                 </div>
             </div>
         </div>
-        <div class="row col-lg-8 col-lg-offset-2">
-            <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
            
                 <div class="form-group margintop-20">
                     <textarea ng-model="comment" name="message" id="message" class="form-control" rows="4" cols="25" required="required" placeholder="Commento al feedback"></textarea>

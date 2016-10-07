@@ -27,7 +27,8 @@
     <link href="frameworks/bootstrap/css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="css/override.css" rel="stylesheet">
     
-    
+   
+
     
     
      <!-- Angular Js Main and Services -->
@@ -38,17 +39,17 @@
     <script src="frameworks/angularJs/angular-cookies.js"></script>
     
         <!-- Angular Js Controllers -->
-    <script src="js/loginCtrl.js"></script>
-    <script src="js/travelCtrl.js"></script>
-    <script src="js/detailCtrl.js"></script>
-    <script src="js/postCtrl.js"></script>
-    <script src="js/accountCtrl.js"></script>
-    <script src="js/serviceCtrl.js"></script>
-    <script src="js/authCtrl.js"></script> 
-    <script src="js/sliderCtrl.js"></script> 
-    <script src="js/datepickerCtrl.js"></script> 
-    <script src="js/homeCtrl.js"></script>
-    <script src="js/historyCtrl.js"></script>
+    <script src="js/controller/loginCtrl.js"></script>
+    <script src="js/controller/travelCtrl.js"></script>
+    <script src="js/controller/detailCtrl.js"></script>
+    <script src="js/controller/postCtrl.js"></script>
+    <script src="js/controller/accountCtrl.js"></script>
+    <script src="js/controller/serviceCtrl.js"></script>
+    <script src="js/controller/authCtrl.js"></script> 
+    <script src="js/controller/sliderCtrl.js"></script> 
+    <script src="js/controller/datepickerCtrl.js"></script> 
+    <script src="js/controller/homeCtrl.js"></script>
+    <script src="js/controller/historyCtrl.js"></script>
     
      <script src="js/gMaps.js"></script>
     
@@ -564,11 +565,37 @@
 </div>
 <!-- /Modal per  mappe  -->
 
+<!-- Modal per viaggio postato con successo -->
+<div id="modalTravelAdded" ng-controller="PostController" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Complimenti!</h4>
+    </div>
+      <div class="modal-body ">
+        <p>Il viaggio è stato aggiunto con successo!
+        Vuoi condividerlo?</p>
+        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Ho%20appena%20aggiunto%20un%20viaggio%20su%20Conpartir!" data-size="large">
+            Tweet
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- /Modal per viaggio postato con successo -->
+
 
 <!-- Modal per informazioni varie -->
 <div id="modalInfo"  class="modal fade" role="dialog">
   <div class="modal-dialog">
-
+  <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Informazioni</h4>
+    </div>
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-body">
@@ -623,7 +650,25 @@
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig&callback=initMap"
     async defer></script>-->
 
-
+       <!-- Twitter -->
+    <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+ 
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+ 
+        return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+  
 
 </body>
 
