@@ -86,9 +86,12 @@
                 else {
                    shared.createTaxiTravel($scope.travel).then(function(promise) {
                     }); 
-                }
-                $location.path('/');
-                alert ("viaggio postato con successo!");
+                }                
+                $('#modalPost').modal('hide');
+                $('#modalTravelAdded').modal('show');
+                
+                //$location.path('/');
+                //alert ("viaggio postato con successo!");
           };
           
           $scope.select = function (dataId,dataModel) {

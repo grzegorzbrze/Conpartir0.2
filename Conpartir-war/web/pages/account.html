@@ -2,7 +2,7 @@
 <section id="account" class="home-section color-dark text-center bg-gray" ng-init="onLoad()">
     <div class="container">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
             <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                 <div class="section-heading text-center">
                     <h2 class="h-bold">Area Personale</h2>
@@ -103,7 +103,7 @@
    
     <div class="container">
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
+        <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
             <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                 <div class="section-heading text-center">
                     <h3 class="h-bold">Viaggi e Prenotazioni</h3> 
@@ -124,7 +124,7 @@
             </div>
         </div>
     <div ng-show="ready" class="row">
-        <div class="col-lg-8 col-lg-offset-2" ng-show="showBooked"> 
+        <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" ng-show="showBooked"> 
             <h4>Viaggi Prenotati:</h4>
             <a ng-repeat=" item in bookedTravels" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
@@ -135,7 +135,7 @@
                 <div class="col-md-11 list-group-item" ng-click="go(item,2)"> Taxi a {{item.destination}} del {{getDay(item.data)}} </div>  
             </a>
         </div>
-        <div  class="col-lg-8 col-lg-offset-2" ng-show="showPosted" style="margin-top: 40px">
+        <div  class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" ng-show="showPosted" style="margin-top: 40px">
             <h4>Viaggi Postati:</h4>
             <a ng-repeat=" item in postedTravels" class="col-md-12 center">
                 <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
