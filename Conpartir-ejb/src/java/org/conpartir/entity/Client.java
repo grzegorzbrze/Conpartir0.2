@@ -47,13 +47,21 @@ public class Client implements Serializable {
     
     @Column (name = "URLPHOTO")
     private String urlPhoto;
-
-    @Column (name = "GMAIL")
-    private boolean gmail;
     
     @Column (name = "GMAILVALUE")
-    private String gmailValue;
+    private String gmailValue = null;
+    
+    @Column (name = "TWITTERVALUE")
+    private String twitterValue = null;
 
+    public String getTwitterValue() {
+        return twitterValue;
+    }
+
+    public void setTwitterValue(String twitterValue) {
+        this.twitterValue = twitterValue;
+    }
+    
     public String getGmailValue() {
         return gmailValue;
     }
@@ -62,7 +70,6 @@ public class Client implements Serializable {
         this.gmailValue = gmailValue;
     }    
     
-        
     public String getName() {
         return name;
     }
@@ -122,17 +129,6 @@ public class Client implements Serializable {
     public Long getId() {
         return clientID;
     }
-    
-    public void setGmail(boolean gmail) {
-        this.gmail = gmail;
-    }
-    
-    public boolean getGmail() {
-        return gmail;
-    }
-    
-    
-    
 
     @Override
     public int hashCode() {

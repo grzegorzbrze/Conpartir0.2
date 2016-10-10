@@ -26,7 +26,6 @@ import org.conpartir.sessionBean.CommentMagangerLocal;
 import org.conpartir.sessionBean.DriverManagerLocal;
 import org.conpartir.sessionBean.TaxiManagerLocal;
 import org.conpartir.sessionBean.TravelManagerLocal;
-import java.util.Objects;
 import org.conpartir.temp.CommentTemp;
 import org.conpartir.temp.AccountDataTemp;
 import org.conpartir.temp.ClientDriverTemp;
@@ -53,10 +52,6 @@ public class SOAPServiceClient {
     @EJB
     private DriverManagerLocal driverRef;
     
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Web Service Operation")
-
      /**
      * Web service operation
      */
@@ -64,7 +59,6 @@ public class SOAPServiceClient {
     public void addPassenger(@WebParam(name = "travel_id") long travel_id, 
             @WebParam(name = "email") String email ){
         long passenger_id = clientRef.getClient(email).getId();
-        //System.out.println("metodo addPassenger " + passenger_id + " " + travel_id);
         travelRef.addPassenger(travel_id, passenger_id);
     }
     
@@ -81,6 +75,9 @@ public class SOAPServiceClient {
         clientRef.createClient(name, surname, gender, age, email, pass);
     } 
     
+    
+    //Nota: qual'è lo scopo del seguente metodo se l'unica modifica che fa è la password
+    // dovrebbe poter fare altro????
      /**
      * Web service operation
      */
@@ -88,53 +85,53 @@ public class SOAPServiceClient {
     public String editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
             @WebParam(name = "surname") String surname, @WebParam(name = "gender") String gender, 
             @WebParam(name = "age") int age, @WebParam(name = "urlPhoto") String urlPhoto, 
-            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass, @WebParam(name = "gmail") String gmail, @WebParam(name = "gmailValue") String gmailValue ){
-        
+            @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass){
         Client datiClient = clientRef.getClient(email);
         String status;
         if(!datiClient.getPass().equals(oldPass)) { 
            //lanciare un'eccezione
             status = "Le password inserite non coincidono";
         }
-    
         else {
-               char cGender = gender.charAt(0);
-               clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto,gmail);
-              status = "modifica dell'account eseguita con successo";
-                }
-        
-    return status;
+            char cGender = gender.charAt(0);
+            clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto);
+            status = "Modifica dell'account eseguita con successo";
+        }
+        return status;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "setTwitter")
+    public String setTwitter(@WebParam(name = "email") String email, 
+            @WebParam(name = "twitterValue") String twitterValue) {
+        if (clientRef.setOtherEmail(email, null, twitterValue)){
+            return "Twitter associato con successo";
+        }
+        else{
+            return "Questa indirizzo Twitter viene già utilizzata in un altro account.";
+        }
     }
     
     /**
      * Web service operation
      */
     @WebMethod(operationName = "setGmail")
-    public String setGmail(@WebParam(name = "email") String email,@WebParam(name = "gmailValue") String gmailValue, @WebParam(name = "gmail") String gmail ){        
-        Client datiClient = clientRef.getClient(email);
-        String status = "";
-        if (gmail.equals("false")) {
-            clientRef.setClientGmail(email,"", false);
-            status = "Account disaccoppiato da gmail";
-        }         
-        if (gmail.equals("true")) {
-            if (datiClient.getEmail().equals(gmailValue)){ 
-                clientRef.setClientGmail(email,gmailValue,true);
-                status = "Aggiunta della gmail con successo";
-            }
-            else { 
-                if(clientRef.isGmailUsed(gmailValue)==false) { 
-                    clientRef.setClientGmail(email, gmailValue, true);
-                    status = "Aggiunta della gmail con successo";
-                }
-                else {
-                    status = "Questa Gmail viene già utilizzata in un altro account.";
-                }
-            }
-             
-        }    
-        
-        return status;
+    public String setGmail(@WebParam(name = "email") String email,
+            @WebParam(name = "gmailValue") String gmailValue){        
+        if (clientRef.setOtherEmail(email, gmailValue, null)){
+            return "Gmail associato con successo";
+        }
+        else{
+            return "Questa Gmail viene già utilizzata in un altro account.";
+        }
+    }
+    
+    
+    @WebMethod(operationName = "isGmailOn")
+    public Boolean isGmailOn(@WebParam(name = "email") String email) {
+        return clientRef.getClient(email).getGmailValue() != null;
     }
     
      /**
@@ -144,27 +141,29 @@ public class SOAPServiceClient {
     public AccountDataTemp getClient(@WebParam(name = "email") String email) {
         AccountDataTemp user = new AccountDataTemp();
         Client userData = clientRef.getClient(email);
-        
         Long clientID = userData.getId();
-                
         user.setAge(userData.getAge());
         user.setEmail(email);
         user.setGender(userData.getGender());
         user.setName(userData.getName());
         user.setSurname(userData.getSurname());
         user.setUrlPhoto(userData.getUrlPhoto());
-        user.setGmail(userData.getGmail());
+        // questa soluzione è necessaria perchè AccountDataTemp deve avere gmail
+        // non capisco cosa ci debba fare quindi non cancella il campo. 
+        if (userData.getGmailValue() != null){
+            user.setGmail(true);
+        }
+        else
+            user.setGmail(false);
+        
         
         List<Driver> driversData = driverRef.getDrivers(clientID);
         user.setDrivers(driversData);
-        
-        Date today = new Date();
-                
+        Date today = new Date();    
         List<Travel> travelsData = travelRef.getClientTravelBefore(userData.getId(), today, today);
         travelsData.addAll(travelRef.getClientTravelAfter(userData.getId(), today, today));
         List<Travel> postedTravelsList = new ArrayList();
         List<Travel> bookedTravelsList = new ArrayList();
-        
         for(int i=0;i<travelsData.size();i++) {
             long travelID = travelsData.get(i).getTravel_id();
             Travel temp = new Travel();
@@ -175,9 +174,7 @@ public class SOAPServiceClient {
             temp.setTime(travelsData.get(i).getTime());
             temp.setTravel_id(travelID);
             temp.setDriver_id(travelsData.get(i).getDriver_id());
-           // Driver driverTemp = travelRef.getInfoDriverEqualClient(travelID);
-            
-                      
+           // Driver driverTemp = travelRef.getInfoDriverEqualClient(travelID);        
             if (driversData.contains(driverRef.getDriver(temp.getDriver_id())) == false){
                 bookedTravelsList.add(temp);
             }
@@ -185,16 +182,12 @@ public class SOAPServiceClient {
                 postedTravelsList.add(temp);
             }
         }            
-            user.setBookedTravels(bookedTravelsList);
-            user.setPostedTravels(postedTravelsList);
-            
-             
-             List<Taxi> postedTaxiList = taxiRef.getTaxiCreated(clientID);
-             List<Taxi> bookedTaxiList = taxiRef.getTaxisReserved(clientID);
-               
-            user.setBookedTaxis(bookedTaxiList);
-            user.setPostedTaxis(postedTaxiList);
-       
+        user.setBookedTravels(bookedTravelsList);
+        user.setPostedTravels(postedTravelsList);
+        List<Taxi> postedTaxiList = taxiRef.getTaxiCreated(clientID);
+        List<Taxi> bookedTaxiList = taxiRef.getTaxisReserved(clientID);     
+        user.setBookedTaxis(bookedTaxiList);
+        user.setPostedTaxis(postedTaxiList);
         return user;
     }
 
@@ -261,9 +254,8 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
-     * Raccoglie tutti i passeggeri relazionati a un viaggio
-     * e le informazioni sul guidatore
-     * e sulla macchina
+     * Raccoglie tutti i passeggeri di un viaggio e le informazioni sul guidatore
+     * e sulla macchina.
      */
     @WebMethod(operationName = "getClientsRelatedToTravel")
     public TravelDataTemp getClientsRelatedToTravel (@WebParam(name = "travelID") long travelID) {
@@ -587,16 +579,13 @@ public class SOAPServiceClient {
         Taxi result = taxiRef.getTaxi(taxi_id);
         return result;
     }
+
+    
     
      /**
      * Web service operation
      */
-    @WebMethod(operationName = "isGmailOn")
-    public Boolean isGmailOn(@WebParam(name = "email") String email) {
-        boolean result = false;
-        result = clientRef.getClient(email).getGmail();
-        return result;
-    }
+    
 
    
     

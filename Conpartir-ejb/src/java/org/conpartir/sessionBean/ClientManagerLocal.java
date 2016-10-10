@@ -34,12 +34,13 @@ public interface ClientManagerLocal {
      * Permette di modificare alcune informazioni legate a un dato utente
      */
     public void editClient(String email, String name, String surname, char gender, int age, 
-             String pass, String urlPhoto, String gmail);    
-    
+             String pass, String urlPhoto);    
+    /*, String gmail*/
     
     
     /**
-     * Il metodo verifica se la stringa email è presente nel database
+     * Il metodo verifica se la stringa email è presente nel database 
+     * come email principale o come Gmail o come Twitter.
      * @return  
      */
     public boolean isEmail(String email);
@@ -58,20 +59,10 @@ public interface ClientManagerLocal {
     public Client getClient(String email);
     
      /**
-     * Restituisce true se l'oggetto di tipo Client ricercato per email
-     * ha abilitato l'accesso tramite Gmail al suo account
-     * @param email
-     * @return 
-     */
-    public Boolean isGmail(String email);
-    
-     /**
      * Setta il valore di gmail dell'utente
      * @param email
      * @param value
      */
-    public void setClientGmail(String email, String gmailValue ,boolean value);
-    
-    public boolean isGmailUsed (String gmailValue);
-    
+    public boolean setOtherEmail(String email, String gmailValue, String twitterValue);
+     
 }

@@ -21,11 +21,8 @@ public class ClientManager implements ClientManagerLocal {
     private ClientFacadeLocal clientFacade;    
     
     @Override
-    public void createClient(Client client) {
-        
-      
+    public void createClient(Client client) {      
         String genere = Character.toString(client.getGender()); 
-        
         if (client.getName() != null && client.getSurname() != null && 
                 genere != null && client.getAge() != 0 && client.getEmail() != null && 
                 client.getPass() != null){ 
@@ -40,7 +37,6 @@ public class ClientManager implements ClientManagerLocal {
         if (name != null && surname != null && genere != null && age != 0 &&
                 email != null && pass != null){
             Client nuovo  = new Client();
-            
             nuovo.setAge(age);
             nuovo.setEmail(email);
             nuovo.setGender(gender);
@@ -48,33 +44,26 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setSurname(surname);
             nuovo.setPass(pass);
             nuovo.setUrlPhoto("http://oi65.tinypic.com/2dlufo.jpg");
-         
-            nuovo.setGmail(false);
-            clientFacade.create(nuovo); 
-            
+            clientFacade.create(nuovo);    
         } 
     }
     
     @Override
       public void editClient(String email, String name, String surname, char gender, int age, 
-             String pass, String urlPhoto, String gmail) {
+             String pass, String urlPhoto) {
           Client editable = this.getClient(email);
-          
           if(!name.equals("undefined") && !name.equals(" ")) editable.setName(name);
           if(!surname.equals("undefined") && !surname.equals(" ")) editable.setSurname(surname);
           if(gender!='u') editable.setGender(gender);
           if(age!=0) editable.setAge(age);
           if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
           if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);          
-          if(gmail.equals("true")) editable.setGmail(true);
-          if(gmail.equals("false")) editable.setGmail(false);         
+          //if(gmail.equals("undefined")) editable.setGmailValue(gmail);
           
           //System.out.println(editable);
-         // clientFacade.edit(editable);
-          
-         
-      
+         // clientFacade.edit(editable);      
       };    
+    
     
     @Override
     public boolean isEmail(String email) {
@@ -82,8 +71,19 @@ public class ClientManager implements ClientManagerLocal {
         List<Client> list = clientFacade.findAll();
         for (Client temp : list){
             String tempEmail = temp.getEmail();
+            String tempGmail = temp.getGmailValue();
+            String tempTwitter = temp.getTwitterValue();
+            if (tempGmail != null && tempGmail.equals(email) ){
+                risultato = true;  
+                break;
+            }
+            if (tempTwitter != null && tempTwitter.equals(email)){
+                risultato = true; 
+                break;
+            }
             if (tempEmail.equals(email)){
                 risultato = true;
+                break;
             }
         }
         return risultato;
@@ -114,63 +114,52 @@ public class ClientManager implements ClientManagerLocal {
         }
         return client;
     }
-    @Override
-    public Boolean isGmail(String email) {
-        boolean result = false;
-        Client client = new Client();
-       
-        if (isEmail(email)==true) {
-             List<Client> list = clientFacade.findAll();
-             for (Client temp : list){
-                 String tempEmail = temp.getEmail();
-                 if (tempEmail.equals(email)){
-                     client = temp;            
-                 }
-             }
-        }
-        
-        if (client.getGmail()==true) result = true;
-    
-    return result;
-    }
     
     @Override
-    public void setClientGmail(String email,String gmailValue ,boolean value) {        
-        Client client = new Client();
-       
-        if (isEmail(email)==true) {
-             List<Client> list = clientFacade.findAll();
-             for (Client temp : list){
-                 String tempEmail = temp.getEmail();
-                 if (tempEmail.equals(email)){
-                     client = temp;            
-                 }
-             }
+    public boolean setOtherEmail(String email, String gmailValue, String twitterValue) {
+        Client owner = this.getClient(email);
+        boolean ris = false;
+        if (gmailValue != null){
+            /*  il seguente if verifica se il gmailValue è stato usato in una 
+                qualunque email, gmail o twitter. Se non esiste nel DB allora
+                può essere direttamente modificato il campo gmailValue nel proprietario.
+            */
+            if (this.isEmail(gmailValue)){
+                /*  il seguente if verifca se il proprietario che richiede la modifica
+                    ha lo stesso email e gmail o lo stesso twitter e gmail. 
+                    Il tal caso il campo gmailValue del proprietario viene direttamente modificato.
+                */
+                if (owner.getEmail().equals(gmailValue) || owner.getTwitterValue().equals(gmailValue)){
+                    owner.setGmailValue(gmailValue);
+                    ris = true;
+                }
+            }
+            else{
+                owner.setGmailValue(gmailValue);
+                ris = true;
+            }       
         }
-        client.setGmail(value);
-        client.setGmailValue(gmailValue);
-     
-    };
-    
-    @Override
-    public boolean isGmailUsed (String gmailValue) {
-    boolean answer = false;
-    
-    List<Client> list = clientFacade.findAll();
-    String tempEmail;
-    String tempGmailEmail;
-    for (Client temp : list){
-        tempEmail = temp.getEmail();
-        tempGmailEmail = temp.getGmailValue(); 
-        
-        if (tempEmail.equals(gmailValue)){
-            answer = true;            
+        if (twitterValue != null){
+            /*  il seguente if verifica se il twitterValue è stato usato in una 
+                qualunque email, gmail o twitter. Se non esiste nel DB allora
+                può essere direttamente modificato il campo twitterValue nel proprietario.
+            */
+            if (this.isEmail(twitterValue)){
+                /*  il seguente if verifca se il proprietario che richiede la modifica
+                    ha lo stesso email e twitter o lo stesso gmail e twitter. 
+                    Il tal caso il campo twitterValue del proprietario viene direttamente modificato.
+                */
+                if (owner.getEmail().equals(twitterValue) || owner.getGmailValue().equals(twitterValue)){
+                    owner.setTwitterValue(twitterValue);
+                    ris = true;
+                }
+            }
+            else{
+                owner.setTwitterValue(twitterValue);
+                ris = true;
+            }
         }
-        if (tempGmailEmail != null && tempGmailEmail.equals(gmailValue)) {
-            answer = true;
-        }
+        return ris;
     }
     
-    return answer;
-    }
 }

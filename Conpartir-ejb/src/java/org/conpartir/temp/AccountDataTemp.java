@@ -22,27 +22,16 @@ import org.conpartir.entity.Travel;
 public class AccountDataTemp {
     
     private String name;
-    
     private String surname;
-    
     private Integer age;
-    
     private String email;
-    
     private char gender;
-    
     private String urlPhoto;
-
     private boolean gmail;
-    
     private List<Driver> drivers; 
-    
     private List<Travel> postedTravels;
-    
     private List<Travel> bookedTravels;
-    
     private List<Taxi> postedTaxis;
-    
     private List<Taxi> bookedTaxis;
 
     public String getName() {
