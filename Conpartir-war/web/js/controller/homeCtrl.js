@@ -72,20 +72,7 @@ var myapp = angular.module('myApp',
             $scope.isAuthorized= false;
             $location.path("/");
             $location.url($location.path());
-        }; 
-        
-        var map;
-        $scope.initMap = function ()  {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 0, lng: 0},
-                zoom: 4
-            });
-        };  
-               
-                
-                
-            
-              
+        };               
    }]);
    
   

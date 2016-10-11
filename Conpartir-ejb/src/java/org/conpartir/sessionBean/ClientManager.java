@@ -43,7 +43,6 @@ public class ClientManager implements ClientManagerLocal {
             nuovo.setName(name);
             nuovo.setSurname(surname);
             nuovo.setPass(pass);
-            nuovo.setUrlPhoto("http://oi65.tinypic.com/2dlufo.jpg");
             clientFacade.create(nuovo);    
         } 
     }

@@ -80,12 +80,12 @@
                         if (result.return === "true") {
                              //l'utente ha abilitato il login via gmail
                              $scope.master.email = profile.getEmail();
-                             $scope.master.use = "gmail";                   
+                             $scope.master.use = "gmail";                  
                              
                              
-                             console.log('check delay');
-                            console.log($scope.master);
-                            auth.setGmailData($scope.master);
+                            //console.log('check delay');
+                            //console.log($scope.master);
+                            auth.setGmailData($scope.master);                            
                         }
                         else {
                             // l'utente non ha abilitato il login via gmail      

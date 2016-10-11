@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var modDetail = angular.module('detailModule', ['ngRoute']);
+  var modDetail = angular.module('detailModule', ['ngRoute','uiGmapgoogle-maps']);
         modDetail.controller('DetailController', ['$scope', '$route', '$location', 'shared', 'auth',
         function($scope, $route, $location, shared, auth) {
            
@@ -24,7 +24,8 @@
             var feedRate;
             var clientToFeed;
             var today= new Date ();
-             
+            
+            
             $scope.getDay = function (data) {
                 var splitter = data.indexOf('T');
                 return data.slice(0,splitter);                
@@ -211,8 +212,7 @@
             };
                        
             // Manca il controllo per evitare che estranei al viaggio lascino un feed
-            $scope.sendFeed = function () {
-        
+            $scope.sendFeed = function () {        
                 var input = {};               
                 input.author_email = sessionStorage.getItem("email");;
                 input.clientJudged_email = clientToFeed ;
@@ -268,10 +268,14 @@
                             $scope.feedbacks[0] = prova;
                             $scope.feedbackAvgRate = prova.feedBackCommento; 
                         };
-                    }
-                    
+                    }                    
                 });
-            };
+            };            
+            
+            // Mappe
+            $scope.map = { center: { latitude: 45.05, longitude: 7.66 }, zoom: 13 };
+            
+            
                         
             $scope.alert = function (message) {
                 $scope.feedAlert = message;       
@@ -280,10 +284,13 @@
             $scope.reload = function () {
                 $route.reload();
               };
-              
+                                         
             var isArray = function(what) {              
                 return Object.prototype.toString.call(what) === '[object Array]';
             };
+            
+            
+            
      
         }]);
     

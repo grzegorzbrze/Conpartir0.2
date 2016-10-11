@@ -88,6 +88,25 @@ public class SOAPServiceClient {
             @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass){
         Client datiClient = clientRef.getClient(email);
         String status;
+        /*char cGender = gender.charAt(0);
+        if (name.equals("undefined") || name.equals(" ")){
+            name = null;
+        }
+        if (surname.equals("undefined") || surname.equals(" ")){
+            surname = null;
+        }
+        if (cGender == 'u'){
+            cGender = null;
+        }
+        if(!name.equals("undefined") && !name.equals(" ")) editable.setName(name);
+          if(!surname.equals("undefined") && !surname.equals(" ")) editable.setSurname(surname);
+          if(gender!='u') editable.setGender(gender);
+          if(age!=0) editable.setAge(age);
+          if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
+          if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);          
+          //if(gmail.equals("undefined")) editable.setGmailValue(gmail);
+        */
+        
         if(!datiClient.getPass().equals(oldPass)) { 
            //lanciare un'eccezione
             status = "Le password inserite non coincidono";
@@ -148,8 +167,6 @@ public class SOAPServiceClient {
         user.setName(userData.getName());
         user.setSurname(userData.getSurname());
         user.setUrlPhoto(userData.getUrlPhoto());
-        // questa soluzione è necessaria perchè AccountDataTemp deve avere gmail
-        // non capisco cosa ci debba fare quindi non cancella il campo. 
         if (userData.getGmailValue() != null){
             user.setGmail(true);
         }

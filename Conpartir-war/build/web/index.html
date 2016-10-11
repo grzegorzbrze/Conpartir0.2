@@ -51,8 +51,7 @@
     <script src="js/controller/homeCtrl.js"></script>
     <script src="js/controller/historyCtrl.js"></script>
     
-     <script src="js/gMaps.js"></script>
-    
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
         
 
 </head>
@@ -72,7 +71,7 @@
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner">
 			    <div class="item active">
-			    	<img src="img/bg4.jpg" alt="First slide">
+			    	<img src="img/bg4x1300.jpg" alt="First slide">
                     <!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -91,7 +90,7 @@
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
-			    	<img src="img/bg2.jpg" alt="Second slide">
+			    	<img src="img/bg2x1300.jpg" alt="Second slide">
 			    	<!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -110,7 +109,7 @@
                     </div><!-- /header-text -->
 			    </div>
 			    <div class="item">
-			    	<img src="img/bg3.jpg" alt="Third slide">
+			    	<img src="img/bg3x1300.jpg" alt="Third slide">
 			    	<!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -170,8 +169,8 @@
                                                                   <li class="active"><a href="#intro" ng-click="go('/home')">Home</a></li>
                                                                   <!--<li><a href="#service">Servizi</a></li>
                                                                   <li><a href="#about">About</a></li>  
-                                                                  <li><a href="#contact">Contact</a></li> -->
-                                                                  <li class="bg-darkgray"><a href="#/search">Cerca</a></li>
+                                                                  <li><a href="#contact">Contact</a></li> 
+                                                                  <li class="bg-darkgray"><a href="#/search">Cerca</a></li> -->
                                                                   <li data-toggle="modal" data-target="#modalLogin" onclick="signOut()" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
                                                                   <li class="bg-darkgray" ng-show="isAuthorized" ><a href="#/account">Account</a></li>
                                                                    <li class="bg-darkgray" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></li>
@@ -227,19 +226,14 @@
                   <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   <button class="btn btn-skin center" onclick="signOut()">Google Sign Out</button>
                    
                   
-                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                <!--  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                       
-                  </fb:login-button>
-                  <div id="status">
-                      
+                  </fb:login-button> -->
+                  <div id="status">                    
                   </div>
-                  
                   <p></p>
-
-
                   <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
-                  <p>
-                      
+                  <p>                   
                   </p>
               </form>          
           </div>
@@ -274,6 +268,10 @@
           <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <form class="input-group adjust" novalidate="">
+                    <p></p>
+                    <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
+                    <p class="bg-success center" ng-show="ifSuccess">{{status}} Puoi tornare alla home in qualunque momento e fare il login.</p>
+                    <p></p>                    
                     <div class="input-group ">
                         <span class="input-group-addon" id="basic-addon1">Email</span>
                         <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
@@ -311,14 +309,8 @@
                     </div>
                     <p></p>
                     <button class="btn btn-skin btn-block" ng-click="register(user)">Registrati</button>
-          
-                  <p></p>
-                  <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
-                  <p class="bg-success center" ng-show="ifSuccess">{{status}} Puoi tornare alla home in qualunque momento e fare il login.</p>
-                  <p></p>
-                  
-              </form>          
-          </div>
+                </form>  
+            </div>
 
       </div>
       </div>
@@ -550,13 +542,13 @@
 <!-- /Modal per offrire un passaggio -->
 
 <!-- Modal per le mappe -->
-<div id="modalMap"  class="modal fade" role="dialog" onload="initMap()" ng-controller="MainController" >
+<div id="modalMap"  class="modal fade" role="dialog" ng-controller="DetailController" >
   <div class="modal-dialog">
 
     <!-- Modal content -->
     <div class="modal-content">
-      <div class="modal-body"  id="map">
-        
+      <div class="modal-body"> 
+       <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>        
         
       </div>
     </div>
@@ -578,7 +570,7 @@
       <div class="modal-body ">
         <p>Il viaggio è stato aggiunto con successo!
         Vuoi condividerlo?</p>
-        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Ho%20appena%20aggiunto%20un%20viaggio%20su%20Conpartir!" data-size="large">
+        <a class="twitter-share-button center" href="https://twitter.com/intent/tweet?text=Ho%20appena%20aggiunto%20un%20viaggio%20su%20Conpartir!&url=http://Conpartir03.com" data-size="large">
             Tweet
         </a>
       </div>
@@ -610,16 +602,27 @@
 
 	<footer>
 		<div class="container">
+                    <div class="row">                  
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="text-center">
+                                <a href="#intro" class="totop"><i class="fa fa-angle-up fa-3x"></i></a>
+                            </div>
+                        </div>
+                    </div>
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					
-					<div class="text-center">
-						<a href="#intro" class="totop"><i class="fa fa-angle-up fa-3x"></i></a>
-
-						<p>Valera, Inc. 795 Folsom Ave, Suite 600 San Francisco, CA 94107<br />
-						&copy;Copyright 2014 - Shuffle. Designed by <a href="http://bootstraptaste.com">Bootstraptaste</a></p>
-					</div>
+				<div class="col-md-5 col-md-offset-1">
+                                    <div class="text-center">
+                                        <p>Valera, Inc. 795 Folsom Ave, Suite 600 San Francisco, CA 94107<br />
+					&copy;Copyright 2014 - Shuffle. Designed by <a href="http://bootstraptaste.com">Bootstraptaste</a></p>
+                                    </div>
 				</div>
+                            
+                            <div class="col-md-5 col-md-offset-1">
+                                <div class="text-center">
+                                        <p>Conpartir 0.3<br />
+					è un progetto di architettura Java EE nato nell'ambito del corso universitario di Sistemi e Componenti per Servizi Web</p>
+                                    </div>                                
+                            </div>
 			</div>	
 		</div>
 	</footer>
@@ -629,13 +632,13 @@
 
 
     <!-- Core JavaScript Files -->
-    <script src="js/jquery.min.js"></script>	 
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>	
-    <script src="js/jquery.scrollTo.js"></script>
-    <script src="js/jquery.appear.js"></script>
+    <script src="frameworks/jquery/jquery.min.js"></script>	 
+    <script src="frameworks/bootstrap/js/bootstrap.min.js"></script>
+    <script src="frameworks/jquery/jquery.sticky.js"></script>
+    <script src="frameworks/jquery/jquery.flexslider-min.js"></script>
+    <script src="frameworks/jquery/jquery.easing.min.js"></script>	
+    <script src="frameworks/jquery/jquery.scrollTo.js"></script>
+    <script src="frameworks/jquery/jquery.appear.js"></script>
     <script src="js/stellar.js"></script>
     <script src="js/wow.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
@@ -646,9 +649,35 @@
     <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>    
     <script src="frameworks/xml2json.min.js"></script>
-    <!-- google maps 
-     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig&callback=initMap"
-    async defer></script>-->
+    
+      <!--  
+    <script>
+   window.initMap = function() {
+                 var start = {lat: -25.363, lng: 131.044};
+                 var map = new google.maps.Map(document.getElementById('map'), {
+                     zoom: 4,
+                     center: start 
+                 });
+                 var marker = new google.maps.Marker({
+                     position: start,
+                     map: map
+                 });
+             };  
+
+    </script>
+
+ google maps 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
+-->
+    
+    <!-- lodash -->
+    <script src="js/lodash.core.js"></script>
+    
+    <!-- angular-simple-logger -->
+    <script src="frameworks/angularJs/angular-simple-logger.js"></script>
+    
+    <!-- angular google maps -->
+    <script src="https://rawgit.com/angular-ui/angular-google-maps/2.4.0/dist/angular-google-maps.min.js"></script>
 
        <!-- Twitter -->
     <script>window.twttr = (function(d, s, id) {
@@ -668,8 +697,7 @@
         return t;
         }(document, "script", "twitter-wjs"));
     </script>
-  
-
+    
 </body>
 
 </html>

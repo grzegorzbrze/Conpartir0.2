@@ -46,7 +46,7 @@ public class Client implements Serializable {
     private String pass;
     
     @Column (name = "URLPHOTO")
-    private String urlPhoto;
+    private String urlPhoto = "http://oi65.tinypic.com/2dlufo.jpg";
     
     @Column (name = "GMAILVALUE")
     private String gmailValue = null;

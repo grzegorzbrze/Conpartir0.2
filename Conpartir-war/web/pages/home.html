@@ -58,7 +58,7 @@
                                 <p>
                                     Non trovi ciò che cerchi? Proponiti come guidatore.
                                 </p>
-                                <a href="#/login" class="btn btn-skin">Vai al Login</a>
+                                <a data-toggle="modal" data-target="#modalLogin" class="btn btn-skin">Vai al Login</a>
                             </div>
                         </div>
                     </div>
@@ -84,61 +84,112 @@
     </section>
 <!-- /Section: services -->
 
-<!-- Section: about -->
-    <section id="about" class="home-section color-dark bg-white" >
-		<div class="container marginbot-50" >
+
+	<!-- Section: search -->
+    <section id="search" class="home-section color-dark text-center bg-gray" ng-controller="TravelController">
+		<div class="container marginbot-50">
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
 					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
 					<div class="section-heading text-center">
-					<h2 class="h-bold">About</h2>
+					<h2 class="h-bold">Ricerca viaggi</h2>
 					<div class="divider-header"></div>
-                                        <h5> Conpartir 0.3</h5>
-                                        <p>è un progetto di architettura Java EE</p>
-                                        <p>nato nell'ambito del corso universitario di Sistemi e Componenti per Servizi Web</p>
+					<p>Da qui puoi iniziare la ricerca dei passaggi.</p>
 					</div>
 					</div>
+                                    
+                                    <button class="btn btn-skin" data-toggle="modal" data-target="#modalMap">prova mappa</button>
 				</div>
 			</div>
 
 		</div>
 
-	<!--	<div class="container">
+		<div class="container">
                     <div class="row">
-			<div class="col-md-6">
-			    <img src="img/dummy1.jpg" alt="" class="img-responsive" />     
+                        <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" >
+                            <div class="row">
+                                <div class="radio-inline-panel">
+                                    <label>Tipo di viaggio: </label>
+                                    <label class="radio-inline" ><input type="radio"  name="optradio"  ng-value="true" ng-click="switch('car')"/>Macchina</label>
+                                    <label class="radio-inline" ><input type="radio" name="optradio" ng-value="false" ng-click="switch('taxi')"/>Taxi</label>
+                                </div>
+                            </div>
+                            <div id="cars" ng-show="showCar">  
+                                <div class="row margintop-10">
+                                    <div class="col-md-6 xs-marginbot-20">
+                                        <input name="partenza" class="form-control input-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="destinazione" class="form-control input-lg" type="text" placeholder="Destinazione" ng-model="data.to"/> 
+                                    </div>
+                                </div>
+                                <div class="row margintop-10">
+                                    <div class="col-md-6 xs-marginbot-20"> 
+                                        <input name="giorno"  class="form-control input-lg" id="datepicker" data-provide="datepicker-inline"/>  
+                                    </div>
+                                    <div class="col-md-6 xs-marginbot-20"> 
+                                        <input id="timepicker" placeholder="Ora" type="text" class="form-control input-lg" ng-model="data.time" data-provide="timepicker-inline">        
+                                    </div>   
+                                    <a class="btn btn-skin btn-lg" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
+                                       
+                                </div>
+                                <p> </p>
+                            </div>
+                                 <div id="taxis" ng-show="showTaxi">
+                                     <div class="row margintop-10">
+                                    <div class="col-md-6 xs-marginbot-20">
+                                        <input name="partenza" class="form-control input-lg" type="text" placeholder="Partenza" ng-model="data.from"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input name="destinazione" class="form-control input-lg" type="text" placeholder="Destinazione" ng-model="data.to"/> 
+                                    </div>
+                                </div>
+                                <div class="row margintop-10">
+                                    <div class="col-md-6 xs-marginbot-20"> 
+                                        <input name="giorno"  class="form-control input-lg" id="datepicker2" data-provide="datepicker-inline"/>  
+                                    </div>
+                                    <div class="col-md-6 xs-marginbot-20"> 
+                                        <input id="timepicker2" placeholder="Ora" type="text" class="form-control input-lg" ng-model="data.time" data-provide="timepicker-inline">        
+                                    </div>   
+                                    <a class="btn btn-skin btn-lg margintop-10" ng-click="search(data)" role="button"><i class=" glyphicon glyphicon-search"></i></a>
+                                       
+                                </div>
+                                <p> </p>
+                                 </div>
+                                 <p class="bg-danger center col-lg-6 col-lg-offset-3" ng-show="ifAlert">{{alert}}</p>
+                             </div>
                         </div>
-                        <div class="col-md-6">	
-                            <p>Graeco voluptua sed ea, malorum quaeque cotidieque per eu, quo id possit dissentias.</p>			
-			<div class="progress progress-striped active">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-				40% - eCommerce
-			  </div>
-			</div>
-			<div class="progress progress-striped active">
-			  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-				20% - Ruby
-			  </div>
-			</div>
-			<div class="progress progress-striped active">
-			  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-				60% - User interface
-			  </div>
-			</div>
-			<div class="progress progress-striped active">
-			  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-				80% - WordPress
-			  </div>
+                    </div>
+                
+        <div class =" container margintop-20">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 scrollable-content">
+                    <div ng-show="showHead">
+                        <h3 class="h-bold">Proposte di viaggi da <b>{{data.from}}</b> a <b>{{data.to}}</b></h3>
+                        <a ng-repeat=" item in travelList" class="list-group col-md-12" ng-click="go(item)">
+                            <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-road"></i></div> 
+                            <div class="col-md-9 list-group-item">Viaggio del {{getDay(item.data)}} alle {{getTime(item.time)}}</div> 
+                            <div class="col-md-2 list-group-item">{{item.freeSeats}} posti</div>          
+                        </a>
+                    </div>
+                    <div ng-show="empty" class="panel"> 
+                        <div class="bg-danger center"> 
+                            <h4>Ci dispiace, sembra che nessuno abbia proposto un viaggio per quella data.</h4>
                         </div>
-                        </div>
-                    </div>		
-		</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
 	</section>
-	<!-- /Section: about -->
+	<!-- /Section: search -->
+
         
 
 	<!-- Section: contact -->
-    <section id="contact" class="home-section nopadd-bot color-dark bg-gray text-center">
+    <section id="contact" class="home-section nopadd-bot color-dark bg-white text-center">
 		<div class="container marginbot-50">
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
@@ -147,6 +198,7 @@
 					<h2 class="h-bold">Contact us</h2>
 					<div class="divider-header"></div>
 					<p>Lorem ipsum dolor sit amet, agam perfecto sensibus usu at duo ut iriure.</p>
+                                        
 					</div>
 					</div>
 				</div>

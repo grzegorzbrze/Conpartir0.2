@@ -338,3 +338,12 @@ html, body {
       #map {
         height: 200px;
       }
+
+      
+    .angular-google-map-container { 
+        height: 300px;
+        width: 500px;
+        
+        
+        
+    }
