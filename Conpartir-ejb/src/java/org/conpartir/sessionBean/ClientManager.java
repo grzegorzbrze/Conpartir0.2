@@ -51,16 +51,12 @@ public class ClientManager implements ClientManagerLocal {
       public void editClient(String email, String name, String surname, char gender, int age, 
              String pass, String urlPhoto) {
           Client editable = this.getClient(email);
-          if(!name.equals("undefined") && !name.equals(" ")) editable.setName(name);
-          if(!surname.equals("undefined") && !surname.equals(" ")) editable.setSurname(surname);
-          if(gender!='u') editable.setGender(gender);
-          if(age!=0) editable.setAge(age);
-          if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
-          if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);          
-          //if(gmail.equals("undefined")) editable.setGmailValue(gmail);
-          
-          //System.out.println(editable);
-         // clientFacade.edit(editable);      
+          if(name != null) editable.setName(name);
+          if(surname != null) editable.setSurname(surname);
+          if(gender != ' ') editable.setGender(gender);
+          if(age != 0) editable.setAge(age);
+          if(pass != null) editable.setPass(pass);
+          if(urlPhoto != null) editable.setUrlPhoto(urlPhoto);           
       };    
     
     

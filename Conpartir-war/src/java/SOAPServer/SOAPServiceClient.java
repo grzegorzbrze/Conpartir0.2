@@ -88,7 +88,7 @@ public class SOAPServiceClient {
             @WebParam(name = "oldPass") String oldPass, @WebParam(name = "newPass") String newPass){
         Client datiClient = clientRef.getClient(email);
         String status;
-        /*char cGender = gender.charAt(0);
+        char cGender = gender.charAt(0);
         if (name.equals("undefined") || name.equals(" ")){
             name = null;
         }
@@ -96,23 +96,21 @@ public class SOAPServiceClient {
             surname = null;
         }
         if (cGender == 'u'){
-            cGender = null;
+            cGender = ' ';
         }
-        if(!name.equals("undefined") && !name.equals(" ")) editable.setName(name);
-          if(!surname.equals("undefined") && !surname.equals(" ")) editable.setSurname(surname);
-          if(gender!='u') editable.setGender(gender);
-          if(age!=0) editable.setAge(age);
-          if(!pass.equals("undefined") && !pass.equals(" ")) editable.setPass(pass);
-          if(!urlPhoto.equals("undefined") && !urlPhoto.equals(" ")) editable.setUrlPhoto(urlPhoto);          
-          //if(gmail.equals("undefined")) editable.setGmailValue(gmail);
-        */
+        if (newPass.equals("undefined") || newPass.equals(" ")){
+            newPass = null;
+        }
+        if (urlPhoto.equals("undefined") || urlPhoto.equals(" ")){
+            urlPhoto = null;
+        }
         
-        if(!datiClient.getPass().equals(oldPass)) { 
+        if(oldPass != null && !datiClient.getPass().equals(oldPass)) { 
            //lanciare un'eccezione
             status = "Le password inserite non coincidono";
         }
         else {
-            char cGender = gender.charAt(0);
+            //char cGender = gender.charAt(0);
             clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto);
             status = "Modifica dell'account eseguita con successo";
         }
@@ -163,7 +161,8 @@ public class SOAPServiceClient {
         Long clientID = userData.getId();
         user.setAge(userData.getAge());
         user.setEmail(email);
-        user.setGender(userData.getGender());
+        String sGender = Character.toString(userData.getGender());
+        user.setGender(sGender);
         user.setName(userData.getName());
         user.setSurname(userData.getSurname());
         user.setUrlPhoto(userData.getUrlPhoto());
@@ -172,6 +171,11 @@ public class SOAPServiceClient {
         }
         else
             user.setGmail(false);
+        if (userData.getTwitterValue() != null){
+            user.setTwitter(true);
+        }
+        else
+            user.setTwitter(false);
         
         
         List<Driver> driversData = driverRef.getDrivers(clientID);

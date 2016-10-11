@@ -18,16 +18,17 @@ import org.conpartir.entity.Travel;
  */
 
 @XmlRootElement(name = "AccountDataTemp")
-@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto","gmail","drivers","postedTravels","bookedTravels","postedTaxis","bookedTaxis"})
+@XmlType(propOrder = {"name", "surname", "age", "email", "gender", "urlPhoto","gmail","twitter","drivers","postedTravels","bookedTravels","postedTaxis","bookedTaxis"})
 public class AccountDataTemp {
     
     private String name;
     private String surname;
     private Integer age;
     private String email;
-    private char gender;
+    private String gender;
     private String urlPhoto;
     private boolean gmail;
+    private boolean twitter;
     private List<Driver> drivers; 
     private List<Travel> postedTravels;
     private List<Travel> bookedTravels;
@@ -66,11 +67,11 @@ public class AccountDataTemp {
         this.email = email;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -132,6 +133,14 @@ public class AccountDataTemp {
         this.bookedTaxis = bookedTaxis;
     }
 
+    public boolean isTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(boolean twitter) {
+        this.twitter = twitter;
+    }
+    
     @Override
     public String toString() {
         return "AccountDataTemp{" + "name=" + name + ", surname=" + surname + ", age=" + age + ", email=" + email + ", gender=" + gender + ", urlPhoto=" + urlPhoto + ", drivers=" + drivers + ", postedTravels=" + postedTravels + ", bookedTravels=" + bookedTravels + ", postedTaxis=" + postedTaxis + ", bookedTaxis=" + bookedTaxis + '}';
