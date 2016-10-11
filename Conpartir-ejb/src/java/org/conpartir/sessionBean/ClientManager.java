@@ -124,9 +124,17 @@ public class ClientManager implements ClientManagerLocal {
                     ha lo stesso email e gmail o lo stesso twitter e gmail. 
                     Il tal caso il campo gmailValue del proprietario viene direttamente modificato.
                 */
-                if (owner.getEmail().equals(gmailValue) || owner.getTwitterValue().equals(gmailValue)){
-                    owner.setGmailValue(gmailValue);
-                    ris = true;
+                if (owner.getTwitterValue() != null){
+                    if (owner.getEmail().equals(gmailValue) || owner.getTwitterValue().equals(gmailValue)){
+                        owner.setGmailValue(gmailValue);
+                        ris = true;
+                    }
+                }
+                else{
+                    if (owner.getEmail().equals(gmailValue)){
+                        owner.setGmailValue(gmailValue);
+                        ris = true;
+                    }
                 }
             }
             else{
@@ -144,10 +152,19 @@ public class ClientManager implements ClientManagerLocal {
                     ha lo stesso email e twitter o lo stesso gmail e twitter. 
                     Il tal caso il campo twitterValue del proprietario viene direttamente modificato.
                 */
-                if (owner.getEmail().equals(twitterValue) || owner.getGmailValue().equals(twitterValue)){
-                    owner.setTwitterValue(twitterValue);
-                    ris = true;
+                if (owner.getGmailValue() != null){
+                    if (owner.getEmail().equals(twitterValue) || owner.getGmailValue().equals(twitterValue)){
+                        owner.setTwitterValue(twitterValue);
+                        ris = true;
+                    }
                 }
+                else{
+                    if (owner.getEmail().equals(twitterValue)){
+                        owner.setTwitterValue(twitterValue);
+                        ris = true;
+                    }
+                }
+                    
             }
             else{
                 owner.setTwitterValue(twitterValue);
