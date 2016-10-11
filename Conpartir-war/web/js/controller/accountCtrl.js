@@ -25,6 +25,7 @@
             $scope.ready = false;
             $scope.isAuth;
             $scope.isGmail;
+            $scope.isTwitter;
             $scope.selectedCar;
             $scope.isArray = false;
             $scope.closeTravels;
