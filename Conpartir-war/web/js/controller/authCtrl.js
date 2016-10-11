@@ -9,6 +9,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
         var data;
         var obj = {};
         var isGmail;
+        var isTwitter;
         var gmailData;
         
         //variabili per le richieste SOAP
@@ -168,6 +169,40 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 
                 return promise;                   
            },
+           
+            isTwitterOn: function (email){
+               var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "isTwitterOn";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ email +'</email>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.isTwitterOnResponse;
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    isTwitter = res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                   
+           },
+           
             
             getData: function () {
                 return obj;
@@ -175,6 +210,10 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             
             getGmailValue: function () {
                 return isGmail;
+            },
+            
+            getTwitterValue: function () {
+                return isTwitter;
             },
             
             getGmailData: function () {

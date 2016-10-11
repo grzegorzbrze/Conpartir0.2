@@ -65,8 +65,7 @@
                 else $scope.servletCall();
             };   
             
-             
-            function onSignIn(googleUser) {
+             function onSignIn(googleUser) {
                 var profile = googleUser.getBasicProfile();
                /* console.log('ID: ' + profile.getId());
                 console.log('Name: ' + profile.getGivenName());
@@ -77,6 +76,33 @@
                 auth.isGmailOn(profile.getEmail()).then(function (promise) {
                      if (promise.status === 200 )  {
                         var result = auth.getGmailValue();
+                        if (result.return === "true") {
+                             //l'utente ha abilitato il login via gmail
+                             $scope.master.email = profile.getEmail();
+                             $scope.master.use = "gmail";                  
+                             
+                             
+                            //console.log('check delay');
+                            //console.log($scope.master);
+                            auth.setGmailData($scope.master);                            
+                        }
+                        else {
+                            // l'utente non ha abilitato il login via gmail      
+                            alert("devi prima entrare con il tuo account Conpartir e abilitare il login via gmail");
+                        }
+                     }
+                
+                
+                });
+            };
+            
+            
+             
+            $scope.onTwitterSignIn = function(twitterUser) {
+                 
+                auth.isTwitterOn(twitterUser.email).then(function (promise) {
+                     if (promise.status === 200 )  {
+                        var result = auth.getTwitterValue();
                         if (result.return === "true") {
                              //l'utente ha abilitato il login via gmail
                              $scope.master.email = profile.getEmail();
@@ -210,7 +236,7 @@
             
             
             // FACEBOOK LOGIN
-            
+            /*
               // This is called with the results from from FB.getLoginStatus().
             function statusChangeCallback(response) {
                 console.log('statusChangeCallback');
@@ -284,7 +310,7 @@
                 document.getElementById('status').innerHTML =
                         'Thanks for logging in, ' + response.name + '!';
             });
-        }
+        } */
     }]);
    
 })();

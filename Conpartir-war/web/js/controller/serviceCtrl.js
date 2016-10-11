@@ -147,7 +147,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            },
            
-           createTaxiTravel: function (input) { 
+            createTaxiTravel: function (input) { 
                var res;
                 var sr;
                 var action;
@@ -261,7 +261,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
            
            
            
-           setClientGmail: function(input) {                
+            setClientGmail: function(input) {                
                 var res;
                 var sr;
                 var action;
@@ -271,8 +271,7 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                 sr = SOAPhead +
                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
                            '<email>'+ input.email +'</email>' +
-                           '<gmailValue>'+ input.gmailValue +'</gmailValue>' +
-                           '<gmail>'+ input.gmail +'</gmail>' +
+                           '<gmailValue>'+ input.gmailValue +'</gmailValue>' +                           
                            '</ns0:' + opName + '>'+
                            SOAPtail; 
                 action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
@@ -285,6 +284,40 @@ var modService = angular.module('serviceModule', ['ngRoute']);
                         .success(function (data, status, headers, config) {
                             var jsonObj = x2js.xml_str2json( data );
                     res = jsonObj.Envelope.Body.setGmailResponse;
+                    delete res["_xmlns:ns2"];
+                    delete res["__prefix"];
+                    obj = res;
+                })
+                        .error(function (data, status, headers, config) {
+                            return {"status": false};
+                });
+                
+                return promise;                     
+            },
+            
+            setClientTwitter: function(input) {                
+                var res;
+                var sr;
+                var action;
+                var opName;
+                var promise;
+                var opName = "setTwitter";           
+                sr = SOAPhead +
+                           '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                           '<email>'+ input.email +'</email>' +
+                           '<twitterValue>'+ input.twitterValue +'</twitterValue>' +
+                           '</ns0:' + opName + '>'+
+                           SOAPtail; 
+                action = '"' + "http://SOAPServer" + "/" + opName + '"' ;
+                
+                promise = $http.post(SOAPbase, sr, { "headers": {
+                        'Content-Type' : "text/xml;charset=utf-8",
+                        'SOAPAction': action
+                    }                  
+                })
+                        .success(function (data, status, headers, config) {
+                            var jsonObj = x2js.xml_str2json( data );
+                    res = jsonObj.Envelope.Body.setTwitterResponse;
                     delete res["_xmlns:ns2"];
                     delete res["__prefix"];
                     obj = res;

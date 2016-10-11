@@ -20,7 +20,7 @@
             $scope.showNextTravels;
             $scope.showPastTravels;
             $scope.gmailValue;
-            
+            $scope.twitterValue;
             
             $scope.ready = false;
             $scope.isAuth;
@@ -131,7 +131,10 @@
                     console.log($scope.clientInfo);
                     
                     if($scope.clientInfo.gmail==="false") $scope.isGmail = false;
-                    if($scope.clientInfo.gmail==="true") $scope.isGmail = true;
+                    if($scope.clientInfo.gmail==="true") $scope.isGmail = true;                    
+                    
+                    if($scope.clientInfo.twitter==="false") $scope.isGmail = false;
+                    if($scope.clientInfo.twitter==="true") $scope.isGmail = true;
 
                     $scope.driversInfo = $scope.clientInfo.drivers;
                     shared.setCars($scope.driversInfo);
@@ -304,10 +307,11 @@
                 
                 var res = $scope.checkGmail();
                 if (res==="ok"){ 
-                    if(input.gmailValue !== input.email && input.gmailValue !== "") {
+                    //TOGLIERE QUESTO CONTROLLO
+                    /* if(input.gmailValue !== input.email && input.gmailValue !== "") {
                         alert("La mail usata per il tuo account principale è già una gmail valida. \n\
                                Non c'é bisogno di inserirne un'altra");
-                    }
+                    } */
                     input.gmailValue = input.email; 
                 }
                 
@@ -323,13 +327,33 @@
             $scope.gmailUnlink = function () {
                 var input = {
                     email : sessionStorage.getItem('email'),
-                    gmailValue : "",
-                    gmail : false
+                    gmailValue : ""
                 };
                 $scope.editGmail(input);
                 
             };
 
+
+            $scope.editTwitter = function (input) {
+                if (self.email === undefined)self.email = sessionStorage.getItem('email');  
+                input.email = self.email;                
+                shared.setClientTwitter(input).then(function (promise) {
+
+                    $scope.modalInfo = shared.getData();
+
+                    //manca un avviso all'utente
+                    $location.path('/account');
+                });
+            };
+            
+            $scope.twitterUnlink = function () {
+                var input = {
+                    email : sessionStorage.getItem('email'),
+                    twitterValue : ""                    
+                };
+                $scope.editTwitter(input);
+                
+            };
 
             $scope.addCar = function (input) {
                 if (self.email === undefined)
