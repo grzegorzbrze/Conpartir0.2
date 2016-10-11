@@ -133,8 +133,8 @@
                     if($scope.clientInfo.gmail==="false") $scope.isGmail = false;
                     if($scope.clientInfo.gmail==="true") $scope.isGmail = true;                    
                     
-                    if($scope.clientInfo.twitter==="false") $scope.isGmail = false;
-                    if($scope.clientInfo.twitter==="true") $scope.isGmail = true;
+                    if($scope.clientInfo.twitter==="false") $scope.isTwitter = false;
+                    if($scope.clientInfo.twitter==="true") $scope.isTwitter = true;
 
                     $scope.driversInfo = $scope.clientInfo.drivers;
                     shared.setCars($scope.driversInfo);
