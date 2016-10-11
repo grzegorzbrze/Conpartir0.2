@@ -100,13 +100,18 @@
              
             $scope.onTwitterSignIn = function(twitterUser) {
                  
+                 auth.doTwitterRequestToken().then(function (promise) { 
+                  if (promise.status === 200 )  {console.log("OK");};
+              });
+                 
+                 /*
                 auth.isTwitterOn(twitterUser.email).then(function (promise) {
                      if (promise.status === 200 )  {
                         var result = auth.getTwitterValue();
                         if (result.return === "true") {
-                             //l'utente ha abilitato il login via gmail
+                             //l'utente ha abilitato il login via twitter
                              $scope.master.email = profile.getEmail();
-                             $scope.master.use = "gmail";                  
+                             $scope.master.use = "twitter";                  
                              
                              
                             //console.log('check delay');
@@ -120,7 +125,7 @@
                      }
                 
                 
-                });
+                });*/
             };
             
                         

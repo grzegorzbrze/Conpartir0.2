@@ -51,9 +51,8 @@
     <script src="js/controller/homeCtrl.js"></script>
     <script src="js/controller/historyCtrl.js"></script>
     
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
-        
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
+   
 </head>
 
 <body  ng-app = "myApp" ng-controller = "MainController" id="page-top" data-spy="scroll" data-target=".navbar-custom">
@@ -222,13 +221,10 @@
                   <p></p>
                   <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
                   <p></p>
-                  <span> Oppure fai il login tramite google: </span>
-                  <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   <button class="btn btn-skin center" onclick="signOut()">Google Sign Out</button>
-                   
-                  
-                <!--  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                      
-                  </fb:login-button> -->
+                  <span class="text-center"> Oppure fai il login tramite google: </span>
+                  <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   <!--<button class="btn btn-skin center" onclick="signOut()">Google Sign Out</button> -->
+                  <button class="btn-block" ng-click="onTwitterSignIn()">Twitter</button>
+                                    
                   <div id="status">                    
                   </div>
                   <p></p>
@@ -449,7 +445,6 @@
              <span class="input-group-addon" id="basic-addon10">Twitter a cui associare:</span>
             <input name="twitter" class="form-control" type="text" ng-model="mod.twitterValue" aria-describedby="basic-addon10">
           
-          
           </div>
           
           
@@ -574,11 +569,11 @@
 </div>
 <!-- /Modal per offrire un passaggio -->
 
-<!-- Modal per le mappe -->
+<!-- Modal per le mappe
 <div id="modalMap"  class="modal fade" role="dialog" ng-controller="DetailController" >
   <div class="modal-dialog">
 
-    <!-- Modal content -->
+    <!-- Modal content
     <div class="modal-content">
       <div class="modal-body"> 
        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>        

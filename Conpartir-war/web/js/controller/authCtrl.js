@@ -203,6 +203,29 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 return promise;                   
            },
            
+           
+           
+           //twitter sign in flow
+           doTwitterRequestToken: function () {
+                var promise;
+                promise = $http({
+                    method: 'POST',
+                    url: 'https://api.twitter.com/oauth/request_token',
+                    headers: {'Content-Type': 'application/json'}
+                    
+                })
+                        .success( function (data, status, header) {
+                            
+                        })
+                        
+                       .error(function (data, status, headers, config) {
+                          
+                                   
+                                   return {"status": false};
+                     });
+                     return promise;
+                
+            },  
             
             getData: function () {
                 return obj;

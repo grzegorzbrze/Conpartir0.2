@@ -47,6 +47,8 @@
     <message name="getSpecificTaxiTravelResponse"/>
     <message name="editClient"/>
     <message name="editClientResponse"/>
+    <message name="isTwitterOn"/>
+    <message name="isTwitterOnResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -132,6 +134,10 @@
             <input message="tns:editClient"/>
             <output message="tns:editClientResponse"/>
         </operation>
+        <operation name="isTwitterOn">
+            <input message="tns:isTwitterOn"/>
+            <output message="tns:isTwitterOnResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -216,6 +222,10 @@
             <output/>
         </operation>
         <operation name="editClient">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="isTwitterOn">
             <input/>
             <output/>
         </operation>
