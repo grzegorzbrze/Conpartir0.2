@@ -411,8 +411,6 @@
         <form novalidate class="input-group adjust" >
           <p></p> <label>Collegamento con Gmail: </label>
           <div class="radio-inline-panel">             
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.gmail" ng-value="'true'"/>Attiva</label>
-           <!-- <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gmail" ng-value="'false'"/>Disattiva</label> -->
             <span class="input-group-addon" id="basic-addon10">Gmail a cui associare:</span>
             <input name="gmail" class="form-control" type="text" ng-model="mod.gmailValue" aria-describedby="basic-addon10">
           
@@ -434,7 +432,7 @@
 <!-- /Modal per modificare le informazioni di gmail -->
 
 
-<!-- Modal per collegare con Gmail-->
+<!-- Modal per collegare con Twitter-->
 <div id="modalTwitter" class="modal fade" role="dialog" ng-controller="AccountController">
   <div class="modal-dialog">
 
@@ -447,17 +445,15 @@
       <div class="modal-body">
         <form novalidate class="input-group adjust" >
           <p></p> <label>Collegamento con Twitter: </label>
-          <div class="radio-inline-panel">             
-            <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="mod.twitter" ng-value="'true'"/>Attiva</label>
-           <!-- <label class="radio-inline" ><input type="radio" name="optradio" ng-model="mod.gmail" ng-value="'false'"/>Disattiva</label> -->
-            <span class="input-group-addon" id="basic-addon10">Twitter a cui associare:</span>
-            <input name="gmail" class="form-control" type="text" ng-model="mod.gmailValue" aria-describedby="basic-addon10">
+          <div class="radio-inline-panel">
+             <span class="input-group-addon" id="basic-addon10">Twitter a cui associare:</span>
+            <input name="twitter" class="form-control" type="text" ng-model="mod.twitterValue" aria-describedby="basic-addon10">
           
           
           </div>
           
           
-          <button class="btn btn-lg btn-skin btn-block margintop-10" ng-click="editGmail(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
+          <button class="btn btn-lg btn-skin btn-block margintop-10" ng-click="editTwitter(mod); showModal=true" data-dismiss="modal">Modifica i dati</button>
           
       </form>
       </div>
@@ -468,7 +464,7 @@
 
   </div>
 </div>
-<!-- /Modal per modificare le informazioni di gmail -->
+<!-- /Modal per modificare le informazioni di Twitter-->
 
 
 <!-- Modal AddCar -->

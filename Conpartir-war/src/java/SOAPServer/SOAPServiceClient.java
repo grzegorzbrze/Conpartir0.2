@@ -147,8 +147,16 @@ public class SOAPServiceClient {
     
     
     @WebMethod(operationName = "isGmailOn")
-    public Boolean isGmailOn(@WebParam(name = "email") String email) {
+    public boolean isGmailOn(@WebParam(name = "email") String email) {
         return clientRef.getClient(email).getGmailValue() != null;
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "isTwitterOn")
+    public boolean isTwitterOn(@WebParam(name = "email") String email) {
+        return clientRef.getClient(email).getTwitterValue() != null;
     }
     
      /**
@@ -600,6 +608,8 @@ public class SOAPServiceClient {
         Taxi result = taxiRef.getTaxi(taxi_id);
         return result;
     }
+
+    
 
     
     
