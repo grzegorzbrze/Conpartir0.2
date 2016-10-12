@@ -52,10 +52,8 @@
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content bg-white">
-                            <div role="tabpanel" id="profile" ng-show="show[0]">
-                                 <p></p>
-                                <dl class="dl-horizontal" ng-model="clientInfo">
-                                     
+                            <div role="tabpanel" id="profile" ng-show="show[0]">                               
+                                <dl class="dl-horizontal margintop-10" ng-model="clientInfo">                                     
                                 <dt>Nome e Cognome</dt>
                                 <dd>{{clientInfo.name}} {{clientInfo.surname}}</dd>
                                 <dt>Sesso</dt>
@@ -66,9 +64,8 @@
                                 <dd>{{clientInfo.email}}</dd>
                                 </dl>
                             </div>
-                            <div role="tabpanel"  id="carProfile" ng-show="show[1]">
-                                                       
-                                <div class="btn-group"  ng-show="isArray" role="group" aria-label="...">
+                            <div role="tabpanel"  id="carProfile" ng-show="show[1]">                                                       
+                                <div class="btn-group margintop-10"  ng-show="isArray" role="group" aria-label="...">
                                     <button type="button" ng-repeat="item in driversInfo" class="btn btn-skin" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
                                 </div>                        
                                 <p></p>   
@@ -81,9 +78,8 @@
                                 <a href="#account" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#account" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
                     
                             </div>
-                            <div role="tabpanel" id="feedback" ng-show="show[2]">
-                                <p></p>
-                                <dl class="dl-horizontal" ng-repeat="commenti in commentInfo">                           
+                            <div role="tabpanel" id="feedback" ng-show="show[2]">                                
+                                <dl class="dl-horizontal margintop-10" ng-repeat="commenti in commentInfo">                           
                                 <dt>Autore:</dt>
                                 <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
                                 <dt>Testo:</dt>
