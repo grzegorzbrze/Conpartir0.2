@@ -189,7 +189,7 @@ public class Registration extends HttpServlet {
          email = (String) joUser.get("email");
          password = (String) joUser.get("pass");      
          
-         Boolean emailCheck = clientManager.isEmail(email);
+         boolean emailCheck = clientManager.isEmail(email);
          
          if (emailCheck == true) {
              if (use.equals("registration")){

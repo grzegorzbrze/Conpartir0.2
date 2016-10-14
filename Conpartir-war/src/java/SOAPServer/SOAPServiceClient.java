@@ -159,6 +159,33 @@ public class SOAPServiceClient {
         return clientRef.getClient(email).getTwitterValue() != null;
     }
     
+    
+    /**
+     * Web service operation
+     * Cancella una mail secondaria su richiesta dell'utente (email)
+     * il campo secondaryEmail è una stringa che indica quale valore cancellare 
+     * per ora o twitter o gmail
+     * Il metodo NON cancella le mai principali.
+     */
+    @WebMethod(operationName = "deleteSecondaryEmail")
+    public String deleteSecondaryEmail(@WebParam(name = "email") String email,
+            @WebParam(name = "secondaryEmail") String secondaryEmail) {
+
+        if (secondaryEmail.equals("gmail")) {
+            clientRef.setOtherEmail(email, "", null);
+
+            return "Gmail disaccoppiata con successo";
+        }
+        if (secondaryEmail.equals("twitter")) {
+            clientRef.setOtherEmail(email, null, "");
+            return "Twitter disaccoppiato con successo";
+        }
+        return "errore";
+    }
+
+    
+    
+    
      /**
      * Web service operation
      */

@@ -114,7 +114,7 @@ public class ClientManager implements ClientManagerLocal {
     public boolean setOtherEmail(String email, String gmailValue, String twitterValue) {
         Client owner = this.getClient(email);
         boolean ris = false;
-        if (gmailValue != null){
+        if (gmailValue != null || gmailValue == ""){
             /*  il seguente if verifica se il gmailValue è stato usato in una 
                 qualunque email, gmail o twitter. Se non esiste nel DB allora
                 può essere direttamente modificato il campo gmailValue nel proprietario.
@@ -126,23 +126,26 @@ public class ClientManager implements ClientManagerLocal {
                 */
                 if (owner.getTwitterValue() != null){
                     if (owner.getEmail().equals(gmailValue) || owner.getTwitterValue().equals(gmailValue)){
-                        owner.setGmailValue(gmailValue);
+                        if(gmailValue == "") owner.setGmailValue(null);
+                        else owner.setGmailValue(gmailValue);
                         ris = true;
                     }
                 }
                 else{
                     if (owner.getEmail().equals(gmailValue)){
-                        owner.setGmailValue(gmailValue);
+                        if(gmailValue == "") owner.setGmailValue(null);
+                        else owner.setGmailValue(gmailValue);
                         ris = true;
                     }
                 }
             }
             else{
-                owner.setGmailValue(gmailValue);
+                if(gmailValue == "") owner.setGmailValue(null);
+                else owner.setGmailValue(gmailValue);
                 ris = true;
             }       
         }
-        if (twitterValue != null){
+        if (twitterValue != null || twitterValue == ""){
             /*  il seguente if verifica se il twitterValue è stato usato in una 
                 qualunque email, gmail o twitter. Se non esiste nel DB allora
                 può essere direttamente modificato il campo twitterValue nel proprietario.
@@ -154,20 +157,23 @@ public class ClientManager implements ClientManagerLocal {
                 */
                 if (owner.getGmailValue() != null){
                     if (owner.getEmail().equals(twitterValue) || owner.getGmailValue().equals(twitterValue)){
-                        owner.setTwitterValue(twitterValue);
+                        if(twitterValue=="") owner.setTwitterValue(null);
+                        else owner.setTwitterValue(twitterValue);
                         ris = true;
                     }
                 }
                 else{
                     if (owner.getEmail().equals(twitterValue)){
-                        owner.setTwitterValue(twitterValue);
+                        if(twitterValue=="") owner.setTwitterValue(null);
+                        else owner.setTwitterValue(twitterValue);
                         ris = true;
                     }
                 }
                     
             }
             else{
-                owner.setTwitterValue(twitterValue);
+                if(twitterValue=="") owner.setTwitterValue(null);
+                else owner.setTwitterValue(twitterValue);
                 ris = true;
             }
         }

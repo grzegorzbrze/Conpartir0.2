@@ -214,15 +214,29 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" >
-                        <h5 class="h-bold text-right">Come posso proporre un viaggio?</h5>
-                        <div class="text-left">
+                        <h5 class="h-bold text-right" ng-click="setFaqValue(1)">Come posso proporre un viaggio?</h5>
+                        <div class="text-left" ng-show="faqValue == 1">
+                            <p>Per proporre un viaggio, devi per forza essere un utente registrato. Registrati qui <a data-toggle="modal" data-target="#modalLSignup">qui</a> (ci vorranno pochi minuti del tuo tempo o fai il <a data-toggle="modal" data-target="#modalLogin">login</a>: una votla nel tuo account, ti basterà cliccare sul pulsante "Offri un passaggio"</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" >
+                        <h5 class="h-bold text-right" ng-click="setFaqValue(2)">Come richiedo un contributo spese?</h5>
+                        <div class="text-left" ng-show="faqValue == 2">
+                            <p>Conpartir non si occupa delle transazioni tra clienti e utenti: accordatevi in privato sul prezzo per ogni condivisione e pagate alla consegna.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" >
+                        <h5 class="h-bold text-right" ng-click="setFaqValue(3)">Come posso proporre un viaggio?</h5>
+                        <div class="text-left" ng-show="faqValue == 3">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum pharetra massa vitae vehicula. Aenean dapibus odio vel turpis porttitor, ac consequat quam interdum. Donec vestibulum nisi eget urna efficitur, at semper mauris tempus. Quisque posuere interdum ante vitae vehicula. Fusce non diam id nulla facilisis scelerisque. Pellentesque non quam neque. Pellentesque rutrum nulla arcu, sit amet varius purus viverra in. Mauris maximus vel est non maximus. Nulla facilisi. Donec lorem nisl, porta in laoreet nec, dapibus vitae enim. Donec consectetur feugiat mauris ut tristique. Mauris purus lorem, rhoncus at congue a, mollis sed lectus. Morbi laoreet elit condimentum tincidunt placerat. Ut hendrerit tellus sed venenatis suscipit. Vivamus efficitur tellus vel diam eleifend, quis ullamcorper leo placerat. 
                             </p>
                         </div>
                     </div>
                     <div class="col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" >
-                        <h5 class="h-bold text-right" >Come richiedo un contributo spese?</h5>
-                        <div class="text-left">
+                        <h5 class="h-bold text-right" ng-click="setFaqValue(4)">Come richiedo un contributo spese?</h5>
+                        <div class="text-left" ng-show="faqValue == 4">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum pharetra massa vitae vehicula. Aenean dapibus odio vel turpis porttitor, ac consequat quam interdum. Donec vestibulum nisi eget urna efficitur, at semper mauris tempus. Quisque posuere interdum ante vitae vehicula. Fusce non diam id nulla facilisis scelerisque. Pellentesque non quam neque. Pellentesque rutrum nulla arcu, sit amet varius purus viverra in. Mauris maximus vel est non maximus. Nulla facilisi. Donec lorem nisl, porta in laoreet nec, dapibus vitae enim. Donec consectetur feugiat mauris ut tristique. Mauris purus lorem, rhoncus at congue a, mollis sed lectus. Morbi laoreet elit condimentum tincidunt placerat. Ut hendrerit tellus sed venenatis suscipit. Vivamus efficitur tellus vel diam eleifend, quis ullamcorper leo placerat. 
                             </p>
                         </div>
@@ -237,55 +251,107 @@
 	</section>
 	<!-- /Section: FAQ -->
 
-	<!-- Section: contact -->
-    <section id="contact" class="home-section nopadd-bot color-dark bg-gray text-center">
-		<div class="container marginbot-50">
-			<div class="row">
-				<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
-					<div class="section-heading text-center">
-					<h2 class="h-bold">Contact us</h2>
-					<div class="divider-header"></div>
-					<p>C'é qualcosa di poco chiaro? Non esitare a contattarci!</p>
-                                        
-					</div>
-					</div>
-				</div>
-			</div>
+        <!-- Section: Chi Siamo-->
+        <section id="developers" class="home-section color-dark text-center bg-gray">
+            <div class="container marginbot-50">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                        <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                            <div class="section-heading text-center">
+                                <h2 class="h-bold">Chi siamo?</h2>
+                                <div class="divider-header"></div>
+                                <p>Il progetto Conpartir è stato ideato e portato a termine da un piccolo gruppo di developer. 
+                                    Vuoi saperne di più?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-		</div>
-		
-		<div class="container">
+            </div>
 
-			<div class="row marginbot-80">
-				<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-						<form id="contact-form" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
-						<div class="row marginbot-20">
-							<div class="col-md-6 xs-marginbot-20">
-								<input type="text" class="form-control input-lg" id="name" placeholder="Enter name" required="required" />
-							</div>
-							<div class="col-md-6">
-								<input type="email" class="form-control input-lg" id="email" placeholder="Enter email" required="required" />
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-										<input type="text" class="form-control input-lg" id="subject" placeholder="Subject" required="required" />
-								</div>
-								<div class="form-group">
-									<textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
-										placeholder="Message"></textarea>
-								</div>						
-								<button type="submit" class="btn btn-skin btn-lg btn-block" id="btnContactUs">
-									Send Message</button>
-							</div>
-						</div>
-						</form>
-				</div>
-			</div>	
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 bg-white margintop-10 " >
+                        <div class="col-lg-4" style="float:right">
+                            <img src="MM.png">
+                        </div>
+                        <h6 class="h-bold text-right margintop-30">Matteo Maponi</h6>
+                        <div class="text-left">
+                            <p>Ciao, sono Matteo; mi sono occupato principalmente della parte Web del sito, del servizio SOAP e di alcuni sezioni della business logic, oltre che delle scelte di sviluppo.
+                                Attualmente sto studiando all'Università di Torino.</p>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 bg-white margintop-10 " >
+                        <div class="col-lg-4" style="float:right">
+                            <img src="TT.png">
+                        </div>
+                        <h6 class="h-bold text-right margintop-30">Tomasz Tadrzak</h6>
+                        <div class="text-left">
+                            <p>Ciao, sono Tomasz; mi sono occupato principalmente della gestione del DB, della business logic e ovviamente della business logic.
+                                Attualmente sto studiando presso la magistrale di informatica a Torino.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
-		</div>
-	</section>
-	<!-- /Section: contact -->
+
+
+        </section>
+        <!-- /Section: chi siamo -->
+
+        <!-- Section: contact -->
+        <section id="contact" class="home-section nopadd-bot color-dark bg-darkgray text-center">
+            <div class="container marginbot-50">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                        <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                            <div class="section-heading text-center">
+                                <h2 class="h-bold">Contact us</h2>
+                                <div class="divider-header"></div>
+                                <p>C'é qualcosa di poco chiaro? Non esitare a contattarci!</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container">
+
+                <div class="row marginbot-80">
+                    <div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                        <form id="contact-form" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
+                            <div class="row marginbot-20">
+                                <div class="col-md-6 xs-marginbot-20">
+                                    <input type="text" class="form-control input-lg" id="name" placeholder="Enter name" required="required" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control input-lg" id="email" placeholder="Enter email" required="required" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-lg" id="subject" placeholder="Subject" required="required" />
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+                                                  placeholder="Message"></textarea>
+                                    </div>						
+                                    <button type="submit" class="btn btn-skin btn-lg btn-block" id="btnContactUs">
+                                        Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>	
+
+
+            </div>
+        </section>
+        <!-- /Section: contact -->

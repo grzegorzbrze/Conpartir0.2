@@ -326,17 +326,23 @@
             
             $scope.gmailUnlink = function () {
                 var input = {
-                    email : sessionStorage.getItem('email'),
-                    gmailValue : ""
+                    email: sessionStorage.getItem('email'),
+                    secondaryEmail: "gmail"
                 };
-                $scope.editGmail(input);
-                
+
+                shared.deleteEmail(input).then(function (promise) {
+                    $scope.isGmail = false;
+                    //manca un avviso all'utente
+                    $location.path('/account');
+                });
+
             };
 
 
             $scope.editTwitter = function (input) {
-                if (self.email === undefined)self.email = sessionStorage.getItem('email');  
-                input.email = self.email;                
+                if (self.email === undefined)
+                    self.email = sessionStorage.getItem('email');
+                input.email = self.email;
                 shared.setClientTwitter(input).then(function (promise) {
 
                     $scope.modalInfo = shared.getData();
@@ -345,14 +351,18 @@
                     $location.path('/account');
                 });
             };
-            
+
             $scope.twitterUnlink = function () {
                 var input = {
-                    email : sessionStorage.getItem('email'),
-                    twitterValue : ""                    
+                    email: sessionStorage.getItem('email'),
+                    secondaryEmail: "twitter"
                 };
-                $scope.editTwitter(input);
-                
+                shared.deleteEmail(input).then(function (promise) {
+                    $scope.isTwitter = false;
+                    //manca un avviso all'utente
+                    $location.path('/account');
+                });
+
             };
 
             $scope.addCar = function (input) {
@@ -361,15 +371,17 @@
                 input.email = self.email;
                 shared.createDriver(input).then(function (promise) {
                 });
-                
+
             };
-            
+
             $scope.checkGmail = function () {
-                var emailProvider = self.email.slice(self.email.indexOf('@')+1);
-                if (emailProvider==="gmail.com") {  
-                   // console.log(emailProvider);
+                var emailProvider = self.email.slice(self.email.indexOf('@') + 1);
+                if (emailProvider === "gmail.com") {
+                    // console.log(emailProvider);
                     $scope.gmailValue = self.email;
-                    return "ok"; };
+                    return "ok";
+                }
+                ;
                 //console.log(emailProvider);
                 return "notOk";
             };

@@ -46,6 +46,7 @@ var myapp = angular.module('myApp',
         $scope.hasFooter = true;
         $scope.loginShow;      
         $scope.isAuthorized =false;
+        $scope.faqValue = 0;
         
         $scope.about = false;
         $scope.show = function () {
@@ -73,6 +74,10 @@ var myapp = angular.module('myApp',
             $location.path("/");
             $location.url($location.path());
         };               
+        
+        $scope.setFaqValue = function (num) {
+            $scope.faqValue = num;
+        };
    }]);
    
   
