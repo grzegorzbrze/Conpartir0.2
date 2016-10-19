@@ -46,9 +46,11 @@
                 <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
             </div> 
         </div>
-    </div>
-    <div class="row col-md-6 col-md-offset-4 margintop-20 marginbot-20">     
-       <!-- <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map> -->
+    </div>    
+    <div class="row col-md-6 col-md-offset-4 margintop-20 marginbot-20">   
+        <leaflet center="torino" defaults="defaults" event-broadcast="events" markers="markers" width="550px" height="250px">
+        </leaflet>
+
     </div>
     
     <div class="row">

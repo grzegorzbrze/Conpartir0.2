@@ -27,7 +27,7 @@
     <link href="frameworks/bootstrap/css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="css/override.css" rel="stylesheet">
     
-   
+
 
     
     
@@ -51,8 +51,18 @@
     <script src="js/controller/homeCtrl.js"></script>
     <script src="js/controller/historyCtrl.js"></script>
     
+       <!-- leaflet 
+    <script src="frameworks/leaflet/leaflet.js"></script>    -->
+    
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script src="frameworks/leaflet/angular-leaflet/angular-leaflet-directive.min.js"></script>
+    <!-- leaflet -->
+    <link rel="stylesheet" href="frameworks/leaflet/leaflet.css">
+    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
    
+
+    
 </head>
 
 <body  ng-app = "myApp" ng-controller = "MainController" id="page-top" data-spy="scroll" data-target=".navbar-custom">
@@ -503,30 +513,36 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Offri un passaggio</h4>
+        <p>I campi contrassegnati da * sono necessari!</p>
       </div>
       <div class="modal-body" ng-controller="PostController">
           <p></p>
           <form novalidate class="input-group adjust" >
              <h2></h2>
           <div class="input-group ">
-              <span class="input-group-addon" id="basic-addon1">Partenza</span>
+              <span class="input-group-addon" id="basic-addon1">Partenza*</span>
               <input class="form-control" type="text" ng-model="travel.from" aria-describedby="basic-addon1" name="email">
-          </div>  
+          
+             <!-- <span class="input-group-addon" id="basic-addon10">Indirizzo della partenza</span>
+              <p>Sarà più facile per gli altri capire da dove partirai se inserisci un indirizzo.<p>
+              <input class="form-control" type="text" ng-model="travel.street" aria-describedby="basic-addon1" name="email">
+          -->
+          </div>
           <p></p>
           <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon2">Destinazione</span>
+              <span class="input-group-addon" id="basic-addon2">Destinazione*</span>
               <input class="form-control" type="text" ng-model="travel.to" aria-describedby="basic-addon2" name="destination">
           </div>
           <p></p>
           <div class="radio-inline-panel">
-              <label>Tipo di viaggio: </label>
+              <label>Tipo di viaggio*: </label>
             <label class="radio-inline" ><input type="radio"  name="optradio" ng-model="isCarTravel" ng-value="true" ng-click="mode()"/>Macchina</label>
             <label class="radio-inline" ><input type="radio" name="optradio" ng-model="isCarTravel" ng-value="false" ng-click="mode()"/>Taxi</label>
           </div>
           <p></p>
          
          <div class="input-group dropdown" ng-if="isCarTravel">
-              <span class="input-group-addon" id="basic-addon7">Macchina</span> 
+              <span class="input-group-addon" id="basic-addon7">Macchina*</span> 
                <input class="form-control" type="text" ng-model="travel.carModel" aria-describedby="basic-addon7" name="car">
          </div>
            <div class="input-group center" ng-if="isCarTravel">
@@ -541,16 +557,16 @@
           
           <p></p>
           <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon4">Data</span>
+              <span class="input-group-addon" id="basic-addon4">Data*</span>
               <input class="form-control" type="text" name="giorno"  id="datepicker"/>
           </div> 
           <p></p>
           <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon5">Ora</span>
+              <span class="input-group-addon" id="basic-addon5">Ora*</span>
               <input  id="timepicker" placeholder="Ora" type="text" class="form-control">         </div> 
           <p></p>
            <div class="input-group" >
-              <span class="input-group-addon" id="basic-addon6">Posti Liberi</span>
+              <span class="input-group-addon" id="basic-addon6">Posti Liberi*</span>
               <input class="form-control" type="text" ng-model="travel.freeSeats" aria-describedby="basic-addon7" name="car">
                  </div> 
           <p></p>
@@ -569,15 +585,17 @@
 </div>
 <!-- /Modal per offrire un passaggio -->
 
-<!-- Modal per le mappe
+<!-- Modal per le mappe -->
 <div id="modalMap"  class="modal fade" role="dialog" ng-controller="DetailController" >
   <div class="modal-dialog">
 
-    <!-- Modal content
+    <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-body"> 
-       <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>        
-        
+       <leaflet center="torino" defaults="defaults" event-broadcast="events" markers="markers" width="550px" height="250px">
+        </leaflet>
+          
+          <button class="btn btn-skin"  ng-click="getGeoJson(provaInput)">provaCoordinate</button> 
       </div>
     </div>
 
@@ -678,25 +696,7 @@
     <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>    
     <script src="frameworks/xml2json.min.js"></script>
     
-      <!--  
-    <script>
-   window.initMap = function() {
-                 var start = {lat: -25.363, lng: 131.044};
-                 var map = new google.maps.Map(document.getElementById('map'), {
-                     zoom: 4,
-                     center: start 
-                 });
-                 var marker = new google.maps.Marker({
-                     position: start,
-                     map: map
-                 });
-             };  
-
-    </script>
-
- google maps 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
--->
+   
     
     <!-- lodash -->
     <script src="js/lodash.core.js"></script>
@@ -704,9 +704,15 @@
     <!-- angular-simple-logger -->
     <script src="frameworks/angularJs/angular-simple-logger.js"></script>
     
-    <!-- angular google maps -->
+    <!-- angular google maps 
     <script src="https://rawgit.com/angular-ui/angular-google-maps/2.4.0/dist/angular-google-maps.min.js"></script>
-
+    
+    <script src="frameworks/angular-google-maps.min.js"></script>-->
+    
+    
+     
+    
+    
        <!-- Twitter -->
     <script>window.twttr = (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0],

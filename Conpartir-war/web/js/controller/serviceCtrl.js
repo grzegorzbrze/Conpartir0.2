@@ -756,8 +756,8 @@
                     return promise;
                 },
                 getData: function () {
-                    console.log("sto passando un oggetto obj = ");
-                    console.log(obj);
+                   // console.log("sto passando un oggetto obj = ");
+                  //  console.log(obj);
                     return obj;
                 },
                 getCars: function () {

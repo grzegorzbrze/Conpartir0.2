@@ -8,35 +8,35 @@ var myapp = angular.module('myApp',
 ['ngRoute', 'ngTouch' , 'ngAnimate', 'ngCookies',
     'loginModule', 'sliderModule', 'travelModule', 'dateModule', 'detailModule', 'postModule' ,'accountModule' ,'historyModule', 'serviceModule', 'authModule']);
   
-  myapp.config(function($routeProvider){
-  $routeProvider
-          .when( "/", 
-  {   templateUrl: "pages/home.html", controller: "MainController" })   
-          .when ( "/home",  
-  {   templateUrl: "pages/home.html", controller: "MainController" })  
-          .when ("#/carousel-example-generic",
-  {   templateUrl: "pages/home.html", controller: "MainController" })    
- //         .when("/about",
- // {   templateUrl: "pages/old/about.html", controller: "MainController" })
-          .when("/account",
-  {   templateUrl: "pages/account.html", controller: "AccountController" })
-          .when("/signup",
-  {   templateUrl: "pages/signup.html", controller: "LoginController" })
-          .when("/login",
-  {   templateUrl: "pages/login.html", controller: "LoginController" })
-     .when("/FBLogin",
-  {   templateUrl: "pages/FBLogin.html", controller: "LoginController" })
-          .when("/search",
-  {   templateUrl: "pages/list.html",  controller: "TravelController"  })
-          .when("/detail",
-  {   templateUrl: "pages/travelDetail.html",  controller: "DetailController"  })
-          .when("/post",
-  {   templateUrl: "pages/post.html",  controller: "PostController"  })
-          .when( "/history",
-  {   templateUrl: "pages/history.html", controller: "HistoryController" });
-  
-  
-});
+myapp.config(function($routeProvider){
+$routeProvider
+        .when("/",
+        {   templateUrl: "pages/home.html", controller: "MainController" })
+        .when ("/home",
+        {   templateUrl: "pages/home.html", controller: "MainController" })
+        .when ("#/carousel-example-generic",
+        {   templateUrl: "pages/home.html", controller: "MainController" })
+        //         .when("/about",
+        // {   templateUrl: "pages/old/about.html", controller: "MainController" })
+        .when("/account",
+        {   templateUrl: "pages/account.html", controller: "AccountController" })
+        .when("/signup",
+        {   templateUrl: "pages/signup.html", controller: "LoginController" })
+        .when("/login",
+        {   templateUrl: "pages/login.html", controller: "LoginController" })
+        .when("/FBLogin",
+        {   templateUrl: "pages/FBLogin.html", controller: "LoginController" })
+        .when("/search",
+        {   templateUrl: "pages/list.html", controller: "TravelController"  })
+        .when("/detail",
+        {   templateUrl: "pages/travelDetail.html", controller: "DetailController"  })
+        .when("/post",
+        {   templateUrl: "pages/post.html", controller: "PostController"  })
+        .when("/history",
+        {   templateUrl: "pages/history.html", controller: "HistoryController" });
+        });
+ 
+
 
 
   myapp.controller("MainController", ['$scope', '$http','$route','$location' , 'shared', 'auth',
@@ -47,6 +47,11 @@ var myapp = angular.module('myApp',
         $scope.loginShow;      
         $scope.isAuthorized =false;
         $scope.faqValue = 0;
+        
+        $scope.markers = [];
+
+      
+        
         
         $scope.about = false;
         $scope.show = function () {

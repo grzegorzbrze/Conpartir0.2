@@ -97,7 +97,16 @@
           $scope.select = function (dataId,dataModel) {
               $scope.travel.id = dataId;
               $scope.travel.carModel = dataModel;
-          }; 
+          };
+          
+          $scope.parseStreet =  function (streetString) {
+              parsedString = "";
+             /* streetString.replace(' ','+');
+              streetString
+              searchUrl + 'q=' + input.numCivico + '+' + input.nomeVia + ',+' +input.nomeCittà  + '&format=xml&limit=1'
+            */
+              return parsedString;
+          };
           
     
     
