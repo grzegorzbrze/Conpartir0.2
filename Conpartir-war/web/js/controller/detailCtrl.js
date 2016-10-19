@@ -70,9 +70,17 @@
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificCarTravel(travelIdParam).then(function (promise) {
                             $scope.travel = shared.getTravelInfo().return;
+                        
+                            shared.getGeoJson("",$scope.travel.destination,1).then(function (promise) {
+                               var geolocEnd = shared.getData();
+                               console.log(geolocEnd);
+                                    
+                                
+                            });
                         });
-                    }
-                    ;
+                        
+                      
+                    };
                     shared.getPassengersTravel(travelIdParam).then(function (promise) {
                         $scope.detail = shared.getPassengersObject().return;
 
@@ -92,14 +100,7 @@
                             if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email) {
                                 $scope.passengerList[i].role = "Passeggero";
                             }
-                            if ($scope.isTaxiTravel === true) {
-                                if ($scope.passengerList[i].email === $scope.detail.driverInfo.email) {
-                                    $scope.passengerList[i].role = "Creatore Taxi";
-                                }
-                                if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email) {
-                                    $scope.passengerList[i].role = "Passeggero Taxi";
-                                }
-                            }
+                            
                             if ($scope.passengerList[i].email === sessionStorage.getItem('email')) {
                                 $scope.allowBooking = false;
                                 $scope.alertMsg = "Sei già prenotato per questo viaggio.";
@@ -123,8 +124,7 @@
                         shared.getSpecificTaxiTravel(travelIdParam).then(function (promise) {
                             $scope.travel = shared.getTravelInfo().return;
                         });
-                    }
-                    ;
+                    };
                     shared.getPassengersTaxi(travelIdParam).then(function (promise) {
                         $scope.detail = shared.getPassengersObject().return;
 
@@ -310,16 +310,14 @@
             };
 
 
-            // Mappe Leaflet              
-
-            var mainMarker = {
+            // Mappe Leaflet 
+            
+            var torinoMarker = {
                 lat: 45.05,
                 lng: 7.66,
                 focus: true,
-                message: "Hey, drag me if you want",
-                draggable: true
+                message: "Torino"
             };
-
             angular.extend($scope, {
                 torino: {
                     lat: 45.05,
@@ -336,7 +334,7 @@
                     scrollWheelZoom: false
                 },
                 markers: {
-                    mainMarker: angular.copy(mainMarker)
+                    torinoMarker: angular.copy(torinoMarker)
                 },
                 events: {// or just {} //all events
                     markers: {

@@ -80,12 +80,29 @@
                 $scope.travel.email = sessionStorage.getItem('email');
                 console.log($scope.travel);
                 if( $scope.isCarTravel === true) { 
-                    shared.createCarTravel($scope.travel).then(function(promise) {
+                    shared.createCarTravel($scope.travel).then(function (promise) {
                     });
                 }
                 else {
-                   shared.createTaxiTravel($scope.travel).then(function(promise) {
-                    }); 
+                    shared.getGeoJson($scope.parseStreet(input.from), "Torino", 1).then(function (promise) {
+                        var geolocStart = shared.getData();
+                        console.log(geolocStart);
+
+                        $scope.travel.coordStart = geolocStart[0].lat.toString() + "+" + geolocStart[0].lon.toString();
+                        
+                        shared.getGeoJson($scope.parseStreet(input.to), "Torino", 1).then(function (promise) {
+                            var geolocEnd = shared.getData();
+                            console.log(geolocEnd);
+
+                            $scope.travel.coordEnd = geolocEnd[0].lat.toString() + "+" + geolocEnd[0].lon.toString();
+
+                            $timeout(
+                                    shared.createTaxiTravel($scope.travel).then(function (promise) {
+                            }), 10);
+                        });
+                    });
+                    
+                  
                 }                
                 $('#modalPost').modal('hide');
                 $('#modalTravelAdded').modal('show');
@@ -100,10 +117,10 @@
           };
           
           $scope.parseStreet =  function (streetString) {
-              parsedString = "";
-             /* streetString.replace(' ','+');
-              streetString
-              searchUrl + 'q=' + input.numCivico + '+' + input.nomeVia + ',+' +input.nomeCittà  + '&format=xml&limit=1'
+              var parsedString = "";
+              parsedString= streetString.replace(' ','+');
+              
+            /*  searchUrl + 'q=' + input.numCivico + '+' + input.nomeVia + ',+' +input.nomeCittà  + '&format=xml&limit=1'
             */
               return parsedString;
           };

@@ -53,7 +53,8 @@
                 else type = 2;
                 //sessionStorage.setItem('number&type',data.travel_id + '_' + type);
                 $location.path("/detail");
-                $location.search("number",data.travel_id);
+                if($scope.showCar===true) $location.search("number",data.travel_id);
+                if($scope.showTaxi===true)  $location.search("number",data.taxi_id);
                 $location.search("type",type);
                 $route.reload();
             };
@@ -170,7 +171,7 @@
                 
                 var when = $('#datepicker2').datepicker({dateFormat: "yyyy-mm-dd" }).val();
                 
-                if(when == null || when == "") { 
+                if(when === null || when === "") { 
                     $scope.alert = "Per favore, inserisci una data."; 
                     $scope.ifAlert = true;
                     return;

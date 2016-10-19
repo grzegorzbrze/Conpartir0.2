@@ -527,10 +527,7 @@ public class SOAPServiceClient {
         }
         return commentTemp;
     }
-    
-    
-    
-    
+        
     /**
      * Web service operation
      * Analogo di getTravels, per i Taxi
@@ -565,7 +562,9 @@ public class SOAPServiceClient {
             temp.setTime(taxi.getTime());
             temp.setDestination(taxi.getDestination());
             temp.setOrigin(taxi.getOrigin());
-            temp.setFreeSeats(taxi.getFreeSeats());            
+            temp.setFreeSeats(taxi.getFreeSeats());  
+            temp.setCoordStart(taxi.getCoordStart());
+            temp.setCoordEnd(taxi.getCoordEnd());
             lista.add(temp);
         }
         return lista;

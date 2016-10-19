@@ -156,6 +156,8 @@
                             '<origin>' + input.from + '</origin>' +
                             '<destination>' + input.to + '</destination>' +
                             '<freeSeats>' + input.freeSeats + '</freeSeats>' +
+                            '<coordStart>' + input.coordStart + '</coordStart>' +                            
+                            '<coordEnd>' + input.coordEnd + '</coordEnd>' +
                             '<when>' + input.when + '</when>' +
                             '</ns0:' + opName + '>' +
                             SOAPtail;
@@ -452,6 +454,7 @@
 
                     return promise;
                 },
+                
                 getTravels: function (input) {
                     var res;
                     var sr;
@@ -755,6 +758,35 @@
 
                     return promise;
                 },
+                
+                //chiamata al servizio esterno nominatim per ottenere geolocalizzazione di una via
+                // parsed via : via, preferibilmente nel formato numCivico+NomeVia, con spazi sostituiti da +
+                //città : città di riferimento
+                //limit : numero di risultati da restituire
+                getGeoJson: function (parsedVia,città,limit) {
+                    var searchUrl = "http://nominatim.openstreetmap.org/search?";
+                    searchUrl = searchUrl + 'q=' + parsedVia + ',+' + città  + '&format=json&limit=' + limit;
+                    var promise;
+                    promise = $http({
+                        method: 'GET',
+                        url: searchUrl,
+                        headers: {'Content-Type': 'application/json'},
+                        data : data
+                    })
+                            .success(function (data, status, header) {
+                                                 
+                                console.log("Geoloc successfull ");
+                                obj = data;
+                                //console.log(data);
+                                //return data;
+                            })
+                            .error(function (data, status, headers, config) {
+
+                                return status;
+                            });
+                    return promise;
+                },
+                
                 getData: function () {
                    // console.log("sto passando un oggetto obj = ");
                   //  console.log(obj);
