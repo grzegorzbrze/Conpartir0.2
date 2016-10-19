@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.conpartir.entity;
 
 import java.io.Serializable;
@@ -17,12 +12,20 @@ import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author Blu Light
+ * Implementazione di serializzable per definire <i>Taxi</i> memoriazzato nel database grazie all'Entity. 
+ * @author Conpartir Group
+ * @version 0.3 11 settembre 2016
+ * @see <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html"> Entity </a>
+ * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html"> Serializable </a>
+ * 
  */
 @Entity
 @XmlRootElement
 public class Taxi implements Serializable {
+    
+    /**
+     * Identificativo univoco dell'oggetto all'interno del database.
+     */
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +54,12 @@ public class Taxi implements Serializable {
     @Column (name = "FREE_SEATS")
     private int freeSeats;
 
+    @Column (name = "COORD_START")
+    private String coordStart;
+    
+    @Column (name = "COORD_END")
+    private String coordEnd;
+    
     public Long getTaxi_id() {
         return taxi_id;
     }
@@ -114,7 +123,23 @@ public class Taxi implements Serializable {
     public void setClient_id(Long client_id) {
         this.client_id = client_id;
     }
-  
+
+    public String getCoordStart() {
+        return coordStart;
+    }
+
+    public void setCoordStart(String coordStart) {
+        this.coordStart = coordStart;
+    }
+
+    public String getCoordEnd() {
+        return coordEnd;
+    }
+
+    public void setCoordEnd(String coordEnd) {
+        this.coordEnd = coordEnd;
+    }
+    
     @Override
     public String toString() {
         return "Taxi{" + "id=" + taxi_id + ", client_id=" + client_id + ", creator_id=" 

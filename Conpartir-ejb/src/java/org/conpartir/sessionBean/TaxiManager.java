@@ -40,10 +40,10 @@ public class TaxiManager implements TaxiManagerLocal {
 
     @Override
     public void createTaxi(Long creator_id, Long id_client, Date data, Date time,
-            String origin, String destination, int freeSeat) {
+            String origin, String destination, int freeSeat, String coordStart, String coordEnd) {
         if (creator_id != null && id_client != null && data.toString() != null &&
                 time.toString() != null && origin != null && destination != null
-                && freeSeat != 0){
+                && freeSeat != 0 && coordStart != null && coordEnd != null){
             Taxi taxi = new Taxi();
             taxi.setCreator_id(creator_id);
             taxi.setClient_id(id_client);
@@ -52,6 +52,8 @@ public class TaxiManager implements TaxiManagerLocal {
             taxi.setOrigin(origin.toLowerCase());
             taxi.setDestination(destination.toLowerCase());
             taxi.setFreeSeats(freeSeat);
+            taxi.setCoordStart(coordStart);
+            taxi.setCoordEnd(coordEnd);
             taxiFacade.create(taxi);
         }
         else {
@@ -81,7 +83,7 @@ public class TaxiManager implements TaxiManagerLocal {
                     if (postiRimasti >= 0){
                         createTaxi(temp.getCreator_id(), passengerID, temp.getData(), 
                                 temp.getTime(), temp.getOrigin(), temp.getDestination(), 
-                                postiRimasti);
+                                postiRimasti, temp.getCoordStart(), temp.getCoordEnd());
                         temp.setFreeSeats(postiRimasti);
                     }
                     else risultato = false;

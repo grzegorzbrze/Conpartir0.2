@@ -20,7 +20,8 @@ public interface TaxiManagerLocal {
     public void createTaxi(Taxi taxi);
     
     public void createTaxi(Long creator_id, Long id_client, 
-            Date data, Date time, String origin, String destination, int freeSeat);
+            Date data, Date time, String origin, String destination, int freeSeat, 
+            String coordStart, String coordEnd);
     
     public boolean addPassenger(Long taxi_id, Long id_passenger);
     

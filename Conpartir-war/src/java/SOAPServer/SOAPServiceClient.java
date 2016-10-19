@@ -393,14 +393,16 @@ public class SOAPServiceClient {
             @WebParam(name = "origin") String origin, 
             @WebParam(name = "destination") String destination, 
             @WebParam(name = "freeSeats") int freeSeats, 
-            @WebParam(name = "when") String when){
+            @WebParam(name = "when") String when, 
+            @WebParam(name = "coordStart") String coordStart,
+            @WebParam(name = "coordEnd") String coordEnd){
         
         Client clientInfo = clientRef.getClient(email);
         Long clientId = clientInfo.getId();
         Long creatorId = clientId;
         
         Date data = convertiStringa(when);
-        taxiRef.createTaxi(creatorId, clientId, data, data, origin, destination, freeSeats);
+        taxiRef.createTaxi(creatorId, clientId, data, data, origin, destination, freeSeats, coordStart, coordEnd);
         
     }
     

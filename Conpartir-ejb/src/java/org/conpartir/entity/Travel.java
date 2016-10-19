@@ -52,7 +52,7 @@ public class Travel implements Serializable {
 
     @Column (name = "FREE_SEATS")
     private int freeSeats;
-
+    
     public void setTravel_id(Long travel_id) {
         this.travel_id = travel_id;
     }
@@ -116,7 +116,7 @@ public class Travel implements Serializable {
     public void setFreeSeats(int freeSeats) {
         this.freeSeats = freeSeats;
     }
-    
+
     public Calendar getCalendarData(){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(data);

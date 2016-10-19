@@ -70,7 +70,7 @@ public class Client implements Serializable {
      * Attributo path image del Client
      */
     @Column (name = "URLPHOTO")
-    private String urlPhoto = "http://oi65.tinypic.com/2dlufo.jpg";
+    private String urlPhoto = "defaultpic_sm.png";
     
     /**
      * Attributo email di Gmail del Client
@@ -94,7 +94,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica email di Twitter con la stringa passata come parametro
-     * @param twitterValue Stringa con la quale cambiare email di Twitter
+     * @param twitterValue String con la quale cambiare email di Twitter
      */
     public void setTwitterValue(String twitterValue) {
         this.twitterValue = twitterValue;
@@ -110,7 +110,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica email di Gmail con la stringa passata come parametro
-     * @param gmailValue Stringa con la quale cambiare il valore di Gmail del Client
+     * @param gmailValue String con la quale cambiare il valore di Gmail del Client
      */
     public void setGmailValue(String gmailValue) {
         this.gmailValue = gmailValue;
@@ -126,7 +126,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo name con il parametro passato
-     * @param name Stringa con la quale cambiare l'attributo name
+     * @param name String con la quale cambiare l'attributo name
      */
     public void setName(String name) {
         this.name = name;
@@ -142,7 +142,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo surname con il parametro passato
-     * @param surname Stringa con la quale cambiare l'attributo surname
+     * @param surname String con la quale cambiare l'attributo surname
      */
     public void setSurname(String surname) {
         this.surname = surname;
@@ -158,7 +158,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo gender con il parametro passato
-     * @param gender Charattere con il quale cambiare l'attributo gender
+     * @param gender Char con il quale cambiare l'attributo gender
      */
     public void setGender(char gender) {
         this.gender = gender;
@@ -174,7 +174,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo age con il parametro passato
-     * @param age Intero con il quale cambiare l'attributo age
+     * @param age Int con il quale cambiare l'attributo age
      */
     public void setAge(int age) {
         this.age = age;
@@ -190,7 +190,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo email con il parametro passato
-     * @param email Stringa con la quale cambiare il campo email
+     * @param email String con la quale cambiare il campo email
      */
     public void setEmail(String email) {
         this.email = email;
@@ -206,7 +206,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo password con il parametro passato
-     * @param pass Stringa con la quale cambiare l'attributo password
+     * @param pass String con la quale cambiare l'attributo password
      */
     public void setPass(String pass) {
         this.pass = pass;
@@ -222,7 +222,7 @@ public class Client implements Serializable {
 
     /**
      * Modifica il campo path image con il parametro passato
-     * @param urlPhoto Stringa con la quale cambiare l'attributo path image
+     * @param urlPhoto String con la quale cambiare l'attributo path image
      */
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
@@ -236,8 +236,8 @@ public class Client implements Serializable {
     }
     
     /**
-     * Restituisce il risultato intero di una funzione hash che codifica i parametri del Client
-     * @return Intero che corrisponde alla risultato di una funzione hash. 
+     * Restituisce il risultato intero di una funzione hash che codifica i parametri del cliente
+     * @return Int che corrisponde alla risultato di una funzione hash. 
      */
     @Override
     public int hashCode() {
@@ -254,14 +254,12 @@ public class Client implements Serializable {
     }
 
     /**
-     * Restituisce la stringa che contiene tutti i dati di un Client
-     * @return Stringa che contiene tutti i dati di un Client
+     * Restituisce la stringa che contiene tutti i dati di un cliente
+     * @return String che contiene tutti i dati di un cliente
      */
     @Override
     public String toString() {
         return "Client{" + "clientID=" + clientID + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", age=" + age + ", email=" + email + ", pass=" + pass + ", urlPhoto=" + urlPhoto + ", gmailValue=" + gmailValue + ", twitterValue=" + twitterValue + '}';
     }   
      
-    @Deprecated public Client(){};
-    
 }

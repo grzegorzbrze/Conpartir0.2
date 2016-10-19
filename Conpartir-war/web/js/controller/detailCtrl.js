@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var modDetail = angular.module('detailModule', ['ngRoute','uiGmapgoogle-maps']);
+  var modDetail = angular.module('detailModule', ['ngRoute']);
         modDetail.controller('DetailController', ['$scope', '$route', '$location', 'shared', 'auth',
         function($scope, $route, $location, shared, auth) {
            
