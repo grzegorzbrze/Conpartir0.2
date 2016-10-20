@@ -72,10 +72,10 @@
                             $scope.travel = shared.getTravelInfo().return;
                         
                             shared.getGeoJson("",$scope.travel.destination,1).then(function (promise) {
-                               var geolocEnd = shared.getData();
-                               console.log(geolocEnd);
-                                    
-                                
+                               $scope.geolocEnd = shared.getData();
+                               //console.log(geolocEnd);
+                          
+                                                               
                             });
                         });
                         
@@ -114,7 +114,20 @@
                             $scope.leaveFeedback = false;
                             $scope.feedAlert = "Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.";
                         }
-
+                        
+                        $scope.carStartMarker = {
+                            lat: 45.05,
+                            lng: 7.66,
+                            focus: true,
+                            message: "Torino"
+                        };
+                        $scope.carEndMarker = {
+                            lat: parseFloat(getLat($scope.geolocEnd)),
+                            lng: parseFloat(getLon($scope.geolocEnd)),
+                            focus: true,
+                            message: $scope.travel.destination
+                        };
+                        
                         $scope.getLatestComment();
                     });
 
@@ -123,8 +136,11 @@
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificTaxiTravel(travelIdParam).then(function (promise) {
                             $scope.travel = shared.getTravelInfo().return;
+                   
+                            
                         });
                     };
+                                        
                     shared.getPassengersTaxi(travelIdParam).then(function (promise) {
                         $scope.detail = shared.getPassengersObject().return;
 
@@ -145,13 +161,28 @@
                                 $scope.passengerList[i].role = "Passeggero Taxi";
 
                             }
-                        }
-                        ;
+                        };                        
+                        $scope.getLatestComment();
                     });
                 }
 
                 // A questo punto sono sicuro di avere tutti i dati;               
 
+                           
+              //definizione dei marker per la mappa - taxi  
+              $scope.taxiStartMarker = {
+                    lat: parseFloat(getLat($scope.travel.coordStart)),
+                    lng: parseFloat(getLon($scope.travel.coordStart)),
+                    focus: true,
+                    message: $scope.travel.origin
+                };
+                $scope.taxiEndMarker = {
+                    lat: parseFloat(getLat($scope.travel.coordEnd)),
+                    lng: parseFloat(getLon($scope.travel.coordEnd)),
+                    focus: true,
+                    message: $scope.travel.destination
+                }; 
+                
                 $scope.checkFeedback();
                 var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
                 var travelDataCompleta = new Date(data);
@@ -318,11 +349,21 @@
                 focus: true,
                 message: "Torino"
             };
+
+            var getLat = function(data) {
+                var lat = data.slice(0,data.indexOf('+'));
+                return lat;
+            };
+            var getLon = function(data) {
+                var lon = data.slice(data.indexOf('+')+1);
+                return lon;
+            };
+            
             angular.extend($scope, {
                 torino: {
                     lat: 45.05,
                     lng: 7.66,
-                    zoom: 14},
+                    zoom: 13},
                 defaults: {
                     tileLayer: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                     tileLayerOptions: {
@@ -334,7 +375,8 @@
                     scrollWheelZoom: false
                 },
                 markers: {
-                    torinoMarker: angular.copy(torinoMarker)
+                  //  torinoMarker: angular.copy(torinoMarker)
+                    
                 },
                 events: {// or just {} //all events
                     markers: {
@@ -342,13 +384,8 @@
                                 //logic: 'emit'
                     }
                 }
-            });
+            });           
             
-            $scope.provaInput = {
-                numCivico: '5',
-                nomeCittà: 'Torino',
-                nomeVia: 'Via+Alessandro+Scarlatti'
-            };
 
             $scope.getGeoJson = function (input) {
                 
@@ -377,6 +414,16 @@
             };
 
 
+            $scope.addMarkers = function(mark1,mark2) {
+                console.log(mark1);
+                console.log(mark2);
+                angular.extend($scope, {
+                    markers: {
+                       m1: angular.copy(mark1),
+                       m2: angular.copy(mark2)
+                    }
+                }); 
+            };
         }]);
 
 })();
