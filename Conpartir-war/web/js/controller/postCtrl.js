@@ -86,13 +86,13 @@
                 else {
                     shared.getGeoJson($scope.parseStreet(input.from), "Torino", 1).then(function (promise) {
                         var geolocStart = shared.getData();
-                        console.log(geolocStart);
+                        //console.log(geolocStart);
 
                         $scope.travel.coordStart = geolocStart[0].lat.toString() + "+" + geolocStart[0].lon.toString();
                         
                         shared.getGeoJson($scope.parseStreet(input.to), "Torino", 1).then(function (promise) {
                             var geolocEnd = shared.getData();
-                            console.log(geolocEnd);
+                            //console.log(geolocEnd);
 
                             $scope.travel.coordEnd = geolocEnd[0].lat.toString() + "+" + geolocEnd[0].lon.toString();
 

@@ -69,14 +69,8 @@
                 if ($scope.isCarTravel === true) {
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificCarTravel(travelIdParam).then(function (promise) {
-                            $scope.travel = shared.getTravelInfo().return;
-                        
-                            shared.getGeoJson("",$scope.travel.destination,1).then(function (promise) {
-                               $scope.geolocEnd = shared.getData();
-                               //console.log(geolocEnd);
+                            $scope.travel = shared.getTravelInfo().return;                      
                           
-                                                               
-                            });
                         });
                         
                       
@@ -114,30 +108,32 @@
                             $scope.leaveFeedback = false;
                             $scope.feedAlert = "Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.";
                         }
-                        
-                        $scope.carStartMarker = {
-                            lat: 45.05,
-                            lng: 7.66,
-                            focus: true,
-                            message: "Torino"
-                        };
-                        $scope.carEndMarker = {
-                            lat: parseFloat(getLat($scope.geolocEnd)),
-                            lng: parseFloat(getLon($scope.geolocEnd)),
-                            focus: true,
-                            message: $scope.travel.destination
-                        };
-                        
                         $scope.getLatestComment();
+                          shared.getGeoJson("",$scope.travel.destination,1).then(function (promise) {
+                               $scope.geolocEnd = shared.getData();
+                               //console.log($scope.geolocEnd);
+                                $scope.carStartMarker = {
+                                    lat: 45.05,
+                                    lng: 7.66,
+                                    message: "Partenza"
+                                };
+                                $scope.carEndMarker = {
+                                    lat: parseFloat($scope.geolocEnd[0].lat),
+                                    lng: parseFloat($scope.geolocEnd[0].lon),
+                                    float: true,
+                                    message : "Arrivo"
+                                };
+                                                               
+                            });
                     });
-
+                    
+                   
                 }
                 if ($scope.isTaxiTravel === true) {
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificTaxiTravel(travelIdParam).then(function (promise) {
                             $scope.travel = shared.getTravelInfo().return;
                    
-                            
                         });
                     };
                                         
@@ -170,18 +166,19 @@
 
                            
               //definizione dei marker per la mappa - taxi  
-              $scope.taxiStartMarker = {
-                    lat: parseFloat(getLat($scope.travel.coordStart)),
-                    lng: parseFloat(getLon($scope.travel.coordStart)),
-                    focus: true,
-                    message: $scope.travel.origin
+                if ($scope.isTaxiTravel === true) {
+                    $scope.taxiStartMarker = {
+                        lat: parseFloat(getLat($scope.travel.coordStart)),
+                        lng: parseFloat(getLon($scope.travel.coordStart)),
+                        focus: true,
+                        message: $scope.travel.origin
+                    };
+                    $scope.taxiEndMarker = {
+                        lat: parseFloat(getLat($scope.travel.coordEnd)),
+                        lng: parseFloat(getLon($scope.travel.coordEnd)),
+                        message: $scope.travel.destination
+                    };
                 };
-                $scope.taxiEndMarker = {
-                    lat: parseFloat(getLat($scope.travel.coordEnd)),
-                    lng: parseFloat(getLon($scope.travel.coordEnd)),
-                    focus: true,
-                    message: $scope.travel.destination
-                }; 
                 
                 $scope.checkFeedback();
                 var data = $scope.getDay($scope.travel.data) + 'T' + $scope.getTime($scope.travel.time) + ':00';
@@ -257,8 +254,7 @@
             // Manca il controllo per evitare che estranei al viaggio lascino un feed
             $scope.sendFeed = function () {
                 var input = {};
-                input.author_email = sessionStorage.getItem("email");
-                ;
+                input.author_email = sessionStorage.getItem("email");                
                 input.clientJudged_email = clientToFeed;
                 input.comment = $scope.comment;
                 input.feedback = feedRate;
@@ -298,8 +294,6 @@
                 shared.getLatestReceivedComments($scope.detail.driverInfo.email, 10).then(function (promise) {
                     var prova = shared.getComments();
 
-
-                    console.log(prova);
                     if (jQuery.isEmptyObject(prova))
                         $scope.commentAlert = true;
                     else {
@@ -342,14 +336,6 @@
 
 
             // Mappe Leaflet 
-            
-            var torinoMarker = {
-                lat: 45.05,
-                lng: 7.66,
-                focus: true,
-                message: "Torino"
-            };
-
             var getLat = function(data) {
                 var lat = data.slice(0,data.indexOf('+'));
                 return lat;
@@ -360,10 +346,10 @@
             };
             
             angular.extend($scope, {
-                torino: {
+                center: {
                     lat: 45.05,
                     lng: 7.66,
-                    zoom: 13},
+                    zoom: 11},
                 defaults: {
                     tileLayer: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                     tileLayerOptions: {
@@ -384,45 +370,24 @@
                                 //logic: 'emit'
                     }
                 }
-            });           
-            
-
-            $scope.getGeoJson = function (input) {
-                
-                var searchUrl = "http://nominatim.openstreetmap.org/search?";
-                searchUrl = searchUrl + 'q=' + input.numCivico + '+' + input.nomeVia + ',+' +input.nomeCittà  + '&format=xml&limit=1';
-                       
-                
-                var promise;
-                promise = $http({
-                    method: 'GET',
-                    url: searchUrl,
-                    headers: {'Content-Type': 'application/json'},
-                    data: input
-                })
-                        .success(function (data, status, header) {
-                            //checkCookieEnabled();                            
-                            console.log("Geoloc successfull ");
-                            console.log(data);
-                        })
-                        .error(function (data, status, headers, config) {
-                            
-                            return status;
-                        });
-                return promise;
-
-            };
-
-
+            });   
             $scope.addMarkers = function(mark1,mark2) {
-                console.log(mark1);
-                console.log(mark2);
+                //console.log(mark1);
+                //console.log(mark2);                
                 angular.extend($scope, {
                     markers: {
                        m1: angular.copy(mark1),
                        m2: angular.copy(mark2)
                     }
                 }); 
+            };
+            
+            $scope.changeCenter = function(value) {
+                value = parseFloat(value);    
+                leafletData.getMap().then(function(map) {
+                    map.center.zoom = value;
+                });
+             
             };
         }]);
 

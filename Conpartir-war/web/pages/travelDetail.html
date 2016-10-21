@@ -13,9 +13,11 @@
                 <div class="">
                     <h5>Un viaggio proposto da {{detail.driverInfo.name}} {{detail.driverInfo.surname}}</h5>
                     <p ng-hide="commentAlert">Punteggio medio: {{feedbackAvgRate}}</p>
-                    <p  ng-hide="commentAlert" data-toggle="modal" data-target="#modalDriverFeed" >Vedi i commenti degli altri utenti</p>
+                    <p ng-hide="commentAlert" data-toggle="modal" data-target="#modalDriverFeed" >Vedi i commenti degli altri utenti</p>
                     <span  class="bg-info margintop-10 marginbot-10" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su questo guidatore.</span>
-           
+                     <a class="twitter-share-button center" href="https://twitter.com/intent/tweet?text=Sto%2guardando%20un%20viaggio%20su%20Conpartir!&url=http://Conpartir03.com" data-size="large">
+                        Tweet
+                    </a>
                 <dl class="dl-horizontal">
                     <dt>Partenza</dt>
                     <dd>{{travel.origin}}</dd>
@@ -39,19 +41,22 @@
             </div>
             <div class="col-lg-4">
                 <img id="foto" src="{{detail.driverInfo.urlPhoto}}" alt="user image">
-                <h3>Posti liberi: {{travel.freeSeats}}</h4>
+                <h5>Posti liberi: {{travel.freeSeats}}</h5>
+                <div class="input-group row">
                     <button class="btn-lg btn-skin btn" ng-click="book()" ng-hide="ifAlert">Prenota</button>
-                <div class="bg-danger center" ng-hide="isAuthorized" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a data-toggle="modal" data-target="#modalLogin" onclick="signOut()">Vuoi farlo ora?</a></div>
-                <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>  
-                <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
+                   
+                </div>    
+                    <div class="bg-danger center" ng-hide="isAuthorized" style="margin-top:5px">Devi fare il login per prenotare un viaggio. <a data-toggle="modal" data-target="#modalLogin" onclick="signOut()">Vuoi farlo ora?</a></div>
+                    <div class="bg-warning center" ng-show="ifAlert" style="margin-top:5px">{{alertMsg}}</div>  
+                    <div class="bg-danger center" ng-show="ifTimeAlert" style="margin-top:5px">Il viaggio sta per partire. Le prenotazioni sono chiuse.</div>
             </div> 
         </div>
     </div>    
     <div class="row col-md-6 col-md-offset-3 margintop-20 marginbot-20">   
-       <leaflet center="torino" defaults="defaults" event-broadcast="events" markers="markers" width="550px" height="250px">
+       <leaflet center="center" defaults="defaults" event-broadcast="events" markers="markers" width="620px" height="300px">
         </leaflet> 
         <button class="btn btn-skin margintop-10"  ng-show="isTaxiTravel" ng-click="addMarkers(taxiStartMarker, taxiEndMarker)">Vedi partenza e arrivo</button>
-        <button class="btn btn-skin margintop-10" ng-show="isCarTravel" ng-click="addMarkers(carStartMarker, carEndMarker)">Vedi partenza e arrivo</button>
+        <button class="btn btn-skin margintop-10" ng-show="isCarTravel" ng-click="addMarkers(carStartMarker, carEndMarker); changeZoom('7')">Vedi partenza e arrivo</button>
    
     </div>
     
