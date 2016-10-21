@@ -10,7 +10,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
         var obj = {};
             var isGmail;
             var isTwitter;
-            var gmailData;
+            var exLoginData;
 
             //variabili per le richieste SOAP
             var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
@@ -100,7 +100,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                     sessionStorage.removeItem('conpCookie');
                     sessionStorage.clear();
                     console.log(sessionStorage.getItem("conpCookie"));
-                    gmailData = {};
+                    exLoginData = {};
                     obj = false;
                 },
                 saveCookie: function (ckName, ckValue) {
@@ -134,6 +134,9 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
 
                     return promise;
                 },
+                
+                //Vecchia versione di un metodo, presupponeva che l'email dell'account e della gmail
+                //fossero le stesse. Vedere "isGmailThere"
                 isGmailOn: function (email) {
                     var res;
                     var sr;
@@ -166,6 +169,40 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
 
                     return promise;
                 },
+                //Controlla se qualche utente ha usato la gmail per collegarla al suo account
+                isGmailThere: function (gmail) {
+                    var res;
+                    var sr;
+                    var action;
+                    var opName;
+                    var promise;
+                    var opName = "isGmailThere";
+                    sr = SOAPhead +
+                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                            '<gmailValue>' + gmail + '</gmailValue>' +
+                            '</ns0:' + opName + '>' +
+                            SOAPtail;
+                    action = '"' + "http://SOAPServer" + "/" + opName + '"';
+
+                    promise = $http.post(SOAPbase, sr, {"headers": {
+                            'Content-Type': "text/xml;charset=utf-8",
+                            'SOAPAction': action
+                        }
+                    })
+                            .success(function (data, status, headers, config) {
+                                var jsonObj = x2js.xml_str2json(data);
+                                res = jsonObj.Envelope.Body.isGmailThereResponse;
+                                delete res["_xmlns:ns2"];
+                                delete res["__prefix"];
+                                isGmail = res;
+                            })
+                            .error(function (data, status, headers, config) {
+                                return {"status": false};
+                            });
+
+                    return promise;
+                },
+                //Deprecato, vedere  isTwitterThere
                 isTwitterOn: function (email) {
                     var res;
                     var sr;
@@ -198,27 +235,41 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
 
                     return promise;
                 },
-                //twitter sign in flow
-                doTwitterRequestToken: function () {
+                //Controlla se c'è un utente che ha quel valore di twitter account
+                //collegato col proprio account conpartir
+                isTwitterThere: function (twitterAccount) {
+                    var res;
+                    var sr;
+                    var action;
+                    var opName;
                     var promise;
-                    promise = $http({
-                        method: 'POST',
-                        url: 'https://api.twitter.com/oauth/request_token',
-                        headers: {'Content-Type': 'application/json'}
+                    var opName = "isTwitterThere";
+                    sr = SOAPhead +
+                            '<ns0:' + opName + ' xmlns:ns0="http://SOAPServer/">' +
+                            '<twitterValue>' + twitterAccount + '</twitterValue>' +
+                            '</ns0:' + opName + '>' +
+                            SOAPtail;
+                    action = '"' + "http://SOAPServer" + "/" + opName + '"';
 
+                    promise = $http.post(SOAPbase, sr, {"headers": {
+                            'Content-Type': "text/xml;charset=utf-8",
+                            'SOAPAction': action
+                        }
                     })
-                            .success(function (data, status, header) {
-
+                            .success(function (data, status, headers, config) {
+                                var jsonObj = x2js.xml_str2json(data);
+                                res = jsonObj.Envelope.Body.isTwitterThereResponse;
+                                delete res["_xmlns:ns2"];
+                                delete res["__prefix"];
+                                isTwitter = res;
                             })
-
                             .error(function (data, status, headers, config) {
-
-
                                 return {"status": false};
                             });
-                    return promise;
 
-              },
+                    return promise;
+                },
+                
                 getData: function () {
                     return obj;
                 },
@@ -228,14 +279,14 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                 getTwitterValue: function () {
                     return isTwitter;
                 },
-                getGmailData: function () {
-                    return gmailData;
+                getExternalLoginData: function () {
+                    return exLoginData;
                 },
                 setData: function (data) {
                     obj = data;
                 },
-                setGmailData: function (data) {
-                    gmailData = data;
+                setExternalLoginData: function (data) {
+                    exLoginData = data;
                 }
 
 

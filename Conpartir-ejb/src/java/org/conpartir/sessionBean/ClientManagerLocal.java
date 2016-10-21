@@ -59,9 +59,25 @@ public interface ClientManagerLocal {
     public Client getClient(String email);
     
      /**
-     * Setta il valore di gmail dell'utente
+     * Restituisce l'oggetto di tipo client, se esiste, ricercato per gmail
+     * @param gmailValue
+     * @return 
+     */
+    public Client getClientByGmail(String gmailValue);
+    
+    
+     /**
+     * Restituisce l'oggetto di tipo client, se esiste, ricercato per twitter
+     * @param twitter
+     * @return 
+     */
+    public Client getClientByTwitter(String twitter);
+    
+     /**
+     * Setta il valore dei riferimenti secondari dell'utente
      * @param email
-     * @param value
+     * @param gmailValue
+     * @param twitterValue
      */
     public boolean setOtherEmail(String email, String gmailValue, String twitterValue);
      

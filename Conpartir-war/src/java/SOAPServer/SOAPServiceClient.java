@@ -145,10 +145,26 @@ public class SOAPServiceClient {
         }
     }
     
-    
+       
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "isGmailOn")
     public boolean isGmailOn(@WebParam(name = "email") String email) {
         return clientRef.getClient(email).getGmailValue() != null;
+    }
+       
+    /**
+     * Web service operation
+     * Controlla se c'é una gmail associata a un'account
+     * se esiste, restituisce l'email (per fare il login)
+     */
+    @WebMethod(operationName = "isGmailThere")
+    public String isGmailThere(@WebParam(name = "gmailValue") String gmailValue) {
+        Client temp = clientRef.getClientByGmail(gmailValue);
+        String accountEmail = temp.getEmail();
+        
+        return accountEmail;
     }
     
     /**
@@ -159,6 +175,18 @@ public class SOAPServiceClient {
         return clientRef.getClient(email).getTwitterValue() != null;
     }
     
+     /**
+     * Web service operation
+     * Controlla se c'é un twitter associato a un'account
+     * se esiste, restituisce l'email (per fare il login)
+     */
+    @WebMethod(operationName = "isTwitterThere")
+    public String isTwitterThere(@WebParam(name = "twitterValue") String twitterValue) {
+        Client temp = clientRef.getClientByTwitter(twitterValue);
+        String accountEmail = temp.getEmail();
+        
+        return accountEmail;
+    }
     
     /**
      * Web service operation

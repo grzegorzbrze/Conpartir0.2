@@ -27,9 +27,6 @@
     <link href="frameworks/bootstrap/css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="css/override.css" rel="stylesheet">
     
-
-
-    
     
      <!-- Angular Js Main and Services -->
     <script src="frameworks/angularJs/angular.min.js"></script>
@@ -54,7 +51,7 @@
        <!-- leaflet 
     <script src="frameworks/leaflet/leaflet.js"></script>    -->
     
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+    <script src="frameworks/leaflet/leaflet.js"></script>
     <script src="frameworks/leaflet/angular-leaflet/angular-leaflet-directive.min.js"></script>
     <!-- leaflet -->
     <link rel="stylesheet" href="frameworks/leaflet/leaflet.css">
@@ -203,49 +200,55 @@
 
     <!-- Modal content -->
     <div class="modal-content">
-      <div class="modal-body" ng-controller="LoginController">
-          <div class="row">
-          <div class="col-lg-8 col-lg-offset-2">
-					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
-					<div class="section-heading text-center">
-					<h2 class="h-bold">Login</h2>
-					<div class="divider-header"></div>
-					<p>Non hai un account? <a data-dismiss="modal" data-toggle="modal" data-target="#modalSignup">Registrati qui.</a></p>
-					</div>
-					</div>
-				</div>
-          
-          </div>
-          <div class="row">
-          <div class="col-lg-8 col-lg-offset-2"> 
-              <form class="input-group adjust" novalidate="">    
-                  <div class="input-group">
-                      <span class="input-group-addon" id="basic-addon1">Email</span>
-                      <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
-                  </div>
-                  <p></p>
-                  <div class="input-group" >
-                      <span class="input-group-addon" id="basic-addon2">Password</span>
-                      <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
-                  </div>
-                  <p></p>
-                  <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
-                  <p></p>
-                  <span class="text-center"> Oppure fai il login tramite google: </span>
-                  <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   <!--<button class="btn btn-skin center" onclick="signOut()">Google Sign Out</button> -->
-                  <!-- <button class="btn-block" ng-click="onTwitterSignIn()">Twitter</button> -->
-                                    
-                  <div id="status">                    
-                  </div>
-                  <p></p>
-                  <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
-                  <p>                   
-                  </p>
-              </form>          
-          </div>
+        <div class="modal-body" ng-controller="LoginController">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                        <div class="section-heading text-center">
+                            <h2 class="h-bold">Login</h2>
+                            <div class="divider-header"></div>
+                            <p>Non hai un account? <a data-dismiss="modal" data-toggle="modal" data-target="#modalSignup">Registrati qui.</a></p>
+                        </div>
+                    </div>
+                </div>
 
-      </div>
-      </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2"> 
+                    <form class="input-group adjust" novalidate="">    
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">Email</span>
+                            <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
+                        </div>
+                        <p></p>
+                        <div class="input-group" >
+                            <span class="input-group-addon" id="basic-addon2">Password</span>
+                            <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
+                        </div>
+                        <p></p>
+                        <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
+                        <p></p>
+                    </form>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2"> 
+                    <form class="input-group adjust" novalidate="">  
+                        <span class="text-center"> Oppure fai il login tramite google: </span>
+                        <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   
+                        <button class="btn-block" ng-click="onTwitterSignIn()">Twitter</button> <!---->
+
+                        <div id="status">                    
+                        </div>
+                        <p></p>
+                        <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
+                        <p>                   
+                        </p>
+                    </form>          
+                </div>
+
+            </div>
+        </div>
     </div>
 
   </div>
@@ -586,11 +589,10 @@
 </div>
 <!-- /Modal per offrire un passaggio -->
 
-<!-- Modal per le mappe -->
+<!-- Modal per le mappe 
 <div id="modalMap"  class="modal fade" role="dialog" ng-controller="DetailController" >
   <div class="modal-dialog">
 
-    <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-body"> 
        <leaflet center="torino" defaults="defaults" event-broadcast="events" markers="markers" width="550px" height="250px">
@@ -601,7 +603,7 @@
     </div>
 
   </div>
-</div>
+</div>-->
 <!-- /Modal per  mappe  -->
 
 <!-- Modal per viaggio postato con successo -->
@@ -696,23 +698,12 @@
     <script src="frameworks/bootstrap/js/bootstrap-datepicker.min.js"></script>
     <script src="frameworks/bootstrap/js/bootstrap-timepicker.min.js"></script>    
     <script src="frameworks/xml2json.min.js"></script>
-    
-   
-    
     <!-- lodash -->
     <script src="js/lodash.core.js"></script>
     
     <!-- angular-simple-logger -->
     <script src="frameworks/angularJs/angular-simple-logger.js"></script>
-    
-    <!-- angular google maps 
-    <script src="https://rawgit.com/angular-ui/angular-google-maps/2.4.0/dist/angular-google-maps.min.js"></script>
-    
-    <script src="frameworks/angular-google-maps.min.js"></script>-->
-    
-    
-     
-    
+    <script src="frameworks/oauth.min.js"></script>
     
        <!-- Twitter -->
     <script>window.twttr = (function(d, s, id) {

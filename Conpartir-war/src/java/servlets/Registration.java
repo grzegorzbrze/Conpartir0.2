@@ -190,66 +190,77 @@ public class Registration extends HttpServlet {
          password = (String) joUser.get("pass");      
          
          boolean emailCheck = clientManager.isEmail(email);
-         
-         if (emailCheck == true) {
-             if (use.equals("registration")){
+
+         if (use.equals("registration")) {
+             if (emailCheck == true) {
                  //alert: si sta cercando di registrare un utente con una mail già utilizzata
                  res = "1 Errore: questa mail è già stata usata per la registrazione di un altro account!";
-                  }
-            if (use.equals("gmail")) {
-                    //login corretto                     
-                     res = "Login effettuato con successo!";
-                     
-                     String ckValue;
-                     double val =  Math.random() * 5000;
-                     ckValue = "random" + val;
-                     
-                     Cookie userCookie = new Cookie("conpCookie",ckValue);
-                     //imposta la validità dei cookie a 10 minuti
-                     userCookie.setMaxAge(60*10);                     
-                     issuedCookies.add(userCookie);
-                     response.addCookie(userCookie);
-            
-            }
-            if (use.equals("login")) {
-                 if (password.equals(clientManager.getClient(email).getPass())) {
-                     //login corretto                     
-                     res = "Login effettuato con successo!";
-                     
-                     String ckValue;
-                     double val =  Math.random() * 5000;
-                     ckValue = "random" + val;
-                     
-                     Cookie userCookie = new Cookie("conpCookie",ckValue);
-                     //imposta la validità dei cookie a 10 minuti
-                     userCookie.setMaxAge(60*10);                     
-                     issuedCookies.add(userCookie);
-                     response.addCookie(userCookie);
+             } else {
+                 Client nuovo = new Client();
+                 nuovo.setName(name);
+                 nuovo.setSurname(surname);
+                 nuovo.setGender(gender.charAt(0));
+                 nuovo.setAge(age);
+                 nuovo.setEmail(email);
+                 nuovo.setPass(password);
+
+                 clientManager.createClient(nuovo);
+                 res = "Registrazione effettuata con successo!";
+             }
+         } else {
+             if (use.equals("gmail")) {
+                 //login corretto                     
+                 res = "Login effettuato con successo!";
+                 String ckValue;
+                 double val = Math.random() * 5000;
+                 ckValue = "random" + val;
+
+                 Cookie userCookie = new Cookie("conpCookie", ckValue);
+                 //imposta la validità dei cookie a 10 minuti
+                 userCookie.setMaxAge(60 * 10);
+                 issuedCookies.add(userCookie);
+                 response.addCookie(userCookie);
+             }
+             if (use.equals("twitter")) {
+                 //login corretto                     
+                 res = "Login effettuato con successo!";
+
+                 String ckValue;
+                 double val = Math.random() * 5000;
+                 ckValue = "random" + val;
+
+                 Cookie userCookie = new Cookie("conpCookie", ckValue);
+                 //imposta la validità dei cookie a 10 minuti
+                 userCookie.setMaxAge(60 * 10);
+                 issuedCookies.add(userCookie);
+                 response.addCookie(userCookie);
+
+             }
+             if (use.equals("login")) {
+                 if (emailCheck == true) {
+                     if (password.equals(clientManager.getClient(email).getPass())) {
+                         //login corretto                     
+                         res = "Login effettuato con successo!";
+
+                         String ckValue;
+                         double val = Math.random() * 5000;
+                         ckValue = "random" + val;
+
+                         Cookie userCookie = new Cookie("conpCookie", ckValue);
+                         //imposta la validità dei cookie a 10 minuti
+                         userCookie.setMaxAge(60 * 10);
+                         issuedCookies.add(userCookie);
+                         response.addCookie(userCookie);
+                     } else {
+                         res = "3 Errore: password errata";
+                     }
+                 } else {
+                     //Da inserire un alert: si sta tentando un login con un'email non presente
+                     res = "2 Errore: l'email inserita non è presente nei nostri database.";
                  }
-                 else {
-                     res = "3 Errore: password errata";                
-                 }                         
-            }             
+             }
          }
-         else { 
-            if (use.equals("registration")){
-                Client nuovo = new Client();
-                nuovo.setName(name); 
-                nuovo.setSurname(surname);
-                nuovo.setGender(gender.charAt(0));
-                nuovo.setAge(age);
-                nuovo.setEmail(email);
-                nuovo.setPass(password);
-              
-                clientManager.createClient(nuovo);
-                res = "Registrazione effettuata con successo!";
-            }
-            else {
-                //Da inserire un alert: si sta tentando un login con un'email non presente
-                res = "2 Errore: l'email inserita non è presente nei nostri database.";
-            }
-         } 
-                         
+         
          PrintWriter out;
         
          //Servlet Response

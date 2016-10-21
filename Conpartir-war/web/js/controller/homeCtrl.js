@@ -46,12 +46,8 @@ $routeProvider
         $scope.hasFooter = true;
         $scope.loginShow;      
         $scope.isAuthorized =false;
-        $scope.faqValue = 0;
-        
-        $scope.markers = [];
-
+        $scope.faqValue = 0;     
       
-        
         
         $scope.about = false;
         $scope.show = function () {

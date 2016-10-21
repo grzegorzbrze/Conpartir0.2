@@ -120,7 +120,7 @@
                                 $scope.carEndMarker = {
                                     lat: parseFloat($scope.geolocEnd[0].lat),
                                     lng: parseFloat($scope.geolocEnd[0].lon),
-                                    float: true,
+                                    focus: true,
                                     message : "Arrivo"
                                 };
                                                                

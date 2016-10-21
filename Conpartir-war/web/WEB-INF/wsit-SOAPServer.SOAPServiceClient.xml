@@ -49,6 +49,10 @@
     <message name="editClientResponse"/>
     <message name="isTwitterOn"/>
     <message name="isTwitterOnResponse"/>
+    <message name="isGmailThere"/>
+    <message name="isGmailThereResponse"/>
+    <message name="isTwitterThere"/>
+    <message name="isTwitterThereResponse"/>
     <portType name="SOAPServiceClient">
         <operation name="createClient_1">
             <input message="tns:createClient_1"/>
@@ -138,6 +142,14 @@
             <input message="tns:isTwitterOn"/>
             <output message="tns:isTwitterOnResponse"/>
         </operation>
+        <operation name="isGmailThere">
+            <input message="tns:isGmailThere"/>
+            <output message="tns:isGmailThereResponse"/>
+        </operation>
+        <operation name="isTwitterThere">
+            <input message="tns:isTwitterThere"/>
+            <output message="tns:isTwitterThereResponse"/>
+        </operation>
     </portType>
     <binding name="SOAPServiceClientPortBinding" type="tns:SOAPServiceClient">
         <wsp:PolicyReference URI="#SOAPServiceClientPortBindingPolicy"/>
@@ -226,6 +238,14 @@
             <output/>
         </operation>
         <operation name="isTwitterOn">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="isGmailThere">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="isTwitterThere">
             <input/>
             <output/>
         </operation>

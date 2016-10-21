@@ -111,6 +111,32 @@ public class ClientManager implements ClientManagerLocal {
     }
     
     @Override
+    public Client getClientByGmail(String gmailValue) {
+        Client client = new Client();
+        List<Client> list = clientFacade.findAll();
+        for (Client temp : list){
+            String tempGmail = temp.getGmailValue();
+            if (tempGmail.equals(gmailValue)){
+                client = temp; 
+                            
+            }
+        }
+       return client;
+    }
+    
+    @Override
+    public Client getClientByTwitter(String twitter) {
+        Client client = new Client();
+        List<Client> list = clientFacade.findAll();
+        for (Client temp : list){
+            if (temp.getTwitterValue().equals(twitter)){
+                client = temp;                          
+            }
+        }
+       return client;
+    }
+        
+    @Override
     public boolean setOtherEmail(String email, String gmailValue, String twitterValue) {
         Client owner = this.getClient(email);
         boolean ris = false;
