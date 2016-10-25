@@ -232,19 +232,18 @@
                 </div>
             </div> 
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2"> 
-                    <form class="input-group adjust" novalidate="">  
-                        <span class="text-center"> Oppure fai il login tramite google: </span>
-                        <div class="g-signin2 btn center" data-onsuccess="onSignIn"></div>   
-                        <button class="btn-block" ng-click="onTwitterSignIn()">Twitter</button> <!---->
+                <div class="col-lg-8 col-lg-offset-2">
+                    <span class="text-center"> Oppure autenticati tramite social: </span> 
+                    <div class =" row">                      
+                        <div class="col-lg-4 col-lg-offset-1"><div class="g-signin2 btn btn-danger " data-onsuccess="onSignIn">Google</div> </div>  
+                        <div class="col-lg-4 col-lg-offset-1"> <button class="btn btn-info" ng-click="onTwitterSignIn()">Twitter</button> </div>
 
-                        <div id="status">                    
-                        </div>
-                        <p></p>
-                        <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
-                        <p>                   
-                        </p>
-                    </form>          
+                    </div><div id="status">                    
+                    </div>
+                    <p></p>
+                    <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
+                    <p>                   
+                    </p>
                 </div>
 
             </div>

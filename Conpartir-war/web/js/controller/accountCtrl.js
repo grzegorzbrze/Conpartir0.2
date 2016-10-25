@@ -319,7 +319,7 @@
 
                     $scope.modalInfo = shared.getData();
 
-                    //manca un avviso all'utente
+                    alert($scope.modalInfo);
                     $location.path('/account');
                 });
             };
@@ -347,7 +347,7 @@
 
                     $scope.modalInfo = shared.getData();
 
-                    //manca un avviso all'utente
+                    alert($scope.modalInfo);
                     $location.path('/account');
                 });
             };

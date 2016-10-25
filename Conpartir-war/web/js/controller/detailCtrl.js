@@ -208,22 +208,34 @@
 
             $scope.book = function () {
                 var input = {};
-                input.travelId = $scope.travel.travel_id;
+                input.travelId =  $location.search().number;
+                input.taxiId =  $location.search().number;
                 input.email = sessionStorage.getItem("email");
 
                 if (input.email === $scope.detail.driverInfo.email) {
                     alert('Non puoi prenotare un tuo stesso viaggio');
                     return;
+                };
+                if ($scope.isCarTravel === true) {
+                    shared.bookTravel(input).then(function (promise) {
+                        if (promise.status === 200) {
+                            alert("Prenotazione effettuata con successo!");
+                        }
+                        else {
+                            alert("Qualcosa è andato storto con la prenotazione.");
+                        }
+                    });
                 }
-                ;
-                shared.bookTravel(input).then(function (promise) {
-                    if (promise.status === 200) {
-                        alert("Prenotazione effettuata con successo!");
-                    }
-                    else {
-                        alert("Qualcosa è andato storto con la prenotazione.");
-                    }
-                });
+                if ($scope.isTaxiTravel === true) {
+                    shared.bookTaxi(input).then(function (promise) {
+                        if (promise.status === 200) {
+                            alert("Prenotazione effettuata con successo!");
+                        }
+                        else {
+                            alert("Qualcosa è andato storto con la prenotazione.");
+                        }
+                    });
+                }
             };
 
             $scope.checkFeedback = function () {

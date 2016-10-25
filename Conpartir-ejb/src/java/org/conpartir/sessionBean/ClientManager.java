@@ -129,7 +129,8 @@ public class ClientManager implements ClientManagerLocal {
         Client client = new Client();
         List<Client> list = clientFacade.findAll();
         for (Client temp : list){
-            if (temp.getTwitterValue()!= null && temp.getTwitterValue().equals(twitter)){
+            String tempTwitt = temp.getTwitterValue();
+            if (twitter.equals(tempTwitt)){                
                 client = temp;                          
             }
         }

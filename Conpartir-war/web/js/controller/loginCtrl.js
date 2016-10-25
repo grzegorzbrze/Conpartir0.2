@@ -35,9 +35,7 @@
             
             $scope.login = function (user) {
 
-                //console.log($scope.master);
                 var prova = auth.getExternalLoginData();
-                //console.log(prova);
                 if (!jQuery.isEmptyObject(prova)) {
                     if (prova.use === "gmail" || prova.use === "twitter") {
                         $scope.master = prova;
@@ -46,10 +44,8 @@
                             if (user.email !== prova.email && user.email !== "undefined") {
                                 alert("Attenzione, stai facendo l'account con i dati di alcuni servizi esterni (gmail, twitter)");
                                 user = {};
-
                             }
-                        }
-                        
+                        }                      
                         
                         $scope.servletCall();
                         return;
@@ -101,7 +97,7 @@
                     console.log(data);
                     
                     auth.isTwitterThere(data.alias).then(function(promise){
-                         var accountEmail = auth.getTwitterValue();
+                         var accountEmail = auth.getTwitterValue().return;
                          if (jQuery.isEmptyObject(accountEmail)) {
                              alert("L'account di twitter da te specificato non è associato ad alcun account Conpartir");
                          }
@@ -126,11 +122,12 @@
                     // this callback will be called asynchronously
                     // when the response is available
                     $scope.status=data.data;
+                    console.log(status);
                     var flag = data.data.charAt(1);
-                    if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
+                    if (flag === '1' || flag === '2' || flag === '3') $scope.ifAlert = true;
                     else {
                         auth.checkAuth().then(function (promise) {                             
-                            if (promise.status == 200 )  $scope.isAuthorized = true;
+                            if (promise.status === 200 )  $scope.isAuthorized = true;
                             else {
                                 $scope.isAuthorized = false;
                                 signOut();

@@ -54,12 +54,24 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
+     * Aggiunta passeggeri per un Travel
      */
     @WebMethod(operationName = "addPassenger")
     public void addPassenger(@WebParam(name = "travel_id") long travel_id, 
             @WebParam(name = "email") String email ){
         long passenger_id = clientRef.getClient(email).getId();
         travelRef.addPassenger(travel_id, passenger_id);
+    }
+    
+     /**
+     * Web service operation
+     * Aggiunta passeggeri per un Taxi
+     */
+    @WebMethod(operationName = "addPassengerTaxi")
+    public void addPassengerTaxi(@WebParam(name = "taxi_id") long taxi_id, 
+            @WebParam(name = "email") String email ){
+        long passenger_id = clientRef.getClient(email).getId();
+        taxiRef.addPassenger(taxi_id, passenger_id);
     }
     
      /**
@@ -182,7 +194,9 @@ public class SOAPServiceClient {
      */
     @WebMethod(operationName = "isTwitterThere")
     public String isTwitterThere(@WebParam(name = "twitterValue") String twitterValue) {
-        Client temp = clientRef.getClientByTwitter(twitterValue);
+        //System.out.println(twitterValue);
+        
+        Client temp = clientRef.getClientByTwitter(twitterValue);        
         String accountEmail = temp.getEmail();
         
         return accountEmail;
