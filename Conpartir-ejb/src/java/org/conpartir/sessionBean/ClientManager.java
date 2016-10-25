@@ -116,7 +116,7 @@ public class ClientManager implements ClientManagerLocal {
         List<Client> list = clientFacade.findAll();
         for (Client temp : list){
             String tempGmail = temp.getGmailValue();
-            if (tempGmail.equals(gmailValue)){
+            if (tempGmail != null && tempGmail.equals(gmailValue)){
                 client = temp; 
                             
             }
@@ -129,7 +129,7 @@ public class ClientManager implements ClientManagerLocal {
         Client client = new Client();
         List<Client> list = clientFacade.findAll();
         for (Client temp : list){
-            if (temp.getTwitterValue().equals(twitter)){
+            if (temp.getTwitterValue()!= null && temp.getTwitterValue().equals(twitter)){
                 client = temp;                          
             }
         }

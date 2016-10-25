@@ -86,7 +86,7 @@ public class TravelManager implements TravelManagerLocal {
                     && temp_origine != null && temp_destination != null){
                 if (temp_driverID.equals(driver_id) && temp_clientID.equals(client_id) &&
                         equalsDate(temp_data,data) && temp_time.equals(time) && 
-                        temp_origine.equals(origine) && temp_destination.equals(destination)){
+                        temp_origine.equals(origine.toLowerCase()) && temp_destination.equals(destination.toLowerCase())){
                     id_travel = temp.getTravel_id();
                 }
             }
@@ -240,12 +240,11 @@ public class TravelManager implements TravelManagerLocal {
     
     @Override
     public Travel getTravel(Long travelID) {
-        Travel viaggio = new Travel();
         for (Travel temp : travelFacade.findAll()){
             if (temp.getTravel_id().equals(travelID))
-                viaggio = temp;
+                return temp;
         }
-        return viaggio;
+        return new Travel();
     }
     
     @Override    
