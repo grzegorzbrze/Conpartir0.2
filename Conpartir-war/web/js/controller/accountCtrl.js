@@ -278,7 +278,31 @@
                 shared.getLatestReceivedComments(self.email, 10).then(function (promise) {
                     var prova = shared.getComments();
                     $scope.commentInfo = prova;
-                    if (jQuery.isEmptyObject($scope.commentInfo)) $scope.commentAlert = true; 
+                     if (jQuery.isEmptyObject(prova))
+                        $scope.commentAlert = true;
+                    else {
+                        if (isArray(prova)) $scope.commentInfo = prova; 
+                        else $scope.commentInfo = [ prova ]; 
+                        
+                        var it;
+                        var avg = 0;
+                        if (isArray(prova)) {
+                            $scope.feedbacks = prova;
+                            for (it = 0; it < prova.length; it++) {
+
+                                avg = avg + parseInt(prova[it].feedBackCommento);
+                            }
+                            if (avg === 0)
+                                $scope.feedbackAvgRate = 0;
+                            else
+                                $scope.feedbackAvgRate = avg / (it);
+                        }
+                        else {
+                            $scope.feedbacks = [];
+                            $scope.feedbacks[0] = prova;
+                            $scope.feedbackAvgRate = prova.feedBackCommento;
+                        };
+                    }
                 });
             };
             
@@ -318,7 +342,6 @@
                 shared.setClientGmail(input).then(function (promise) {
 
                     $scope.modalInfo = shared.getData();
-
                     alert($scope.modalInfo);
                     $location.path('/account');
                 });
@@ -337,7 +360,6 @@
                 });
 
             };
-
 
             $scope.editTwitter = function (input) {
                 if (self.email === undefined)
@@ -384,6 +406,10 @@
                 ;
                 //console.log(emailProvider);
                 return "notOk";
+            };
+            
+            var isArray = function(what) {              
+                return Object.prototype.toString.call(what) === '[object Array]';
             };
 
         }]);

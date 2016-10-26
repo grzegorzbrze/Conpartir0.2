@@ -28,15 +28,20 @@
                             Offri un passaggio.           </button> -->
                         <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalModify"> Modifica il profilo. </button> 
                         <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button> <p></p>
-                    </div> 
+                    </div>
+                    <div class="row margintop-10">
+                        <h6 ng-hide="commentAlert">Il tuo punteggio medio utente è di {{feedbackAvgRate}} stars</h6>
+                    </div>
                     <div class="row margintop-10"> 
-                        <span ng-show="isGmail"> Account collegato con Gmail. <a ng-click="gmailUnlink()" class="bg-danger">Vuoi scollegarlo?</a> </span>
+                        <span ng-show="isGmail"> Account collegato con Gmail. <a ng-click="gmailUnlink()" class="">Vuoi scollegarlo?</a> </span>
                         <span ng-hide="isGmail"> Account non collegato con Gmail. <a data-toggle="modal" data-target="#modalGmail">Vuoi collegarlo?</a> </span>
                         <p></p>
-                        <span ng-show="isTwitter"> Account collegato con Twitter. <a ng-click="twitterUnlink()" class="bg-danger">Vuoi scollegarlo?</a> </span>
+                        <span ng-show="isTwitter"> Account collegato con Twitter. <a ng-click="twitterUnlink()" class="">Vuoi scollegarlo?</a> </span>
                         <span ng-hide="isTwitter"> Account non collegato con Twitter. <a data-toggle="modal" data-target="#modalTwitter">Vuoi collegarlo?</a> </span>
-                   
-                </div> 
+                    </div>
+                    <div class="row margintop-10">
+                        <span ng-hide="commentAlert">Punteggio medio: {{feedbackAvgRate}}</span>
+                    </div>
             </div> 
         </div>
     </div>
@@ -81,19 +86,19 @@
                                 <a href="#account" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#account" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
                                 </div> 
                             </div>
-                            <div role="tabpanel" id="feedback" ng-show="show[2]">      
+                            <div role="tabpanel" id="feedback" ng-show="show[2]">                                
                                 <div class="row"> 
-                                <dl class="dl-horizontal margintop-10" ng-repeat="commenti in commentInfo">                           
-                                <dt>Autore:</dt>
-                                <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
-                                <dt>Testo:</dt>
-                                <dd>{{commenti.testoCommento}}</dd>
-                                <dt> Feedback </dt>
-                                <dd> {{commenti.feedBackCommento}}</dd>                        
-                                </dl>
-                                <br>
-                                <span class="bg-info margintop-10 marginbot-10" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su di te.</span>
-                            </div>
+                                    <dl class="dl-horizontal margintop-10" ng-repeat="commenti in commentInfo">                           
+                                        <dt>Autore:</dt>
+                                        <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
+                                        <dt>Testo:</dt>
+                                        <dd>{{commenti.testoCommento}}</dd>
+                                        <dt> Feedback </dt>
+                                        <dd> {{commenti.feedBackCommento}}</dd>                        
+                                    </dl>
+                                    <br>
+                                    <span class="margintop-10 marginbot-10" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su di te.</span>
+                                </div>
                             </div>
                         </div>
                 </div>
@@ -119,7 +124,7 @@
     </div>
     <div class="container margintop-20">
         <div class="row">
-            <span class="bg-info">Vuoi lasciare un commento su un altro utente? Seleziona uno dei viaggi passati per iniziare.</span>
+            <span class="">Vuoi lasciare un commento su un altro utente? Seleziona uno dei viaggi passati per iniziare.</span>
         </div>
         <div class="row">
             <div class="radio-inline-panel">
