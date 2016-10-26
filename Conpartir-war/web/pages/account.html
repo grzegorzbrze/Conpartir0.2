@@ -30,7 +30,7 @@
                         <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button> <p></p>
                     </div>
                     <div class="row margintop-10">
-                        <h6 ng-hide="commentAlert">Il tuo punteggio medio utente è di {{feedbackAvgRate}} stars</h6>
+                        <h6 ng-hide="commentAlert">Il tuo punteggio medio utente è di {{feedbackAvgRate}} &#9733</h6>
                     </div>
                     <div class="row margintop-10"> 
                         <span ng-show="isGmail"> Account collegato con Gmail. <a ng-click="gmailUnlink()" class="">Vuoi scollegarlo?</a> </span>
@@ -38,9 +38,6 @@
                         <p></p>
                         <span ng-show="isTwitter"> Account collegato con Twitter. <a ng-click="twitterUnlink()" class="">Vuoi scollegarlo?</a> </span>
                         <span ng-hide="isTwitter"> Account non collegato con Twitter. <a data-toggle="modal" data-target="#modalTwitter">Vuoi collegarlo?</a> </span>
-                    </div>
-                    <div class="row margintop-10">
-                        <span ng-hide="commentAlert">Punteggio medio: {{feedbackAvgRate}}</span>
                     </div>
             </div> 
         </div>
@@ -72,7 +69,7 @@
                             </div>    
                             </div>
                             <div role="tabpanel"  id="carProfile" ng-show="show[1]">
-                                <div class="row"> 
+                                <div class="row marginbot-10"> 
                                 <div class="btn-group margintop-10"  ng-show="isArray" role="group" aria-label="...">
                                     <button type="button" ng-repeat="item in driversInfo" class="btn btn-skin" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
                                 </div>                        

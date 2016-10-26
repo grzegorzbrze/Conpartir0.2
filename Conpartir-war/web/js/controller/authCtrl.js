@@ -13,8 +13,8 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
             var exLoginData;
 
             //variabili per le richieste SOAP
-            //var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
-            var SOAPbase = "http://conpartir03.northeurope.cloudapp.azure.com:8080/Conpartir-war/SOAPServiceClient";
+            var SOAPbase = "http://localhost:8080/Conpartir-war/SOAPServiceClient";
+            //var SOAPbase = "http://conpartir03.northeurope.cloudapp.azure.com:8080/Conpartir-war/SOAPServiceClient";
 
             var SOAPhead = '<?xml version="1.0" encoding="utf-8"?>' +
                     '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
@@ -82,7 +82,7 @@ var modAuthenticator = angular.module('authModule', ['ngRoute','ngCookies']);
                     return promise;
 
                 },
-//            //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
+               //controlla se l'utente è autenticato, verificando se esiste un cookie nella sessionStorage
                 isAuthenticated: function () {
 
                     var cookie = sessionStorage.getItem('conpCookie');

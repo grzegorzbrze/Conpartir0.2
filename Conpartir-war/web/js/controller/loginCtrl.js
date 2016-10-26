@@ -16,9 +16,14 @@
             $scope.ifAlert = false;
             $scope.ifSuccess = false;
             $scope.isAuthorized = false;
+            $scope.ifExternalLogin = false;
+            
+            //inizializzazione del servizio OAuth
             OAuth.initialize('jwDEjpUY8CHTgtz-Mx5DbPCdZSY');
             OAuth.create('twitter');
             
+            //metodo che controlla se l'utente è autenticato
+            //interrogando auth
             $scope.checkAuth = function () {
                 
                 auth.checkAuth().then(function (promise) {
@@ -34,7 +39,6 @@
             };
             
             $scope.login = function (user) {
-
                 var prova = auth.getExternalLoginData();
                 if (!jQuery.isEmptyObject(prova)) {
                     if (prova.use === "gmail" || prova.use === "twitter") {
@@ -64,58 +68,65 @@
                     $scope.servletCall();
             };
 
-            function onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-               
-                auth.isGmailOn(profile.getEmail()).then(function (promise) {
-                    if (promise.status === 200) {
-                        var result = auth.getGmailValue();
-                        if (result.return === "true") {
-                            //l'utente ha abilitato il login via gmail
-                            $scope.master.email = profile.getEmail();
-                            $scope.master.use = "gmail";
-                            //console.log('check delay');
-                            //console.log($scope.master);
-                            auth.setExternalLoginData($scope.master);
-                        }
-                        else {
-                            // l'utente non ha abilitato il login via gmail      
-                            alert("devi prima entrare con il tuo account Conpartir e abilitare il login via gmail");
-                        }
-                    }
-
-
-                });
-            };           
-             
-            $scope.onTwitterSignIn = function(twitterUser) {             
+           
+            //login tramite twitter, parte quando l'utente clicca sul relativo bottone
+            //e usa il servizio Oauth.io
+            $scope.onTwitterSignIn = function() {             
                 OAuth.popup('twitter').done(function (result) {
                     //console.log(result);
                     // do some stuff with result  
                     result.me().done(function (data) {
-                    // do something with `data`, e.g. print data.name
-                    console.log(data);
-                    
-                    auth.isTwitterThere(data.alias).then(function(promise){
-                         var accountEmail = auth.getTwitterValue().return;
-                         if (jQuery.isEmptyObject(accountEmail)) {
-                             alert("L'account di twitter da te specificato non è associato ad alcun account Conpartir");
-                         }
-                         else {
-                             $scope.master.email = accountEmail;
-                             $scope.master.use = "twitter";
-                             auth.setExternalLoginData($scope.master);
-                         }
-                            
-                        
-                    });
+                        // do something with `data`, e.g. print data.name
+                        console.log(data);
+
+                        auth.isTwitterThere(data.alias).then(function (promise) {
+                            var accountEmail = auth.getTwitterValue().return;
+                            if (jQuery.isEmptyObject(accountEmail)) {
+                                alert("L'account di twitter da te specificato non è associato ad alcun account Conpartir");
+                            }
+                            else {
+                                $scope.master.email = accountEmail;
+                                $scope.master.use = "twitter";
+                                auth.setExternalLoginData($scope.master);
+                                $scope.ifExternalLogin = true;
+                            }
+                        });
                     });
                 });
 
  
             };
             
-                        
+            //login tramite google, parte quando l'utente clicca sul relativo bottone
+            //e usa il servizio Oauth.io
+            $scope.onGoogleSignIn = function() {             
+                OAuth.popup('google').done(function (result) {
+                    console.log(result);
+                    result.me().done(function (data) {
+                        // do something with `data`, e.g. print data.name
+                        console.log(data);
+
+                        auth.isGmailThere(data.email).then(function (promise) {
+                            var accountEmail = auth.getGmailValue().return;
+                            if (jQuery.isEmptyObject(accountEmail)) {
+                                alert("L'account di google da te specificato non è associato ad alcun account Conpartir");
+                            }
+                            else {
+                                $scope.master.email = accountEmail;
+                                $scope.master.use = "gmail";
+                                auth.setExternalLoginData($scope.master);
+                                $scope.ifExternalLogin = true;
+                            }
+
+                        });
+                    });
+                });
+
+ 
+            };
+            
+            //Funzione handler che "chiama" la servlet registration per il login
+            //in realtà si interfaccia con auth
             $scope.servletCall = function (){                
                 $scope.ifAlert = false;
                 auth.doLogin($scope.master).then(function (data, status, headers, config) {                    
@@ -150,7 +161,7 @@
                });
            };
            
-       
+            //Registrazione di un utente
             $scope.register = function (user) {
                 $scope.master = user;
                 $scope.master.use = "registration";
@@ -167,7 +178,7 @@
                         flag = true; 
                     }
                 }    
-                if (user.email == undefined ) { 
+                if (user.email === undefined ) { 
                     $scope.status ="Prego, inserisci un'email valida";                    
                     $scope.ifAlert = true;
                     flag = true; 
@@ -202,6 +213,7 @@
                 }
             }; 
             
+            //Logout
             $scope.logout = function () {
                 
                 auth.doLogout();
@@ -216,6 +228,32 @@
                   });
             };
             
+            //Versione precedente del login di google
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+
+                auth.isGmailOn(profile.getEmail()).then(function (promise) {
+                    if (promise.status === 200) {
+                        var result = auth.getGmailValue();
+                        if (result.return === "true") {
+                            //l'utente ha abilitato il login via gmail
+                            $scope.master.email = profile.getEmail();
+                            $scope.master.use = "gmail";
+                            //console.log('check delay');
+                            //console.log($scope.master);
+                            auth.setExternalLoginData($scope.master);
+                        }
+                        else {
+                            // l'utente non ha abilitato il login via gmail      
+                            alert("devi prima entrare con il tuo account Conpartir e abilitare il login via gmail");
+                        }
+                    }
+
+
+                });
+            };            
+            
+            //Versione precedente del logout di google
             function signOut() {
                 var auth2 = gapi.auth2.getAuthInstance();
                 auth2.signOut().then(function () {

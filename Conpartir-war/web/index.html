@@ -56,7 +56,7 @@
     <!-- leaflet -->
     <link rel="stylesheet" href="frameworks/leaflet/leaflet.css">
     
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyURssnNi9CDZFhS1fKyuO9Gi_PKpzkig"></script> -->
    
 
     
@@ -201,6 +201,7 @@
     <!-- Modal content -->
     <div class="modal-content">
         <div class="modal-body" ng-controller="LoginController">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
@@ -235,13 +236,15 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <span class="text-center"> Oppure autenticati tramite social: </span> 
                     <div class =" row">                      
-                        <div class="col-lg-4 col-lg-offset-1"><div class="g-signin2 btn btn-danger " data-onsuccess="onSignIn">Google</div> </div>  
-                        <div class="col-lg-4 col-lg-offset-1"> <button class="btn btn-info" ng-click="onTwitterSignIn()">Twitter</button> </div>
+                        <!--<div class="col-lg-4 col-lg-offset-1"><div class="g-signin2 btn btn-danger " data-onsuccess="onSignIn">Google</div> </div>  -->
+                        <div class="col-lg-6 "> <button class="btn btn-lg btn-skin btn-block" ng-click="onTwitterSignIn()">Twitter</button> </div>
+                        <div class="col-lg-6"> <button class="btn btn-lg btn-skin btn-block" ng-click="onGoogleSignIn()">G+ e Gmail</button> </div>
 
                     </div><div id="status">                    
                     </div>
                     <p></p>
                     <p class="bg-danger center" ng-show="ifAlert">{{status}}</p>
+                    <p class="bg-info center" ng-show="ifExternalLogin">Perfetto, ora sei autenticato. Clicca su Login per proseguire!</p>
                     <p>                   
                     </p>
                 </div>
@@ -261,6 +264,7 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-body" ng-controller="LoginController">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <div class="row">
           <div class="col-lg-8 col-lg-offset-2">
 					<div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
@@ -588,23 +592,6 @@
 </div>
 <!-- /Modal per offrire un passaggio -->
 
-<!-- Modal per le mappe 
-<div id="modalMap"  class="modal fade" role="dialog" ng-controller="DetailController" >
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-body"> 
-       <leaflet center="torino" defaults="defaults" event-broadcast="events" markers="markers" width="550px" height="250px">
-        </leaflet>
-          
-          <button class="btn btn-skin"  ng-click="getGeoJson(provaInput)">provaCoordinate</button> 
-      </div>
-    </div>
-
-  </div>
-</div>-->
-<!-- /Modal per  mappe  -->
-
 <!-- Modal per viaggio postato con successo -->
 <div id="modalTravelAdded" ng-controller="PostController" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -631,19 +618,20 @@
 
 <!-- Modal per informazioni varie -->
 <div id="modalInfo"  class="modal fade" role="dialog">
-  <div class="modal-dialog">
-  <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Informazioni</h4>
-    </div>
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>{{modalInfo}}</p>
-      </div>
-    </div>
+    <div class="modal-dialog">
 
-  </div>
+        <!-- Modal content -->
+        <div class="modal-content"> 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Informazioni</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{modalInfo}}</p>
+            </div>
+        </div>
+
+    </div>
 </div>
 <!-- /Modal per informazioni varie -->
     
@@ -675,8 +663,8 @@
 		</div>
 	</footer>
 
-    <!-- Google Api -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Google Api 
+    <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 
 
     <!-- Core JavaScript Files -->
