@@ -222,10 +222,10 @@
                 $location.url($location.path());    
                 window.signOut;
                 
-                var auth2 = gapi.auth2.getAuthInstance();
+             /*   var auth2 = gapi.auth2.getAuthInstance();
                   auth2.signOut().then(function () {
                       console.log('User signed out.');
-                  });
+                  }); */
             };
             
             //Versione precedente del login di google
@@ -255,10 +255,10 @@
             
             //Versione precedente del logout di google
             function signOut() {
-                var auth2 = gapi.auth2.getAuthInstance();
+               /* var auth2 = gapi.auth2.getAuthInstance();
                 auth2.signOut().then(function () {
                     console.log('User signed out.');
-                });
+                }); */
             };
             
             window.onSignIn = onSignIn;        

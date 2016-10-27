@@ -292,7 +292,6 @@
                     alert("Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.");
                 }
 
-
                 if (sessionStorage.getItem("email") === input.clientJudged_email) {
                     alert("Non puoi lasciare un feedback a te stesso!");
                 }
@@ -326,8 +325,7 @@
                             $scope.feedbacks = [];
                             $scope.feedbacks[0] = prova;
                             $scope.feedbackAvgRate = prova.feedBackCommento;
-                        }
-                        ;
+                        };
                     }
                 });
             };

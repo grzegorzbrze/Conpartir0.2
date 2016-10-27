@@ -70,17 +70,17 @@
                             </div>
                             <div role="tabpanel"  id="carProfile" ng-show="show[1]">
                                 <div class="row marginbot-10"> 
-                                <div class="btn-group margintop-10"  ng-show="isArray" role="group" aria-label="...">
-                                    <button type="button" ng-repeat="item in driversInfo" class="btn btn-skin" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
-                                </div>                        
-                                <p></p>   
-                                <dl class="dl-horizontal" ng-model="selectedCar">
-                                <dt>Modello:</dt>
-                                <dd>{{selectedCar.carModel}}</dd>
-                                <dt>Anno:</dt>
-                                <dd>{{selectedCar.carYear}}</dd>
-                                </dl>  
-                                <a href="#account" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#account" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
+                                    <div class="btn-group margintop-10"  ng-show="isArray" role="group" aria-label="...">
+                                        <button type="button" ng-repeat="item in driversInfo" class="btn btn-skin" ng-click="carInfo(item.driver_id)">{{item.carModel}}</button>
+                                    </div>                        
+                                    <p></p>   
+                                    <dl class="dl-horizontal" ng-model="selectedCar">
+                                        <dt>Modello:</dt>
+                                        <dd>{{selectedCar.carModel}}</dd>
+                                        <dt>Anno:</dt>
+                                        <dd>{{selectedCar.carYear}}</dd>
+                                    </dl>  
+                                    <a href="#account" data-toggle="modal" data-target="#modalAddCar"> Aggiungi una macchina al tuo profilo</a> <i class="glyphicon glyphicon-question-sign" href="#account" ng-click="alert()" data-toggle="modal" data-target="#modalInfo"></i>
                                 </div> 
                             </div>
                             <div role="tabpanel" id="feedback" ng-show="show[2]">                                
