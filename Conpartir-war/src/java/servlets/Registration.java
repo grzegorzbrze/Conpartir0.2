@@ -99,24 +99,12 @@ public class Registration extends HttpServlet {
             } catch (IOException ex) {
                 Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
-        
+        }        
        
         for(i=0;i<issuedCookies.size();i++) {
             
-            String conpCookie = issuedCookies.get(i).getValue();
-           /* String[] array = ck.split(";");
-            String conpCookie = null;
-            for (i=0;i<array.length;i++) {
-                if (array[i].startsWith("conpCookie")) {
-                    String[] parts = array[i].split("=");
-                    conpCookie = parts[1];
-                    out.print(conpCookie);
-                } */
-                
-                if (conpCookie != null && conpCookie.equals(conpCookieValue)) flag = true;
-            //out.println("cookie now " + issuedCookies.get(i).getValue() + " compared with " + toCheck[0].getValue());
-           //}
+            String conpCookie = issuedCookies.get(i).getValue();                        
+                if (conpCookie != null && conpCookie.equals(conpCookieValue)) flag = true;           
         }
         if(flag==false) {
              try {
