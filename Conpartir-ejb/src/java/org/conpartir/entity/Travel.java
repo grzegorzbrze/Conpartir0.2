@@ -18,8 +18,12 @@ import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author Blu Light
+ * Implementazione di serializzable per definire <i>Travel</i> memoriazzato nel database grazie all'Entity. 
+ * @author Conpartir Group
+ * @version 0.3 11 settembre 2016
+ * @see <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html"> Entity </a>
+ * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html"> Serializable </a>
+ * 
  */
 @Entity
 @XmlRootElement
