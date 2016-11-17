@@ -128,7 +128,7 @@
                 shared.getClient(self.email).then(function (promise) {
                     var prova = shared.getClientInfo();
                     $scope.clientInfo = prova.return;
-                    console.log($scope.clientInfo);
+                    //console.log($scope.clientInfo);
                     
                     if($scope.clientInfo.gmail==="false") $scope.isGmail = false;
                     if($scope.clientInfo.gmail==="true") $scope.isGmail = true;                    
@@ -295,7 +295,7 @@
                             if (avg === 0)
                                 $scope.feedbackAvgRate = 0;
                             else
-                                $scope.feedbackAvgRate = avg / (it);
+                                $scope.feedbackAvgRate = parseInt(avg / (it));
                         }
                         else {
                             $scope.feedbacks = [];
@@ -319,8 +319,7 @@
                 shared.editClient(input).then(function (promise) {
 
                     $scope.modalInfo = shared.getData();
-
-                    //manca un avviso all'utente
+                    
                     $location.path('/account');
                 });
             };
@@ -342,7 +341,7 @@
                 shared.setClientGmail(input).then(function (promise) {
 
                     $scope.modalInfo = shared.getData();
-                    alert($scope.modalInfo);
+                    //alert($scope.modalInfo);
                     $location.path('/account');
                 });
             };
@@ -369,7 +368,7 @@
 
                     $scope.modalInfo = shared.getData();
 
-                    alert($scope.modalInfo);
+                    //alert($scope.modalInfo);
                     $location.path('/account');
                 });
             };

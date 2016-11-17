@@ -319,7 +319,7 @@
                             if (avg === 0)
                                 $scope.feedbackAvgRate = 0;
                             else
-                                $scope.feedbackAvgRate = avg / (it);
+                                $scope.feedbackAvgRate = parseInt(avg / (it));
                         }
                         else {
                             $scope.feedbacks = [];

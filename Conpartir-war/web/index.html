@@ -171,17 +171,13 @@
                                           </div>
                                                       <!-- Collect the nav links, forms, and other content for toggling -->
                                                       <div class="collapse navbar-collapse" id="menu">
-                                                            <ul class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
-                                                                  <li class="active"><a href="#intro" ng-click="go('/home')">Home</a></li>
-                                                                  <!--<li><a href="#service">Servizi</a></li>
-                                                                  <li><a href="#about">About</a></li>  
-                                                                  <li><a href="#contact">Contact</a></li> 
-                                                                  <li class="bg-darkgray"><a href="#/search">Cerca</a></li> -->
-                                                                  <li data-toggle="modal" data-target="#modalLogin" onclick="signOut()" class="bg-darkgray" ng-hide="isAuthorized" ><a href="#intro">Login</a></li>
-                                                                  <li class="bg-darkgray" ng-show="isAuthorized" ><a href="#/account">Account</a></li>
-                                                                   <li class="bg-darkgray" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></li>
-                                                            </ul>
-                                                      </div>
+                                                            <div class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
+                                                                  <span class="span-nav"><a href="#/" ng-click="go('/home')">Home</a></span>
+                                                                  <span class="span-nav" data-toggle="modal" data-target="#modalLogin" onclick="signOut()"  ng-hide="isAuthorized" ><a href="#intro">Login</a></span>
+                                                                  <span class="span-nav " ng-show="isAuthorized" ><a href="#/account">Account</a></span>
+                                                                  <span class="span-nav" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></span>
+                                                            </div>
+                                                      </div>  
                                                       <!-- /.Navbar-collapse -->
                              
                                           </div>

@@ -100,146 +100,30 @@ and open the template in the editor.
     border: 1px solid transparent;
     border-radius: 4px;
 }
+.span-nav {  
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: 0 none;
+    border: 0 solid transparent;
+    border-radius: 0px;
+    float: left;
+    font-family: "Ek Mukta";
+    font-size: 20px;
+    margin: 0px 0px 0px 5px;
+    outline: 0 none;
+    padding: 3px 20px 3px 20px;
+    position: relative;
+    vertical-align: middle;
+}
+.span-nav > a {
+    color: black;
+}
+
 
 .center {
     text-align: center;
-}
-
-/*
-.main-container-signin{
-    position: absolute;
-    text-align: center;
-    top: 30px;
-    left: 33%;
-    background-color: #E0E0E0;
-    padding: 0.5cm 1cm 1cm 1cm;
-}
-
-
-.BGcarousel{    
-  position: absolute;
-  text-align: center;
-  top: 70px;
-  width: 100%;
-  height: 100%;
     
 }
 
-.carousel-inner {
-  position: absolute;
-  text-align: center;
-  top: 70px;
-  width: 100%;
-  height: 100%;
-    
-}
-.form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0px auto;
-}
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0px, 0px, 0px, 0px);
-    border: 0px none;
-}
-.form-control {
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #555;
-    background-color: #FFF;
-    background-image: none;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-}
-
-
-.footer{
-    height: 30px;
-    background-color: lightgray;
-    position: fixed;
-    text-align: center;
-    bottom: 0px;
-    width: 100%; 
-}
-.central-panel{
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    top: 20%;
-    left: 10%;
-}
-.central-panel-position{
-    position:absolute;
-    width: 100%;
-    top: 80%;
-    left: 10px;
-    right: 10px;
-    background-color: #E0E0E0;
-}
-.inline{
-    display: inline-block;
-}
-.map-panel{
-    position: absolute;
-    width: 100%;
-    margin-top: 5%;
-    left: 10%;
-    background-color: red;
-}
-#map {
-    position:absolute;
-    width: 500px;
-    height: 400px;
-}
-/*CSS for CAR/TAXI posts
-.inline-cars{
-    display: inline-block;
-    width: 100%;
-}
-.transport-panel{
-    position: absolute;
-    top:50px;
-    width: 100%;
-    height: 200px;
-}
-.transport-panel-photo{
-    float: left;
-    width: 200px;
-    heigth: 200px;
-    margin-left: 0%;
-    display: inline-block;
-}
-.transport-panel-info{
-    width: 33%;
-    text-align: left;
-    margin-top: 30px;
-    margin-left: 10px;
-    display: inline-block;
-}
-.transport-panel-actions{
-    float: right;
-    width: 33%;
-    height: 100px;
-    margin-top: 30px;
-    display: inline-block;
-}
-.transport-comment-block{
-    width: 100%;
-    position: absolute;
-    top: 300px;
-}
 /* CSS for comments block*/
 .comment{
     width: 100%;
@@ -284,16 +168,6 @@ tr.spaceUnder > td
 {
   padding-bottom: 1em;
 }
-/*select {
-   width: 150px;
-   overflow: hidden;
-   background: url(images/arrow.jpg) no-repeat right #ddd;
-   border: 1px solid #ccc;
-   padding: 5px 5px 5px 5px;
-   font-size: 14px;
-   height: 40px;
-   text-align: center;
-}*/
 .chat-message{
     width: 100%;
     background-color: red;
