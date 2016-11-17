@@ -212,7 +212,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2"> 
-                    <form class="input-group adjust" novalidate="">    
+                    <form ng-hide="ifExternalLogin" class="input-group adjust" novalidate="">    
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Email</span>
                             <input class="form-control" type="text" ng-model="user.email" aria-describedby="basic-addon1" name="email">
@@ -223,9 +223,10 @@
                             <input class="form-control" type="password" ng-model="user.pass" aria-describedby="basic-addon2" name="password">
                         </div>
                         <p></p>
-                        <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>                
+                                      
                         <p></p>
                     </form>
+                    <button class="btn btn-lg btn-skin btn-block" ng-click="login(user)">Login</button>  
                 </div>
             </div> 
             <div class="row">

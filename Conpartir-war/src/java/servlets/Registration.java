@@ -8,7 +8,6 @@ package servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -77,7 +76,8 @@ public class Registration extends HttpServlet {
      */
     
         
-    //check dei cookie
+    //Tramite i Get la servlet controlla che il cookie, ricevuto nella request,
+    //sia tra i cookie ritenuti validi
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
    /*         throws ServletException, IOException {
@@ -90,9 +90,11 @@ public class Registration extends HttpServlet {
         
         int i;
         for (i=0;i<toCheck.length;i++) {
+            //cerco il valore del "conpCookie", ovvero il cookie emesso dalla nostra webapp
             if(toCheck[i].getName().equals("conpCookie")) conpCookieValue = toCheck[i].getValue();
         }
         
+        //se è scaduto
         if(toCheck[0] != null && toCheck[0].getMaxAge()==0) {  
             try {
                 response.sendError(403, "expired Cookie");
@@ -101,8 +103,8 @@ public class Registration extends HttpServlet {
             }
         }        
        
-        for(i=0;i<issuedCookies.size();i++) {
-            
+        //controllo nella lista di cookie rilasciati
+        for(i=0;i<issuedCookies.size();i++) {            
             String conpCookie = issuedCookies.get(i).getValue();                        
                 if (conpCookie != null && conpCookie.equals(conpCookieValue)) flag = true;           
         }
@@ -118,7 +120,7 @@ public class Registration extends HttpServlet {
         }
         
         
-    }
+    };
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -130,121 +132,119 @@ public class Registration extends HttpServlet {
      */
     
     // Questa POST della servlet si occupa delle richieste di registrazione e di login. 
-    // Gli if/else all'interno distinguono i due casi
+    // Gli if/else all'interno distinguono i vari casi
      
      @Override
      protected void doPost(HttpServletRequest request, HttpServletResponse response) 
      {         
-         response.setContentType("text/html");
-         StringBuffer sb = new StringBuffer();
+        response.setContentType("text/html");
+        StringBuffer sb = new StringBuffer();
          
-         try 
-         {
-             BufferedReader reader = request.getReader(); 
-             String line = null;
-             while ((line = reader.readLine()) != null)
-             {
-                 sb.append(line);
-                         }
-         } catch (Exception e) { e.printStackTrace(); }
+        try 
+        {
+            BufferedReader reader = request.getReader(); 
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line);
+                        }
+        } catch (Exception e) { e.printStackTrace(); }
          
-         //Inizializzo un parser per leggere il JSON
-         JSONParser parser = new JSONParser();
-         JSONObject joUser = null;
+        //Inizializzo un parser per leggere il JSON
+        JSONParser parser = new JSONParser();
+        JSONObject joUser = null;
          
-         try
-         {
-             joUser = (JSONObject) parser.parse(sb.toString());
-         } catch (ParseException e) { e.printStackTrace(); }
+        try
+        {
+            joUser = (JSONObject) parser.parse(sb.toString());
+        } catch (ParseException e) { e.printStackTrace(); }
          
-         //inizializzo i parametri         
-         String name = null;
-         String surname = null;
-         int age = 0;
-         String gender = null;
-         String email = null;
-         String password = null;
-         String res = null;
+        //inizializzo i parametri         
+        String name = null;
+        String surname = null;
+        int age = 0;
+        String gender = null;
+        String email = null;
+        String password = null;
+        String res = null;
          
-         String use = (String) joUser.get("use");
+        //per prima cosa, prendo la variabile "use" che identifica le intenzioni 
+        //della richiesta
+        String use = (String) joUser.get("use");
          
-         if (use.equals("registration")) {
-             name = (String) joUser.get("name");      
-             surname = (String) joUser.get("surname");             
-             age = Integer.parseInt((String) joUser.get("age"));
-             gender = (String) joUser.get("gender");
-         }         
-         email = (String) joUser.get("email");
-         password = (String) joUser.get("pass");      
+        if (use.equals("registration")) {
+            name = (String) joUser.get("name");      
+            surname = (String) joUser.get("surname");             
+            age = Integer.parseInt((String) joUser.get("age"));
+            gender = (String) joUser.get("gender");
+        }         
+        email = (String) joUser.get("email");
+        password = (String) joUser.get("pass");      
          
-         boolean emailCheck = clientManager.isEmail(email);
+        boolean emailCheck = clientManager.isEmail(email);
 
-         if (use.equals("registration")) {
-             if (emailCheck == true) {
-                 //alert: si sta cercando di registrare un utente con una mail già utilizzata
-                 res = "1 Errore: questa mail è già stata usata per la registrazione di un altro account!";
-             } else {
-                 Client nuovo = new Client();
-                 nuovo.setName(name);
-                 nuovo.setSurname(surname);
-                 nuovo.setGender(gender.charAt(0));
-                 nuovo.setAge(age);
-                 nuovo.setEmail(email);
-                 nuovo.setPass(password);
-
-                 clientManager.createClient(nuovo);
-                 res = "Registrazione effettuata con successo!";
+        if (use.equals("registration")) {
+            if (emailCheck == true) {
+                //alert: si sta cercando di registrare un utente con una mail già utilizzata
+                res = "1 Errore: questa mail è già stata usata per la registrazione di un altro account!";
+            } else {
+                Client nuovo = new Client();
+                nuovo.setName(name);
+                nuovo.setSurname(surname);
+                nuovo.setGender(gender.charAt(0));
+                nuovo.setAge(age);
+                nuovo.setEmail(email);
+                nuovo.setPass(password);
+                //A questo punto ho tutti i dati per creare un nuovo cliente.
+                clientManager.createClient(nuovo);
+                res = "Registrazione effettuata con successo!";
+            }
+        } else {
+            //Login via gmail
+            if (use.equals("gmail")) {
+                             
+                res = "Login effettuato con successo!";
+                String ckValue;
+                double val = Math.random() * 5000;
+                ckValue = "random" + val;
+                Cookie userCookie = new Cookie("conpCookie", ckValue);
+                //imposta la validità dei cookie a 10 minuti
+                userCookie.setMaxAge(60 * 10);
+                issuedCookies.add(userCookie);
+                response.addCookie(userCookie);
+            }
+            //Login via twitte
+            if (use.equals("twitter")) {
+                              
+                res = "Login effettuato con successo!";
+                String ckValue;
+                double val = Math.random() * 5000;
+                ckValue = "random" + val;
+                Cookie userCookie = new Cookie("conpCookie", ckValue);
+                //imposta la validità dei cookie a 10 minuti
+                userCookie.setMaxAge(60 * 10);
+                issuedCookies.add(userCookie);
+                response.addCookie(userCookie);
              }
-         } else {
-             if (use.equals("gmail")) {
-                 //login corretto                     
-                 res = "Login effettuato con successo!";
-                 String ckValue;
-                 double val = Math.random() * 5000;
-                 ckValue = "random" + val;
-
-                 Cookie userCookie = new Cookie("conpCookie", ckValue);
-                 //imposta la validità dei cookie a 10 minuti
-                 userCookie.setMaxAge(60 * 10);
-                 issuedCookies.add(userCookie);
-                 response.addCookie(userCookie);
-             }
-             if (use.equals("twitter")) {
-                 //login corretto                     
-                 res = "Login effettuato con successo!";
-
-                 String ckValue;
-                 double val = Math.random() * 5000;
-                 ckValue = "random" + val;
-
-                 Cookie userCookie = new Cookie("conpCookie", ckValue);
-                 //imposta la validità dei cookie a 10 minuti
-                 userCookie.setMaxAge(60 * 10);
-                 issuedCookies.add(userCookie);
-                 response.addCookie(userCookie);
-
-             }
-             if (use.equals("login")) {
-                 if (emailCheck == true) {
-                     if (password.equals(clientManager.getClient(email).getPass())) {
-                         //login corretto                     
-                         res = "Login effettuato con successo!";
-
-                         String ckValue;
-                         double val = Math.random() * 5000;
-                         ckValue = "random" + val;
-
-                         Cookie userCookie = new Cookie("conpCookie", ckValue);
-                         //imposta la validità dei cookie a 10 minuti
-                         userCookie.setMaxAge(60 * 10);
-                         issuedCookies.add(userCookie);
-                         response.addCookie(userCookie);
-                     } else {
-                         res = "3 Errore: password errata";
-                     }
-                 } else {
-                     //Da inserire un alert: si sta tentando un login con un'email non presente
-                     res = "2 Errore: l'email inserita non è presente nei nostri database.";
+            //login via account conpartir
+            if (use.equals("login")) {
+                if (emailCheck == true) {
+                    if (password.equals(clientManager.getClient(email).getPass())) {
+                              
+                        res = "Login effettuato con successo!";
+                        String ckValue;
+                        double val = Math.random() * 5000;
+                        ckValue = "random" + val;
+                        Cookie userCookie = new Cookie("conpCookie", ckValue);
+                        //imposta la validità dei cookie a 10 minuti
+                        userCookie.setMaxAge(60 * 10);
+                        issuedCookies.add(userCookie);
+                        response.addCookie(userCookie);
+                    } else {
+                        res = "3 Errore: password errata";
+                    }
+                } else { 
+                    res = "2 Errore: l'email inserita non è presente nei nostri database.";
                  }
              }
          }

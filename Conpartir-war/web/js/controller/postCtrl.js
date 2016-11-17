@@ -18,65 +18,53 @@
                 $('#timepicker').timepicker({
                     showMeridian : false,
                     defaultTime : false,
-                    maxHours : 24
-                    
+                    maxHours : 24                    
                 });    
                 $('#timepicker').timepicker().on('changeTime.timepicker', function(e) {
                     //console.log('The time is ' + e.time.value);
                     $scope.travel.hour = e.time.value;
                 });
             });
-        
-          
-          var isArray = function(what) {              
+            
+            var isArray = function(what) {     
                 return Object.prototype.toString.call(what) === '[object Array]';
             };
-          
-          $scope.check = function () {
-              var flag;
-
-              auth.checkAuth().then(function (promise) {
-                    if (promise.status===200) 
-                    {  flag = true; }; 
+            
+            $scope.check = function () {
+                var flag;
+                
+                auth.checkAuth().then(function (promise) {
+                    if (promise.status===200) {  flag = true; }; 
                     if (flag === true){ 
-                          $scope.notLogged = false; 
-                        //  $scope.self.email = sessionStorage.getItem('email');
-                        //   shared.getDrivers($scope.self.email); 
+                        $scope.notLogged = false;                        
                        }
-                       else {
-                           $scope.notLogged = true;
-                       }           
+                    else {
+                        $scope.notLogged = true;
+                    }          
                 });          
              // console.log("risultato =" +$scope.notLogged);
             };
           
-          $scope.mode = function () {
-              if($scope.isCarTravel===true){ 
-                  
-                  if (!isArray(shared.getCars())) {
+            $scope.mode = function () {
+                if($scope.isCarTravel===true){                  
+                    if (!isArray(shared.getCars())) {
                       $scope.cars = [shared.getCars()]; 
-                  }
-                  else $scope.cars = shared.getCars();
-                  //$scope.clientInfo = shared.getClientInfo();
-                  //console.log("macchine" +$scope.cars);
-              }
-              else {
-              };
-             
-          };
+                    }
+                    else $scope.cars = shared.getCars();
+                }
+                else {
+                };
+            };
           
-          $scope.post = function (input) {
-               var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
-                     
+            $scope.post = function (input) {
+                var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();                     
                 if (when !== null && when !== "") {             
                     var month = when.slice(0,2);
                     var day = when.slice(3,5);
                     var year= when.slice(6,10);
-                    when = day + '-' + month + '-' + year;
-                    
+                    when = day + '-' + month + '-' + year;                    
                 }
-                $scope.travel.when = when +':'+ $scope.travel.hour+ ":00";
-                
+                $scope.travel.when = when +':'+ $scope.travel.hour+ ":00";                
                 $scope.travel.email = sessionStorage.getItem('email');
                 console.log($scope.travel);
                 if( $scope.isCarTravel === true) { 
@@ -93,42 +81,29 @@
                         shared.getGeoJson($scope.parseStreet(input.to), "Torino", 1).then(function (promise) {
                             var geolocEnd = shared.getData();
                             //console.log(geolocEnd);
-
                             $scope.travel.coordEnd = geolocEnd[0].lat.toString() + "+" + geolocEnd[0].lon.toString();
-
                             $timeout(
                                     shared.createTaxiTravel($scope.travel).then(function (promise) {
                             }), 10);
                         });
-                    });
-                    
+                    });                   
                   
                 }                
                 $('#modalPost').modal('hide');
-                $('#modalTravelAdded').modal('show');
-                
-                //$location.path('/');
-                //alert ("viaggio postato con successo!");
-          };
+                $('#modalTravelAdded').modal('show');                
+            };
           
-          $scope.select = function (dataId,dataModel) {
+            $scope.select = function (dataId,dataModel) {
               $scope.travel.id = dataId;
               $scope.travel.carModel = dataModel;
-          };
+            };
           
-          $scope.parseStreet =  function (streetString) {
+            $scope.parseStreet =  function (streetString) {
               var parsedString = "";
-              parsedString= streetString.replace(' ','+');
-              
-            /*  searchUrl + 'q=' + input.numCivico + '+' + input.nomeVia + ',+' +input.nomeCittà  + '&format=xml&limit=1'
-            */
+              parsedString= streetString.replace(' ','+');              
               return parsedString;
-          };
-          
-    
-    
-                
-        }]);  
+            };
+      }]);  
     
    
     

@@ -30,7 +30,7 @@
                         <button type="button" class="btn btn-skin" data-toggle="modal" data-target="#modalPost"> Offri un passaggio. </button> <p></p>
                     </div>
                     <div class="row margintop-10">
-                        <h6 ng-hide="commentAlert">Il tuo punteggio medio utente è di {{feedbackAvgRate}} &#9733</h6>
+                        <h6 ng-hide="commentAlert">Punteggio medio : {{starString}}</h6>
                     </div>
                     <div class="row margintop-10"> 
                         <span ng-show="isGmail"> Account collegato con Gmail. <a ng-click="gmailUnlink()" class="">Vuoi scollegarlo?</a> </span>
@@ -86,12 +86,11 @@
                             <div role="tabpanel" id="feedback" ng-show="show[2]">                                
                                 <div class="row"> 
                                     <dl class="dl-horizontal margintop-10" ng-repeat="commenti in commentInfo">                           
-                                        <dt>Autore:</dt>
-                                        <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
-                                        <dt>Testo:</dt>
+                                        <dt>{{commenti.nomeAutore}}
+                                        {{commenti.cognomeAutore}}</dt>
                                         <dd>{{commenti.testoCommento}}</dd>
-                                        <dt> Feedback </dt>
-                                        <dd> {{commenti.feedBackCommento}}</dd>                        
+                                        <dt>  </dt>
+                                        <dd> Punteggio di feedback : {{commenti.feedBackCommento}}</dd>                        
                                     </dl>
                                     <br>
                                     <span class="margintop-10 marginbot-10" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su di te.</span>

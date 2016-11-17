@@ -79,11 +79,9 @@
                 var splitter = data.indexOf('T');
                 return data.slice(splitter+1,splitter+6);                
             };
-                    
-             $scope.reload = function () {
-                  $route.reload();
-              };
-              
+            $scope.reload = function () {
+                $route.reload();
+            };              
             $scope.search = function(data) {
                 $scope.ifAlert = false;
                 $scope.travelList =null;
@@ -107,13 +105,11 @@
                     $scope.ifAlert = true;
                     return;
                 } 
-                
-                 if(jQuery.isEmptyObject( data.to )) { 
+                if(jQuery.isEmptyObject( data.to )) { 
                     $scope.alert = "Per favore, inserisci una località di arrivo."; 
                     $scope.ifAlert = true;
-                    return;
-                    
-                } 
+                    return;                    
+                }
                 
                 var when = $('#datepicker').datepicker({dateFormat: "yyyy-mm-dd" }).val();
                 

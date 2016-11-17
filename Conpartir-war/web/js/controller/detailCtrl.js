@@ -69,11 +69,8 @@
                 if ($scope.isCarTravel === true) {
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificCarTravel(travelIdParam).then(function (promise) {
-                            $scope.travel = shared.getTravelInfo().return;                      
-                          
+                            $scope.travel = shared.getTravelInfo().return;
                         });
-                        
-                      
                     };
                     shared.getPassengersTravel(travelIdParam).then(function (promise) {
                         $scope.detail = shared.getPassengersObject().return;
@@ -100,10 +97,8 @@
                                 $scope.alertMsg = "Sei già prenotato per questo viaggio.";
                                 $scope.ifAlert = true;
                                 isPassenger = true;
-                            }
-                            ;
-                        }
-                        ;
+                            };
+                        };
                         if (isPassenger === false) {
                             $scope.leaveFeedback = false;
                             $scope.feedAlert = "Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.";
@@ -125,15 +120,12 @@
                                 };
                                                                
                             });
-                    });
-                    
-                   
+                    }); 
                 }
                 if ($scope.isTaxiTravel === true) {
                     if (jQuery.isEmptyObject($scope.travel)) {
                         shared.getSpecificTaxiTravel(travelIdParam).then(function (promise) {
-                            $scope.travel = shared.getTravelInfo().return;
-                   
+                            $scope.travel = shared.getTravelInfo().return;                   
                         });
                     };
                                         
@@ -143,25 +135,19 @@
                         if (isArray($scope.detail.passengers) === true) {
                             $scope.passengerList = $scope.detail.passengers;
                         }
-                        else
-                            $scope.passengerList[0] = $scope.detail.passengers;
-
+                        else  $scope.passengerList[0] = $scope.detail.passengers;
                         var i;
                         for (i = 0; i < $scope.passengerList.length; i++) {
-
                             if ($scope.passengerList[i].email === $scope.detail.driverInfo.email) {
                                 $scope.passengerList[i].role = "Creatore Taxi";
-
                             }
                             if ($scope.passengerList[i].email !== $scope.detail.driverInfo.email) {
                                 $scope.passengerList[i].role = "Passeggero Taxi";
-
                             }
                         };                        
                         $scope.getLatestComment();
                     });
                 }
-
                 // A questo punto sono sicuro di avere tutti i dati;               
 
                            
@@ -239,7 +225,6 @@
             };
 
             $scope.checkFeedback = function () {
-
                 var dataViaggio = new Date($scope.travel.data);
                 if (today > dataViaggio && $scope.isAuthorized) {
                     $scope.leaveFeedback = true;
@@ -250,9 +235,7 @@
                         $scope.alert('Non puoi lasciare un feedback per un viaggio non ancora avvenuto.');
                     if ($scope.isAuthorized === false)
                         $scope.alert('Non puoi lasciare un feedback senza aver fatto il login!');
-                }
-                ;
-
+                };
             };
 
             $scope.rate = function (number) {
@@ -274,8 +257,7 @@
                 if ($scope.isCarTravel === true) {
                     input.travel_id = $scope.travel.travel_id;
                 }
-                else
-                    input.travel_id = $scope.travel.taxi_id;
+                else input.travel_id = $scope.travel.taxi_id;
                 input.when = today;
 
                 var i;
@@ -283,10 +265,8 @@
                 for (i = 0; i < $scope.passengerList.length; i++) {
                     if ($scope.passengerList[i].email === sessionStorage.getItem('email')) {
                         isPassenger = true;
-                    }
-                    ;
-                }
-                ;
+                    };                    
+                };
                 if (isPassenger === false) {
                     $scope.leaveFeedback = false;
                     alert("Non puoi lasciare un feedback su un viaggio a cui non hai partecipato.");
@@ -297,14 +277,12 @@
                 }
                 else {
                     shared.createComment(input);
-                }
-                ;
+                };
             };
 
             $scope.getLatestComment = function () {
                 shared.getLatestReceivedComments($scope.detail.driverInfo.email, 10).then(function (promise) {
                     var prova = shared.getComments();
-
                     if (jQuery.isEmptyObject(prova))
                         $scope.commentAlert = true;
                     else {
@@ -320,6 +298,10 @@
                                 $scope.feedbackAvgRate = 0;
                             else
                                 $scope.feedbackAvgRate = parseInt(avg / (it));
+                                $scope.starString = "";
+                                for(i=0;i<$scope.feedbackAvgRate;i++) {
+                                    $scope.starString = $scope.starString + "★";
+                                }
                         }
                         else {
                             $scope.feedbacks = [];

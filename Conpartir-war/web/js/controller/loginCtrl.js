@@ -72,12 +72,11 @@
             //login tramite twitter, parte quando l'utente clicca sul relativo bottone
             //e usa il servizio Oauth.io
             $scope.onTwitterSignIn = function() {             
-                OAuth.popup('twitter').done(function (result) {
-                    //console.log(result);
+                OAuth.popup('twitter').done(function (result) {                    
                     // do some stuff with result  
                     result.me().done(function (data) {
-                        // do something with `data`, e.g. print data.name
-                        console.log(data);
+                        //do something with `data`, e.g. print data.name
+                        //console.log(data);
 
                         auth.isTwitterThere(data.alias).then(function (promise) {
                             var accountEmail = auth.getTwitterValue().return;
@@ -103,9 +102,8 @@
                 OAuth.popup('google').done(function (result) {
                     console.log(result);
                     result.me().done(function (data) {
-                        // do something with `data`, e.g. print data.name
-                        console.log(data);
-
+                        //do something with `data`, e.g. print data.name
+                        //console.log(data);
                         auth.isGmailThere(data.email).then(function (promise) {
                             var accountEmail = auth.getGmailValue().return;
                             if (jQuery.isEmptyObject(accountEmail)) {
@@ -117,23 +115,19 @@
                                 auth.setExternalLoginData($scope.master);
                                 $scope.ifExternalLogin = true;
                             }
-
                         });
                     });
-                });
-
- 
+                }); 
             };
             
             //Funzione handler che "chiama" la servlet registration per il login
-            //in realtà si interfaccia con auth
+            //si interfaccia con auth
             $scope.servletCall = function (){                
                 $scope.ifAlert = false;
-                auth.doLogin($scope.master).then(function (data, status, headers, config) {                    
-                    // this callback will be called asynchronously
-                    // when the response is available
+                auth.doLogin($scope.master).then(function (data, status, headers, config) {
                     $scope.status=data.data;
                     console.log(status);
+                    //controllo se la registration ha posto dei "flag" all'inizio del messaggio
                     var flag = data.data.charAt(1);
                     if (flag === '1' || flag === '2' || flag === '3') $scope.ifAlert = true;
                     else {
@@ -141,12 +135,11 @@
                             if (promise.status === 200 )  $scope.isAuthorized = true;
                             else {
                                 $scope.isAuthorized = false;
-                                signOut();
-                                window.signOut();
+                                //signOut();
                                 return;
                             }                                   
                             sessionStorage.setItem("email",$scope.master.email);
-                            
+                            //Se il login è stato fatto dalla pagina di detail, torna indietro
                             if ($location.search().from === "detail") {
                                 $window.history.back();
                                 $route.reload();
@@ -154,20 +147,19 @@
                             };                            
                             $location.path('/account');                             
                             $scope.$on('$locationChangeSuccess', function() {
-                               window.location.reload();
-                           }); 
-                       });
-                   }
-               });
-           };
-           
+                                window.location.reload();
+                            }); 
+                        });
+                    }
+                });
+            };           
             //Registrazione di un utente
             $scope.register = function (user) {
                 $scope.master = user;
                 $scope.master.use = "registration";
                 var flag;
                 flag = false; 
-                if (user.pass == undefined) { 
+                if (user.pass === undefined) { 
                     $scope.status = "Inserisci una password";                    
                     $scope.ifAlert = true;
                     flag = true; 
@@ -193,39 +185,28 @@
                     $scope.ifAlert = true;
                     flag = true; 
                 }                
-                if (flag === false) {        
-                    
-                    $scope.ifAlert = false;
-                auth.doRegister($scope.master).then(function (data, status, headers, config) {                    
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    $scope.status=data.data;
-                    var flag = data.data.charAt(1);
-                    if (flag == '1' || flag == '2' || flag == '3') $scope.ifAlert = true;
-                    else { 
-                        sessionStorage.setItem("email",$scope.master.email);
-                        $scope.ifSuccess = true;
-                        $location.path('/');  
-                   }
-               });
-                    
-                    
+                if (flag === false) {
+                    $scope.ifAlert = false;              
+                    auth.doRegister($scope.master).then(function (data, status, headers, config) {                    
+                        $scope.status=data.data;
+                        var flag = data.data.charAt(1);
+                        if (flag === '1' || flag === '2' || flag === '3') $scope.ifAlert = true;
+                        else { 
+                            sessionStorage.setItem("email",$scope.master.email);
+                            $scope.ifSuccess = true;
+                            $location.path('/');  
+                        }
+                    });                    
                 }
             }; 
             
             //Logout
-            $scope.logout = function () {
-                
+            $scope.logout = function () {                
                 auth.doLogout();
                 $scope.isAuthorized= false;                
                 $location.path("/");
                 $location.url($location.path());    
                 window.signOut;
-                
-             /*   var auth2 = gapi.auth2.getAuthInstance();
-                  auth2.signOut().then(function () {
-                      console.log('User signed out.');
-                  }); */
             };
             
             //Versione precedente del login di google
@@ -239,8 +220,6 @@
                             //l'utente ha abilitato il login via gmail
                             $scope.master.email = profile.getEmail();
                             $scope.master.use = "gmail";
-                            //console.log('check delay');
-                            //console.log($scope.master);
                             auth.setExternalLoginData($scope.master);
                         }
                         else {
@@ -248,8 +227,6 @@
                             alert("devi prima entrare con il tuo account Conpartir e abilitare il login via gmail");
                         }
                     }
-
-
                 });
             };            
             

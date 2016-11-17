@@ -106,7 +106,7 @@
                 var i;
                 for (i = 0; i < $scope.driversInfo.length; i++) {
                     item = $scope.driversInfo[i];
-                    if (item.driver_id == data) {
+                    if (item.driver_id === data) {
                         $scope.selectedCar = item;
                        };
                    }
@@ -289,13 +289,18 @@
                         if (isArray(prova)) {
                             $scope.feedbacks = prova;
                             for (it = 0; it < prova.length; it++) {
-
                                 avg = avg + parseInt(prova[it].feedBackCommento);
                             }
                             if (avg === 0)
                                 $scope.feedbackAvgRate = 0;
                             else
                                 $scope.feedbackAvgRate = parseInt(avg / (it));
+                                var i=0;
+                                $scope.starString = "";
+                                for(i=0;i<$scope.feedbackAvgRate;i++) {
+                                    $scope.starString = $scope.starString + "★";
+                                    
+                                } 
                         }
                         else {
                             $scope.feedbacks = [];
