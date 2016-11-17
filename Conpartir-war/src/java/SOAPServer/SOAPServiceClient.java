@@ -55,6 +55,8 @@ public class SOAPServiceClient {
      /**
      * Web service operation
      * Aggiunta passeggeri per un Travel
+     * @param travel_id long l'id del travel in questione
+     * @param email String l'email del passeggero da aggiungere
      */
     @WebMethod(operationName = "addPassenger")
     public void addPassenger(@WebParam(name = "travel_id") long travel_id, 
@@ -66,6 +68,8 @@ public class SOAPServiceClient {
      /**
      * Web service operation
      * Aggiunta passeggeri per un Taxi
+     * @param taxi_id long l'id del taxi in questione
+     * @param email String l'email del passeggero da aggiungere
      */
     @WebMethod(operationName = "addPassengerTaxi")
     public void addPassengerTaxi(@WebParam(name = "taxi_id") long taxi_id, 
@@ -76,6 +80,13 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
+     * creazione di un client
+     * @param surname String il suo cognome
+     * @param name String il suo nome
+     * @param gender char il suo genere 
+     * @param age int la sua età
+     * @param email String l'email del suo account
+     * @param pass String la sua password
      */    
     @WebMethod(operationName = "createClient_1")
     @RequestWrapper(className = "createClient_1")
@@ -85,13 +96,24 @@ public class SOAPServiceClient {
             @WebParam(name = "age") int age, @WebParam(name = "email") String email, 
             @WebParam(name = "pass") String pass) {
         clientRef.createClient(name, surname, gender, age, email, pass);
-    } 
+    }     
     
     
-    //Nota: qual'è lo scopo del seguente metodo se l'unica modifica che fa è la password
-    // dovrebbe poter fare altro????
      /**
      * Web service operation
+     * modifica delle informazioni di un client. L'unica informazione necessaria 
+     * alla modifica è la vecchia password (oldPass). I restanti parametri devono essere riempiti
+     * solo se si desidera modificare il rispettivo campo nel DB
+     * @param surname String il suo cognome
+     * @param name String il suo nome
+     * @param gender char il suo genere 
+     * @param age int la sua età
+     * @param urlPhoto String l'url della foto del suo profilo
+     * @param email String l'email del suo account
+     * @param oldPass String la sua password precedente; 
+     *        necessaria per autorizzare la modifica
+     * @param newPass String la sua nuova password
+     * @return status String l'esito dell'operazione di modifica
      */
     @WebMethod(operationName = "editClient")
     public String editClient(@WebParam(name = "email") String email, @WebParam(name = "name") String name, 
@@ -102,27 +124,19 @@ public class SOAPServiceClient {
         String status;
         char cGender = gender.charAt(0);
         if (name.equals("undefined") || name.equals(" ")){
-            name = null;
-        }
+            name = null;        }
         if (surname.equals("undefined") || surname.equals(" ")){
-            surname = null;
-        }
+            surname = null;        }
         if (cGender == 'u'){
-            cGender = ' ';
-        }
+            cGender = ' ';        }
         if (newPass.equals("undefined") || newPass.equals(" ")){
-            newPass = null;
-        }
+            newPass = null;        }
         if (urlPhoto.equals("undefined") || urlPhoto.equals(" ")){
-            urlPhoto = null;
-        }
-        
-        if(oldPass != null && !datiClient.getPass().equals(oldPass)) { 
-           //lanciare un'eccezione
+            urlPhoto = null;        }        
+        if(oldPass != null && !datiClient.getPass().equals(oldPass)) {           
             status = "Le password inserite non coincidono";
         }
         else {
-            //char cGender = gender.charAt(0);
             clientRef.editClient(email, name, surname, cGender, age, newPass, urlPhoto);
             status = "Modifica dell'account eseguita con successo";
         }
@@ -131,6 +145,10 @@ public class SOAPServiceClient {
     
     /**
      * Web service operation
+     * Metodo per impostare il nome dell'account twitter di un utente.
+     * @param email String l'email dell'utente desiderato
+     * @param twitterValue String il nome account di twitter
+     * @return String l'esito dell'operazione
      */
     @WebMethod(operationName = "setTwitter")
     public String setTwitter(@WebParam(name = "email") String email, 
@@ -145,6 +163,10 @@ public class SOAPServiceClient {
     
     /**
      * Web service operation
+     * Metodo per impostare l'account google di un utente.
+     * @param email String l'email dell'utente desiderato
+     * @param gmailValue String l'email gmail
+     * @return String l'esito dell'operazione
      */
     @WebMethod(operationName = "setGmail")
     public String setGmail(@WebParam(name = "email") String email,
@@ -160,6 +182,9 @@ public class SOAPServiceClient {
        
     /**
      * Web service operation
+     * Metodo per controllare se un utente ha una gmail
+     * @param email String L'email dell'utente su cui effettuare il controllo
+     * @return boolean la presenza o meno di un valore di gmail diverso da null
      */
     @WebMethod(operationName = "isGmailOn")
     public boolean isGmailOn(@WebParam(name = "email") String email) {
@@ -168,19 +193,23 @@ public class SOAPServiceClient {
        
     /**
      * Web service operation
-     * Controlla se c'é una gmail associata a un'account
+     * Controlla se una gmail è associata a un'account
      * se esiste, restituisce l'email (per fare il login)
+     * @param gmailValue String la gmail da controllare
+     * @return accountEmail String l'email che identifica l'eventuale account con quella gmail
      */
     @WebMethod(operationName = "isGmailThere")
     public String isGmailThere(@WebParam(name = "gmailValue") String gmailValue) {
         Client temp = clientRef.getClientByGmail(gmailValue);
-        String accountEmail = temp.getEmail();
-        
+        String accountEmail = temp.getEmail();        
         return accountEmail;
     }
     
     /**
      * Web service operation
+     * Metodo per controllare se un utente ha twitter
+     * @param email String L'email dell'utente su cui effettuare il controllo
+     * @return boolean la presenza o meno di un valore di twitter diverso da null
      */
     @WebMethod(operationName = "isTwitterOn")
     public boolean isTwitterOn(@WebParam(name = "email") String email) {
@@ -191,14 +220,13 @@ public class SOAPServiceClient {
      * Web service operation
      * Controlla se c'é un twitter associato a un'account
      * se esiste, restituisce l'email (per fare il login)
+     * @param twitterValue String il nome account di Twitter da controllare
+     * @return accountEmail String l'email che identifica l'eventuale account con quel twitter   
      */
     @WebMethod(operationName = "isTwitterThere")
-    public String isTwitterThere(@WebParam(name = "twitterValue") String twitterValue) {
-        //System.out.println(twitterValue);
-        
+    public String isTwitterThere(@WebParam(name = "twitterValue") String twitterValue) {  
         Client temp = clientRef.getClientByTwitter(twitterValue);        
-        String accountEmail = temp.getEmail();
-        
+        String accountEmail = temp.getEmail();        
         return accountEmail;
     }
     
@@ -207,7 +235,11 @@ public class SOAPServiceClient {
      * Cancella una mail secondaria su richiesta dell'utente (email)
      * il campo secondaryEmail è una stringa che indica quale valore cancellare 
      * per ora o twitter o gmail
-     * Il metodo NON cancella le mai principali.
+     * Il metodo NON cancella le mail principali.
+     * @param email String l'email che identifica l'utente
+     * @param secondaryEmail String parametro da settare a "gmail" o "twitter"; 
+     *                              identifica la "mail" secondaria da cancellare
+     * @return String stato dell'operazione
      */
     @WebMethod(operationName = "deleteSecondaryEmail")
     public String deleteSecondaryEmail(@WebParam(name = "email") String email,
@@ -215,7 +247,6 @@ public class SOAPServiceClient {
 
         if (secondaryEmail.equals("gmail")) {
             clientRef.setOtherEmail(email, "", null);
-
             return "Gmail disaccoppiata con successo";
         }
         if (secondaryEmail.equals("twitter")) {
@@ -230,6 +261,9 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
+     * restituisce un client data la sua mail
+     * @param email String l'email del cliente di cui si desiderano i dati
+     * @return user AccountDataTemp oggetto composto che contiene i dati del cliente
      */
     @WebMethod(operationName = "getClient")
     public AccountDataTemp getClient(@WebParam(name = "email") String email) {
@@ -291,6 +325,10 @@ public class SOAPServiceClient {
 
      /**
      * Web service operation
+     * Crea un oggetto guidatore
+     * @param clientEmail String l'email del cliente associato all'account guidatore
+     * @param carModel String identifica il modello di macchina da inserire
+     * @param carYear int l'anno della macchina da inserire
      */
     @WebMethod(operationName = "createDriver")
     public void createDriver(@WebParam(name = "clientEmail") String clientEmail, 
@@ -300,8 +338,11 @@ public class SOAPServiceClient {
         driverRef.createDriver(carModel, carYear, client_id);
     }
      
-        /**
+    /**
      * Web service operation
+     * restituisce un oggetto guidatore, dato l'id
+     * @param id long id del driver
+     * @return Driver oggetto driver ricercato
      */
     @WebMethod(operationName = "getDriver")
     public Driver getDriver(@WebParam(name = "ID") long id) {
@@ -310,6 +351,9 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
+     * restituisce tutti gli oggetti driver associati a un cliente, se ne ha
+     * @param clientEmail String l'email dell'utente interessato
+     * @return lista List<Driver> una lista contenente tutti gli oggetti Driver associati a quell'utente
      */
     @WebMethod(operationName = "getDrivers")
     public List<Driver> getDrivers(@WebParam(name = "clientEmail") String clientEmail) {
@@ -332,6 +376,8 @@ public class SOAPServiceClient {
      * Web service operation
      * vecchio metodo per avere le informazioni del client/driver di un viaggio
      * vedere getClientsRelatedToTravel
+     * @param travelID long l'id del viaggio di cui si vogliono ottenere client e driver
+     * @return temp ClientDriverTemp oggetto composto, contenente i valori di client e driver cercati
      */
     @WebMethod(operationName = "getDriverFromTravel")
     public ClientDriverTemp getDriverFromTravel (@WebParam(name = "travelID") long travelID) {
@@ -354,6 +400,8 @@ public class SOAPServiceClient {
      * Web service operation
      * Raccoglie tutti i passeggeri di un viaggio e le informazioni sul guidatore
      * e sulla macchina.
+     * @param travelID long l'id del travel di cui si vogliono ottenere le informazioni
+     * @return temp TravelDataTemp oggetto composto contenente client, driver, e passeggeri relazionati al viaggio
      */
     @WebMethod(operationName = "getClientsRelatedToTravel")
     public TravelDataTemp getClientsRelatedToTravel (@WebParam(name = "travelID") long travelID) {
@@ -385,7 +433,8 @@ public class SOAPServiceClient {
      * Web service operation
      * Raccoglie tutti i passeggeri relazionati a un taxi
      * e le informazioni sul creatore
-     * 
+     * @param taxiID long l'id del taxi di cui si vogliono ottenere le informazioni
+     * @return temp TravelDataTemp oggetto composto contenente client, driver, e passeggeri relazionati al viaggio
      */
     @WebMethod(operationName = "getClientsRelatedToTaxi")
     public TravelDataTemp getClientsRelatedToTaxi (@WebParam(name = "taxiID") long taxiID) {
@@ -411,6 +460,13 @@ public class SOAPServiceClient {
     
      /**
      * Web service operation
+     * crea un viaggio in macchina
+     * @param email String l'email del client creatore
+     * @param id long l'id del driver creatore
+     * @param from String la città di partenza
+     * @param to String la città di destinazione
+     * @param when String la data e l'ora di partenza, formattate opportunamente
+     * @param freeSeats int il numero di posti liberi.
      */
     @WebMethod(operationName = "createCarTravel")
     @Oneway
@@ -422,12 +478,19 @@ public class SOAPServiceClient {
         Client clientInfo = clientRef.getClient(email);
         Long clientId = clientInfo.getId();
         Date data = convertiStringa(when);
-        travelRef.createTravel(id, clientId, from, to, data, data, freeSeats);
-        
+        travelRef.createTravel(id, clientId, from, to, data, data, freeSeats);        
     }
     
     /**
      * Web service operation
+     * crea un viaggio in taxi
+     * @param email String l'email dell'utente creatore
+     * @param origin String la destinazione di partenza
+     * @param destination String la località di arrivo
+     * @param freeSeats int il numero di posti liber
+     * @param when String la data e l'ora, formattate in stringa, di partenza
+     * @param coordStart String le coordinate geografiche della partenza
+     * @param coordEnd String le coordinate geografiche dell'arrivo
      */
     @WebMethod(operationName = "createTaxiTravel")
     public void createTaxiTravel(
@@ -441,16 +504,18 @@ public class SOAPServiceClient {
         
         Client clientInfo = clientRef.getClient(email);
         Long clientId = clientInfo.getId();
-        Long creatorId = clientId;
-        
+        Long creatorId = clientId;        
         Date data = convertiStringa(when);
-        taxiRef.createTaxi(creatorId, clientId, data, data, origin, destination, freeSeats, coordStart, coordEnd);
-        
+        taxiRef.createTaxi(creatorId, clientId, data, data, origin, destination, freeSeats, coordStart, coordEnd);       
     }
     
     
      /**
      * Web service operation  
+     * restituisce i viaggi tra due località ricercate
+     * @param start String la località di partenza
+     * @param end String la località di arrivo
+     * @return viaggi List<Travel> una lista contenente i viaggi con quelle start/end
      */
     @WebMethod(operationName = "getTravels")
     public List<Travel> getTravels(@WebParam(name = "start") String start, 
@@ -460,22 +525,28 @@ public class SOAPServiceClient {
         return viaggi;
     }
     
-         /**
+    /**
      * Web service operation  
+     * Restituisce l'history di un cliente, quindi i suoi viaggi passati
+     * @param email String l'email che identifica quel cliente
+     * @return viaggi List<Travel> la lista dei viaggi che ha compiuto. 
      */
     @WebMethod(operationName = "getHistoryTravels")
     public List<Travel> getHistoryTravels(@WebParam(name = "email") String email) {
         Client reqClient = clientRef.getClient(email);
-        Date flagDate = new Date();
-        
+        Date flagDate = new Date();        
         List<Travel> viaggi = travelRef.getClientTravel(reqClient.getId(), flagDate, flagDate);       
-        
-              
+          
         return viaggi;
     }
     
      /**
      * Web service operation
+     * restituisce i viaggi a partire da una certa data
+     * @param start String la località di partenza
+     * @param end String la località di arrivo
+     * @param date String la data oltre la quale bisogna cercare
+     * @return viaggi List<Travel> una lista contenente i viaggi con quelle start/end
      */
     @WebMethod(operationName = "getTravelsFrom")
     public List<Travel> getTravelsFrom(@WebParam(name = "start") String start, 
@@ -488,6 +559,9 @@ public class SOAPServiceClient {
 
      /**
      * Web service operation
+     * restituisce i viaggi futuri di un dato utente
+     * @param email String l'email dell'utente in questione
+     * @return viaggi List<Travel> una lista contenente i viaggi in cui l'utente è registrato
      */
     @WebMethod(operationName = "getClientTravel")
     public List<Travel> getClientTravel(@WebParam(name = "email") String email) {
@@ -499,10 +573,16 @@ public class SOAPServiceClient {
         }
         return lista;
     }
- 
-    
+     
      /**
      * Web service operation
+     * crea un commento 
+     * @param author_email String l'email dell'account del creatore del commento
+     * @param clientJudged_email String l'email del client su cui viene rilasciato il commento
+     * @param travel_id long l'id del travel di riferimento
+     * @param comment String il testo del commento
+     * @param feedback int un numero da uno a cinque che rappresenta il grado di soddisfazione di chi scriver
+     * @param when String la data formattata in stringa di quando il commento viene rilasciato
      */
     @WebMethod(operationName = "createComment")
     public void createComment(@WebParam(name = "author_email") String author_email, 
@@ -524,6 +604,8 @@ public class SOAPServiceClient {
      * Web service operation
      * Restituisce una lista di commenti associati all'utente che li ha ricevuti
      * Match da fare tra clientId e Id_clientJudged
+     * @param clientId long l'id del cliente in questione 
+     * @return lista List<Comment> la lista contenente i suddetti commenti
      */
     @WebMethod(operationName = "getComments")
     public List<Comment> getComments(@WebParam(name = "clientId") long clientId) {
@@ -535,7 +617,9 @@ public class SOAPServiceClient {
     /**
      * Web service operation
      * Restituisce il valore complessivo dei feedback ricevuti da un utente 
-     * Match da fare tra clientId 
+     * Match da fare tra clientId
+     * @param clientId l'id del client in questione
+     * @param int il valore del feedback da lui ricevuto
      */
     @WebMethod(operationName = "getFeedbackValue")
     public int getFeedbacks(@WebParam(name = "clientId") long clientId) {
@@ -547,6 +631,9 @@ public class SOAPServiceClient {
      * Restituisce una list con gli ultimi numMax commenti ricevuti in ordine di tempo 
      * max 10
      * da usare per mostrare l'attività degli utenti in homepage
+     * @param clientEmail String l'email del client di cui si vogliono cercare i commenti
+     * @param numMax int numero massimo di commenti che si vogliono scaricare
+     * @return commentTemp List<CommentTemp> lista di commenti 
      */
     @WebMethod(operationName = "getLatestReceivedComments")
     public List<CommentTemp> getLatestReceivedComments(@WebParam(name = "clientEmail") String clientEmail, @WebParam(name = "numMax") int numMax) {
@@ -572,7 +659,10 @@ public class SOAPServiceClient {
         
     /**
      * Web service operation
-     * Analogo di getTravels, per i Taxi
+     * Analogo di getTravels, per i Taxi: restituisce dei taxxi
+     * @param from String località di partenza
+     * @param to String località di destinazione
+     * @reurn List<Taxi> una lista di viaggi tra quelle località
      */
     @WebMethod(operationName = "getTaxiTravels")
     public List<Taxi> getTaxiTravels(@WebParam(name = "from") String from, @WebParam(name = "to") String to) {
@@ -583,8 +673,10 @@ public class SOAPServiceClient {
     /**
      * Web service operation
      * Analogo di getTravelsFrom per i Taxi
-     * PERO', in questo caso nell'oggetto dateTime verrà incluso anche il tempo secondo il formato "2016-05-04T00:00:00". 
-     * Il motivo è che per i taxi è anche importante sapere l'ora
+     * @param from String la località di partenza
+     * @param to String la località di arrivo
+     * @param dateTime String data e ora formattate in stringa 
+     * @return List<Taxi> lista di viaggi in taxi tra quelle località, successivi alla data
      */
     @WebMethod(operationName = "getTaxiTravelsFrom")
     public List<Taxi> getTaxiTravelsFrom(@WebParam(name = "from") String from, @WebParam(name = "to") String to, @WebParam(name = "dateTime") String dateTime) {
@@ -662,6 +754,9 @@ public class SOAPServiceClient {
 
     /**
      * Web service operation
+     * restituisce un viaggio in macchina a partire dal suo id
+     * @param travel_id long l'id del viaggio ricercato
+     * @return result Travel il viaggio ricercato
      */
     @WebMethod(operationName = "getSpecificCarTravel")
     public Travel getSpecificCarTravel(@WebParam(name = "travel_id") long travel_id) {
@@ -672,23 +767,13 @@ public class SOAPServiceClient {
 
     /**
      * Web service operation
+     * restituisce un viaggio in taxi a partire dall'id
+     * @param taxi_id long l'id del viaggio in taxi ricercato
+     * @return result Taxi il taxi ricercato
      */
     @WebMethod(operationName = "getSpecificTaxiTravel")
-    public Taxi getSpecificTaxiTravel(@WebParam(name = "travel_id") long taxi_id) {
+    public Taxi getSpecificTaxiTravel(@WebParam(name = "taxi_id") long taxi_id) {
         Taxi result = taxiRef.getTaxi(taxi_id);
         return result;
-    }
-
-    
-
-    
-    
-     /**
-     * Web service operation
-     */
-    
-
-   
-    
-    
+    } 
 }
