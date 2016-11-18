@@ -163,6 +163,7 @@ blockquote strong {
     box-sizing:border-box;
 	border-bottom: 1px solid #eee;
 	box-shadow:0px 0px 20px rgba(0, 0, 0, 0.1);
+        height: 48px;
 }
 
 
@@ -205,7 +206,7 @@ blockquote strong {
 
 .navbar-custom ul.nav ul.dropdown-menu {
 	  border-radius: 0;	
-	margin-top: 21px;
+	margin-top: 10px;
 	border-top: none;
 }
 
@@ -226,7 +227,7 @@ blockquote strong {
 }
 
 .navbar-custom ul.nav ul.dropdown-menu li a {
-	padding: 10px 20px;
+	padding: 5px 10px;
 }
 
 .navbar-custom ul.nav ul.dropdown-menu li a:hover {
@@ -935,7 +936,7 @@ a.btn:focus{
 @media(min-width:767px) {
 
     .navbar {
-        padding: 20px 0;
+        padding: 10px 0;
         border-bottom: 0;
         letter-spacing: 1px;
         background: 0 0;
@@ -971,7 +972,7 @@ a.btn:focus{
 }
 @media (max-width:768px) {
 	#navigation {
-		padding: 20px 0;
+		padding: 10px 0;
 	}
 	.site-logo{
 		margin: 0 0 0 30px;

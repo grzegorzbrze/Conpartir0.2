@@ -1,7 +1,7 @@
 <section id="detail" class="home-section color-dark text-center bg-gray" ng-init="getInfo()">  
     <div class="container col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-sm-8 ">
                 <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                     <div class="section-heading text-center">
                         <h2 class="h-bold">Riepilogo Viaggio</h2>
@@ -37,7 +37,7 @@
             
             
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-sm-4">
                 <img id="foto" src="{{detail.driverInfo.urlPhoto}}" alt="user image">
                 <h5>Posti liberi: {{travel.freeSeats}}</h5>
                 <div class="input-group row col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2">
@@ -65,8 +65,8 @@
         <div  class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 margintop-10">
             <h4>Passeggeri del viaggio:</h4>
             <a ng-show="{{passengerList.length > 0}}" ng-repeat=" item in passengerList" class="col-md-12 center">
-                <div class="col-md-1 list-group-item"><i class="glyphicon glyphicon-eye-open"></i></div> 
-                <div class="col-md-6 list-group-item"> {{item.name}} </div>  <div class="col-md-5 list-group-item"> {{item.role}} </div> 
+                <div class="col-sm-1 col-md-1 col-lg-1 list-group-item"><i class="glyphicon glyphicon-eye-open"></i></div> 
+                <div class="col-sm-6 col-md-6 col-lg-6 list-group-item"> {{item.name}} </div>  <div class="col-sm-5 col-md-5 col-lg-5 list-group-item"> {{item.role}} </div> 
             </a>
             <span class="marginbot-10 margintop-10" ng-show="{{passengerList.length > 0}}"> Sembra che nessuno abbia ancora prenotato questo viaggio. </span>
         </div>
@@ -139,12 +139,10 @@
       <div class="modal-body">
           <h4 class="h-bold"> Commenti ricevuti dal driver: </h4>
           <dl class="dl-horizontal" ng-repeat="commenti in feedbacks">  
-              <dt>Autore:</dt>
-              <dd>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dd>
-              <dt>Testo:</dt>
+              <dt>{{commenti.nomeAutore}} {{commenti.cognomeAutore}}</dt>
               <dd>{{commenti.testoCommento}}</dd>
-              <dt> Feedback </dt>
-              <dd> {{commenti.feedBackCommento}}</dd>
+              <dt>  </dt>
+              <dd> Feedback : {{commenti.feedBackCommento}}</dd>
           </dl> 
           <br>
            <span class="bg-info" ng-show="commentAlert" > Sembra che nessuno abbia ancora lasciato un commento su questo guidatore.</span>
