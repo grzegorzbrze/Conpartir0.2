@@ -2,10 +2,10 @@
 (function ($) {
 
 
-	$(window).load(function(){
+/*	$(window).load(function(){
       $("#navigation").sticky({ topSpacing: 0 });
     });
-	
+*/	
 
 	wow = new WOW(
       {

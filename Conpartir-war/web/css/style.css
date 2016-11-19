@@ -320,11 +320,11 @@ hr.bold {
 ============================ */
 
 .home-section {
-    padding-top: 150px;
-    padding-bottom: 110px;
-	display:block;
-    position:relative;
-    z-index:120;
+    padding-top: 70px;
+    padding-bottom: 100px;
+    display: block;
+    position: relative;
+    z-index: 120;
 }
 
 .inner-section {
