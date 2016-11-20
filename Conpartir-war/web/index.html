@@ -151,7 +151,7 @@
 
     <!-- Navigation -->
     <div id="navigation">
-        <nav class="navbar navbar-custom" role="navigation">
+        <!--<nav class="navbar navbar-custom" role="navigation">
                               <div class="container">
                                     <div class="row">
                                           <div class="col-md-2">
@@ -162,15 +162,47 @@
                                           
 
                                         <div class="col-md-10">
-<!-- /.Navbar-collapse -->
-                                            <!-- Brand and toggle get grouped for better mobile display -->
+
                                             <div class="navbar-header">
                                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
                                                     <i class="fa fa-bars"></i>
                                                 </button>
                                             </div>
-                                            <!-- Collect the nav links, forms, and other content for toggling -->
+                                          
                                             <div class="collapse navbar-collapse" id="menu">
+                                                <div class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
+                                                    <span class="span-nav"><a href="#/" ng-click="go('/home')">Home</a></span>
+                                                    <span class="span-nav" data-toggle="modal" data-target="#modalLogin" onclick="signOut()"  ng-hide="isAuthorized" ><a href="#/">Login</a></span>
+                                                    <span class="span-nav " ng-show="isAuthorized" ><a href="#/account">Account</a></span>
+                                                    <span class="span-nav" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></span>
+                                                </div>
+                                            </div>  
+                                            
+
+                                        </div>
+                                    </div>
+                              </div>
+                        </nav> -->
+                        <div class="navbar navbar-custom">
+                              <div class="container">
+                                    <div class="row">
+                                          <div class="col-md-2">
+                                                   <div class="site-logo">
+                                                            <a href="index.html" class="brand">Conpartir</a>
+                                                    </div>
+                                          </div>
+                                          
+
+                                        <div class="col-md-10">
+
+                                            <!-- Brand and toggle get grouped for better mobile display 
+                                            <div class="navbar-header">
+                                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                                                    <i class="fa fa-bars"></i>
+                                                </button>
+                                            </div>
+                                             Collect the nav links, forms, and other content for toggling -->
+                                            <div
                                                 <div class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
                                                     <span class="span-nav"><a href="#/" ng-click="go('/home')">Home</a></span>
                                                     <span class="span-nav" data-toggle="modal" data-target="#modalLogin" onclick="signOut()"  ng-hide="isAuthorized" ><a href="#/">Login</a></span>
@@ -183,8 +215,7 @@
                                         </div>
                                     </div>
                               </div>
-                              <!-- /.container -->
-                        </nav>
+       
     </div> 
     <!-- /Navigation -->  
     <ng-view></ng-view>
