@@ -162,7 +162,12 @@
                                           
 
                                           <div class="col-md-10">
-                         
+                                              <div class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
+                                                                  <span class="span-nav"><a href="#/" ng-click="go('/home')">Home</a></span>
+                                                                  <span class="span-nav" data-toggle="modal" data-target="#modalLogin" onclick="signOut()"  ng-hide="isAuthorized" ><a href="#/">Login</a></span>
+                                                                  <span class="span-nav " ng-show="isAuthorized" ><a href="#/account">Account</a></span>
+                                                                  <span class="span-nav" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></span>
+                                                            </div>
                                                       <!-- Brand and toggle get grouped for better mobile display 
                                           <div class="navbar-header">
                                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
@@ -171,12 +176,7 @@
                                           </div>-->
                                                       <!-- Collect the nav links, forms, and other content for toggling -->
                                                       <div>
-                                                            <div class="nav navbar-nav navbar-right" ng-init="checkAuth()" >
-                                                                  <span class="span-nav"><a href="#/" ng-click="go('/home')">Home</a></span>
-                                                                  <span class="span-nav" data-toggle="modal" data-target="#modalLogin" onclick="signOut()"  ng-hide="isAuthorized" ><a href="#intro">Login</a></span>
-                                                                  <span class="span-nav " ng-show="isAuthorized" ><a href="#/account">Account</a></span>
-                                                                  <span class="span-nav" ng-show="isAuthorized"  onclick="signOut()" ng-click="logout()"><a href="#/home">Logout</a></span>
-                                                            </div>
+                                                            
                                                       </div>  
                                                       <!-- /.Navbar-collapse -->
                              
