@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/entity/Driver.java</file>
-            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/entity/Travel.java</file>
-            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/entity/Taxi.java</file>
+            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/facade/ClientFacade.java</file>
+            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/facade/ClientFacadeLocal.java</file>
+            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/sessionBean/ClientManager.java</file>
+            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/facade/AbstractFacade.java</file>
+            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/sessionBean/ClientManagerLocal.java</file>
             <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/entity/Client.java</file>
-            <file>file:/D:/Program%20Files/NetBeansProjects/Conpartir0.2/Conpartir-ejb/src/java/org/conpartir/entity/Comment.java</file>
         </group>
     </open-files>
 </project-private>
